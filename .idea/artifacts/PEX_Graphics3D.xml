@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="PEX_Graphics3D">
+    <output-path>$PROJECT_DIR$/../lib</output-path>
+    <root id="archive" name="PEX_Graphics3D.jar">
+      <element id="module-output" name="PEX_Graphics3D" />
+    </root>
+  </artifact>
+</component>
