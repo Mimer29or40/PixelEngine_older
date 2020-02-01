@@ -19,43 +19,63 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL32.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "SameParameterValue"})
 public class PixelEngine
 {
-    private static final Logger            LOGGER        = Logger.getLogger();
-    private static final Map<String, PGEX> extensions    = new HashMap<>();
-    private static final Profiler          profiler      = new Profiler("Engine");
-    private static final Color             COLOR         = Color.WHITE.copy();
-    private static final Pattern           bottomChars   = Pattern.compile(".*[gjpqy,]+.*");
-    private static final String            TITLE         = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
-    private static       int               overdraw      = 0;
-    private static       Random            random        = new Random();
-    private static       PixelEngine       logic;
-    private static       String            printFrame    = null;
-    private static       long              glfwWindow;
-    private static       long              startTime;
-    private static       boolean           engineRunning = false;
-    private static       int               monitorW, monitorH;
+    private static final Logger   LOGGER   = Logger.getLogger();
+    private static final Profiler profiler = new Profiler("Engine");
+    
+    private static PixelEngine logic;
+    
+    private static final Map<String, PGEX> extensions = new HashMap<>();
+    
+    private static final Color COLOR = Color.WHITE.copy();
+    
+    private static final Pattern bottomChars = Pattern.compile(".*[gjpqy,]+.*");
+    
+    private static final String TITLE = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
+    
+    private static int    overdraw = 0;
+    private static Random random   = new Random();
+    
+    private static String printFrame = null;
+    
+    private static long glfwWindow;
+    private static long startTime;
+    
+    private static boolean engineRunning = false;
+    
+    private static int monitorW, monitorH;
+    
     private static int windowX, windowY;
     private static int windowW, windowH;
-    private static int screenW, screenH;
-    private static int pixelW, pixelH;
+    
     private static int viewX, viewY;
     private static int viewW, viewH;
+    
+    private static int screenW, screenH;
+    
+    private static int pixelW, pixelH;
+    
     private static boolean fullscreen, vsync;
-    private static boolean   updateWindow = true;
-    private static boolean   focused      = false;
-    private static Sprite    font;
-    private static Sprite    prev;
-    private static Sprite    window;
-    private static Sprite    target;
-    private static DrawMode  drawMode     = DrawMode.NORMAL;
+    
+    private static boolean updateWindow = true;
+    private static boolean focused      = false;
+    
+    private static Sprite font;
+    private static Sprite prev;
+    private static Sprite window;
+    private static Sprite target;
+    
+    private static DrawMode drawMode = DrawMode.NORMAL;
+    
     private static IBlendPos blendFunc;
-    private        String    name;
+    
+    private String name;
     
     protected PixelEngine()
     {
-        PixelEngine.LOGGER.trace("PixelGameEngine2 instance created");
+        PixelEngine.LOGGER.trace("PixelEngine instance created");
         String        className = this.getClass().getSimpleName();
         StringBuilder name      = new StringBuilder();
         for (int i = 0; i < className.length(); i++)
@@ -75,9 +95,39 @@ public class PixelEngine
     }
     
     /**
+     * Called once before engine enter loop. Use to initialize user variables.
+     *
+     * @return True if engine can continue to run
+     */
+    protected boolean onUserCreate()
+    {
+        return false;
+    }
+    
+    /**
+     * Called every frame.
+     *
+     * @param elapsedTime time in seconds since that last frame. Must be overridden for engine to run
+     *
+     * @return True if engine can continue to run
+     */
+    protected boolean onUserUpdate(double elapsedTime)
+    {
+        return false;
+    }
+    
+    /**
+     * Called once after engine is put into a stopped state.
+     */
+    protected void onUserDestroy()
+    {
+        
+    }
+    
+    /**
      * This will create and initialize the window size, stats and pixel dimensions.
      *
-     * @param gameLogic  Sub-Classed PixelGameEngine2 providing onUser methods
+     * @param logic      Sub-Classed PixelEngine providing onUser methods
      * @param screenW    Screen width in pixels
      * @param screenH    Screen height in pixels
      * @param pixelW     Width of pixel in actual pixels
@@ -85,13 +135,13 @@ public class PixelEngine
      * @param fullscreen Engine should be fullscreen
      * @param vsync      Engine should lock to monitor refresh rate
      */
-    protected static void start(PixelEngine gameLogic, int screenW, int screenH, int pixelW, int pixelH, boolean fullscreen, boolean vsync)
+    protected static void start(PixelEngine logic, int screenW, int screenH, int pixelW, int pixelH, boolean fullscreen, boolean vsync)
     {
         PixelEngine.LOGGER.info("Engine Started");
         
-        if (PixelEngine.logic != null) throw new RuntimeException("PixelGameEngine2 can only be constructed once.");
-        PixelEngine.LOGGER.trace("Setting Game Logic");
-        PixelEngine.logic = gameLogic;
+        if (PixelEngine.logic != null) throw new RuntimeException("PixelEngine can only be constructed once.");
+        PixelEngine.LOGGER.trace("Setting Logic");
+        PixelEngine.logic = logic;
         
         PixelEngine.screenW = screenW;
         PixelEngine.screenH = screenH;
@@ -537,7 +587,7 @@ public class PixelEngine
             }
             catch (URISyntaxException ignored)
             {
-            
+    
             }
         }
         return Paths.get(filePath);
@@ -550,11 +600,12 @@ public class PixelEngine
     
     public static void printFrameData(String parent)
     {
-        if (PixelEngine.profiler.enabled)
-        {
-            PixelEngine.printFrame = parent;
-        }
+        if (PixelEngine.profiler.enabled) PixelEngine.printFrame = parent;
     }
+    
+    // --------
+    // - Draw -
+    // --------
     
     public static void clear(Color p)
     {
@@ -565,10 +616,6 @@ public class PixelEngine
     {
         clear(Color.BACKGROUND_GREY);
     }
-    
-    // --------
-    // - Draw -
-    // --------
     
     public static void draw(int x, int y, Color p)
     {
@@ -1138,7 +1185,7 @@ public class PixelEngine
             }
             catch (ReflectiveOperationException ignored)
             {
-            
+    
             }
         }
     }
@@ -1664,35 +1711,5 @@ public class PixelEngine
         {
             PixelEngine.engineRunning = false;
         }
-    }
-    
-    /**
-     * Called once before engine enter loop. Use to initialize user variables.
-     *
-     * @return True if engine can continue to run
-     */
-    protected boolean onUserCreate()
-    {
-        return false;
-    }
-    
-    /**
-     * Called every frame.
-     *
-     * @param elapsedTime time in seconds since that last frame. Must be overridden for engine to run
-     *
-     * @return True if engine can continue to run
-     */
-    protected boolean onUserUpdate(double elapsedTime)
-    {
-        return false;
-    }
-    
-    /**
-     * Called once after engine is put into a stopped state.
-     */
-    protected void onUserDestroy()
-    {
-    
     }
 }

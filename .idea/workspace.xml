@@ -2,22 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/Ryan.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Color.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/DrawMode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/IBlend.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/IBlendPos.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Keyboard.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Logger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Mouse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PGEX.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Profiler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Sprite.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/util/Pair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/util/Tuple.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Ryan.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Ryan.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/PixelEngine.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/PixelEngine.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,10 +47,10 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="Adapt OpenJDK 11" />
     <property name="last_opened_file_path" value="C:/Env/Java/visualvm_144/bin/visualvm.exe" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.gutterIcons" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.CommitDialog" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -91,7 +77,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580571509061</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Initial Engine Commit">
+      <created>1580571973081</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1580571973081</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -99,32 +92,32 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Test" />
     <MESSAGE value="Initial Structure Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Structure Commit" />
+    <MESSAGE value="Initial Engine Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Engine Commit" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
-    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1580571805915">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571805915" />
-    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2" timestamp="1580571508352">
+    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2" timestamp="1580571971765">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571508352" />
+    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571971765" />
     <state x="666" y="297" key="FileChooserDialogImpl" timestamp="1580571245539">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="666" y="297" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571245539" />
-    <state x="440" y="130" key="SettingsEditor" timestamp="1580571807811">
+    <state x="440" y="130" key="SettingsEditor" timestamp="1580572600485">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="440" y="130" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571807811" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580571946386">
+    <state x="440" y="130" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580572600485" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580571980238">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571946386" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571980238" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580571363920">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
