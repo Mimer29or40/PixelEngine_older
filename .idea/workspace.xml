@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/PEX_GUI/PEX_GUI.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/test/resources/car_top1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/test/resources/zombie.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Sound/PEX_Sound.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Sound/src/test/resources/sample1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Sound/src/test/resources/sample2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Sound/src/test/resources/sample5.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/PEX_Vector.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Physics3D.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Physics3D_source.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_GUI/PGE_GUI.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Physics2D/src/test/java/pe/Physics2DTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics2D/src/test/java/pe/Physics2DTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Sound/PGE_Sound.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/PGEX_Vector.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Sound/PEX_Sound.iml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -189,7 +177,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580581374903</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="It compiles!!!">
+      <created>1580582669869</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1580582669869</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -204,35 +199,40 @@
     <MESSAGE value="Sound Extension" />
     <MESSAGE value="Renamed Modules" />
     <MESSAGE value="Other Extensions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Other Extensions" />
+    <MESSAGE value="It compiles!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="It compiles!!!" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1580582497173">
+    <state x="552" y="214" key="#Notifications" timestamp="1580583145500">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580582497173" />
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580581374078">
+    <state x="552" y="214" key="#Notifications/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583145500" />
+    <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1580583762941">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580581374078" />
+    <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583762941" />
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580582668981">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580582668981" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="714" y="271" key="DetectedRootsChooserDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580581520181" />
-    <state x="666" y="297" key="FileChooserDialogImpl" timestamp="1580582476257">
+    <state x="666" y="297" key="FileChooserDialogImpl" timestamp="1580583538786">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="666" y="297" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580582476257" />
-    <state x="440" y="130" width="1241" height="850" key="SettingsEditor" timestamp="1580582629981">
+    <state x="666" y="297" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583538786" />
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1580583770386">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="440" y="130" width="1241" height="850" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580582629981" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580581378139">
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583770386" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580582672001">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580581378139" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580582672001" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580571363920">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -241,9 +241,9 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="591" y="252" width="737" height="606" key="find.popup/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580580229906" />
-    <state x="343" y="176" key="new project wizard" timestamp="1580582343360">
+    <state x="343" y="176" key="new project wizard" timestamp="1580583739694">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="343" y="176" key="new project wizard/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580582343360" />
+    <state x="343" y="176" key="new project wizard/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583739694" />
   </component>
 </project>
