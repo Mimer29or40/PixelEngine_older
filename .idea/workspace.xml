@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector_source.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PixelEngine.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/PixelEngine_source.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/PGEX_Vector.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix4.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/PEX_Vector.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector3.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PGEX.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PEX.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,8 +44,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="Adapt OpenJDK 11" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/PEX_Vector" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lib" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.CommitDialog" />
@@ -104,7 +89,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580572632980</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Vector Extension">
+      <created>1580573538097</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1580573538097</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -114,7 +106,8 @@
     <MESSAGE value="Initial Structure Commit" />
     <MESSAGE value="Initial Engine Commit" />
     <MESSAGE value="Changed PixelEngine formatting" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed PixelEngine formatting" />
+    <MESSAGE value="Vector Extension" />
+    <option name="LAST_COMMIT_MESSAGE" value="Vector Extension" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -123,29 +116,33 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571805915" />
-    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2" timestamp="1580572631490">
+    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2" timestamp="1580573537120">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580572631490" />
-    <state x="666" y="297" key="FileChooserDialogImpl" timestamp="1580573078326">
+    <state x="508" y="104" width="1034" height="859" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573537120" />
+    <state x="666" y="297" key="FileChooserDialogImpl" timestamp="1580573815086">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="666" y="297" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573078326" />
-    <state x="440" y="130" key="SettingsEditor" timestamp="1580573502881">
+    <state x="666" y="297" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573815086" />
+    <state x="440" y="130" key="SettingsEditor" timestamp="1580573949010">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="440" y="130" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573502881" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580572638962">
+    <state x="440" y="130" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573949010" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580573559643">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580572638962" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573559643" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580571363920">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571363920" />
-    <state x="343" y="176" key="new project wizard" timestamp="1580572750177">
+    <state x="591" y="252" width="737" height="606" key="find.popup" timestamp="1580573965091">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="343" y="176" key="new project wizard/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580572750177" />
+    <state x="591" y="252" width="737" height="606" key="find.popup/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573965091" />
+    <state x="343" y="176" key="new project wizard" timestamp="1580573682061">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="343" y="176" key="new project wizard/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580573682061" />
   </component>
 </project>
