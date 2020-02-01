@@ -1172,9 +1172,7 @@ public class PixelEngine
     {
         PixelEngine.LOGGER.info("Loading Extensions");
         
-        //        Reflections reflections = new Reflections(new ConfigurationBuilder().setScanners(new TypeElementsScanner(),
-        //        new TypeAnnotationsScanner(), new SubTypesScanner()));
-        Reflections reflections = new Reflections("pge");
+        Reflections reflections = new Reflections("pe");
         for (Class<? extends PEX> ext : reflections.getSubTypesOf(PEX.class))
         {
             try

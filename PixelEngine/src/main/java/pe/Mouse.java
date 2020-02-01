@@ -11,18 +11,20 @@ import static pe.PixelEngine.getScreenWidth;
 @SuppressWarnings("unused")
 public class Mouse
 {
-    public static final    Button               NONE        = new Button("NONE", -1);
-    public static final    Button               LEFT        = new Button("LEFT", GLFW_MOUSE_BUTTON_LEFT);
-    public static final    Button               RIGHT       = new Button("RIGHT", GLFW_MOUSE_BUTTON_RIGHT);
-    public static final    Button               MIDDLE      = new Button("MIDDLE", GLFW_MOUSE_BUTTON_MIDDLE);
-    public static final    Button               FOUR        = new Button("FOUR", GLFW_MOUSE_BUTTON_4);
-    public static final    Button               FIVE        = new Button("FIVE", GLFW_MOUSE_BUTTON_5);
-    public static final    Button               SIX         = new Button("SIX", GLFW_MOUSE_BUTTON_6);
-    public static final    Button               SEVEN       = new Button("SEVEN", GLFW_MOUSE_BUTTON_7);
-    public static final    Button               EIGHT       = new Button("EIGHT", GLFW_MOUSE_BUTTON_8);
-    protected static final Map<Integer, Button> inputs      = new HashMap<>();
-    protected static       long                 holdDelay   = 500_000_000;
-    protected static       long                 repeatDelay = 100_000_000;
+    protected static final Map<Integer, Button> inputs = new HashMap<>();
+    
+    public static final Button NONE   = new Button("NONE", -1);
+    public static final Button LEFT   = new Button("LEFT", GLFW_MOUSE_BUTTON_LEFT);
+    public static final Button RIGHT  = new Button("RIGHT", GLFW_MOUSE_BUTTON_RIGHT);
+    public static final Button MIDDLE = new Button("MIDDLE", GLFW_MOUSE_BUTTON_MIDDLE);
+    public static final Button FOUR   = new Button("FOUR", GLFW_MOUSE_BUTTON_4);
+    public static final Button FIVE   = new Button("FIVE", GLFW_MOUSE_BUTTON_5);
+    public static final Button SIX    = new Button("SIX", GLFW_MOUSE_BUTTON_6);
+    public static final Button SEVEN  = new Button("SEVEN", GLFW_MOUSE_BUTTON_7);
+    public static final Button EIGHT  = new Button("EIGHT", GLFW_MOUSE_BUTTON_8);
+    
+    protected static long holdDelay   = 500_000_000;
+    protected static long repeatDelay = 100_000_000;
     
     private static boolean entered = false;
     
