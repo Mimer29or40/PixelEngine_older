@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PixelEngine.iml" filepath="$PROJECT_DIR$/PixelEngine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PixelEngine/PixelEngine.iml" filepath="$PROJECT_DIR$/PixelEngine/PixelEngine.iml" />
     </modules>
   </component>
 </project>
