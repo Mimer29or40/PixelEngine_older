@@ -1,10 +1,10 @@
 package pe;
 
-public abstract class PGEX
+public abstract class PEX
 {
     protected final Profiler profiler;
     
-    protected PGEX(Profiler profiler)
+    protected PEX(Profiler profiler)
     {
         this.profiler = profiler;
     }

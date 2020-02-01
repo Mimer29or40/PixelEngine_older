@@ -27,7 +27,7 @@ public class PixelEngine
     
     private static PixelEngine logic;
     
-    private static final Map<String, PGEX> extensions = new HashMap<>();
+    private static final Map<String, PEX> extensions = new HashMap<>();
     
     private static final Color COLOR = Color.WHITE.copy();
     
@@ -174,7 +174,7 @@ public class PixelEngine
         try
         {
             PixelEngine.LOGGER.debug("Initializing Extensions");
-            PixelEngine.extensions.values().forEach(PGEX::initialize);
+            PixelEngine.extensions.values().forEach(PEX::initialize);
             
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.onUserCreate())
@@ -190,9 +190,9 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.debug("User Initialization");
             PixelEngine.logic.onUserDestroy();
-            
+    
             PixelEngine.LOGGER.trace("Extension Destruction");
-            PixelEngine.extensions.values().forEach(PGEX::destroy);
+            PixelEngine.extensions.values().forEach(PEX::destroy);
             
             if (PixelEngine.glfwWindow > 0)
             {
@@ -1175,7 +1175,7 @@ public class PixelEngine
         //        Reflections reflections = new Reflections(new ConfigurationBuilder().setScanners(new TypeElementsScanner(),
         //        new TypeAnnotationsScanner(), new SubTypesScanner()));
         Reflections reflections = new Reflections("pge");
-        for (Class<? extends PGEX> ext : reflections.getSubTypesOf(PGEX.class))
+        for (Class<? extends PEX> ext : reflections.getSubTypesOf(PEX.class))
         {
             try
             {
@@ -1567,8 +1567,8 @@ public class PixelEngine
                     PixelEngine.profiler.endSection();
                     
                     PixelEngine.overdraw = 0;
-                    
-                    PixelEngine.profiler.startSection("PGEX Pre");
+    
+                    PixelEngine.profiler.startSection("PEX Pre");
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
@@ -1590,8 +1590,8 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.profiler.endSection();
-                    
-                    PixelEngine.profiler.startSection("PGEX Post");
+    
+                    PixelEngine.profiler.startSection("PEX Post");
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
