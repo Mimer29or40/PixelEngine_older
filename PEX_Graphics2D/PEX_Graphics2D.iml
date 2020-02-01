@@ -9,8 +9,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
     </content>
     <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="PixelEngine" scope="PROVIDED" />
     <orderEntry type="module" module-name="PEX_Vector" scope="PROVIDED" />
-    <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

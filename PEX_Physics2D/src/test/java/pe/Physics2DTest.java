@@ -5,7 +5,7 @@ import pe.phx2D.util.*;
 
 import java.util.Arrays;
 
-public class Physics2DTest extends PixelGameEngine
+public class Physics2DTest extends PixelEngine
 {
     private static class Test implements Printable
     {
