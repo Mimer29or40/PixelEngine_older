@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PGEX_Vector/PGEX_Vector.iml" filepath="$PROJECT_DIR$/PGEX_Vector/PGEX_Vector.iml" />
       <module fileurl="file://$PROJECT_DIR$/PGE_GUI/PGE_GUI.iml" filepath="$PROJECT_DIR$/PGE_GUI/PGE_GUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/PGE_Sound/PGE_Sound.iml" filepath="$PROJECT_DIR$/PGE_Sound/PGE_Sound.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PGEX_Vector/PGEX_Vector.iml" filepath="$PROJECT_DIR$/PGEX_Vector/PGEX_Vector.iml" />
       <module fileurl="file://$PROJECT_DIR$/PixelEngine/PixelEngine.iml" filepath="$PROJECT_DIR$/PixelEngine/PixelEngine.iml" />
     </modules>
   </component>
