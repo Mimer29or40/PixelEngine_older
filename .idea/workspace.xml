@@ -2,11 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/test/java/pe/PropertyTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PixelEngine/src/test/java/pe/ColorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Keyboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Keyboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Mouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Color.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Sprite.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,6 +20,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="PixelEngine" />
       </list>
     </option>
   </component>
@@ -49,15 +53,41 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="Adapt OpenJDK 11" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../lib/PEX_Sound-source.jar!/" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.WindowTest">
+    <configuration name="ColorTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pe.ColorTest" />
+      <module name="PixelEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pe.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PropertyTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pe.PropertyTest" />
       <module name="PixelEngine" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="pe.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WindowTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="pe.WindowTest" />
+      <module name="PEX_GUI" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="pe.*" />
@@ -117,6 +147,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.WindowTest" />
+        <item itemvalue="Application.ColorTest" />
         <item itemvalue="Application.PropertyTest" />
       </list>
     </recent_temporary>
@@ -209,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580583808905</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Everything works">
+      <created>1580585979636</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1580585979636</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -226,7 +265,8 @@
     <MESSAGE value="Other Extensions" />
     <MESSAGE value="It compiles!!!" />
     <MESSAGE value="Once again for the second time" />
-    <option name="LAST_COMMIT_MESSAGE" value="Once again for the second time" />
+    <MESSAGE value="Everything works" />
+    <option name="LAST_COMMIT_MESSAGE" value="Everything works" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -243,10 +283,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583762941" />
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580583808057">
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580585978506">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583808057" />
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585978506" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -255,30 +295,46 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="715" y="257" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583876116" />
-    <state width="1387" height="285" key="GridCell.Tab.0.bottom" timestamp="1580585664964">
+    <state width="1382" height="234" key="GridCell.Tab.0.bottom" timestamp="1580590799734">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1387" height="285" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585664964" />
-    <state width="1387" height="285" key="GridCell.Tab.0.center" timestamp="1580585664964">
+    <state width="1382" height="234" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
+    <state width="1382" height="234" key="GridCell.Tab.0.center" timestamp="1580590799734">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1387" height="285" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585664964" />
-    <state width="1387" height="285" key="GridCell.Tab.0.left" timestamp="1580585664963">
+    <state width="1382" height="234" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
+    <state width="1382" height="234" key="GridCell.Tab.0.left" timestamp="1580590799734">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1387" height="285" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585664963" />
-    <state width="1387" height="285" key="GridCell.Tab.0.right" timestamp="1580585664964">
+    <state width="1382" height="234" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
+    <state width="1382" height="234" key="GridCell.Tab.0.right" timestamp="1580590799734">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1387" height="285" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585664964" />
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1580584819102">
+    <state width="1382" height="234" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
+    <state width="1382" height="234" key="GridCell.Tab.1.bottom" timestamp="1580590801777">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580584819102" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580583810046">
+    <state width="1382" height="234" key="GridCell.Tab.1.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
+    <state width="1382" height="234" key="GridCell.Tab.1.center" timestamp="1580590801777">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583810046" />
+    <state width="1382" height="234" key="GridCell.Tab.1.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
+    <state width="1382" height="234" key="GridCell.Tab.1.left" timestamp="1580590801777">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1382" height="234" key="GridCell.Tab.1.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
+    <state width="1382" height="234" key="GridCell.Tab.1.right" timestamp="1580590801777">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state width="1382" height="234" key="GridCell.Tab.1.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1580589378923">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580589378923" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580585981204">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585981204" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580571363920">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -295,5 +351,31 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="623" y="257" width="672" height="678" key="search.everywhere.popup/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580584380551" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java</url>
+          <line>313</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java</url>
+          <line>632</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="PixelEngine.COLOR" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

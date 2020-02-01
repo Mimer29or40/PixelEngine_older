@@ -177,7 +177,7 @@ public class Button extends Label
             else
             {
                 setPressed(!isPressed());
-                onMousePressed(button, widgetX, widgetY);
+                onButtonPressed(button, widgetX, widgetY);
                 onButtonToggled(button, widgetX, widgetY, this.pressed);
             }
             return true;

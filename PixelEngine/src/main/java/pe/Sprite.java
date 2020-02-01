@@ -160,7 +160,7 @@ public class Sprite
         {
             if (0 <= x && x < this.width && 0 <= y && y < this.height)
             {
-                return out.set(this.data.getInt(4 * (y * this.width + x)));
+                return out.fromInt(this.data.getInt(4 * (y * this.width + x)));
             }
             else
             {
@@ -169,7 +169,7 @@ public class Sprite
         }
         else
         {
-            return out.set(this.data.getInt(4 * (Math.abs(y % this.height) * this.width + Math.abs(x % this.width))));
+            return out.fromInt(this.data.getInt(4 * (Math.abs(y % this.height) * this.width + Math.abs(x % this.width))));
         }
     }
     
@@ -258,8 +258,6 @@ public class Sprite
     {
         if (this.data == null) return;
         
-        if (!imagePath.endsWith(".pge")) imagePath += ".pge";
-        
         try (FileOutputStream out = new FileOutputStream(imagePath))
         {
             out.write(this.width);
@@ -281,8 +279,8 @@ public class Sprite
         if (this.data == null) return;
         
         if (!imagePath.endsWith(".png")) imagePath += ".png";
-        
-        if (!stbi_write_png(getPath(imagePath).toString(), this.width, this.height, this.components, this.data, this.width * 4))
+    
+        if (!stbi_write_png(imagePath, this.width, this.height, this.components, this.data, this.width * 4))
         {
             System.err.println("Sprite could not be saved: " + imagePath);
         }

@@ -106,16 +106,6 @@ public class Color
         this(0, 0, 0, 255);
     }
     
-    public static Color fromInt(int color, Color out)
-    {
-        return out.set(color, color >> 8, color >> 16, color >> 24);
-    }
-    
-    public static Color fromInt(int color)
-    {
-        return fromInt(color, new Color());
-    }
-    
     public static Color random(int lower, int upper, boolean alpha, Color out)
     {
         out.r(randInt(lower, upper));
@@ -276,6 +266,11 @@ public class Color
     public Color set(Color p)
     {
         return set(p.r(), p.g(), p.b(), p.a());
+    }
+    
+    public Color fromInt(int x)
+    {
+        return set(x, x >> 8, x >> 16, x >> 24);
     }
     
     public int toInt()

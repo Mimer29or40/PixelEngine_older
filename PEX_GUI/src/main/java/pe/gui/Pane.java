@@ -149,9 +149,11 @@ public class Pane extends Window
                 drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
-        
+    
         setDrawMode(DrawMode.ALPHA);
         setTarget(getSprite());
+        getSprite().saveSprite("Menu");
+        getChildSprite().saveSprite("Menu Foreground");
         drawSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
     }
 }

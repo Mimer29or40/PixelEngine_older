@@ -33,6 +33,7 @@ public class WindowTest extends PixelEngine
             if (doubleClicked) addEvent("Menu Double Clicked: (" + widgetX + ", " + widgetY + ")");
             return true;
         });
+        //menu.setDefaultColor(new Color(0, 255, 0));
         
         int margin = 1;
         
