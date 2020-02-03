@@ -34,23 +34,26 @@ public class WindowTest extends PixelEngine
             return true;
         });
         //menu.setDefaultColor(new Color(0, 255, 0));
-        
+    
         int margin = 1;
-        
+    
         Button button = new Button(menu, "Button");
         //button.setPosition(menu.getForegroundOriginX(), menu.getForegroundOriginY());
         button.setWidth(menu.getForegroundWidth());
         button.onButtonPressed((mouse, widgetX, widgetY) -> addEvent("Button Pressed: " + mouse));
         button.onButtonReleased((mouse, widgetX, widgetY) -> addEvent("Button Released: " + mouse));
-        button.onButtonClicked((mouse, widgetX, widgetY, doubleClicked) -> addEvent("Button Clicked: " + mouse));
-        
+        button.onButtonClicked((mouse, widgetX, widgetY, doubleClicked) -> {
+            if (!doubleClicked) addEvent("Button Clicked: " + mouse);
+            if (doubleClicked) addEvent("Button Double Clicked: " + mouse);
+        });
+    
         Button toggle = new Button(menu, "Toggle");
         toggle.setToggleable(true);
         //toggle.setPosition(menu.getForegroundOriginX(), button.getMaxY() + 1 + margin);
         toggle.setY(button.getMaxY() + 1 + margin);
         toggle.setWidth(menu.getForegroundWidth());
         toggle.onButtonToggled((mouse, widgetX, widgetY, pressed) -> addEvent("Toggle: " + pressed));
-        
+    
         Slider slider = new Slider(menu, 1, 32);
         //slider.setPosition(menu.getForegroundOriginX(), toggle.getMaxY() + 1 + margin);
         slider.setY(toggle.getMaxY() + 1 + margin);

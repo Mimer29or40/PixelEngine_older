@@ -1343,7 +1343,6 @@ public class PixelEngine
         
         glfwSetCharCallback(PixelEngine.glfwWindow, (window, codePoint) -> {
             if (window != PixelEngine.glfwWindow) return;
-            System.out.println(Character.toString(codePoint));
             Keyboard.charCallback(codePoint);
         });
         

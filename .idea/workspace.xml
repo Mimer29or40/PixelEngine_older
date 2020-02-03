@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/test/java/pe/ColorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="Fixed Color Issue">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Color.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Color.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Sprite.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Sprite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -248,7 +245,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580585979636</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Fixed Color Issue">
+      <created>1580590842488</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1580590842488</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -266,7 +270,8 @@
     <MESSAGE value="It compiles!!!" />
     <MESSAGE value="Once again for the second time" />
     <MESSAGE value="Everything works" />
-    <option name="LAST_COMMIT_MESSAGE" value="Everything works" />
+    <MESSAGE value="Fixed Color Issue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Color Issue" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -283,10 +288,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583762941" />
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580585978506">
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580591063659">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585978506" />
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580591063659" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -295,38 +300,38 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="715" y="257" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583876116" />
-    <state width="1382" height="234" key="GridCell.Tab.0.bottom" timestamp="1580590799734">
+    <state width="1382" height="234" key="GridCell.Tab.0.bottom" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
-    <state width="1382" height="234" key="GridCell.Tab.0.center" timestamp="1580590799734">
+    <state width="1382" height="234" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
+    <state width="1382" height="234" key="GridCell.Tab.0.center" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
-    <state width="1382" height="234" key="GridCell.Tab.0.left" timestamp="1580590799734">
+    <state width="1382" height="234" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
+    <state width="1382" height="234" key="GridCell.Tab.0.left" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
-    <state width="1382" height="234" key="GridCell.Tab.0.right" timestamp="1580590799734">
+    <state width="1382" height="234" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
+    <state width="1382" height="234" key="GridCell.Tab.0.right" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590799734" />
-    <state width="1382" height="234" key="GridCell.Tab.1.bottom" timestamp="1580590801777">
+    <state width="1382" height="234" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
+    <state width="1382" height="234" key="GridCell.Tab.1.bottom" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.1.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
-    <state width="1382" height="234" key="GridCell.Tab.1.center" timestamp="1580590801777">
+    <state width="1382" height="234" key="GridCell.Tab.1.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
+    <state width="1382" height="234" key="GridCell.Tab.1.center" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.1.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
-    <state width="1382" height="234" key="GridCell.Tab.1.left" timestamp="1580590801777">
+    <state width="1382" height="234" key="GridCell.Tab.1.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
+    <state width="1382" height="234" key="GridCell.Tab.1.left" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.1.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
-    <state width="1382" height="234" key="GridCell.Tab.1.right" timestamp="1580590801777">
+    <state width="1382" height="234" key="GridCell.Tab.1.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
+    <state width="1382" height="234" key="GridCell.Tab.1.right" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1382" height="234" key="GridCell.Tab.1.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580590801777" />
+    <state width="1382" height="234" key="GridCell.Tab.1.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
     <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1580589378923">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -339,6 +344,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580571363920" />
+    <state x="92" y="122" width="1736" height="866" key="dock-window-1" timestamp="1580591356982">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="92" y="122" width="1736" height="866" key="dock-window-1/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580591356982" />
     <state x="591" y="252" width="737" height="606" key="find.popup" timestamp="1580584348161">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -360,11 +369,6 @@
           <line>313</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java</url>
-          <line>156</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java</url>
           <line>632</line>
@@ -372,10 +376,5 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="PixelEngine.COLOR" />
-      </configuration>
-    </watches-manager>
   </component>
 </project>

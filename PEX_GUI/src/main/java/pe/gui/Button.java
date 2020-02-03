@@ -171,7 +171,7 @@ public class Button extends Label
                 if (!isPressed())
                 {
                     setPressed(true);
-                    onMousePressed(button, widgetX, widgetY);
+                    onButtonPressed(button, widgetX, widgetY);
                 }
             }
             else
