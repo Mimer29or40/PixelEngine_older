@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,6 +21,7 @@
         <option value="Mimer29or40 &lt;7897914+mimer29or40@users.noreply.github.com&gt;" />
       </list>
     </option>
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GithubDefaultAccount">
@@ -258,7 +257,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580689280055</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fixed GLFW_REPEAT events stopping hold events">
+      <created>1580770290404</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1580770290404</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -278,7 +284,8 @@
     <MESSAGE value="Everything works" />
     <MESSAGE value="Fixed Color Issue" />
     <MESSAGE value="Clean up before work" />
-    <option name="LAST_COMMIT_MESSAGE" value="Clean up before work" />
+    <MESSAGE value="Fixed GLFW_REPEAT events stopping hold events" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed GLFW_REPEAT events stopping hold events" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -295,10 +302,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583762941" />
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580689279194">
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580770289715">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580689279194" />
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770289715" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -343,14 +350,22 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state width="1382" height="234" key="GridCell.Tab.1.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580652266836" />
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1580589378923">
+    <state x="184" y="122" key="MergeDialog" timestamp="1580770395758">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580589378923" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580689285610">
+    <state x="184" y="122" key="MergeDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770395758" />
+    <state x="672" y="271" key="MultipleFileMergeDialog" timestamp="1580770395785">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580689285610" />
+    <state x="672" y="271" key="MultipleFileMergeDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770395785" />
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1580770421795">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770421795" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580770293468">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770293468" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580571363920">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
