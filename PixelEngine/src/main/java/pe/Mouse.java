@@ -118,11 +118,16 @@ public class Mouse
                     button.held = true;
                     button.downTime = time;
                 }
-                else
+                else if (button.state == GLFW_RELEASE)
                 {
                     button.released = true;
                     button.held = false;
                     button.downTime = Long.MAX_VALUE;
+                }
+                else if (button.state == GLFW_REPEAT)
+                {
+                    button.pressed = true;
+                    button.repeated = true;
                 }
             }
             if (button.held && time - button.downTime > Mouse.holdDelay)

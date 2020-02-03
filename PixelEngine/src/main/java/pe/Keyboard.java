@@ -205,11 +205,16 @@ public class Keyboard
                     key.held = true;
                     key.downTime = time;
                 }
-                else
+                else if (key.state == GLFW_RELEASE)
                 {
                     key.released = true;
                     key.held = false;
                     key.downTime = Long.MAX_VALUE;
+                }
+                else if (key.state == GLFW_REPEAT)
+                {
+                    key.pressed = true;
+                    key.repeated = true;
                 }
             }
             if (key.held && time - key.downTime > Keyboard.holdDelay)

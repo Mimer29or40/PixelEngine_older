@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="Fixed Color Issue">
+    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Pane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +24,9 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="ccf72b26-1e3d-4bff-9cdb-0f0d2c3ccbce" />
   </component>
   <component name="ProjectId" id="1XDC5u70bvemrkVeHNHeT8M6RLP" />
   <component name="ProjectLevelVcsManager">
@@ -252,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580590842488</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Clean up before work">
+      <created>1580689280055</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1580689280055</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -271,7 +277,8 @@
     <MESSAGE value="Once again for the second time" />
     <MESSAGE value="Everything works" />
     <MESSAGE value="Fixed Color Issue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Color Issue" />
+    <MESSAGE value="Clean up before work" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clean up before work" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -288,10 +295,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583762941" />
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580591063659">
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580689279194">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580591063659" />
+    <state x="303" y="83" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580689279194" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -300,6 +307,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="715" y="257" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583876116" />
+    <state x="1091" y="523" key="Github.Dialog.Accounts.Choose" timestamp="1580689299111">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="1091" y="523" key="Github.Dialog.Accounts.Choose/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580689299111" />
     <state width="1382" height="234" key="GridCell.Tab.0.bottom" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -336,10 +347,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580589378923" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580585981204">
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580689285610">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580585981204" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580689285610" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580571363920">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
