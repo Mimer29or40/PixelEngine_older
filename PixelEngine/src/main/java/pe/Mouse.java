@@ -124,13 +124,8 @@ public class Mouse
                     button.held = false;
                     button.downTime = Long.MAX_VALUE;
                 }
-                else if (button.state == GLFW_REPEAT)
-                {
-                    button.pressed = true;
-                    button.repeated = true;
-                }
             }
-            if (button.held && time - button.downTime > Mouse.holdDelay)
+            if (button.state == GLFW_REPEAT || button.held && time - button.downTime > Mouse.holdDelay)
             {
                 button.downTime += Mouse.repeatDelay;
                 button.repeated = true;
