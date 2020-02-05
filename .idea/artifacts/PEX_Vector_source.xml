@@ -3,6 +3,7 @@
     <output-path>$PROJECT_DIR$/../lib</output-path>
     <root id="archive" name="PEX_Vector-source.jar">
       <element id="module-source" name="PEX_Vector" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../lib/joml-1.9.20-sources.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

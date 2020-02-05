@@ -1,16 +1,16 @@
 package pe;
 
-import pe.vector.Matrix3;
-import pe.vector.Vector2;
+import org.joml.Matrix3d;
+import org.joml.Vector3d;
 
 public class MatrixTest
 {
     public static void main(String[] args)
     {
-        Matrix3 matrix = new Matrix3();
-        matrix.translate(new Vector2(1, 0));
+        Matrix3d matrix = new Matrix3d();
+        matrix.transform(new Vector3d(1, 0, 0));
         System.out.println(matrix);
-        matrix.inverse();
+        matrix.invert();
         System.out.println(matrix);
     }
 }

@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="Fixed GLFW_REPEAT events stopping hold events">
+    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="Moved own Vector class to another branch">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/s316353.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector_source.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector_source.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Keyboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Keyboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Mouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/src/main/java/pe/gfx2d/PEX_GFX2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/main/java/pe/gfx2d/PEX_GFX2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/MatrixTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/MatrixTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/VectorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/VectorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Physics2D/src/main/java/pe/phx2D/model/AABB.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics2D/src/main/java/pe/phx2D/model/AABB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Vector/PEX_Vector.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/PEX_Vector.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix2.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix3.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix4.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector3.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector4.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector4.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,11 +42,23 @@
       </list>
     </option>
     <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="Vector" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="GithubDefaultAccount">
     <option name="defaultAccountId" value="ccf72b26-1e3d-4bff-9cdb-0f0d2c3ccbce" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/Mimer29or40/PixelEngine.git" />
+      </set>
+    </option>
   </component>
   <component name="ProjectId" id="1XDC5u70bvemrkVeHNHeT8M6RLP" />
   <component name="ProjectLevelVcsManager">
@@ -52,8 +80,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="Adapt OpenJDK 11" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lib/PEX_Sound-source.jar!/" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lib/joml-1.9.20-sources.jar!/" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
@@ -148,8 +176,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.WindowTest" />
-        <item itemvalue="Application.ColorTest" />
         <item itemvalue="Application.PropertyTest" />
+        <item itemvalue="Application.ColorTest" />
+        <item itemvalue="Application.WindowTest" />
+        <item itemvalue="Application.ColorTest" />
       </list>
     </recent_temporary>
   </component>
@@ -276,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1580770517271</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Moved own Vector class to another branch">
+      <created>1580912789901</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1580912789901</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -297,7 +334,8 @@
     <MESSAGE value="Fixed Color Issue" />
     <MESSAGE value="Clean up before work" />
     <MESSAGE value="Fixed GLFW_REPEAT events stopping hold events" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed GLFW_REPEAT events stopping hold events" />
+    <MESSAGE value="Moved own Vector class to another branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved own Vector class to another branch" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -310,22 +348,29 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="765" y="265" key="#com.intellij.ide.util.MemberChooser/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580584751192" />
-    <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1580583762941">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1580914714208">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583762941" />
-    <state x="341" y="63" width="1379" height="877" key="CommitChangelistDialog2" timestamp="1580858715529">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580914714208" />
+    <state x="341" y="73" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1580916161731">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="341" y="63" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580858715529" />
+    <state x="341" y="73" width="1316" height="804" key="CommitChangelistDialog2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916161731" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="714" y="271" key="DetectedRootsChooserDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580581520181" />
-    <state x="715" y="257" key="FileChooserDialogImpl" timestamp="1580583876116">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="92" y="132" width="1736" height="856" key="DiffContextDialog" timestamp="1580912629327">
+      <screen x="0" y="40" width="1920" height="1040" />
+    </state>
+    <state x="92" y="132" width="1736" height="856" key="DiffContextDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580912629327" />
+    <state x="715" y="265" key="FileChooserDialogImpl" timestamp="1580913130501">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="715" y="257" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583876116" />
+    <state x="715" y="265" key="FileChooserDialogImpl/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580913130501" />
     <state x="1091" y="523" key="Github.Dialog.Accounts.Choose" timestamp="1580689299111">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -366,18 +411,21 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="184" y="122" key="MergeDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770395758" />
-    <state x="672" y="271" key="MultipleFileMergeDialog" timestamp="1580770395785">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="672" y="279" key="MultipleFileMergeDialog" timestamp="1580916200527">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="672" y="271" key="MultipleFileMergeDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770395785" />
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1580770421795">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="672" y="279" key="MultipleFileMergeDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916200527" />
+    <state x="397" y="151" width="1241" height="775" key="SettingsEditor" timestamp="1580916233117">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770421795" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1580770525894">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916233117" />
+    <state x="552" y="296" key="Vcs.Push.Dialog.v2" timestamp="1580912806076">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770525894" />
+    <state x="552" y="296" key="Vcs.Push.Dialog.v2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580912806076" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580571363920">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -394,6 +442,14 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="591" y="252" width="737" height="606" key="find.popup/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580584348161" />
+    <state x="741" y="274" key="git4idea.branch.GitSmartOperationDialog" timestamp="1580916176956">
+      <screen x="0" y="40" width="1920" height="1040" />
+    </state>
+    <state x="741" y="274" key="git4idea.branch.GitSmartOperationDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916176956" />
+    <state x="761" y="352" key="git4idea.merge.GitMergeDialog" timestamp="1580916133406">
+      <screen x="0" y="40" width="1920" height="1040" />
+    </state>
+    <state x="761" y="352" key="git4idea.merge.GitMergeDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916133406" />
     <state x="343" y="176" key="new project wizard" timestamp="1580583739694">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>

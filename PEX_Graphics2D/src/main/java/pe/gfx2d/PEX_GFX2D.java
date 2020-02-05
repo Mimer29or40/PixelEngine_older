@@ -1,31 +1,36 @@
 package pe.gfx2d;
 
+import org.joml.Vector2dc;
+import org.joml.Vector2fc;
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
 import pe.*;
-import pe.vector.Vector2;
 
 import static pe.PixelEngine.getScreenHeight;
 import static pe.PixelEngine.getScreenWidth;
 
+@SuppressWarnings("unused")
 public class PEX_GFX2D extends PEX
 {
-    private static final Vector2 mousePos = new Vector2();
-    private static final Vector2 viewport = new Vector2();
+    private static final Vector2i mousePos = new Vector2i();
+    private static final Vector2i viewport = new Vector2i();
     
     public PEX_GFX2D(Profiler profiler)
     {
         super(profiler);
     }
     
-    public static Vector2 getMousePos()
+    public static Vector2ic getMousePos()
     {
         return PEX_GFX2D.mousePos.set(Mouse.getX(), Mouse.getY());
     }
     
-    public static Vector2 getViewport()
+    public static Vector2ic getViewport()
     {
         return PEX_GFX2D.viewport.set(getScreenWidth(), getScreenHeight());
     }
     
+    // TODO - This needs an equivalent
     public static void drawSprite(Sprite sprite, Transform2D transform)
     {
         if (sprite == null) return;
@@ -89,167 +94,447 @@ public class PEX_GFX2D extends PEX
         }
     }
     
-    public static void draw(Vector2 pos, Color p)
+    public static void draw(Vector2ic p, Color c)
     {
-        PixelEngine.draw(pos.xi(), pos.yi(), p);
+        PixelEngine.draw(p.x(), p.y(), c);
     }
     
-    public static void draw(Vector2 pos)
+    public static void draw(Vector2ic p)
     {
-        PixelEngine.draw(pos.xi(), pos.yi());
+        PixelEngine.draw(p.x(), p.y());
     }
     
-    public static void drawLine(Vector2 pos1, Vector2 pos2, Color p, int pattern)
+    public static void draw(Vector2fc p, Color c)
     {
-        PixelEngine.drawLine(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), p, pattern);
+        PixelEngine.draw((int) p.x(), (int) p.y(), c);
     }
     
-    public static void drawLine(Vector2 pos1, Vector2 pos2, Color p)
+    public static void draw(Vector2fc p)
     {
-        PixelEngine.drawLine(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), p, 0xFFFFFFFF);
+        PixelEngine.draw((int) p.x(), (int) p.y());
     }
     
-    public static void drawLine(Vector2 pos1, Vector2 pos2, int pattern)
+    public static void draw(Vector2dc p, Color c)
     {
-        PixelEngine.drawLine(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), Color.WHITE, pattern);
+        PixelEngine.draw((int) p.x(), (int) p.y(), c);
     }
     
-    public static void drawLine(Vector2 pos1, Vector2 pos2)
+    public static void draw(Vector2dc p)
     {
-        PixelEngine.drawLine(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), Color.WHITE, 0xFFFFFFFF);
+        PixelEngine.draw((int) p.x(), (int) p.y());
     }
     
-    public static void drawCircle(Vector2 pos, int radius, Color p, int mask)
+    public static void drawLine(Vector2ic p1, Vector2ic p2, Color c, int pattern)
     {
-        PixelEngine.drawCircle(pos.xi(), pos.yi(), radius, p, mask);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), c, pattern);
     }
     
-    public static void drawCircle(Vector2 pos, int radius, Color p)
+    public static void drawLine(Vector2ic p1, Vector2ic p2, Color c)
     {
-        PixelEngine.drawCircle(pos.xi(), pos.yi(), radius, p, 0xFF);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), c, 0xFFFFFFFF);
     }
     
-    public static void drawCircle(Vector2 pos, int radius, int mask)
+    public static void drawLine(Vector2ic p1, Vector2ic p2, int pattern)
     {
-        PixelEngine.drawCircle(pos.xi(), pos.yi(), radius, Color.WHITE, mask);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), Color.WHITE, pattern);
     }
     
-    public static void drawCircle(Vector2 pos, int radius)
+    public static void drawLine(Vector2ic p1, Vector2ic p2)
     {
-        PixelEngine.drawCircle(pos.xi(), pos.yi(), radius, Color.WHITE, 0xFF);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), Color.WHITE, 0xFFFFFFFF);
     }
     
-    public static void fillCircle(Vector2 pos, int radius, Color p)
+    public static void drawLine(Vector2fc p1, Vector2fc p2, Color c, int pattern)
     {
-        PixelEngine.fillCircle(pos.xi(), pos.yi(), radius, p);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, pattern);
     }
     
-    public static void fillCircle(Vector2 pos, int radius)
+    public static void drawLine(Vector2fc p1, Vector2fc p2, Color c)
     {
-        PixelEngine.fillCircle(pos.xi(), pos.yi(), radius, Color.WHITE);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, 0xFFFFFFFF);
     }
     
-    public static void drawRect(Vector2 pos, int w, int h, Color p)
+    public static void drawLine(Vector2fc p1, Vector2fc p2, int pattern)
     {
-        PixelEngine.drawRect(pos.xi(), pos.yi(), w, h, p);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, pattern);
     }
     
-    public static void drawRect(Vector2 pos, int w, int h)
+    public static void drawLine(Vector2fc p1, Vector2fc p2)
     {
-        PixelEngine.drawRect(pos.xi(), pos.yi(), w, h, Color.WHITE);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, 0xFFFFFFFF);
     }
     
-    public static void fillRect(Vector2 pos, int w, int h, Color p)
+    public static void drawLine(Vector2dc p1, Vector2dc p2, Color c, int pattern)
     {
-        PixelEngine.fillRect(pos.xi(), pos.yi(), w, h, p);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, pattern);
     }
     
-    public static void fillRect(Vector2 pos, int w, int h)
+    public static void drawLine(Vector2dc p1, Vector2dc p2, Color c)
     {
-        PixelEngine.fillRect(pos.xi(), pos.yi(), w, h, Color.WHITE);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, 0xFFFFFFFF);
     }
     
-    public static void drawTriangle(Vector2 pos1, Vector2 pos2, Vector2 pos3, Color p)
+    public static void drawLine(Vector2dc p1, Vector2dc p2, int pattern)
     {
-        PixelEngine.drawTriangle(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), pos3.xi(), pos3.yi(), p);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, pattern);
     }
     
-    public static void drawTriangle(Vector2 pos1, Vector2 pos2, Vector2 pos3)
+    public static void drawLine(Vector2dc p1, Vector2dc p2)
     {
-        PixelEngine.drawTriangle(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), pos3.xi(), pos3.yi(), Color.WHITE);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, 0xFFFFFFFF);
     }
     
-    public static void fillTriangle(Vector2 pos1, Vector2 pos2, Vector2 pos3, Color p)
+    public static void drawCircle(Vector2ic p, int radius, Color c, int mask)
     {
-        PixelEngine.fillTriangle(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), pos3.xi(), pos3.yi(), p);
+        PixelEngine.drawCircle(p.x(), p.y(), radius, c, mask);
     }
     
-    public static void fillTriangle(Vector2 pos1, Vector2 pos2, Vector2 pos3)
+    public static void drawCircle(Vector2ic p, int radius, Color c)
     {
-        PixelEngine.fillTriangle(pos1.xi(), pos1.yi(), pos2.xi(), pos2.yi(), pos3.xi(), pos3.yi(), Color.WHITE);
+        PixelEngine.drawCircle(p.x(), p.y(), radius, c, 0xFF);
     }
     
-    public static void drawSprite(Vector2 pos, Sprite sprite, int scale)
+    public static void drawCircle(Vector2ic p, int radius, int mask)
     {
-        PixelEngine.drawSprite(pos.xi(), pos.yi(), sprite, scale);
+        PixelEngine.drawCircle(p.x(), p.y(), radius, Color.WHITE, mask);
     }
     
-    public static void drawSprite(Vector2 pos, Sprite sprite)
+    public static void drawCircle(Vector2ic p, int radius)
     {
-        PixelEngine.drawSprite(pos.xi(), pos.yi(), sprite, 1);
+        PixelEngine.drawCircle(p.x(), p.y(), radius, Color.WHITE, 0xFF);
     }
     
-    public static void drawPartialSprite(Vector2 pos, Sprite sprite, int ox, int oy, int w, int h, int scale)
+    public static void drawCircle(Vector2fc p, int radius, Color c, int mask)
     {
-        PixelEngine.drawPartialSprite(pos.xi(), pos.yi(), sprite, ox, oy, w, h, scale);
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, c, mask);
     }
     
-    public static void drawPartialSprite(Vector2 pos, Sprite sprite, int ox, int oy, int w, int h)
+    public static void drawCircle(Vector2fc p, int radius, Color c)
     {
-        PixelEngine.drawPartialSprite(pos.xi(), pos.yi(), sprite, ox, oy, w, h, 1);
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, c, 0xFF);
     }
     
-    public static void drawString(Vector2 pos, String text, Color color, int scale)
+    public static void drawCircle(Vector2fc p, int radius, int mask)
     {
-        PixelEngine.drawString(pos.xi(), pos.yi(), text, color, scale);
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, Color.WHITE, mask);
     }
     
-    public static void drawString(Vector2 pos, String text, Color color)
+    public static void drawCircle(Vector2fc p, int radius)
     {
-        PixelEngine.drawString(pos.xi(), pos.yi(), text, color, 1);
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, Color.WHITE, 0xFF);
     }
     
-    public static void drawString(Vector2 pos, String text, int scale)
+    public static void drawCircle(Vector2dc p, int radius, Color c, int mask)
     {
-        PixelEngine.drawString(pos.xi(), pos.yi(), text, Color.WHITE, scale);
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, c, mask);
     }
     
-    public static void drawString(Vector2 pos, String text)
+    public static void drawCircle(Vector2dc p, int radius, Color c)
     {
-        PixelEngine.drawString(pos.xi(), pos.yi(), text, Color.WHITE, 1);
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, c, 0xFF);
+    }
+    
+    public static void drawCircle(Vector2dc p, int radius, int mask)
+    {
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, Color.WHITE, mask);
+    }
+    
+    public static void drawCircle(Vector2dc p, int radius)
+    {
+        PixelEngine.drawCircle((int) p.x(), (int) p.y(), radius, Color.WHITE, 0xFF);
+    }
+    
+    public static void fillCircle(Vector2ic p, int radius, Color c)
+    {
+        PixelEngine.fillCircle(p.x(), p.y(), radius, c);
+    }
+    
+    public static void fillCircle(Vector2ic p, int radius)
+    {
+        PixelEngine.fillCircle(p.x(), p.y(), radius, Color.WHITE);
+    }
+    
+    public static void fillCircle(Vector2fc p, int radius, Color c)
+    {
+        PixelEngine.fillCircle((int) p.x(), (int) p.y(), radius, c);
+    }
+    
+    public static void fillCircle(Vector2fc p, int radius)
+    {
+        PixelEngine.fillCircle((int) p.x(), (int) p.y(), radius, Color.WHITE);
+    }
+    
+    public static void fillCircle(Vector2dc p, int radius, Color c)
+    {
+        PixelEngine.fillCircle((int) p.x(), (int) p.y(), radius, c);
+    }
+    
+    public static void fillCircle(Vector2dc p, int radius)
+    {
+        PixelEngine.fillCircle((int) p.x(), (int) p.y(), radius, Color.WHITE);
+    }
+    
+    public static void drawRect(Vector2ic p, int w, int h, Color c)
+    {
+        PixelEngine.drawRect(p.x(), p.y(), w, h, c);
+    }
+    
+    public static void drawRect(Vector2ic p, int w, int h)
+    {
+        PixelEngine.drawRect(p.x(), p.y(), w, h, Color.WHITE);
+    }
+    
+    public static void drawRect(Vector2fc p, int w, int h, Color c)
+    {
+        PixelEngine.drawRect((int) p.x(), (int) p.y(), w, h, c);
+    }
+    
+    public static void drawRect(Vector2fc p, int w, int h)
+    {
+        PixelEngine.drawRect((int) p.x(), (int) p.y(), w, h, Color.WHITE);
+    }
+    
+    public static void drawRect(Vector2dc p, int w, int h, Color c)
+    {
+        PixelEngine.drawRect((int) p.x(), (int) p.y(), w, h, c);
+    }
+    
+    public static void drawRect(Vector2dc p, int w, int h)
+    {
+        PixelEngine.drawRect((int) p.x(), (int) p.y(), w, h, Color.WHITE);
+    }
+    
+    public static void fillRect(Vector2ic p, int w, int h, Color c)
+    {
+        PixelEngine.fillRect(p.x(), p.y(), w, h, c);
+    }
+    
+    public static void fillRect(Vector2ic p, int w, int h)
+    {
+        PixelEngine.fillRect(p.x(), p.y(), w, h, Color.WHITE);
+    }
+    
+    public static void fillRect(Vector2fc p, int w, int h, Color c)
+    {
+        PixelEngine.fillRect((int) p.x(), (int) p.y(), w, h, c);
+    }
+    
+    public static void fillRect(Vector2fc p, int w, int h)
+    {
+        PixelEngine.fillRect((int) p.x(), (int) p.y(), w, h, Color.WHITE);
+    }
+    
+    public static void fillRect(Vector2dc p, int w, int h, Color c)
+    {
+        PixelEngine.fillRect((int) p.x(), (int) p.y(), w, h, c);
+    }
+    
+    public static void fillRect(Vector2dc p, int w, int h)
+    {
+        PixelEngine.fillRect((int) p.x(), (int) p.y(), w, h, Color.WHITE);
+    }
+    
+    public static void drawTriangle(Vector2ic p1, Vector2ic p2, Vector2ic p3, Color c)
+    {
+        PixelEngine.drawTriangle(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), c);
+    }
+    
+    public static void drawTriangle(Vector2ic p1, Vector2ic p2, Vector2ic p3)
+    {
+        PixelEngine.drawTriangle(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), Color.WHITE);
+    }
+    
+    public static void drawTriangle(Vector2fc p1, Vector2fc p2, Vector2fc p3, Color c)
+    {
+        PixelEngine.drawTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), c);
+    }
+    
+    public static void drawTriangle(Vector2fc p1, Vector2fc p2, Vector2fc p3)
+    {
+        PixelEngine.drawTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), Color.WHITE);
+    }
+    
+    public static void drawTriangle(Vector2dc p1, Vector2dc p2, Vector2dc p3, Color c)
+    {
+        PixelEngine.drawTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), c);
+    }
+    
+    public static void drawTriangle(Vector2dc p1, Vector2dc p2, Vector2dc p3)
+    {
+        PixelEngine.drawTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), Color.WHITE);
+    }
+    
+    public static void fillTriangle(Vector2ic p1, Vector2ic p2, Vector2ic p3, Color c)
+    {
+        PixelEngine.fillTriangle(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), c);
+    }
+    
+    public static void fillTriangle(Vector2ic p1, Vector2ic p2, Vector2ic p3)
+    {
+        PixelEngine.fillTriangle(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y(), Color.WHITE);
+    }
+    
+    public static void fillTriangle(Vector2fc p1, Vector2fc p2, Vector2fc p3, Color c)
+    {
+        PixelEngine.fillTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), c);
+    }
+    
+    public static void fillTriangle(Vector2fc p1, Vector2fc p2, Vector2fc p3)
+    {
+        PixelEngine.fillTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), Color.WHITE);
+    }
+    
+    public static void fillTriangle(Vector2dc p1, Vector2dc p2, Vector2dc p3, Color c)
+    {
+        PixelEngine.fillTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), c);
+    }
+    
+    public static void fillTriangle(Vector2dc p1, Vector2dc p2, Vector2dc p3)
+    {
+        PixelEngine.fillTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y(), Color.WHITE);
+    }
+    
+    public static void drawSprite(Vector2ic p, Sprite sprite, int scale)
+    {
+        PixelEngine.drawSprite(p.x(), p.y(), sprite, scale);
+    }
+    
+    public static void drawSprite(Vector2ic p, Sprite sprite)
+    {
+        PixelEngine.drawSprite(p.x(), p.y(), sprite, 1);
+    }
+    
+    public static void drawSprite(Vector2fc p, Sprite sprite, int scale)
+    {
+        PixelEngine.drawSprite((int) p.x(), (int) p.y(), sprite, scale);
+    }
+    
+    public static void drawSprite(Vector2fc p, Sprite sprite)
+    {
+        PixelEngine.drawSprite((int) p.x(), (int) p.y(), sprite, 1);
+    }
+    
+    public static void drawSprite(Vector2dc p, Sprite sprite, int scale)
+    {
+        PixelEngine.drawSprite((int) p.x(), (int) p.y(), sprite, scale);
+    }
+    
+    public static void drawSprite(Vector2dc p, Sprite sprite)
+    {
+        PixelEngine.drawSprite((int) p.x(), (int) p.y(), sprite, 1);
+    }
+    
+    public static void drawPartialSprite(Vector2ic p, Sprite sprite, int ox, int oy, int w, int h, int scale)
+    {
+        PixelEngine.drawPartialSprite(p.x(), p.y(), sprite, ox, oy, w, h, scale);
+    }
+    
+    public static void drawPartialSprite(Vector2ic p, Sprite sprite, int ox, int oy, int w, int h)
+    {
+        PixelEngine.drawPartialSprite(p.x(), p.y(), sprite, ox, oy, w, h, 1);
+    }
+    
+    public static void drawPartialSprite(Vector2fc p, Sprite sprite, int ox, int oy, int w, int h, int scale)
+    {
+        PixelEngine.drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, scale);
+    }
+    
+    public static void drawPartialSprite(Vector2fc p, Sprite sprite, int ox, int oy, int w, int h)
+    {
+        PixelEngine.drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, 1);
+    }
+    
+    public static void drawPartialSprite(Vector2dc p, Sprite sprite, int ox, int oy, int w, int h, int scale)
+    {
+        PixelEngine.drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, scale);
+    }
+    
+    public static void drawPartialSprite(Vector2dc p, Sprite sprite, int ox, int oy, int w, int h)
+    {
+        PixelEngine.drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, 1);
+    }
+    
+    public static void drawString(Vector2ic p, String text, Color color, int scale)
+    {
+        PixelEngine.drawString(p.x(), p.y(), text, color, scale);
+    }
+    
+    public static void drawString(Vector2ic p, String text, Color color)
+    {
+        PixelEngine.drawString(p.x(), p.y(), text, color, 1);
+    }
+    
+    public static void drawString(Vector2ic p, String text, int scale)
+    {
+        PixelEngine.drawString(p.x(), p.y(), text, Color.WHITE, scale);
+    }
+    
+    public static void drawString(Vector2ic p, String text)
+    {
+        PixelEngine.drawString(p.x(), p.y(), text, Color.WHITE, 1);
+    }
+    
+    public static void drawString(Vector2fc p, String text, Color color, int scale)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, color, scale);
+    }
+    
+    public static void drawString(Vector2fc p, String text, Color color)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, color, 1);
+    }
+    
+    public static void drawString(Vector2fc p, String text, int scale)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, Color.WHITE, scale);
+    }
+    
+    public static void drawString(Vector2fc p, String text)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, Color.WHITE, 1);
+    }
+    
+    public static void drawString(Vector2dc p, String text, Color color, int scale)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, color, scale);
+    }
+    
+    public static void drawString(Vector2dc p, String text, Color color)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, color, 1);
+    }
+    
+    public static void drawString(Vector2dc p, String text, int scale)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, Color.WHITE, scale);
+    }
+    
+    public static void drawString(Vector2dc p, String text)
+    {
+        PixelEngine.drawString((int) p.x(), (int) p.y(), text, Color.WHITE, 1);
     }
     
     @Override
     public void initialize()
     {
-    
+        
     }
     
     @Override
     public void beforeUserUpdate(double elapsedTime)
     {
-    
+        
     }
     
     @Override
     public void afterUserUpdate(double elapsedTime)
     {
-    
+        
     }
     
     @Override
     public void destroy()
     {
-    
+        
     }
 }

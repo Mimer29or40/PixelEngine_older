@@ -1,8 +1,9 @@
 package pe.phx2D.model;
 
+import org.joml.AABBd;
+import org.joml.Vector2d;
 import pe.phx2D.util.Printable;
 import pe.phx2D.util.Util;
-import pe.vector.Vector2;
 
 import java.util.Objects;
 
@@ -12,7 +13,7 @@ import java.util.Objects;
  * Note that for AABB we regard the vertical coordinate as **increasing upwards**, so the top coordinate is greater than the bottom coordinate. This is in contrast to screen
  * coordinates where vertical coordinates increase downwards.
  */
-public class AABB implements Printable
+public class AABB extends AABBd implements Printable
 {
     public static final AABB EMPTY_RECT = new AABB(0, 0, 0, 0).markImmutable();
     
@@ -47,7 +48,7 @@ public class AABB implements Printable
         this(0, 0, 0, 0);
     }
     
-    public AABB(Vector2 point1, Vector2 point2)
+    public AABB(Vector2d point1, Vector2d point2)
     {
         this(Math.min(point1.x(), point2.x()), Math.min(point1.y(), point2.y()), Math.max(point1.x(), point2.x()), Math.max(point1.y(), point2.y()));
     }
@@ -276,7 +277,7 @@ public class AABB implements Printable
      *
      * @return `true` if the point is within this aabb, or exactly on an edge
      */
-    public boolean contains(Vector2 point)
+    public boolean contains(Vector2d point)
     {
         return getLeft() <= point.x() && point.x() <= getRight() && getBottom() <= point.y() && point.y() <= getTop();
     }
@@ -306,7 +307,7 @@ public class AABB implements Printable
      *
      * @return true if the line between the two points might be visible in the rectangle
      */
-    public boolean intersects(Vector2 p1, Vector2 p2)
+    public boolean intersects(Vector2d p1, Vector2d p2)
     {
         // if either point is inside the rect, then line is visible
         if (contains(p1) || contains(p2)) return true;
@@ -381,12 +382,12 @@ public class AABB implements Printable
         return translate(x, y, getDefault());
     }
     
-    public AABB translate(Vector2 v, AABB out)
+    public AABB translate(Vector2d v, AABB out)
     {
         return translate(v.x(), v.y(), out);
     }
     
-    public AABB translate(Vector2 v)
+    public AABB translate(Vector2d v)
     {
         return translate(v.x(), v.y(), getDefault());
     }
@@ -466,7 +467,7 @@ public class AABB implements Printable
      *
      * @return the union of this rectangle and the point
      */
-    public AABB union(Vector2 point)
+    public AABB union(Vector2d point)
     {
         return new AABB(Math.min(getLeft(), point.x()), Math.min(getBottom(), point.y()), Math.max(getRight(), point.x()), Math.max(getTop(), point.y()));
     }
@@ -480,7 +481,7 @@ public class AABB implements Printable
      *
      * @return a AABB centered at the given point with given height and width
      */
-    public static AABB make(Vector2 center, double width, double height)
+    public static AABB make(Vector2d center, double width, double height)
     {
         return new AABB(center.x() - width * 0.5, center.y() - height * 0.5, center.x() + width * 0.5, center.y() + height * 0.5);
     }
@@ -493,7 +494,7 @@ public class AABB implements Printable
      *
      * @return a AABB centered at the given point with given size
      */
-    public static AABB make(Vector2 center, Vector2 size)
+    public static AABB make(Vector2d center, Vector2d size)
     {
         return new AABB(center.x() - size.x() * 0.5, center.y() - size.y() * 0.5, center.x() + size.x() * 0.5, center.y() + size.y() * 0.5);
     }
