@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/PEX_GUI/PEX_GUI.iml" filepath="$PROJECT_DIR$/PEX_GUI/PEX_GUI.iml" />
       <module fileurl="file://$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" filepath="$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" />
       <module fileurl="file://$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" filepath="$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PEX_Neat/PEX_Neat.iml" filepath="$PROJECT_DIR$/PEX_Neat/PEX_Neat.iml" />
       <module fileurl="file://$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" filepath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" />
       <module fileurl="file://$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" filepath="$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" />
       <module fileurl="file://$PROJECT_DIR$/PEX_Sound/PEX_Sound.iml" filepath="$PROJECT_DIR$/PEX_Sound/PEX_Sound.iml" />
