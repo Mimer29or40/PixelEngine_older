@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="Moved own Vector class to another branch">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/s316353.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector_source.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/PEX_Vector_source.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/PEX_Graphics2D.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/src/main/java/pe/gfx2d/PEX_GFX2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/main/java/pe/gfx2d/PEX_GFX2D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/MatrixTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/MatrixTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/VectorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics2D/src/test/java/pe/VectorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Graphics3D/PEX_Graphics3D.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Physics2D/src/main/java/pe/phx2D/model/AABB.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics2D/src/main/java/pe/phx2D/model/AABB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/PEX_Vector.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/PEX_Vector.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix2.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix3.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix4.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Matrix4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector2.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector3.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector4.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_Vector/src/main/java/pe/vector/Vector4.java" afterDir="false" />
-    </list>
+    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,8 +60,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="Adapt OpenJDK 11" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../lib/joml-1.9.20-sources.jar!/" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/PEX_Neat/src/test" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="fileTemplates" />
@@ -316,6 +296,17 @@
     <option name="localTasksCounter" value="18" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
@@ -344,10 +335,11 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="552" y="214" key="#Notifications/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583145500" />
-    <state x="765" y="265" key="#com.intellij.ide.util.MemberChooser" timestamp="1580584751192">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="765" y="273" key="#com.intellij.ide.util.MemberChooser" timestamp="1581014645083">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="765" y="265" key="#com.intellij.ide.util.MemberChooser/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580584751192" />
+    <state x="765" y="273" key="#com.intellij.ide.util.MemberChooser/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1581014645083" />
     <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1580914714208">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
@@ -416,11 +408,11 @@
     </state>
     <state x="672" y="271" key="MultipleFileMergeDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770395785" />
     <state x="672" y="279" key="MultipleFileMergeDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916200527" />
-    <state x="397" y="151" width="1241" height="775" key="SettingsEditor" timestamp="1580916233117">
+    <state x="397" y="151" width="1241" height="775" key="SettingsEditor" timestamp="1581014495380">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770421795" />
-    <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916233117" />
+    <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1581014495380" />
     <state x="552" y="296" key="Vcs.Push.Dialog.v2" timestamp="1580912806076">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
@@ -450,10 +442,11 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="761" y="352" key="git4idea.merge.GitMergeDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916133406" />
-    <state x="343" y="176" key="new project wizard" timestamp="1580583739694">
-      <screen x="0" y="30" width="1920" height="1050" />
+    <state x="343" y="185" key="new project wizard" timestamp="1581014429877">
+      <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="343" y="176" key="new project wizard/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583739694" />
+    <state x="343" y="185" key="new project wizard/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1581014429877" />
     <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1580584380551">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
