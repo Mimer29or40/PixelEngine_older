@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PEX_Noise">
+    <output-path>$PROJECT_DIR$/../lib</output-path>
+    <root id="archive" name="PEX_Noise.jar">
+      <element id="module-output" name="PEX_Noise" />
+    </root>
+  </artifact>
+</component>
