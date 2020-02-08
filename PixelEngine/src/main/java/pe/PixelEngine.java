@@ -1,8 +1,5 @@
 package pe;
 
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
 import org.reflections.Reflections;
 import pe.util.Pair;
 
@@ -14,62 +11,31 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL32.*;
-import static org.lwjgl.system.MemoryUtil.NULL;
-
 @SuppressWarnings({"unused", "SameParameterValue"})
 public class PixelEngine
 {
-    private static final Logger   LOGGER   = Logger.getLogger();
-    private static final Profiler profiler = new Profiler("Engine");
+    private static final Logger   LOGGER       = Logger.getLogger();
+    private static final Profiler PROFILER     = new Profiler("Engine");
+    private static final Color    COLOR        = Color.WHITE.copy();
+    private static final String   TITLE        = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
+    private static final Pattern  BOTTOM_CHARS = Pattern.compile(".*[gjpqy,]+.*");
+    private static final Random   RANDOM       = new Random();
     
     private static PixelEngine logic;
     
     private static final Map<String, PEX> extensions = new HashMap<>();
     
-    private static final Color COLOR = Color.WHITE.copy();
-    
-    private static final Pattern bottomChars = Pattern.compile(".*[gjpqy,]+.*");
-    
-    private static final String TITLE = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
-    
-    private static int    overdraw = 0;
-    private static Random random   = new Random();
-    
-    private static String printFrame = null;
-    
-    private static long glfwWindow;
-    private static long startTime;
-    
-    private static boolean engineRunning = false;
-    
-    private static int monitorW, monitorH;
-    
-    private static int windowX, windowY;
-    private static int windowW, windowH;
-    
-    private static int viewX, viewY;
-    private static int viewW, viewH;
+    private static String  printFrame;
+    private static boolean running;
+    private static long    startTime;
     
     private static int screenW, screenH;
-    
     private static int pixelW, pixelH;
     
-    private static boolean fullscreen, vsync;
-    
-    private static boolean updateWindow = true;
-    private static boolean focused      = false;
-    
-    private static Sprite font;
-    private static Sprite prev;
-    private static Sprite window;
-    private static Sprite target;
-    
-    private static DrawMode drawMode = DrawMode.NORMAL;
-    
+    private static DrawMode  drawMode = DrawMode.NORMAL;
     private static IBlendPos blendFunc;
+    
+    private static Sprite font, prev, window, target;
     
     private String name;
     
@@ -150,11 +116,11 @@ public class PixelEngine
         PixelEngine.pixelW = pixelW;
         PixelEngine.pixelH = pixelH;
         PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
-        
-        PixelEngine.fullscreen = fullscreen;
+    
+        Window.fullscreen(fullscreen);
         PixelEngine.LOGGER.trace("Fullscreen: %s)", fullscreen);
-        
-        PixelEngine.vsync = vsync;
+    
+        Window.vsync(vsync);
         PixelEngine.LOGGER.trace("VSync: %s)", vsync);
         
         if (PixelEngine.screenW == 0 || PixelEngine.screenH == 0) throw new RuntimeException("Screen dimension must be > 0");
@@ -167,8 +133,8 @@ public class PixelEngine
         
         PixelEngine.window = PixelEngine.target = new Sprite(screenW, screenH);
         PixelEngine.prev = new Sprite(screenW, screenH);
-        
-        PixelEngine.engineRunning = true;
+    
+        PixelEngine.running = true;
         PixelEngine.startTime = System.nanoTime();
         
         try
@@ -179,11 +145,11 @@ public class PixelEngine
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.onUserCreate())
             {
-                setupWindow();
+                Window.setup();
                 
                 new Thread(PixelEngine::renderLoop, "Render Loop").start();
-                
-                while (PixelEngine.engineRunning) glfwPollEvents();
+    
+                while (PixelEngine.running) Window.pollEvents();
             }
         }
         finally
@@ -193,15 +159,8 @@ public class PixelEngine
     
             PixelEngine.LOGGER.trace("Extension Destruction");
             PixelEngine.extensions.values().forEach(PEX::destroy);
-            
-            if (PixelEngine.glfwWindow > 0)
-            {
-                glfwFreeCallbacks(PixelEngine.glfwWindow);
-                glfwDestroyWindow(PixelEngine.glfwWindow);
-                
-                glfwTerminate();
-                glfwSetErrorCallback(null);
-            }
+    
+            Window.destroy();
         }
         
         PixelEngine.LOGGER.info("Engine Finished");
@@ -224,36 +183,7 @@ public class PixelEngine
     
     public static void stop()
     {
-        PixelEngine.engineRunning = false;
-    }
-    
-    /**
-     * DEBUG
-     * Gets the number of times that a pixel was drawn. Reset to 0 before onUserUpdate
-     *
-     * @return Overdraw count if engine is in debug mode else 0
-     */
-    public static int getOverdrawCount()
-    {
-        return PixelEngine.overdraw;
-    }
-    
-    /**
-     * DEBUG
-     * Increments overdraw count by amount. Used in clear method since that writes to sprite's buffer directly
-     */
-    public static void incOverdrawCount(int amount)
-    {
-        PixelEngine.overdraw += amount;
-    }
-    
-    /**
-     * DEBUG
-     * Increments overdraw count by 1.
-     */
-    public static void incOverdrawCount()
-    {
-        incOverdrawCount(1);
+        PixelEngine.running = false;
     }
     
     public static long getTime()
@@ -265,161 +195,104 @@ public class PixelEngine
     // - Properties -
     // --------------
     
-    public static int getMonitorWidth()
-    {
-        return PixelEngine.monitorW;
-    }
-    
-    public static int getMonitorHeight()
-    {
-        return PixelEngine.monitorH;
-    }
-    
-    public static int getWindowX()
-    {
-        return PixelEngine.windowX;
-    }
-    
-    public static int getWindowY()
-    {
-        return PixelEngine.windowY;
-    }
-    
-    public static int getWindowWidth()
-    {
-        return PixelEngine.windowW;
-    }
-    
-    public static int getWindowHeight()
-    {
-        return PixelEngine.windowH;
-    }
-    
-    public static int getScreenWidth()
+    public static int screenWidth()
     {
         return PixelEngine.screenW;
     }
     
-    public static int getScreenHeight()
+    public static int screenHeight()
     {
         return PixelEngine.screenH;
     }
     
-    public static int getPixelWidth()
+    public static int pixelWidth()
     {
         return PixelEngine.pixelW;
     }
     
-    public static int getPixelHeight()
+    public static int pixelHeight()
     {
         return PixelEngine.pixelH;
     }
     
-    public static boolean isFullscreen()
-    {
-        return PixelEngine.fullscreen;
-    }
-    
-    public static void setFullscreen(boolean fullscreen)
-    {
-        PixelEngine.fullscreen = fullscreen;
-        PixelEngine.updateWindow = true;
-    }
-    
-    public static boolean isVSync()
-    {
-        return PixelEngine.vsync;
-    }
-    
-    public static void setVSync(boolean vsync)
-    {
-        PixelEngine.vsync = vsync;
-        PixelEngine.updateWindow = true;
-    }
-    
-    public static boolean isFocused()
-    {
-        return PixelEngine.focused;
-    }
-    
-    public static DrawMode getDrawMode()
+    public static DrawMode drawMode()
     {
         return PixelEngine.drawMode;
     }
     
-    public static void setDrawMode(DrawMode mode)
+    public static void drawMode(DrawMode mode)
     {
         PixelEngine.drawMode = mode;
     }
     
-    public static void setColorMode(IBlendPos pixelFunc)
+    public static void colorMode(IBlendPos pixelFunc)
     {
         PixelEngine.drawMode = DrawMode.CUSTOM;
         PixelEngine.blendFunc = pixelFunc;
     }
     
-    public static Sprite getTarget()
+    public static Sprite renderTarget()
     {
         return PixelEngine.target;
     }
     
-    public static void setTarget(Sprite target)
+    public static void renderTarget(Sprite target)
     {
         PixelEngine.target = target != null ? target : PixelEngine.window;
     }
     
-    public static int getTargetWidth()
+    public static int renderTargetWidth()
     {
         return PixelEngine.target != null ? PixelEngine.target.width : 0;
     }
     
-    public static int getTargetHeight()
+    public static int renderTargetHeight()
     {
         return PixelEngine.target != null ? PixelEngine.target.height : 0;
-    }
-    
-    public static int scaleToPixels(double scale)
-    {
-        return (int) round(8 * scale, 0);
     }
     
     // -------------
     // - Functions -
     // -------------
     
-    public static int getTextWidth(String text, double scale)
+    public static int scaleToPixels(double scale)
+    {
+        return (int) round(8 * scale, 0);
+    }
+    
+    public static int textWidth(String text, double scale)
     {
         if (text.contains("\n"))
         {
             int max = 0;
-            for (String s : text.split("\n")) max = Math.max(max, getTextWidth(s, scale));
+            for (String s : text.split("\n")) max = Math.max(max, textWidth(s, scale));
             return max;
         }
         return scaleToPixels((text.length() * 8 - 1) / 8.0 * scale);
     }
     
-    public static int getTextWidth(String text)
+    public static int textWidth(String text)
     {
-        return getTextWidth(text, 1);
+        return textWidth(text, 1);
     }
     
-    public static int getTextHeight(String text, double scale)
+    public static int textHeight(String text, double scale)
     {
         int size = Math.max(scaleToPixels(scale), 1);
         
         if (text.contains("\n"))
         {
             String[] lines  = text.split("\n");
-            int      bottom = bottomChars.matcher(lines[lines.length - 1]).matches() ? 0 : 1;
+            int      bottom = BOTTOM_CHARS.matcher(lines[lines.length - 1]).matches() ? 0 : 1;
             return scaleToPixels((lines.length * 8 - bottom) / 8.0 * scale);
         }
-        int bottom = bottomChars.matcher(text).matches() ? 0 : 1;
+        int bottom = BOTTOM_CHARS.matcher(text).matches() ? 0 : 1;
         return scaleToPixels((8.0 - bottom) / 8.0 * scale);
     }
     
-    public static int getTextHeight(String text)
+    public static int textHeight(String text)
     {
-        return getTextHeight(text, 1);
+        return textHeight(text, 1);
     }
     
     public static List<String> clipTextWidth(String text, double scale, int maxWidth)
@@ -438,14 +311,14 @@ public class PixelEngine
         for (int i = 0; i < lines.size(); i++)
         {
             String line = lines.remove(i);
-            
-            if (getTextWidth(line, scale) > maxWidth)
+    
+            if (textWidth(line, scale) > maxWidth)
             {
                 String[]      subLines = line.split(" ");
                 StringBuilder newLine  = new StringBuilder(subLines[0]);
                 for (int j = 1; j < subLines.length; j++)
                 {
-                    if (getTextWidth(newLine.toString() + " " + subLines[j], scale) > maxWidth)
+                    if (textWidth(newLine.toString() + " " + subLines[j], scale) > maxWidth)
                     {
                         lines.add(i, newLine.toString());
                         i++;
@@ -487,34 +360,34 @@ public class PixelEngine
         System.out.println(builder.substring(0, builder.length() - 1));
     }
     
-    public static void setSeed(long seed)
+    public static void seed(long seed)
     {
-        PixelEngine.random.setSeed(seed);
+        PixelEngine.RANDOM.setSeed(seed);
     }
     
     public static double random()
     {
-        return PixelEngine.random.nextDouble();
+        return PixelEngine.RANDOM.nextDouble();
     }
     
     public static double random(double upper)
     {
-        return PixelEngine.random.nextDouble() * upper;
+        return PixelEngine.RANDOM.nextDouble() * upper;
     }
     
     public static double random(double lower, double upper)
     {
-        return PixelEngine.random.nextDouble() * (upper - lower) + lower;
+        return PixelEngine.RANDOM.nextDouble() * (upper - lower) + lower;
     }
     
     public static int randInt(int upper)
     {
-        return PixelEngine.random.nextInt(upper);
+        return PixelEngine.RANDOM.nextInt(upper);
     }
     
     public static int randInt(int lower, int upper)
     {
-        return PixelEngine.random.nextInt(upper - lower + 1) + lower;
+        return PixelEngine.RANDOM.nextInt(upper - lower + 1) + lower;
     }
     
     public static double map(double x, double xMin, double xMax, double yMin, double yMax)
@@ -595,12 +468,12 @@ public class PixelEngine
     
     public static void enableProfiler()
     {
-        PixelEngine.profiler.enabled = true;
+        PixelEngine.PROFILER.enabled = true;
     }
     
     public static void printFrameData(String parent)
     {
-        if (PixelEngine.profiler.enabled) PixelEngine.printFrame = parent;
+        if (PixelEngine.PROFILER.enabled) PixelEngine.printFrame = parent;
     }
     
     // --------
@@ -1040,7 +913,7 @@ public class PixelEngine
         
         if (scale == (int) scale)
         {
-            setDrawMode(color.a() == 255 ? DrawMode.MASK : DrawMode.ALPHA);
+            drawMode(color.a() == 255 ? DrawMode.MASK : DrawMode.ALPHA);
             
             for (int ci = 0; ci < text.length(); ci++)
             {
@@ -1091,7 +964,7 @@ public class PixelEngine
         }
         else
         {
-            setDrawMode(DrawMode.ALPHA);
+            drawMode(DrawMode.ALPHA);
             
             int size = Math.max(scaleToPixels(scale), 1);
             
@@ -1149,8 +1022,8 @@ public class PixelEngine
                 }
             }
         }
-        
-        setDrawMode(DrawMode.NORMAL);
+    
+        drawMode(DrawMode.NORMAL);
     }
     
     public static void drawString(int x, int y, String text, Color color)
@@ -1179,7 +1052,7 @@ public class PixelEngine
             {
                 String name = ext.getSimpleName();
                 PixelEngine.LOGGER.debug("Found: %s", name);
-                PixelEngine.extensions.put(name, ext.getConstructor(Profiler.class).newInstance(PixelEngine.profiler));
+                PixelEngine.extensions.put(name, ext.getConstructor(Profiler.class).newInstance(PixelEngine.PROFILER));
             }
             catch (ReflectiveOperationException ignored)
             {
@@ -1236,293 +1109,9 @@ public class PixelEngine
         PixelEngine.LOGGER.trace("Font Sheet Generation Finished");
     }
     
-    private static void setupWindow()
-    {
-        PixelEngine.LOGGER.debug("Window Creation Started");
-        
-        PixelEngine.windowW = PixelEngine.screenW * PixelEngine.pixelW;
-        PixelEngine.windowH = PixelEngine.screenH * PixelEngine.pixelH;
-        
-        PixelEngine.LOGGER.trace("Window Size: (%s, %s)", PixelEngine.windowW, PixelEngine.windowH);
-        
-        PixelEngine.LOGGER.trace("GLFW: Init");
-        GLFWErrorCallback.createPrint(System.err).set();
-        if (!glfwInit()) throw new IllegalStateException("Unable to initialize GLFW");
-        
-        PixelEngine.LOGGER.trace("GLFW: Hints");
-        glfwDefaultWindowHints();
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-        
-        PixelEngine.LOGGER.trace("GLFW: Checking Window Size");
-        GLFWVidMode videoMode = Objects.requireNonNull(glfwGetVideoMode(glfwGetPrimaryMonitor()));
-        PixelEngine.monitorW = videoMode.width();
-        PixelEngine.monitorH = videoMode.height();
-        
-        if (PixelEngine.fullscreen)
-        {
-            PixelEngine.windowW = videoMode.width();
-            PixelEngine.windowH = videoMode.height();
-        }
-        
-        if (PixelEngine.windowW > PixelEngine.monitorW)
-        {
-            throw new RuntimeException(String.format("Window width (%s) is greater than monitor width", PixelEngine.windowW));
-        }
-        if (PixelEngine.windowH > PixelEngine.monitorH)
-        {
-            throw new RuntimeException(String.format("Window height (%s) is greater than monitor height", PixelEngine.windowH));
-        }
-        
-        PixelEngine.LOGGER.trace("GLFW: Creating Window");
-        PixelEngine.glfwWindow = glfwCreateWindow(PixelEngine.windowW, PixelEngine.windowH, "", NULL, NULL);
-        
-        if (PixelEngine.glfwWindow == NULL) throw new RuntimeException("Failed to create the GLFW window");
-        
-        PixelEngine.windowX = (PixelEngine.monitorW - PixelEngine.windowW) >> 1;
-        PixelEngine.windowY = (PixelEngine.monitorH - PixelEngine.windowH) >> 1;
-        glfwSetWindowPos(PixelEngine.glfwWindow, PixelEngine.windowX, PixelEngine.windowY);
-        
-        PixelEngine.LOGGER.trace("GLFW: Event Handling");
-        
-        glfwSetWindowCloseCallback(PixelEngine.glfwWindow, window -> {
-            if (window != PixelEngine.glfwWindow) return;
-            stop();
-        });
-        
-        glfwSetWindowPosCallback(PixelEngine.glfwWindow, (window, x, y) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            if (PixelEngine.fullscreen) return;
-            PixelEngine.windowX = x;
-            PixelEngine.windowY = y;
-        });
-        
-        glfwSetWindowSizeCallback(PixelEngine.glfwWindow, (window, w, h) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            PixelEngine.updateWindow = true;
-            if (PixelEngine.fullscreen) return;
-            PixelEngine.windowW = w;
-            PixelEngine.windowH = h;
-        });
-        
-        glfwSetWindowFocusCallback(PixelEngine.glfwWindow, (window, focused) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            PixelEngine.focused = focused;
-        });
-        
-        glfwSetCursorEnterCallback(PixelEngine.glfwWindow, (window, entered) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            Mouse.enteredCallback(entered);
-        });
-        
-        glfwSetCursorPosCallback(PixelEngine.glfwWindow, (window, x, y) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            x = (x - PixelEngine.viewX) * (double) PixelEngine.screenW / (double) PixelEngine.viewW;
-            y = (y - PixelEngine.viewY) * (double) PixelEngine.screenH / (double) PixelEngine.viewH;
-            Mouse.positionCallback(x, y);
-        });
-        
-        glfwSetScrollCallback(PixelEngine.glfwWindow, (window, x, y) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            Mouse.scrollCallback(x, y);
-        });
-        
-        glfwSetMouseButtonCallback(PixelEngine.glfwWindow, (window, mouse, action, mods) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            Mouse.stateCallback(mouse, action);
-        });
-        
-        glfwSetKeyCallback(PixelEngine.glfwWindow, (window, key, scancode, action, mods) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            Keyboard.stateCallback(key, action);
-        });
-        
-        glfwSetCharCallback(PixelEngine.glfwWindow, (window, codePoint) -> {
-            if (window != PixelEngine.glfwWindow) return;
-            Keyboard.charCallback(codePoint);
-        });
-        
-        glfwShowWindow(PixelEngine.glfwWindow);
-        
-        PixelEngine.LOGGER.trace("GLFW: Init Completed");
-        
-        PixelEngine.LOGGER.debug("Window Creation Finished");
-    }
-    
-    private static void setupOpenGL()
-    {
-        PixelEngine.LOGGER.debug("Creating OpenGL Context");
-        
-        GL.createCapabilities();
-        
-        PixelEngine.LOGGER.trace("OpenGL: Shader setup");
-        {
-            int program, shader, result;
-            program = glCreateProgram();
-            
-            PixelEngine.LOGGER.trace("OpenGL: Vertex Shader");
-            
-            shader = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(shader,
-                           "#version 430 core\n" +
-                           "layout(location = 0) in vec2 pos;\n" +
-                           "out vec2 cord;\n" +
-                           "void main(void)\n" +
-                           "{\n" +
-                           "    cord = vec2(pos.x < 0 ? 0.0 : 1.0, pos.y < 0 ? 1.0 : 0.0);\n" +
-                           "    gl_Position = vec4(pos, 0.0, 1.0);\n" +
-                           "}\n");
-            glCompileShader(shader);
-            
-            result = glGetShaderi(shader, GL_COMPILE_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetShaderInfoLog(shader);
-                throw new RuntimeException(String.format("Vertex Shader compile failure: %s", log));
-            }
-            glAttachShader(program, shader);
-            glDeleteShader(shader);
-            
-            PixelEngine.LOGGER.trace("OpenGL: Fragment Shader");
-            
-            shader = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(shader,
-                           "#version 430 core\n" +
-                           "uniform sampler2D text;\n" +
-                           "in vec2 cord;\n" +
-                           "out vec4 color;\n" +
-                           "void main(void)\n" +
-                           "{\n" +
-                           "    color = texture(text, cord);\n" +
-                           "}\n");
-            glCompileShader(shader);
-            
-            result = glGetShaderi(shader, GL_COMPILE_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetShaderInfoLog(shader);
-                throw new RuntimeException(String.format("Fragment Shader compile failure: %s", log));
-            }
-            glAttachShader(program, shader);
-            glDeleteShader(shader);
-            
-            PixelEngine.LOGGER.trace("OpenGL: Linking Program");
-            
-            glLinkProgram(program);
-            result = glGetProgrami(program, GL_LINK_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetProgramInfoLog(program);
-                throw new RuntimeException(String.format("Link failure: %s", log));
-            }
-            
-            glValidateProgram(program);
-            result = glGetProgrami(program, GL_VALIDATE_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetProgramInfoLog(program);
-                throw new RuntimeException(String.format("Validation failure: %s", log));
-            }
-            glUseProgram(program);
-        }
-        PixelEngine.LOGGER.trace("OpenGL: Shader Validated");
-        
-        PixelEngine.LOGGER.trace("OpenGL: Setting Viewport");
-        
-        glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
-        glViewport(PixelEngine.viewX, PixelEngine.viewY, PixelEngine.viewW, PixelEngine.viewH);
-        
-        PixelEngine.LOGGER.trace("OpenGL: Building Vertex Array");
-        
-        glBindVertexArray(glGenVertexArrays());
-        glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers());
-        glBufferData(GL_ARRAY_BUFFER, new float[] {-1.0F, 1.0F, -1.0F, -1.0F, 1.0F, -1.0F, -1.0F, 1.0F, 1.0F, -1.0F, 1.0F, 1.0F}, GL_STATIC_DRAW);
-        
-        glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * Float.BYTES, 0);
-        glEnableVertexAttribArray(0);
-        
-        PixelEngine.LOGGER.trace("OpenGL: Building Texture");
-        
-        glEnable(GL_TEXTURE_2D);
-        
-        glBindTexture(GL_TEXTURE_2D, glGenTextures());
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, PixelEngine.screenW, PixelEngine.screenH, 0, GL_RGBA, GL_UNSIGNED_BYTE, PixelEngine.window.getData());
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        
-        glfwSwapBuffers(PixelEngine.glfwWindow);
-        glFinish();
-        
-        PixelEngine.LOGGER.debug("OpenGL Context Initialized");
-    }
-    
-    private static void updateWindow()
-    {
-        PixelEngine.LOGGER.debug("Updating Window");
-        
-        PixelEngine.profiler.startSection("Setting vSync");
-        {
-            glfwSwapInterval(PixelEngine.vsync ? 1 : 0);
-        }
-        PixelEngine.profiler.endSection();
-        
-        PixelEngine.profiler.startSection("Updating Window Size/Position");
-        {
-            GLFWVidMode videoMode = Objects.requireNonNull(glfwGetVideoMode(glfwGetPrimaryMonitor()));
-            
-            PixelEngine.monitorW = videoMode.width();
-            PixelEngine.monitorH = videoMode.height();
-            
-            if (PixelEngine.fullscreen)
-            {
-                glfwSetWindowPos(PixelEngine.glfwWindow, 0, 0);
-                glfwSetWindowSize(PixelEngine.glfwWindow, PixelEngine.monitorW, PixelEngine.monitorH);
-            }
-            else
-            {
-                glfwSetWindowPos(PixelEngine.glfwWindow, PixelEngine.windowX, PixelEngine.windowY);
-                glfwSetWindowSize(PixelEngine.glfwWindow, PixelEngine.windowW, PixelEngine.windowH);
-            }
-        }
-        PixelEngine.profiler.endSection();
-        
-        PixelEngine.profiler.startSection("Setting vSync");
-        {
-            int    ww     = PixelEngine.screenW * PixelEngine.pixelW;
-            int    wh     = PixelEngine.screenH * PixelEngine.pixelH;
-            double aspect = (double) ww / (double) wh;
-            
-            
-            int actual_w = PixelEngine.fullscreen ? PixelEngine.monitorW : PixelEngine.windowW;
-            int actual_h = PixelEngine.fullscreen ? PixelEngine.monitorH : PixelEngine.windowH;
-            
-            PixelEngine.viewW = actual_w;
-            PixelEngine.viewH = (int) (PixelEngine.viewW / aspect);
-            
-            if (PixelEngine.viewH > actual_h)
-            {
-                PixelEngine.viewH = actual_h;
-                PixelEngine.viewW = (int) (PixelEngine.viewH * aspect);
-            }
-            
-            PixelEngine.viewX = (actual_w - PixelEngine.viewW) >> 1;
-            PixelEngine.viewY = (actual_h - PixelEngine.viewH) >> 1;
-            
-            PixelEngine.LOGGER.debug("Viewport Pos(%s, %s) Size(%s, %s)", PixelEngine.viewX, PixelEngine.viewY, PixelEngine.viewW, PixelEngine.viewH);
-        }
-        PixelEngine.profiler.endSection();
-    }
-    
     private static void renderLoop()
     {
-        glfwMakeContextCurrent(PixelEngine.glfwWindow);
-        
-        setupOpenGL();
+        Window.setupContext();
         
         long t, dt;
         long lastFrame  = System.nanoTime();
@@ -1537,130 +1126,112 @@ public class PixelEngine
         
         try
         {
-            while (PixelEngine.engineRunning)
+            while (PixelEngine.running)
             {
                 PixelEngine.LOGGER.trace("Frame Started");
-                
+        
                 t = System.nanoTime();
                 dt = t - lastFrame;
                 lastFrame = t;
-                
-                PixelEngine.profiler.startTick();
+        
+                PixelEngine.PROFILER.startTick();
                 {
-                    PixelEngine.profiler.startSection("Events");
+                    PixelEngine.PROFILER.startSection("Events");
                     {
                         PixelEngine.LOGGER.trace("Updating Mouse States");
                         {
                             Mouse.handleEvents(t, dt);
                         }
-                        PixelEngine.profiler.endSection();
-                        
-                        PixelEngine.profiler.startSection("Key States");
+                        PixelEngine.PROFILER.endSection();
+    
+                        PixelEngine.PROFILER.startSection("Key States");
                         {
                             Keyboard.handleEvents(t, dt);
                         }
-                        PixelEngine.profiler.endSection();
+                        PixelEngine.PROFILER.endSection();
                     }
-                    PixelEngine.profiler.endSection();
-                    
-                    PixelEngine.overdraw = 0;
-    
-                    PixelEngine.profiler.startSection("PEX Pre");
+                    PixelEngine.PROFILER.endSection();
+            
+                    PixelEngine.PROFILER.startSection("PEX Pre");
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
-                            PixelEngine.profiler.startSection(name);
+                            PixelEngine.PROFILER.startSection(name);
                             {
                                 PixelEngine.extensions.get(name).beforeUserUpdate(dt / 1_000_000_000D);
                             }
-                            PixelEngine.profiler.endSection();
+                            PixelEngine.PROFILER.endSection();
                         }
                     }
-                    PixelEngine.profiler.endSection();
-                    
-                    PixelEngine.profiler.startSection("User Update");
+                    PixelEngine.PROFILER.endSection();
+            
+                    PixelEngine.PROFILER.startSection("User Update");
                     {
                         if (!PixelEngine.logic.onUserUpdate(dt / 1_000_000_000D))
                         {
                             PixelEngine.LOGGER.trace("onUserUpdate return false so engine will stop");
-                            PixelEngine.engineRunning = false;
+                            PixelEngine.running = false;
                         }
                     }
-                    PixelEngine.profiler.endSection();
-    
-                    PixelEngine.profiler.startSection("PEX Post");
+                    PixelEngine.PROFILER.endSection();
+            
+                    PixelEngine.PROFILER.startSection("PEX Post");
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
-                            PixelEngine.profiler.startSection(name);
+                            PixelEngine.PROFILER.startSection(name);
                             {
                                 PixelEngine.extensions.get(name).afterUserUpdate(dt / 1_000_000_000D);
                             }
-                            PixelEngine.profiler.endSection();
+                            PixelEngine.PROFILER.endSection();
                         }
                     }
-                    PixelEngine.profiler.endSection();
-                    
-                    PixelEngine.LOGGER.trace("Overdraw Count: %s", PixelEngine.overdraw);
-                    
-                    PixelEngine.profiler.startSection("Window Update");
+                    PixelEngine.PROFILER.endSection();
+            
+                    boolean update;
+                    PixelEngine.PROFILER.startSection("Window Update");
                     {
-                        if (PixelEngine.updateWindow) updateWindow();
+                        update = Window.update();
                     }
-                    PixelEngine.profiler.endSection();
-                    
-                    PixelEngine.profiler.startSection("Render");
+                    PixelEngine.PROFILER.endSection();
+            
+                    PixelEngine.PROFILER.startSection("Render");
                     {
                         for (int i = 0; i < PixelEngine.screenW * PixelEngine.screenH; i++)
                         {
                             ByteBuffer currData = PixelEngine.window.getData();
                             ByteBuffer prevData = PixelEngine.prev.getData();
-                            if (PixelEngine.updateWindow || currData.getInt(4 * i) != prevData.getInt(4 * i))
+                            if (update || currData.getInt(4 * i) != prevData.getInt(4 * i))
                             {
                                 PixelEngine.LOGGER.trace("Rendering Frame");
-                                
-                                PixelEngine.profiler.startSection("Update Viewport");
+                        
+                                PixelEngine.PROFILER.startSection("Update/Draw Texture");
                                 {
-                                    glClear(GL_COLOR_BUFFER_BIT);
-                                    glViewport(PixelEngine.viewX, PixelEngine.viewY, PixelEngine.viewW, PixelEngine.viewH);
+                                    Window.drawSprite(PixelEngine.window);
                                 }
-                                PixelEngine.profiler.endSection();
-                                
-                                PixelEngine.profiler.startSection("Update Texture");
+                                PixelEngine.PROFILER.endSection();
+                        
+                                PixelEngine.PROFILER.startSection("Swap");
                                 {
-                                    glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, PixelEngine.screenW, PixelEngine.screenH, GL_RGBA, GL_UNSIGNED_BYTE, PixelEngine.window.getData());
+                                    Window.swap();
                                 }
-                                PixelEngine.profiler.endSection();
-                                
-                                PixelEngine.profiler.startSection("Draw Array");
-                                {
-                                    glDrawArrays(GL_TRIANGLES, 0, 6);
-                                }
-                                PixelEngine.profiler.endSection();
-                                
-                                PixelEngine.profiler.startSection("Swap");
-                                {
-                                    glfwSwapBuffers(PixelEngine.glfwWindow);
-                                }
-                                PixelEngine.profiler.endSection();
-                                
-                                PixelEngine.profiler.startSection("Swap Sprites");
+                                PixelEngine.PROFILER.endSection();
+                        
+                                PixelEngine.PROFILER.startSection("Swap Sprites");
                                 {
                                     PixelEngine.window.copy(PixelEngine.prev);
                                 }
-                                PixelEngine.profiler.endSection();
-                                
-                                PixelEngine.updateWindow = false;
+                                PixelEngine.PROFILER.endSection();
                                 
                                 break;
                             }
                         }
                     }
-                    PixelEngine.profiler.endSection();
-                    
-                    PixelEngine.profiler.startSection("Stats");
+                    PixelEngine.PROFILER.endSection();
+            
+                    PixelEngine.PROFILER.startSection("Stats");
                     {
-                        PixelEngine.profiler.startSection("Update");
+                        PixelEngine.PROFILER.startSection("Update");
                         {
                             frameTime = System.nanoTime() - t;
                             minTime = Math.min(minTime, frameTime);
@@ -1668,45 +1239,44 @@ public class PixelEngine
                             totalTime += frameTime;
                             totalFrames++;
                         }
-                        PixelEngine.profiler.endSection();
+                        PixelEngine.PROFILER.endSection();
                         
                         dt = t - lastSecond;
                         if (dt > 1_000_000_000L)
                         {
-                            PixelEngine.profiler.startSection("Update Title");
+                            PixelEngine.PROFILER.startSection("Update Title");
                             {
                                 lastSecond = t;
                                 
                                 double s = 1000D;
                                 
                                 totalTime /= totalFrames;
-                                
-                                glfwSetWindowTitle(PixelEngine.glfwWindow,
-                                                   String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
+    
+                                Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
                                 
                                 totalTime = 0;
                                 minTime = Long.MAX_VALUE;
                                 maxTime = Long.MIN_VALUE;
                                 totalFrames = 0;
                             }
-                            PixelEngine.profiler.endSection();
+                            PixelEngine.PROFILER.endSection();
                         }
                     }
-                    PixelEngine.profiler.endSection();
+                    PixelEngine.PROFILER.endSection();
                 }
-                PixelEngine.profiler.endTick();
-                
-                if (PixelEngine.profiler.enabled && PixelEngine.printFrame != null)
+                PixelEngine.PROFILER.endTick();
+        
+                if (PixelEngine.PROFILER.enabled && PixelEngine.printFrame != null)
                 {
                     String parent = PixelEngine.printFrame.equals("") ? null : PixelEngine.printFrame;
-                    print(PixelEngine.profiler.getFormattedData(parent));
+                    print(PixelEngine.PROFILER.getFormattedData(parent));
                     PixelEngine.printFrame = null;
                 }
             }
         }
         finally
         {
-            PixelEngine.engineRunning = false;
+            PixelEngine.running = false;
         }
     }
 }

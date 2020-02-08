@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.lwjgl.glfw.GLFW.*;
-import static pe.PixelEngine.getScreenHeight;
-import static pe.PixelEngine.getScreenWidth;
+import static pe.PixelEngine.screenHeight;
+import static pe.PixelEngine.screenWidth;
 
 @SuppressWarnings("unused")
 public class Mouse
@@ -37,27 +37,27 @@ public class Mouse
     
     }
     
-    public static double getHoldDelay()
+    public static double holdDelay()
     {
         return Mouse.holdDelay / 1_000_000_000D;
     }
     
-    public static void setHoldDelay(double holdDelay)
+    public static void holdDelay(double holdDelay)
     {
         Mouse.holdDelay = (long) (holdDelay * 1_000_000_000L);
     }
     
-    public static double getRepeatDelay()
+    public static double repeatDelay()
     {
         return Mouse.repeatDelay / 1_000_000_000D;
     }
     
-    public static void setRepeatDelay(double repeatDelay)
+    public static void repeatDelay(double repeatDelay)
     {
         Mouse.repeatDelay = (long) (repeatDelay * 1_000_000_000L);
     }
     
-    public static Collection<Button> getInputs()
+    public static Collection<Button> inputs()
     {
         return Mouse.inputs.values();
     }
@@ -67,49 +67,49 @@ public class Mouse
         return Mouse.inputs.getOrDefault(reference, Mouse.NONE);
     }
     
-    public static boolean isEntered()
+    public static boolean entered()
     {
         return Mouse.entered;
     }
     
-    public static int getX()
+    public static int x()
     {
         return Mouse.x;
     }
     
-    public static int getY()
+    public static int y()
     {
         return Mouse.y;
     }
     
-    public static int getRelX()
+    public static int relX()
     {
         return Mouse.relX;
     }
     
-    public static int getRelY()
+    public static int relY()
     {
         return Mouse.relY;
     }
     
-    public static int getScrollX()
+    public static int scrollX()
     {
         return Mouse.scrollX;
     }
     
-    public static int getScrollY()
+    public static int scrollY()
     {
         return Mouse.scrollY;
     }
     
     protected static void handleEvents(long time, long delta)
     {
-        for (Button button : getInputs())
+        for (Button button : inputs())
         {
             button.pressed = false;
             button.released = false;
             button.repeated = false;
-            
+        
             if (button.state != button.prevState)
             {
                 if (button.state == GLFW_PRESS)
@@ -158,12 +158,12 @@ public class Mouse
     {
         Mouse.newX = (int) x;
         Mouse.newY = (int) y;
-        
+    
         if (Mouse.newX < 0) Mouse.newX = 0;
         if (Mouse.newY < 0) Mouse.newY = 0;
-        
-        if (getScreenWidth() <= Mouse.newX) Mouse.newX = getScreenWidth() - 1;
-        if (getScreenHeight() <= Mouse.newY) Mouse.newY = getScreenHeight() - 1;
+    
+        if (screenWidth() <= Mouse.newX) Mouse.newX = screenWidth() - 1;
+        if (screenHeight() <= Mouse.newY) Mouse.newY = screenHeight() - 1;
     }
     
     public static void scrollCallback(double x, double y)
@@ -176,8 +176,8 @@ public class Mouse
     {
         if (captured)
         {
-            Mouse.newX = Mouse.x = getScreenWidth() / 2;
-            Mouse.newY = Mouse.y = getScreenHeight() / 2;
+            Mouse.newX = Mouse.x = screenWidth() / 2;
+            Mouse.newY = Mouse.y = screenHeight() / 2;
         }
     }
     

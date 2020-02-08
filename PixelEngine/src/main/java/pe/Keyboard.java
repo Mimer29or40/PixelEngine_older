@@ -87,12 +87,12 @@ public class Keyboard
     public static final Key BACK      = new Key("BACK", GLFW_KEY_BACKSPACE, '\b', '\b');
     public static final Key SPACE     = new Key("SPACE", GLFW_KEY_SPACE, ' ', ' ');
     
-    public static final Key R_SHIFT = new Key("R_SHIFT", GLFW_KEY_LEFT_SHIFT, 0, 0);
-    public static final Key L_SHIFT = new Key("L_SHIFT", GLFW_KEY_RIGHT_SHIFT, 0, 0);
-    public static final Key R_CTRL  = new Key("R_CTRL", GLFW_KEY_LEFT_CONTROL, 0, 0);
-    public static final Key L_CTRL  = new Key("L_CTRL", GLFW_KEY_RIGHT_CONTROL, 0, 0);
-    public static final Key R_ALT   = new Key("R_ALT", GLFW_KEY_LEFT_ALT, 0, 0);
-    public static final Key L_ALT   = new Key("L_ALT", GLFW_KEY_RIGHT_ALT, 0, 0);
+    public static final Key L_SHIFT = new Key("L_SHIFT", GLFW_KEY_LEFT_SHIFT, 0, 0);
+    public static final Key R_SHIFT = new Key("R_SHIFT", GLFW_KEY_RIGHT_SHIFT, 0, 0);
+    public static final Key L_CTRL  = new Key("L_CTRL", GLFW_KEY_LEFT_CONTROL, 0, 0);
+    public static final Key R_CTRL  = new Key("R_CTRL", GLFW_KEY_RIGHT_CONTROL, 0, 0);
+    public static final Key L_ALT   = new Key("L_ALT", GLFW_KEY_LEFT_ALT, 0, 0);
+    public static final Key R_ALT   = new Key("R_ALT", GLFW_KEY_RIGHT_ALT, 0, 0);
     public static final Key L_SUPER = new Key("L_SUPER", GLFW_KEY_LEFT_SUPER, 0, 0);
     public static final Key R_SUPER = new Key("R_SUPER", GLFW_KEY_RIGHT_SUPER, 0, 0);
     
@@ -139,27 +139,27 @@ public class Keyboard
     
     }
     
-    public static double getHoldDelay()
+    public static double holdDelay()
     {
         return Keyboard.holdDelay / 1_000_000_000D;
     }
     
-    public static void setHoldDelay(double holdDelay)
+    public static void holdDelay(double holdDelay)
     {
         Keyboard.holdDelay = (long) (holdDelay * 1_000_000_000L);
     }
     
-    public static double getRepeatDelay()
+    public static double repeatDelay()
     {
         return Keyboard.repeatDelay / 1_000_000_000D;
     }
     
-    public static void setRepeatDelay(double repeatDelay)
+    public static void repeatDelay(double repeatDelay)
     {
         Keyboard.repeatDelay = (long) (repeatDelay * 1_000_000_000L);
     }
     
-    public static Collection<Key> getInputs()
+    public static Collection<Key> inputs()
     {
         return Keyboard.inputs.values();
     }
@@ -172,7 +172,7 @@ public class Keyboard
     public static Key getKey(char key)
     {
         if (key == 0) return Keyboard.NONE;
-        for (Key k : getInputs()) if (k.baseChar == key || k.shiftChar == key) return k;
+        for (Key k : inputs()) if (k.baseChar == key || k.shiftChar == key) return k;
         return Keyboard.NONE;
     }
     
@@ -182,7 +182,7 @@ public class Keyboard
         Keyboard.capturedText = "";
     }
     
-    public static String getCapturedText()
+    public static String capturedText()
     {
         String text = Keyboard.capturedText;
         Keyboard.capturedText = "";
@@ -191,12 +191,12 @@ public class Keyboard
     
     public static void handleEvents(long time, long delta)
     {
-        for (Key key : getInputs())
+        for (Key key : inputs())
         {
             key.pressed = false;
             key.released = false;
             key.repeated = false;
-            
+        
             if (key.state != key.prevState)
             {
                 if (key.state == GLFW_PRESS)

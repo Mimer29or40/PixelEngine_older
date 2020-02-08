@@ -22,10 +22,10 @@ public class WindowTest extends PixelEngine
     @Override
     protected boolean onUserCreate()
     {
-        int lines = (getScreenHeight() - 2) / 8;
+        int lines = (screenHeight() - 2) / 8;
         for (int i = 0; i < lines; i++) events.add("");
-        
-        menu = new Pane(PEX_GUI.ROOT, getScreenWidth() - getScreenHeight(), getScreenHeight(), "Menu");
+    
+        menu = new Pane(PEX_GUI.ROOT, screenWidth() - screenHeight(), screenHeight(), "Menu");
         menu.setMarginSize(1);
         menu.getTooltipText(() -> "Test");
         menu.onMouseClicked((mouse, widgetX, widgetY, doubleClicked) -> {

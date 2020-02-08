@@ -69,7 +69,7 @@ public class PEX_GUI extends PEX
     {
         this.profiler.startSection("Window Events");
         
-        int mouseX = Mouse.getX(), mouseY = Mouse.getY();
+        int mouseX = Mouse.x(), mouseY = Mouse.y();
         
         this.profiler.startSection("Mouse Over");
         
@@ -114,23 +114,23 @@ public class PEX_GUI extends PEX
         {
             String tooltip = PEX_GUI.top.getTooltipText();
             PEX_GUI.tooltip.setVisible(true);
-            int posX = mouseX + 12 / getPixelWidth();
+            int posX = mouseX + 12 / pixelWidth();
             if (!PEX_GUI.prevTooltip.equals(tooltip))
             {
                 PEX_GUI.tooltip.setText(tooltip);
-                
-                int maxWidth = getScreenWidth() - posX - (PEX_GUI.tooltip.getBorderSize() + PEX_GUI.tooltip.getMarginSize()) * 2;
+    
+                int maxWidth = screenWidth() - posX - (PEX_GUI.tooltip.getBorderSize() + PEX_GUI.tooltip.getMarginSize()) * 2;
                 
                 String linesString = join(clipTextWidth(tooltip, PEX_GUI.tooltip.getScale(), maxWidth), "\n");
-                
-                PEX_GUI.tooltip.setForegroundSize(getTextWidth(linesString, PEX_GUI.tooltip.getScale()), getTextHeight(linesString, PEX_GUI.tooltip.getScale()));
+    
+                PEX_GUI.tooltip.setForegroundSize(textWidth(linesString, PEX_GUI.tooltip.getScale()), textHeight(linesString, PEX_GUI.tooltip.getScale()));
             }
             PEX_GUI.tooltip.setPosition(posX, mouseY);
         }
         else
         {
             PEX_GUI.tooltip.setVisible(false);
-            PEX_GUI.tooltip.setPosition(getScreenWidth() + 10, getScreenHeight() + 10);
+            PEX_GUI.tooltip.setPosition(screenWidth() + 10, screenHeight() + 10);
         }
         
         this.profiler.endSection();
@@ -138,13 +138,13 @@ public class PEX_GUI extends PEX
         this.profiler.startSection("Event Handlers");
         
         this.profiler.startSection("Mouse Wheel Events");
-        
-        if (Mouse.getScrollY() != 0)
+    
+        if (Mouse.scrollY() != 0)
         {
             Window window = PEX_GUI.top;
             while (window != null)
             {
-                if (window.onMouseWheel(Mouse.getScrollY())) break;
+                if (window.onMouseWheel(Mouse.scrollY())) break;
                 window = window.getParent();
             }
         }
@@ -152,17 +152,17 @@ public class PEX_GUI extends PEX
         this.profiler.endSection();
         
         this.profiler.startSection("Mouse Events");
-        
-        for (Mouse.Button button : Mouse.getInputs())
+    
+        for (Mouse.Button button : Mouse.inputs())
         {
             if (button.isPressed())
             {
                 if (PEX_GUI.top == null) setFocused(null);
-                
+            
                 PEX_GUI.clickMouse = button;
                 PEX_GUI.clickX = mouseX;
                 PEX_GUI.clickY = mouseY;
-                
+            
                 PEX_GUI.dragMouse = button;
                 PEX_GUI.dragX = mouseX;
                 PEX_GUI.dragY = mouseY;
@@ -240,7 +240,7 @@ public class PEX_GUI extends PEX
         
         if (PEX_GUI.focused != null)
         {
-            for (Keyboard.Key key : Keyboard.getInputs())
+            for (Keyboard.Key key : Keyboard.inputs())
             {
                 if (key.isPressed())
                 {
@@ -323,8 +323,8 @@ public class PEX_GUI extends PEX
             
             if (window.isVisible())
             {
-                setDrawMode(DrawMode.NORMAL);
-                setTarget(null);
+                PixelEngine.drawMode(DrawMode.NORMAL);
+                PixelEngine.renderTarget(null);
                 drawSprite(window.getX(), window.getY(), window.getSprite(), 1);
             }
         }
@@ -339,8 +339,8 @@ public class PEX_GUI extends PEX
             
             if (window.isVisible())
             {
-                setDrawMode(DrawMode.NORMAL);
-                setTarget(null);
+                PixelEngine.drawMode(DrawMode.NORMAL);
+                PixelEngine.renderTarget(null);
                 drawSprite(window.getX(), window.getY(), window.getSprite(), 1);
             }
         }
@@ -355,8 +355,8 @@ public class PEX_GUI extends PEX
             
             if (PEX_GUI.tooltip.isVisible())
             {
-                setDrawMode(DrawMode.NORMAL);
-                setTarget(null);
+                PixelEngine.drawMode(DrawMode.NORMAL);
+                PixelEngine.renderTarget(null);
                 drawSprite(PEX_GUI.tooltip.getX(), PEX_GUI.tooltip.getY(), PEX_GUI.tooltip.getSprite(), 1);
             }
         }

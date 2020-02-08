@@ -31,16 +31,16 @@ public class Graphics2DTest extends PixelEngine
     @Override
     public boolean onUserUpdate(double elapsedTime)
     {
-        setDrawMode(DrawMode.NORMAL);
+        drawMode(DrawMode.NORMAL);
         clear(Color.BLUE);
-        
+    
         drawCircle(32, 32, 30);
         drawCircle(96, 32, 30);
-        
-        float mx = Mouse.getX();
-        float my = Mouse.getY();
-        
-        
+    
+        float mx = Mouse.x();
+        float my = Mouse.y();
+    
+    
         float px1 = mx - 32, px2 = mx - 96;
         float py1 = my - 32, py2 = my - 32;
         float pr1 = 1.0f / (float) Math.sqrt(px1 * px1 + py1 * py1);
@@ -103,8 +103,8 @@ public class Graphics2DTest extends PixelEngine
         t1.rotate(angle / 3);
         // Translate to centre of screen
         t1.translate(320, 240);
-        
-        setDrawMode(DrawMode.ALPHA);
+    
+        drawMode(DrawMode.ALPHA);
         
         // Use extension to draw sprite with transform applied
         PEX_GFX2D.drawSprite(spr, t1);

@@ -12,7 +12,6 @@ import static org.lwjgl.stb.STBImage.stbi_info;
 import static org.lwjgl.stb.STBImage.stbi_load;
 import static org.lwjgl.stb.STBImageWrite.stbi_write_png;
 import static pe.PixelEngine.getPath;
-import static pe.PixelEngine.incOverdrawCount;
 
 @SuppressWarnings("unused")
 public class Sprite
@@ -180,8 +179,6 @@ public class Sprite
     
     public void setPixel(int x, int y, Color p)
     {
-        incOverdrawCount();
-        
         if (0 <= x && x < this.width && 0 <= y && y < this.height)
         {
             this.data.putInt(4 * (y * this.width + x), p.toInt());
@@ -250,8 +247,6 @@ public class Sprite
                 this.data.putInt(4 * (j * this.width + i), color);
             }
         }
-        
-        incOverdrawCount(this.width * this.height);
     }
     
     public void savePGESprite(String imagePath)
