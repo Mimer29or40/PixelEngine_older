@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +33,7 @@
     <option name="UPDATE_TYPE" value="MERGE" />
   </component>
   <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="ccf72b26-1e3d-4bff-9cdb-0f0d2c3ccbce" />
+    <option name="defaultAccountId" value="defa5d3b-24e4-4e12-8244-f4767199267b" />
   </component>
   <component name="GithubPullRequestsUISettings">
     <option name="hiddenUrls">
@@ -68,7 +67,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="application.passwordSafe" />
   </component>
   <component name="RunManager" selected="Application.WindowTest">
     <configuration name="ColorTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -325,7 +324,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581174345407</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Tweaked some formatting">
+      <created>1581174755477</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1581174755477</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -351,7 +357,8 @@
     <MESSAGE value="Moved Window Stuff to another Class" />
     <MESSAGE value="Removed OverdrawCount" />
     <MESSAGE value="Fully Removed OpenGL and GLFW from PixelEngine" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fully Removed OpenGL and GLFW from PixelEngine" />
+    <MESSAGE value="Tweaked some formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tweaked some formatting" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -373,10 +380,10 @@
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580939935083" />
     <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580914714208" />
-    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581174344120">
+    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581174754100">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174344120" />
+    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174754100" />
     <state x="341" y="73" width="1316" height="804" key="CommitChangelistDialog2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916161731" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -391,10 +398,10 @@
     </state>
     <state x="715" y="257" key="FileChooserDialogImpl/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581168762851" />
     <state x="715" y="265" key="FileChooserDialogImpl/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580913130501" />
-    <state x="1091" y="523" key="Github.Dialog.Accounts.Choose" timestamp="1580689299111">
+    <state x="1091" y="523" key="Github.Dialog.Accounts.Choose" timestamp="1581174827241">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="1091" y="523" key="Github.Dialog.Accounts.Choose/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580689299111" />
+    <state x="1091" y="523" key="Github.Dialog.Accounts.Choose/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174827241" />
     <state width="1382" height="234" key="GridCell.Tab.0.bottom" timestamp="1580652266836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -436,15 +443,15 @@
     </state>
     <state x="672" y="271" key="MultipleFileMergeDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770395785" />
     <state x="672" y="279" key="MultipleFileMergeDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916200527" />
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1581172434714">
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1581174893503">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581172434714" />
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174893503" />
     <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916233117" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581174347545">
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581174813961">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174347545" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174813961" />
     <state x="552" y="296" key="Vcs.Push.Dialog.v2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580912806076" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580939894193">
       <screen x="0" y="30" width="1920" height="1050" />
