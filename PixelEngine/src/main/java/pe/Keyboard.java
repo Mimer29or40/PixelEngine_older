@@ -1,5 +1,10 @@
 package pe;
 
+import pe.event.EventKeyHeld;
+import pe.event.EventKeyPressed;
+import pe.event.EventKeyReleased;
+import pe.event.EventKeyRepeated;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -218,6 +223,11 @@ public class Keyboard
                 key.repeated = true;
             }
             key.prevState = key.state;
+    
+            if (key.pressed) Events.post(EventKeyPressed.class, key);
+            if (key.released) Events.post(EventKeyReleased.class, key);
+            if (key.repeated) Events.post(EventKeyRepeated.class, key);
+            if (key.held) Events.post(EventKeyHeld.class, key);
         }
     }
     

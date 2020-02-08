@@ -1,5 +1,7 @@
 package pe;
 
+import pe.event.*;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -104,6 +106,18 @@ public class Mouse
     
     protected static void handleEvents(long time, long delta)
     {
+        Mouse.relX = Mouse.newX - Mouse.x;
+        Mouse.relY = Mouse.newY - Mouse.y;
+        Mouse.x = Mouse.newX;
+        Mouse.y = Mouse.newY;
+        if (Mouse.relX != 0 || Mouse.relY != 0) Events.post(EventMouseMoved.class, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
+    
+        Mouse.scrollX = Mouse.newScrollX;
+        Mouse.scrollY = Mouse.newScrollY;
+        Mouse.newScrollX = 0;
+        Mouse.newScrollY = 0;
+        if (Mouse.scrollX != 0 || Mouse.scrollY != 0) Events.post(EventMouseMoved.class, Mouse.scrollX, Mouse.scrollY);
+    
         for (Button button : inputs())
         {
             button.pressed = false;
@@ -131,17 +145,12 @@ public class Mouse
                 button.repeated = true;
             }
             button.prevState = button.state;
+        
+            if (button.pressed) Events.post(EventButtonPressed.class, button, Mouse.x, Mouse.y);
+            if (button.released) Events.post(EventButtonReleased.class, button, Mouse.x, Mouse.y);
+            if (button.repeated) Events.post(EventButtonRepeated.class, button, Mouse.x, Mouse.y);
+            if (button.held) Events.post(EventButtonHeld.class, button, Mouse.x, Mouse.y);
         }
-        
-        Mouse.relX = Mouse.newX - Mouse.x;
-        Mouse.relY = Mouse.newY - Mouse.y;
-        Mouse.x = Mouse.newX;
-        Mouse.y = Mouse.newY;
-        
-        Mouse.scrollX = Mouse.newScrollX;
-        Mouse.scrollY = Mouse.newScrollY;
-        Mouse.newScrollX = 0;
-        Mouse.newScrollY = 0;
     }
     
     protected static void stateCallback(int reference, int state)

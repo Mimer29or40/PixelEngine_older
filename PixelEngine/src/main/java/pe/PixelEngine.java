@@ -1137,6 +1137,8 @@ public class PixelEngine
                 {
                     PixelEngine.PROFILER.startSection("Events");
                     {
+                        Events.clear();
+    
                         PixelEngine.LOGGER.trace("Updating Mouse States");
                         {
                             Mouse.handleEvents(t, dt);
