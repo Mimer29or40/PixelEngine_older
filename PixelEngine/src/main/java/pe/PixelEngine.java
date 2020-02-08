@@ -1085,16 +1085,15 @@ public class PixelEngine
         
         PixelEngine.LOGGER.trace("Font Sheet Sprite Generated");
         PixelEngine.font = new Sprite(128, 48);
-        int   px = 0, py = 0;
         Color p  = new Color();
-        for (int b = 0; b < 1024; b += 4)
+        for (int b = 0, px = 0, py = 0; b < 1024; b += 4)
         {
             int sym1 = (int) data.charAt(b) - 48;
             int sym2 = (int) data.charAt(b + 1) - 48;
             int sym3 = (int) data.charAt(b + 2) - 48;
             int sym4 = (int) data.charAt(b + 3) - 48;
             int r    = sym1 << 18 | sym2 << 12 | sym3 << 6 | sym4;
-            
+    
             for (int i = 0; i < 24; i++)
             {
                 int k = (r & (1 << i)) != 0 ? 255 : 0;
