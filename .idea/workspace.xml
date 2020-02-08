@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java" afterDir="false" />
-    </list>
+    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +65,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunManager" selected="Application.WindowTest">
     <configuration name="ColorTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -346,7 +343,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581175074109</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Tweaked some formatting">
+      <created>1581175910295</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1581175910295</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -395,10 +399,10 @@
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580939935083" />
     <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580914714208" />
-    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581175073208">
+    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581175909356">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581175073208" />
+    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581175909356" />
     <state x="341" y="73" width="1316" height="804" key="CommitChangelistDialog2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916161731" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -458,15 +462,15 @@
     </state>
     <state x="672" y="271" key="MultipleFileMergeDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580770395785" />
     <state x="672" y="279" key="MultipleFileMergeDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916200527" />
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1581175028637">
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor" timestamp="1581175965480">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581175028637" />
+    <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581175965480" />
     <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916233117" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581175075608">
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581175911434">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581175075608" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581175911434" />
     <state x="552" y="296" key="Vcs.Push.Dialog.v2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580912806076" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580939894193">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -492,6 +496,10 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="761" y="352" key="git4idea.merge.GitMergeDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916133406" />
+    <state x="670" y="347" key="git4idea.merge.GitPullDialog" timestamp="1581175946781">
+      <screen x="0" y="30" width="1920" height="1050" />
+    </state>
+    <state x="670" y="347" key="git4idea.merge.GitPullDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581175946781" />
     <state x="343" y="176" key="new project wizard" timestamp="1580583739694">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
