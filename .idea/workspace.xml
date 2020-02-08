@@ -311,7 +311,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581172403358</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Removed OverdrawCount">
+      <created>1581174123860</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1581174123860</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -335,7 +342,8 @@
     <MESSAGE value="Moved own Vector class to another branch" />
     <MESSAGE value="Fixed Modifier Keys" />
     <MESSAGE value="Moved Window Stuff to another Class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved Window Stuff to another Class" />
+    <MESSAGE value="Removed OverdrawCount" />
+    <option name="LAST_COMMIT_MESSAGE" value="Removed OverdrawCount" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -357,10 +365,10 @@
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580939935083" />
     <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580914714208" />
-    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581172402525">
+    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581174122681">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581172402525" />
+    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174122681" />
     <state x="341" y="73" width="1316" height="804" key="CommitChangelistDialog2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916161731" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -425,10 +433,10 @@
     </state>
     <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581172434714" />
     <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916233117" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581172409785">
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581174125686">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581172409785" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174125686" />
     <state x="552" y="296" key="Vcs.Push.Dialog.v2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580912806076" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580939894193">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -473,7 +481,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/PixelEngine/src/main/java/pe/PixelEngine.java</url>
-          <line>548</line>
+          <line>515</line>
           <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
