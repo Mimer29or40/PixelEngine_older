@@ -1,16 +1,42 @@
 package pe;
 
-import pe.event.Event;
+import pe.event.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.function.Consumer;
 
 public class Events
 {
-    private static final HashMap<Class<? extends Event>, ArrayList<Event>> EVENTS = new HashMap<>();
+    public static final EventGroup WINDOW_EVENTS   = new EventGroup(EventWindowFocused.class,
+                                                                    EventWindowFullscreen.class,
+                                                                    EventWindowMoved.class,
+                                                                    EventWindowResized.class,
+                                                                    EventWindowVSync.class);
+    public static final EventGroup BUTTON_EVENTS   = new EventGroup(EventButtonClicked.class,
+                                                                    EventButtonDown.class,
+                                                                    EventButtonHeld.class,
+                                                                    EventButtonRepeat.class,
+                                                                    EventButtonUp.class);
+    public static final EventGroup MOUSE_EVENTS    = new EventGroup(EventMouseDragged.class,
+                                                                    EventMouseEntered.class,
+                                                                    EventMouseMoved.class,
+                                                                    EventMouseScrolled.class).addFromGroups(BUTTON_EVENTS);
+    public static final EventGroup KEY_EVENTS      = new EventGroup(EventKeyPressed.class,
+                                                                    EventKeyDown.class,
+                                                                    EventKeyHeld.class,
+                                                                    EventKeyRepeat.class,
+                                                                    EventKeyUp.class,
+                                                                    EventKeyTyped.class);
+    public static final EventGroup KEYBOARD_EVENTS = new EventGroup().addFromGroups(KEY_EVENTS);
+    public static final EventGroup INPUT_EVENTS    = new EventGroup().addFromGroups(MOUSE_EVENTS, KEY_EVENTS);
     
-    public static ArrayList<Event> get()
+    private static final HashMap<Class<? extends Event>, ArrayList<Event>>         EVENTS        = new HashMap<>();
+    private static final HashMap<Class<? extends Event>, HashSet<Consumer<Event>>> SUBSCRIPTIONS = new HashMap<>();
+    
+    public static Iterable<Event> get()
     {
         ArrayList<Event> events = new ArrayList<>();
         Events.EVENTS.values().forEach(events::addAll);
@@ -18,9 +44,8 @@ public class Events
     }
     
     @SafeVarargs
-    public static ArrayList<Event> get(Class<? extends Event>... eventTypes)
+    public static Iterable<Event> get(Class<? extends Event>... eventTypes)
     {
-        // TODO - Event grouping
         ArrayList<Event> events = new ArrayList<>();
         for (Class<? extends Event> eventType : eventTypes)
         {
@@ -30,17 +55,52 @@ public class Events
         return events;
     }
     
-    public static void post(Class<? extends Event> eventType, Object... arguments)
+    public static Iterable<Event> get(EventGroup... eventGroups)
+    {
+        ArrayList<Event> events = new ArrayList<>();
+        for (EventGroup eventGroup : eventGroups)
+        {
+            for (Class<? extends Event> eventType : eventGroup.getClasses())
+            {
+                Events.EVENTS.computeIfAbsent(eventType, e -> new ArrayList<>());
+                events.addAll(Events.EVENTS.get(eventType));
+            }
+        }
+        return events;
+    }
+    
+    public static <T extends Event> void post(Class<T> eventType, Object... arguments)
     {
         try
         {
             Events.EVENTS.computeIfAbsent(eventType, e -> new ArrayList<>());
-            // TODO - Have way to subscribe to events so a function can be called immediately
-            Events.EVENTS.get(eventType).add(eventType.getDeclaredConstructor(Object[].class).newInstance(new Object[] {arguments}));
+            Event event = eventType.getDeclaredConstructor(Object[].class).newInstance(new Object[] {arguments});
+            Events.EVENTS.get(eventType).add(event);
+            
+            Events.SUBSCRIPTIONS.computeIfAbsent(eventType, e -> new HashSet<>());
+            for (Consumer<Event> function : Events.SUBSCRIPTIONS.get(eventType))
+            {
+                function.accept(event);
+            }
         }
         catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored)
         {
         
+        }
+    }
+    
+    public static void subscribe(Class<? extends Event> eventType, Consumer<Event> function)
+    {
+        Events.SUBSCRIPTIONS.computeIfAbsent(eventType, e -> new HashSet<>());
+        Events.SUBSCRIPTIONS.get(eventType).add(function);
+    }
+    
+    public static void subscribe(EventGroup eventGroup, Consumer<Event> function)
+    {
+        for (Class<? extends Event> eventType : eventGroup.getClasses())
+        {
+            Events.SUBSCRIPTIONS.computeIfAbsent(eventType, e -> new HashSet<>());
+            Events.SUBSCRIPTIONS.get(eventType).add(function);
         }
     }
     
