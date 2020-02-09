@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public class Events
 {
     public static final EventGroup WINDOW_EVENTS   = new EventGroup(EventWindowFocused.class,
@@ -15,11 +16,7 @@ public class Events
                                                                     EventWindowMoved.class,
                                                                     EventWindowResized.class,
                                                                     EventWindowVSync.class);
-    public static final EventGroup BUTTON_EVENTS   = new EventGroup(EventButtonClicked.class,
-                                                                    EventButtonDown.class,
-                                                                    EventButtonHeld.class,
-                                                                    EventButtonRepeat.class,
-                                                                    EventButtonUp.class);
+    public static final EventGroup BUTTON_EVENTS   = new EventGroup(EventButtonClicked.class, EventButtonDown.class, EventButtonHeld.class, EventButtonRepeat.class, EventButtonUp.class);
     public static final EventGroup MOUSE_EVENTS    = new EventGroup(EventMouseDragged.class,
                                                                     EventMouseEntered.class,
                                                                     EventMouseMoved.class,

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventGroup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Events.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PixelEngine/src/test/java/pe/EventsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/test/java/pe/EventsTest.java" afterDir="false" />
     </list>
@@ -415,7 +415,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581264189602</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Event Groups and Subscriptions">
+      <created>1581279910624</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1581279910624</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -432,7 +439,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Test" />
     <MESSAGE value="Initial Structure Commit" />
     <MESSAGE value="Initial Engine Commit" />
     <MESSAGE value="Changed PixelEngine formatting" />
@@ -457,7 +463,8 @@
     <MESSAGE value="Added Mouse and Keyboard Events" />
     <MESSAGE value="Added the rest of Mouse and Keyboard Events" />
     <MESSAGE value="Added Window Events" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Window Events" />
+    <MESSAGE value="Event Groups and Subscriptions" />
+    <option name="LAST_COMMIT_MESSAGE" value="Event Groups and Subscriptions" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -483,10 +490,10 @@
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580939935083" />
     <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580914714208" />
-    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581264188822">
+    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581279909992">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581264188822" />
+    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581279909992" />
     <state x="341" y="73" width="1316" height="804" key="CommitChangelistDialog2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916161731" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -505,22 +512,22 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="1091" y="523" key="Github.Dialog.Accounts.Choose/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174827241" />
-    <state width="1528" height="285" key="GridCell.Tab.0.bottom" timestamp="1581273113118">
+    <state width="1528" height="285" key="GridCell.Tab.0.bottom" timestamp="1581280871598">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1528" height="285" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581273113118" />
-    <state width="1528" height="285" key="GridCell.Tab.0.center" timestamp="1581273113118">
+    <state width="1528" height="285" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581280871598" />
+    <state width="1528" height="285" key="GridCell.Tab.0.center" timestamp="1581280871598">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1528" height="285" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581273113118" />
-    <state width="1528" height="285" key="GridCell.Tab.0.left" timestamp="1581273113118">
+    <state width="1528" height="285" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581280871598" />
+    <state width="1528" height="285" key="GridCell.Tab.0.left" timestamp="1581280871597">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1528" height="285" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581273113118" />
-    <state width="1528" height="285" key="GridCell.Tab.0.right" timestamp="1581273113118">
+    <state width="1528" height="285" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581280871597" />
+    <state width="1528" height="285" key="GridCell.Tab.0.right" timestamp="1581280871598">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1528" height="285" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581273113118" />
+    <state width="1528" height="285" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581280871598" />
     <state width="1528" height="234" key="GridCell.Tab.1.bottom" timestamp="1581263826176">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -551,10 +558,10 @@
     </state>
     <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581180470624" />
     <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916233117" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581255158039">
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581279917691">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581255158039" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581279917691" />
     <state x="552" y="296" key="Vcs.Push.Dialog.v2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580912806076" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580939894193">
       <screen x="0" y="30" width="1920" height="1050" />

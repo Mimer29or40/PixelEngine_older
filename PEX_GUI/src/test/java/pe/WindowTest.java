@@ -116,7 +116,7 @@ public class WindowTest extends PixelEngine
     {
         clear();
         
-        if (Keyboard.M.down) menu.setVisible(!menu.isVisible());
+        if (Keyboard.M.down()) menu.setVisible(!menu.isVisible());
         
         if (menu.isVisible())
         {
@@ -128,14 +128,14 @@ public class WindowTest extends PixelEngine
                 nLog++;
             }
         }
-        
-        if (Keyboard.SPACE.held)
+    
+        if (Keyboard.SPACE.held())
         {
             progressBar.setValue(progressBar.getValue() + 0.001);
             if (progressBar.getValue() >= 1.0) progressBar.setValue(0.0);
         }
     
-        if (Keyboard.A.down) alert.open();
+        if (Keyboard.A.down()) alert.open();
         
         return true;
     }
