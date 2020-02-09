@@ -3,6 +3,7 @@ package pe;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
+import pe.event.*;
 
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static pe.PixelEngine.*;
 
+@SuppressWarnings("unused")
 public class Window
 {
     private static final Logger LOGGER = Logger.getLogger();
@@ -21,16 +23,17 @@ public class Window
     private static int viewX, viewY;
     private static int viewW, viewH;
     
-    private static boolean update;
+    private static boolean update = true;
     
     private static int monitorW, monitorH;
     
-    private static int windowX, windowY;
-    private static int windowW, windowH;
+    private static int windowX, windowY, newWindowX, newWindowY, fullX, fullY;
+    private static int windowW, windowH, newWindowW, newWindowH, fullW, fullH;
     
-    private static boolean focused;
+    private static boolean focused, newFocused;
     
-    private static boolean fullscreen, vsync;
+    private static boolean fullscreen, newFullscreen;
+    private static boolean vsync, newVsync;
     
     public static int monitorWidth()
     {
@@ -74,8 +77,7 @@ public class Window
     
     public static void fullscreen(boolean fullscreen)
     {
-        Window.fullscreen = fullscreen;
-        Window.update = true;
+        Window.newFullscreen = fullscreen;
     }
     
     public static boolean vsync()
@@ -85,8 +87,7 @@ public class Window
     
     public static void vsync(boolean vsync)
     {
-        Window.vsync = vsync;
-        Window.update = true;
+        Window.newVsync = vsync;
     }
     
     public static void title(String title)
@@ -149,27 +150,24 @@ public class Window
         
         glfwSetWindowCloseCallback(Window.glfwWindow, window -> {
             if (window != Window.glfwWindow) return;
-            stop();
+            PixelEngine.stop();
         });
         
         glfwSetWindowPosCallback(Window.glfwWindow, (window, x, y) -> {
             if (window != Window.glfwWindow) return;
-            if (Window.fullscreen) return;
-            Window.windowX = x;
-            Window.windowY = y;
+            Window.newWindowX = x;
+            Window.newWindowY = y;
         });
         
         glfwSetWindowSizeCallback(Window.glfwWindow, (window, w, h) -> {
             if (window != Window.glfwWindow) return;
-            Window.update = true;
-            if (Window.fullscreen) return;
-            Window.windowW = w;
-            Window.windowH = h;
+            Window.newWindowW = w;
+            Window.newWindowH = h;
         });
         
         glfwSetWindowFocusCallback(Window.glfwWindow, (window, focused) -> {
             if (window != Window.glfwWindow) return;
-            Window.focused = focused;
+            Window.newFocused = focused;
         });
         
         glfwSetCursorEnterCallback(Window.glfwWindow, (window, entered) -> {
@@ -180,7 +178,7 @@ public class Window
         glfwSetCursorPosCallback(Window.glfwWindow, (window, x, y) -> {
             if (window != Window.glfwWindow) return;
             x = (x - Window.viewX) * (double) screenWidth() / (double) Window.viewW;
-            y = (y - Window.viewY) * (double) screenWidth() / (double) Window.viewH;
+            y = (y - Window.viewY) * (double) screenHeight() / (double) Window.viewH;
             Mouse.positionCallback(x, y);
         });
         
@@ -310,7 +308,8 @@ public class Window
         glEnable(GL_TEXTURE_2D);
         
         glBindTexture(GL_TEXTURE_2D, glGenTextures());
-        // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, getScreenWidth(), getScreenHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, Window.window.getData());
+        // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, screenWidth(), screenHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, Window.window.getData());
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, screenWidth(), screenHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -324,6 +323,61 @@ public class Window
     protected static void pollEvents()
     {
         glfwPollEvents();
+    }
+    
+    protected static void handleEvents(long time, long delta)
+    {
+        Window.LOGGER.debug("Handling Window Events");
+        
+        if (Window.focused != Window.newFocused)
+        {
+            Events.post(EventWindowFocused.class, Window.newFocused);
+            Window.focused = Window.newFocused;
+        }
+        
+        if (Window.fullscreen != Window.newFullscreen)
+        {
+            Events.post(EventWindowFullscreen.class, Window.newFullscreen);
+            Window.fullscreen = Window.newFullscreen;
+            Window.update = true;
+            if (Window.fullscreen)
+            {
+                Window.fullX = Window.windowX;
+                Window.fullY = Window.windowY;
+                Window.fullW = Window.windowW;
+                Window.fullH = Window.windowH;
+            }
+            else
+            {
+                Window.newWindowX = Window.fullX;
+                Window.newWindowY = Window.fullY;
+                Window.newWindowW = Window.fullW;
+                Window.newWindowH = Window.fullH;
+            }
+        }
+        
+        if (Window.vsync != Window.newVsync)
+        {
+            Events.post(EventWindowVSync.class, Window.newVsync);
+            Window.vsync = Window.newVsync;
+            Window.update = true;
+        }
+        
+        if (Window.windowX != Window.newWindowX || Window.windowY != Window.newWindowY)
+        {
+            Events.post(EventWindowMoved.class, Window.newWindowX, Window.newWindowY);
+            Window.windowX = Window.newWindowX;
+            Window.windowY = Window.newWindowY;
+            Window.update = true;
+        }
+        
+        if (Window.windowW != Window.newWindowW || Window.windowH != Window.newWindowH)
+        {
+            Events.post(EventWindowResized.class, Window.newWindowW, Window.newWindowH);
+            Window.windowW = Window.newWindowW;
+            Window.windowH = Window.newWindowH;
+            Window.update = true;
+        }
     }
     
     protected static boolean update()
@@ -350,10 +404,7 @@ public class Window
                 glfwSetWindowSize(Window.glfwWindow, Window.windowW, Window.windowH);
             }
             
-            int    ww     = screenWidth() * pixelWidth();
-            int    wh     = screenHeight() * pixelHeight();
-            double aspect = (double) ww / (double) wh;
-            
+            double aspect = (double) (screenWidth() * pixelWidth()) / (double) (screenHeight() * pixelHeight());
             
             int actual_w = Window.fullscreen ? Window.monitorW : Window.windowW;
             int actual_h = Window.fullscreen ? Window.monitorH : Window.windowH;

@@ -20,6 +20,7 @@ public class Events
     @SafeVarargs
     public static ArrayList<Event> get(Class<? extends Event>... eventTypes)
     {
+        // TODO - Event grouping
         ArrayList<Event> events = new ArrayList<>();
         for (Class<? extends Event> eventType : eventTypes)
         {
@@ -34,6 +35,7 @@ public class Events
         try
         {
             Events.EVENTS.computeIfAbsent(eventType, e -> new ArrayList<>());
+            // TODO - Have way to subscribe to events so a function can be called immediately
             Events.EVENTS.get(eventType).add(eventType.getDeclaredConstructor(Object[].class).newInstance(new Object[] {arguments}));
         }
         catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored)

@@ -1137,17 +1137,23 @@ public class PixelEngine
                 {
                     PixelEngine.PROFILER.startSection("Events");
                     {
-                        Events.clear();
+                        Events.clear(); // TODO - Have a way to have events persist and be consumable.
     
-                        PixelEngine.LOGGER.trace("Updating Mouse States");
+                        PixelEngine.PROFILER.startSection("Mouse Events");
                         {
                             Mouse.handleEvents(t, dt);
                         }
                         PixelEngine.PROFILER.endSection();
     
-                        PixelEngine.PROFILER.startSection("Key States");
+                        PixelEngine.PROFILER.startSection("Key Events");
                         {
                             Keyboard.handleEvents(t, dt);
+                        }
+                        PixelEngine.PROFILER.endSection();
+    
+                        PixelEngine.PROFILER.startSection("Window Events");
+                        {
+                            Window.handleEvents(t, dt);
                         }
                         PixelEngine.PROFILER.endSection();
                     }
