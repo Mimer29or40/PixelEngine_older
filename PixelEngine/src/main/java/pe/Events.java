@@ -17,9 +17,16 @@ public class Events
         return events;
     }
     
-    public static ArrayList<Event> get(Class<? extends Event> eventType)
+    @SafeVarargs
+    public static ArrayList<Event> get(Class<? extends Event>... eventTypes)
     {
-        return Events.EVENTS.get(eventType);
+        ArrayList<Event> events = new ArrayList<>();
+        for (Class<? extends Event> eventType : eventTypes)
+        {
+            Events.EVENTS.computeIfAbsent(eventType, e -> new ArrayList<>());
+            events.addAll(Events.EVENTS.get(eventType));
+        }
+        return events;
     }
     
     public static void post(Class<? extends Event> eventType, Object... arguments)

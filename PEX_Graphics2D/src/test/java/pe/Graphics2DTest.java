@@ -51,24 +51,24 @@ public class Graphics2DTest extends PixelEngine
         py2 = 22.0f * (py2 * pr2) + 32.0f;
         fillCircle((int) px1, (int) py1, 8, Color.CYAN);
         fillCircle((int) px2, (int) py2, 8, Color.CYAN);
-        
+    
         drawLine(10, 70, 54, 70);    // Lines
         drawLine(54, 70, 70, 54);
-        
+    
         drawRect(10, 80, 54, 30);
         fillRect(10, 80, 54, 30);
-        
+    
         // Multiline Text
         drawString(10, 130, "Your Mouse Position is:\nX=" + mx + "\nY=" + my);
-        
-        if (Mouse.LEFT.pressed) addEvent("Mouse Button LEFT Down");
-        if (Mouse.LEFT.released) addEvent("Mouse Button LEFT Up");
-        if (Mouse.RIGHT.pressed) addEvent("Mouse Button RIGHT Down");
-        if (Mouse.RIGHT.released) addEvent("Mouse Button RIGHT Up");
-        if (Mouse.MIDDLE.pressed) addEvent("Mouse Button MIDDLE Down");
-        if (Mouse.MIDDLE.released) addEvent("Mouse Button MIDDLE Up");
-        
-        
+    
+        if (Mouse.LEFT.down) addEvent("Mouse Button LEFT Down");
+        if (Mouse.LEFT.up) addEvent("Mouse Button LEFT Up");
+        if (Mouse.RIGHT.down) addEvent("Mouse Button RIGHT Down");
+        if (Mouse.RIGHT.up) addEvent("Mouse Button RIGHT Up");
+        if (Mouse.MIDDLE.down) addEvent("Mouse Button MIDDLE Down");
+        if (Mouse.MIDDLE.up) addEvent("Mouse Button MIDDLE Up");
+    
+    
         // Draw Event Log
         int nLog = 0;
         for (String s : this.events)

@@ -1,9 +1,6 @@
 package pe;
 
-import pe.event.EventKeyHeld;
-import pe.event.EventKeyPressed;
-import pe.event.EventKeyReleased;
-import pe.event.EventKeyRepeated;
+import pe.event.*;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -136,8 +133,7 @@ public class Keyboard
     protected static long holdDelay   = 500_000_000;
     protected static long repeatDelay = 100_000_000;
     
-    private static boolean captureText  = false;
-    private static String  capturedText = "";
+    private static String capturedText = "";
     
     private Keyboard()
     {
@@ -181,38 +177,32 @@ public class Keyboard
         return Keyboard.NONE;
     }
     
-    public static void captureText(boolean captureText)
-    {
-        Keyboard.captureText = captureText;
-        Keyboard.capturedText = "";
-    }
-    
-    public static String capturedText()
-    {
-        String text = Keyboard.capturedText;
-        Keyboard.capturedText = "";
-        return text;
-    }
-    
     public static void handleEvents(long time, long delta)
     {
+        String text = Keyboard.capturedText;
+        for (int i = 0, n = Keyboard.capturedText.length(); i < n; i++)
+        {
+            Events.post(EventKeyTyped.class, Keyboard.capturedText.charAt(i));
+        }
+        Keyboard.capturedText = "";
+    
         for (Key key : inputs())
         {
-            key.pressed = false;
-            key.released = false;
-            key.repeated = false;
+            key.down = false;
+            key.up = false;
+            key.repeat = false;
         
             if (key.state != key.prevState)
             {
                 if (key.state == GLFW_PRESS)
                 {
-                    key.pressed = true;
+                    key.down = true;
                     key.held = true;
                     key.downTime = time;
                 }
                 else if (key.state == GLFW_RELEASE)
                 {
-                    key.released = true;
+                    key.up = true;
                     key.held = false;
                     key.downTime = Long.MAX_VALUE;
                 }
@@ -220,14 +210,27 @@ public class Keyboard
             if (key.state == GLFW_REPEAT || key.held && time - key.downTime > Keyboard.holdDelay)
             {
                 key.downTime += Keyboard.repeatDelay;
-                key.repeated = true;
+                key.repeat = true;
             }
             key.prevState = key.state;
-    
-            if (key.pressed) Events.post(EventKeyPressed.class, key);
-            if (key.released) Events.post(EventKeyReleased.class, key);
-            if (key.repeated) Events.post(EventKeyRepeated.class, key);
+        
+            if (key.down) Events.post(EventKeyDown.class, key);
+            if (key.up)
+            {
+                Events.post(EventKeyUp.class, key);
+            
+                if (time - key.pressTime < 500_000_000)
+                {
+                    Events.post(EventKeyPressed.class, key, true);
+                }
+                else
+                {
+                    Events.post(EventKeyPressed.class, key, false);
+                    key.pressTime = time;
+                }
+            }
             if (key.held) Events.post(EventKeyHeld.class, key);
+            if (key.repeat) Events.post(EventKeyRepeat.class, key);
         }
     }
     
@@ -258,30 +261,30 @@ public class Keyboard
     
     public static void charCallback(int codePoint)
     {
-        if (Keyboard.captureText) Keyboard.capturedText += Character.toString(codePoint);
+        Keyboard.capturedText += Character.toString(codePoint);
     }
     
     public static class Key
     {
-        public final    int     scancode;
-        public final    char    baseChar;
-        public final    char    shiftChar;
-        protected final String  name;
-        protected final int     reference;
-        protected       boolean pressed  = false;
-        protected       boolean released = false;
-        protected       boolean held     = false;
-        protected       boolean repeated = false;
-        protected       long    downTime = 0;
-        protected       int     state, prevState;
+        private final String name;
+        
+        private boolean down   = false;
+        private boolean up     = false;
+        private boolean held   = false;
+        private boolean repeat = false;
+        
+        private int state, prevState;
+        private long downTime, pressTime;
+        
+        public final int  scancode;
+        public final char baseChar;
+        public final char shiftChar;
         
         private Key(String name, int reference, int baseChar, int shiftChar)
         {
             this.name = name;
-            this.reference = reference;
             
-            this.scancode = this.reference > 0 ? glfwGetKeyScancode(this.reference) : 0;
-            
+            this.scancode = reference > 0 ? glfwGetKeyScancode(reference) : 0;
             this.baseChar = (char) baseChar;
             this.shiftChar = (char) shiftChar;
             
@@ -299,24 +302,24 @@ public class Keyboard
             return this.name;
         }
         
-        public boolean isPressed()
+        public boolean down()
         {
-            return this.pressed;
+            return this.down;
         }
         
-        public boolean isReleased()
+        public boolean up()
         {
-            return this.released;
+            return this.up;
         }
         
-        public boolean isHeld()
+        public boolean held()
         {
             return this.held;
         }
         
-        public boolean isRepeated()
+        public boolean repeat()
         {
-            return this.repeated;
+            return this.repeat;
         }
     }
 }

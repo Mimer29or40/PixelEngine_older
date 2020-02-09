@@ -28,11 +28,14 @@ public class Mouse
     protected static long holdDelay   = 500_000_000;
     protected static long repeatDelay = 100_000_000;
     
-    private static boolean entered = false;
+    private static boolean entered, newEntered;
     
     private static int x, y, newX, newY;
     private static int relX, relY;
     private static int scrollX, scrollY, newScrollX, newScrollY;
+    
+    private static Button drag;
+    private static int    dragX, dragY;
     
     private Mouse()
     {
@@ -106,6 +109,9 @@ public class Mouse
     
     protected static void handleEvents(long time, long delta)
     {
+        if (Mouse.entered != Mouse.newEntered) Events.post(EventMouseEntered.class, Mouse.newEntered);
+        Mouse.entered = Mouse.newEntered;
+    
         Mouse.relX = Mouse.newX - Mouse.x;
         Mouse.relY = Mouse.newY - Mouse.y;
         Mouse.x = Mouse.newX;
@@ -122,21 +128,21 @@ public class Mouse
     
         for (Button button : inputs())
         {
-            button.pressed = false;
-            button.released = false;
-            button.repeated = false;
+            button.down = false;
+            button.up = false;
+            button.repeat = false;
         
             if (button.state != button.prevState)
             {
                 if (button.state == GLFW_PRESS)
                 {
-                    button.pressed = true;
+                    button.down = true;
                     button.held = true;
                     button.downTime = time;
                 }
                 else if (button.state == GLFW_RELEASE)
                 {
-                    button.released = true;
+                    button.up = true;
                     button.held = false;
                     button.downTime = Long.MAX_VALUE;
                 }
@@ -144,14 +150,53 @@ public class Mouse
             if (button.state == GLFW_REPEAT || button.held && time - button.downTime > Mouse.holdDelay)
             {
                 button.downTime += Mouse.repeatDelay;
-                button.repeated = true;
+                button.repeat = true;
             }
             button.prevState = button.state;
         
-            if (button.pressed) Events.post(EventButtonPressed.class, button, Mouse.x, Mouse.y);
-            if (button.released) Events.post(EventButtonReleased.class, button, Mouse.x, Mouse.y);
-            if (button.repeated) Events.post(EventButtonRepeated.class, button, Mouse.x, Mouse.y);
-            if (button.held) Events.post(EventButtonHeld.class, button, Mouse.x, Mouse.y);
+            if (button.down)
+            {
+                Events.post(EventButtonDown.class, button, Mouse.x, Mouse.y);
+            
+                button.clickX = Mouse.x;
+                button.clickY = Mouse.y;
+                if (Mouse.drag == null)
+                {
+                    Mouse.drag = button;
+                    Mouse.dragX = Mouse.x;
+                    Mouse.dragY = Mouse.y;
+                }
+            }
+            if (button.up)
+            {
+                Events.post(EventButtonUp.class, button, Mouse.x, Mouse.y);
+            
+                boolean inClickRange  = Math.abs(Mouse.x - button.clickX) < 2 && Math.abs(Mouse.y - button.clickY) < 2;
+                boolean inDClickRange = Math.abs(Mouse.x - button.dClickX) < 2 && Math.abs(Mouse.y - button.dClickY) < 2;
+            
+                if (inDClickRange && time - button.clickTime < 500_000_000)
+                {
+                    Events.post(EventButtonClicked.class, button, Mouse.x, Mouse.y, true);
+                }
+                else if (inClickRange)
+                {
+                    Events.post(EventButtonClicked.class, button, Mouse.x, Mouse.y, false);
+                    button.dClickX = Mouse.x;
+                    button.dClickY = Mouse.y;
+                    button.clickTime = time;
+                }
+                if (Mouse.drag == button) Mouse.drag = null;
+            }
+            if (button.held)
+            {
+                Events.post(EventButtonHeld.class, button, Mouse.x, Mouse.y);
+            
+                if (Mouse.drag == button && (Mouse.relX != 0 || Mouse.relY != 0))
+                {
+                    Events.post(EventMouseDragged.class, button, Mouse.dragX, Mouse.dragY, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
+                }
+            }
+            if (button.repeat) Events.post(EventButtonRepeat.class, button, Mouse.x, Mouse.y);
         }
     }
     
@@ -162,7 +207,7 @@ public class Mouse
     
     public static void enteredCallback(boolean entered)
     {
-        Mouse.entered = entered;
+        Mouse.newEntered = entered;
     }
     
     public static void positionCallback(double x, double y)
@@ -194,21 +239,20 @@ public class Mouse
     
     public static class Button
     {
-        protected final String name;
-        protected final int    reference;
+        private final String name;
         
-        protected boolean pressed  = false;
-        protected boolean released = false;
-        protected boolean held     = false;
-        protected boolean repeated = false;
+        private boolean down   = false;
+        private boolean up     = false;
+        private boolean held   = false;
+        private boolean repeat = false;
         
-        protected long downTime = 0;
-        protected int  state, prevState;
+        private int state, prevState;
+        private long downTime, clickTime;
+        private int clickX, clickY, dClickX, dClickY;
         
         private Button(String name, int reference)
         {
             this.name = name;
-            this.reference = reference;
             
             Mouse.inputs.put(reference, this);
         }
@@ -224,24 +268,24 @@ public class Mouse
             return this.name;
         }
         
-        public boolean isPressed()
+        public boolean down()
         {
-            return this.pressed;
+            return this.down;
         }
         
-        public boolean isReleased()
+        public boolean up()
         {
-            return this.released;
+            return this.up;
         }
         
-        public boolean isHeld()
+        public boolean held()
         {
             return this.held;
         }
         
-        public boolean isRepeated()
+        public boolean repeat()
         {
-            return this.repeated;
+            return this.repeat;
         }
     }
 }

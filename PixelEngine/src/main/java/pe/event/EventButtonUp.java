@@ -2,14 +2,14 @@ package pe.event;
 
 import pe.Mouse;
 
-public class EventButtonRepeated extends Event
+public class EventButtonUp extends Event
 {
-    public EventButtonRepeated(Object[] values)
+    public EventButtonUp(Object[] values)
     {
         super(new String[] {"", "x", "y"}, values);
     }
     
-    public Mouse.Button getButton()
+    public Mouse.Button button()
     {
         return (Mouse.Button) this.values[0];
     }

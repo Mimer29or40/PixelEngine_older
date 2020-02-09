@@ -2,9 +2,9 @@ package pe.event;
 
 import pe.Keyboard;
 
-public class EventKeyHeld extends Event
+public class EventKeyDown extends Event
 {
-    public EventKeyHeld(Object[] values)
+    public EventKeyDown(Object[] values)
     {
         super(new String[] {""}, values);
     }

@@ -155,14 +155,14 @@ public class PEX_GUI extends PEX
     
         for (Mouse.Button button : Mouse.inputs())
         {
-            if (button.isPressed())
+            if (button.down())
             {
                 if (PEX_GUI.top == null) setFocused(null);
-            
+    
                 PEX_GUI.clickMouse = button;
                 PEX_GUI.clickX = mouseX;
                 PEX_GUI.clickY = mouseY;
-            
+    
                 PEX_GUI.dragMouse = button;
                 PEX_GUI.dragX = mouseX;
                 PEX_GUI.dragY = mouseY;
@@ -174,7 +174,7 @@ public class PEX_GUI extends PEX
                     window = window.getParent();
                 }
             }
-            if (button.isReleased())
+            if (button.up())
             {
                 PEX_GUI.drag = null;
                 Window window = PEX_GUI.top;
@@ -182,7 +182,7 @@ public class PEX_GUI extends PEX
                 {
                     // TODO - Right Click Menu
                     boolean result = window.onMouseReleased(button, mouseX - window.getAbsX(), mouseY - window.getAbsY());
-                    
+            
                     boolean inClickRange       = Math.abs(mouseX - PEX_GUI.clickX) < 2 && Math.abs(mouseY - PEX_GUI.clickY) < 2;
                     boolean inDoubleClickRange = Math.abs(mouseX - PEX_GUI.dClickX) < 2 && Math.abs(mouseY - PEX_GUI.dClickY) < 2;
                     if (inDoubleClickRange && PEX_GUI.dClickMouse == button && getTime() - PEX_GUI.dClickTime < 500_000_000)
@@ -203,7 +203,7 @@ public class PEX_GUI extends PEX
                 }
                 PEX_GUI.clickMouse = null;
             }
-            if (button.isHeld())
+            if (button.held())
             {
                 Window window = PEX_GUI.top;
                 while (window != null)
@@ -223,7 +223,7 @@ public class PEX_GUI extends PEX
                     window = window.getParent();
                 }
             }
-            if (button.isRepeated())
+            if (button.repeat())
             {
                 Window window = PEX_GUI.top;
                 while (window != null)
@@ -242,7 +242,7 @@ public class PEX_GUI extends PEX
         {
             for (Keyboard.Key key : Keyboard.inputs())
             {
-                if (key.isPressed())
+                if (key.down())
                 {
                     Window window = PEX_GUI.focused;
                     while (window != null)
@@ -251,7 +251,7 @@ public class PEX_GUI extends PEX
                         window = window.getParent();
                     }
                 }
-                if (key.isReleased())
+                if (key.up())
                 {
                     Window window = PEX_GUI.focused;
                     while (window != null)
@@ -260,7 +260,7 @@ public class PEX_GUI extends PEX
                         window = window.getParent();
                     }
                 }
-                if (key.isHeld())
+                if (key.held())
                 {
                     Window window = PEX_GUI.focused;
                     while (window != null)
@@ -269,7 +269,7 @@ public class PEX_GUI extends PEX
                         window = window.getParent();
                     }
                 }
-                if (key.isReleased())
+                if (key.up())
                 {
                     Window window = PEX_GUI.focused;
                     while (window != null)

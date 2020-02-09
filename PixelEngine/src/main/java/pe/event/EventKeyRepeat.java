@@ -2,14 +2,14 @@ package pe.event;
 
 import pe.Keyboard;
 
-public class EventKeyReleased extends Event
+public class EventKeyRepeat extends Event
 {
-    public EventKeyReleased(Object[] values)
+    public EventKeyRepeat(Object[] values)
     {
         super(new String[] {""}, values);
     }
     
-    public Keyboard.Key getButton()
+    public Keyboard.Key button()
     {
         return (Keyboard.Key) this.values[0];
     }
