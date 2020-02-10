@@ -150,10 +150,10 @@ public class ProgressBar extends Label
         if (canDrawValue())
         {
             String text = (int) Math.floor(this.value * 100) + "%";
-            
-            int x = (getForegroundWidth() - getTextWidth(text)) / 2 + getForegroundOriginX();
-            int y = (getForegroundHeight() - getTextHeight(text)) / 2 + getForegroundOriginY();
-            
+    
+            int x = (getForegroundWidth() - textWidth(text)) / 2 + getForegroundOriginX();
+            int y = (getForegroundHeight() - textHeight(text)) / 2 + getForegroundOriginY();
+    
             drawString(x, y, text, Color.BLACK);
         }
     }

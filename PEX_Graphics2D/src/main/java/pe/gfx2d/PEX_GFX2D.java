@@ -6,8 +6,8 @@ import org.joml.Vector2i;
 import org.joml.Vector2ic;
 import pe.*;
 
-import static pe.PixelEngine.getScreenHeight;
-import static pe.PixelEngine.getScreenWidth;
+import static pe.PixelEngine.screenHeight;
+import static pe.PixelEngine.screenWidth;
 
 @SuppressWarnings("unused")
 public class PEX_GFX2D extends PEX
@@ -22,12 +22,12 @@ public class PEX_GFX2D extends PEX
     
     public static Vector2ic getMousePos()
     {
-        return PEX_GFX2D.mousePos.set(Mouse.getX(), Mouse.getY());
+        return PEX_GFX2D.mousePos.set(Mouse.x(), Mouse.y());
     }
     
     public static Vector2ic getViewport()
     {
-        return PEX_GFX2D.viewport.set(getScreenWidth(), getScreenHeight());
+        return PEX_GFX2D.viewport.set(screenWidth(), screenHeight());
     }
     
     // TODO - This needs an equivalent
