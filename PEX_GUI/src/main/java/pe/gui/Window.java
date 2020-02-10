@@ -816,22 +816,22 @@ public class Window
                 if (this.regen)
                 {
                     LOGGER.debug("Regen: %s", this);
-                    
+    
                     generateSprites(elapsedTime);
-                    
+    
                     this.regen = false;
                 }
-                
+    
                 LOGGER.debug("Redraw: %s", this);
-                
-                setDrawMode(DrawMode.NORMAL);
-                setTarget(getSprite());
+    
+                PixelEngine.drawMode(DrawMode.NORMAL);
+                PixelEngine.renderTarget(getSprite());
                 drawWindow(elapsedTime);
-                
+    
                 drawBorder(elapsedTime);
-                
+    
                 drawChildren(elapsedTime);
-                
+    
                 this.redraw = false;
             }
         }
@@ -861,8 +861,8 @@ public class Window
             child.draw(elapsedTime);
             if (child.isVisible())
             {
-                setDrawMode(DrawMode.NORMAL);
-                setTarget(getSprite());
+                PixelEngine.drawMode(DrawMode.NORMAL);
+                PixelEngine.renderTarget(getSprite());
                 drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }

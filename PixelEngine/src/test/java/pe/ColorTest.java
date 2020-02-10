@@ -13,9 +13,9 @@ public class ColorTest extends PixelEngine
     @Override
     protected boolean onUserUpdate(double elapsedTime)
     {
-        for (int j = 0; j < getScreenHeight(); j++)
+        for (int j = 0; j < screenHeight(); j++)
         {
-            for (int i = 0; i < getScreenHeight(); i++)
+            for (int i = 0; i < screenHeight(); i++)
             {
                 draw(i, j, color.set(i, j, 255));
             }

@@ -16,10 +16,10 @@ public class Label extends Window
         
         setScale(scale);
         
-        int width = getTextWidth(text, getScale());
+        int width = textWidth(text, getScale());
         if (width > getForegroundWidth()) setForegroundWidth(width);
-        
-        int height = getTextHeight(text, getScale());
+    
+        int height = textHeight(text, getScale());
         if (height > getForegroundHeight()) setForegroundHeight(height);
         
         setText(text);
@@ -38,14 +38,14 @@ public class Label extends Window
     public void fitWidth(boolean shrink)
     {
         int width    = getWidth();
-        int newWidth = getTextWidth(getText(), getScale()) + (getBorderSize() + getMarginSize()) * 2;
+        int newWidth = textWidth(getText(), getScale()) + (getBorderSize() + getMarginSize()) * 2;
         if ((shrink && newWidth < width) || newWidth > width) setWidth(newWidth);
     }
     
     public void fitHeight(boolean shrink)
     {
         int height    = getHeight();
-        int newHeight = getTextHeight(getText(), getScale()) + (getBorderSize() + getMarginSize()) * 2;
+        int newHeight = textHeight(getText(), getScale()) + (getBorderSize() + getMarginSize()) * 2;
         if ((shrink && newHeight < height) || newHeight > height) setHeight(newHeight);
     }
     
@@ -163,17 +163,17 @@ public class Label extends Window
     protected void drawWindow(double elapsedTime)
     {
         super.drawWindow(elapsedTime);
-        
-        if (getTextWidth(getText(), getScale()) > getForegroundWidth())
+    
+        if (textWidth(getText(), getScale()) > getForegroundWidth())
         {
             List<String> lines = clipTextWidth(getText(), getScale(), getForegroundWidth());
-            
+        
             int textY = getForegroundHeight() - (lines.size() * scaleToPixels(getScale()));
             int vPos  = getTextPosition().getVertical();
             int y     = vPos > 0 ? textY : vPos == 0 ? textY / 2 : 0;
             for (String line : lines)
             {
-                int textX = getForegroundWidth() - getTextWidth(line, getScale());
+                int textX = getForegroundWidth() - textWidth(line, getScale());
                 
                 int hPos = getTextPosition().getHorizontal();
                 
@@ -187,15 +187,15 @@ public class Label extends Window
         }
         else
         {
-            int textX = getForegroundWidth() - getTextWidth(getText(), getScale());
-            int textY = getForegroundHeight() - getTextHeight(getText(), getScale());
-            
+            int textX = getForegroundWidth() - textWidth(getText(), getScale());
+            int textY = getForegroundHeight() - textHeight(getText(), getScale());
+        
             int hPos = getTextPosition().getHorizontal();
             int vPos = getTextPosition().getVertical();
-            
+        
             int x = hPos > 0 ? textX : hPos == 0 ? textX / 2 : 0;
             int y = vPos > 0 ? textY : vPos == 0 ? textY / 2 : 0;
-            
+        
             drawString(getForegroundOriginX() + x, getForegroundOriginY() + y, getText(), getTextColor(), getScale());
         }
     }

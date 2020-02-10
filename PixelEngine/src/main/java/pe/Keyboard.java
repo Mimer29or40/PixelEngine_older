@@ -1,5 +1,7 @@
 package pe;
 
+import pe.event.*;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,12 +89,12 @@ public class Keyboard
     public static final Key BACK      = new Key("BACK", GLFW_KEY_BACKSPACE, '\b', '\b');
     public static final Key SPACE     = new Key("SPACE", GLFW_KEY_SPACE, ' ', ' ');
     
-    public static final Key R_SHIFT = new Key("R_SHIFT", GLFW_KEY_LEFT_SHIFT, 0, 0);
-    public static final Key L_SHIFT = new Key("L_SHIFT", GLFW_KEY_RIGHT_SHIFT, 0, 0);
-    public static final Key R_CTRL  = new Key("R_CTRL", GLFW_KEY_LEFT_CONTROL, 0, 0);
-    public static final Key L_CTRL  = new Key("L_CTRL", GLFW_KEY_RIGHT_CONTROL, 0, 0);
-    public static final Key R_ALT   = new Key("R_ALT", GLFW_KEY_LEFT_ALT, 0, 0);
-    public static final Key L_ALT   = new Key("L_ALT", GLFW_KEY_RIGHT_ALT, 0, 0);
+    public static final Key L_SHIFT = new Key("L_SHIFT", GLFW_KEY_LEFT_SHIFT, 0, 0);
+    public static final Key R_SHIFT = new Key("R_SHIFT", GLFW_KEY_RIGHT_SHIFT, 0, 0);
+    public static final Key L_CTRL  = new Key("L_CTRL", GLFW_KEY_LEFT_CONTROL, 0, 0);
+    public static final Key R_CTRL  = new Key("R_CTRL", GLFW_KEY_RIGHT_CONTROL, 0, 0);
+    public static final Key L_ALT   = new Key("L_ALT", GLFW_KEY_LEFT_ALT, 0, 0);
+    public static final Key R_ALT   = new Key("R_ALT", GLFW_KEY_RIGHT_ALT, 0, 0);
     public static final Key L_SUPER = new Key("L_SUPER", GLFW_KEY_LEFT_SUPER, 0, 0);
     public static final Key R_SUPER = new Key("R_SUPER", GLFW_KEY_RIGHT_SUPER, 0, 0);
     
@@ -131,35 +133,34 @@ public class Keyboard
     protected static long holdDelay   = 500_000_000;
     protected static long repeatDelay = 100_000_000;
     
-    private static boolean captureText  = false;
-    private static String  capturedText = "";
+    private static String capturedText = "";
     
     private Keyboard()
     {
     
     }
     
-    public static double getHoldDelay()
+    public static double holdDelay()
     {
         return Keyboard.holdDelay / 1_000_000_000D;
     }
     
-    public static void setHoldDelay(double holdDelay)
+    public static void holdDelay(double holdDelay)
     {
         Keyboard.holdDelay = (long) (holdDelay * 1_000_000_000L);
     }
     
-    public static double getRepeatDelay()
+    public static double repeatDelay()
     {
         return Keyboard.repeatDelay / 1_000_000_000D;
     }
     
-    public static void setRepeatDelay(double repeatDelay)
+    public static void repeatDelay(double repeatDelay)
     {
         Keyboard.repeatDelay = (long) (repeatDelay * 1_000_000_000L);
     }
     
-    public static Collection<Key> getInputs()
+    public static Collection<Key> inputs()
     {
         return Keyboard.inputs.values();
     }
@@ -172,42 +173,36 @@ public class Keyboard
     public static Key getKey(char key)
     {
         if (key == 0) return Keyboard.NONE;
-        for (Key k : getInputs()) if (k.baseChar == key || k.shiftChar == key) return k;
+        for (Key k : inputs()) if (k.baseChar == key || k.shiftChar == key) return k;
         return Keyboard.NONE;
-    }
-    
-    public static void captureText(boolean captureText)
-    {
-        Keyboard.captureText = captureText;
-        Keyboard.capturedText = "";
-    }
-    
-    public static String getCapturedText()
-    {
-        String text = Keyboard.capturedText;
-        Keyboard.capturedText = "";
-        return text;
     }
     
     public static void handleEvents(long time, long delta)
     {
-        for (Key key : getInputs())
+        String text = Keyboard.capturedText;
+        for (int i = 0, n = Keyboard.capturedText.length(); i < n; i++)
         {
-            key.pressed = false;
-            key.released = false;
-            key.repeated = false;
-            
+            Events.post(EventKeyTyped.class, Keyboard.capturedText.charAt(i));
+        }
+        Keyboard.capturedText = "";
+    
+        for (Key key : inputs())
+        {
+            key.down = false;
+            key.up = false;
+            key.repeat = false;
+        
             if (key.state != key.prevState)
             {
                 if (key.state == GLFW_PRESS)
                 {
-                    key.pressed = true;
+                    key.down = true;
                     key.held = true;
                     key.downTime = time;
                 }
                 else if (key.state == GLFW_RELEASE)
                 {
-                    key.released = true;
+                    key.up = true;
                     key.held = false;
                     key.downTime = Long.MAX_VALUE;
                 }
@@ -215,9 +210,27 @@ public class Keyboard
             if (key.state == GLFW_REPEAT || key.held && time - key.downTime > Keyboard.holdDelay)
             {
                 key.downTime += Keyboard.repeatDelay;
-                key.repeated = true;
+                key.repeat = true;
             }
             key.prevState = key.state;
+        
+            if (key.down) Events.post(EventKeyDown.class, key);
+            if (key.up)
+            {
+                Events.post(EventKeyUp.class, key);
+            
+                if (time - key.pressTime < 500_000_000)
+                {
+                    Events.post(EventKeyPressed.class, key, true);
+                }
+                else
+                {
+                    Events.post(EventKeyPressed.class, key, false);
+                    key.pressTime = time;
+                }
+            }
+            if (key.held) Events.post(EventKeyHeld.class, key);
+            if (key.repeat) Events.post(EventKeyRepeat.class, key);
         }
     }
     
@@ -248,30 +261,30 @@ public class Keyboard
     
     public static void charCallback(int codePoint)
     {
-        if (Keyboard.captureText) Keyboard.capturedText += Character.toString(codePoint);
+        Keyboard.capturedText += Character.toString(codePoint);
     }
     
     public static class Key
     {
-        public final    int     scancode;
-        public final    char    baseChar;
-        public final    char    shiftChar;
-        protected final String  name;
-        protected final int     reference;
-        protected       boolean pressed  = false;
-        protected       boolean released = false;
-        protected       boolean held     = false;
-        protected       boolean repeated = false;
-        protected       long    downTime = 0;
-        protected       int     state, prevState;
+        private final String name;
+        
+        private boolean down   = false;
+        private boolean up     = false;
+        private boolean held   = false;
+        private boolean repeat = false;
+        
+        private int state, prevState;
+        private long downTime, pressTime;
+        
+        public final int  scancode;
+        public final char baseChar;
+        public final char shiftChar;
         
         private Key(String name, int reference, int baseChar, int shiftChar)
         {
             this.name = name;
-            this.reference = reference;
             
-            this.scancode = this.reference > 0 ? glfwGetKeyScancode(this.reference) : 0;
-            
+            this.scancode = reference > 0 ? glfwGetKeyScancode(reference) : 0;
             this.baseChar = (char) baseChar;
             this.shiftChar = (char) shiftChar;
             
@@ -289,24 +302,24 @@ public class Keyboard
             return this.name;
         }
         
-        public boolean isPressed()
+        public boolean down()
         {
-            return this.pressed;
+            return this.down;
         }
         
-        public boolean isReleased()
+        public boolean up()
         {
-            return this.released;
+            return this.up;
         }
         
-        public boolean isHeld()
+        public boolean held()
         {
             return this.held;
         }
         
-        public boolean isRepeated()
+        public boolean repeat()
         {
-            return this.repeated;
+            return this.repeat;
         }
     }
 }

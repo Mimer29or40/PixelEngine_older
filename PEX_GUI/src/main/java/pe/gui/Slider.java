@@ -337,14 +337,14 @@ public class Slider extends Window
     protected void drawWindow(double elapsedTime)
     {
         super.drawWindow(elapsedTime);
-        
+    
         fillRect(getForegroundOriginX(), getForegroundOriginY(), this.barWidth, getForegroundHeight(), getSliderColor());
-        
+    
         String text = getValue() == (int) getValue() ? String.valueOf((int) getValue()) : String.valueOf(round(getValue(), 3));
-        
-        int x = (getForegroundWidth() - getTextWidth(text)) / 2;
-        int y = (getForegroundHeight() - getTextHeight(text)) / 2;
-        
+    
+        int x = (getForegroundWidth() - textWidth(text)) / 2;
+        int y = (getForegroundHeight() - textHeight(text)) / 2;
+    
         drawString(getForegroundOriginX() + x, getForegroundOriginY() + y, text, Color.BLACK);
     }
 }

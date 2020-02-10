@@ -20,9 +20,9 @@ public class SoundTest extends PixelEngine
     @Override
     protected boolean onUserUpdate(double elapsedTime)
     {
-        if (Keyboard.SPACE.pressed) sound.play();
-        if (Keyboard.SPACE.released) sound.stop();
-        
+        if (Keyboard.SPACE.down()) sound.play();
+        if (Keyboard.SPACE.up()) sound.stop();
+    
         return true;
     }
     

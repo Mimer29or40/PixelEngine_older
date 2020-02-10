@@ -31,16 +31,16 @@ public class Graphics2DTest extends PixelEngine
     @Override
     public boolean onUserUpdate(double elapsedTime)
     {
-        setDrawMode(DrawMode.NORMAL);
+        drawMode(DrawMode.NORMAL);
         clear(Color.BLUE);
-        
+    
         drawCircle(32, 32, 30);
         drawCircle(96, 32, 30);
-        
-        float mx = Mouse.getX();
-        float my = Mouse.getY();
-        
-        
+    
+        float mx = Mouse.x();
+        float my = Mouse.y();
+    
+    
         float px1 = mx - 32, px2 = mx - 96;
         float py1 = my - 32, py2 = my - 32;
         float pr1 = 1.0f / (float) Math.sqrt(px1 * px1 + py1 * py1);
@@ -51,24 +51,24 @@ public class Graphics2DTest extends PixelEngine
         py2 = 22.0f * (py2 * pr2) + 32.0f;
         fillCircle((int) px1, (int) py1, 8, Color.CYAN);
         fillCircle((int) px2, (int) py2, 8, Color.CYAN);
-        
+    
         drawLine(10, 70, 54, 70);    // Lines
         drawLine(54, 70, 70, 54);
-        
+    
         drawRect(10, 80, 54, 30);
         fillRect(10, 80, 54, 30);
-        
+    
         // Multiline Text
         drawString(10, 130, "Your Mouse Position is:\nX=" + mx + "\nY=" + my);
-        
-        if (Mouse.LEFT.pressed) addEvent("Mouse Button LEFT Down");
-        if (Mouse.LEFT.released) addEvent("Mouse Button LEFT Up");
-        if (Mouse.RIGHT.pressed) addEvent("Mouse Button RIGHT Down");
-        if (Mouse.RIGHT.released) addEvent("Mouse Button RIGHT Up");
-        if (Mouse.MIDDLE.pressed) addEvent("Mouse Button MIDDLE Down");
-        if (Mouse.MIDDLE.released) addEvent("Mouse Button MIDDLE Up");
-        
-        
+    
+        if (Mouse.LEFT.down) addEvent("Mouse Button LEFT Down");
+        if (Mouse.LEFT.up) addEvent("Mouse Button LEFT Up");
+        if (Mouse.RIGHT.down) addEvent("Mouse Button RIGHT Down");
+        if (Mouse.RIGHT.up) addEvent("Mouse Button RIGHT Up");
+        if (Mouse.MIDDLE.down) addEvent("Mouse Button MIDDLE Down");
+        if (Mouse.MIDDLE.up) addEvent("Mouse Button MIDDLE Up");
+    
+    
         // Draw Event Log
         int nLog = 0;
         for (String s : this.events)
@@ -103,8 +103,8 @@ public class Graphics2DTest extends PixelEngine
         t1.rotate(angle / 3);
         // Translate to centre of screen
         t1.translate(320, 240);
-        
-        setDrawMode(DrawMode.ALPHA);
+    
+        drawMode(DrawMode.ALPHA);
         
         // Use extension to draw sprite with transform applied
         PEX_GFX2D.drawSprite(spr, t1);

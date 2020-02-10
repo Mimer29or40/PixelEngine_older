@@ -42,7 +42,7 @@ public abstract class Modal extends Window
         for (Button button : getButtons()) button.onKeyPressed(key -> key != Keyboard.ESCAPE);
         
         String linesString = join(clipTextWidth(getText(), this.text.getScale(), 150), "\n");
-        setForegroundSize(getTextWidth(linesString, this.text.getScale()), getTextHeight(linesString, this.text.getScale()));
+        setForegroundSize(textWidth(linesString, this.text.getScale()), textHeight(linesString, this.text.getScale()));
     }
     
     @Override
@@ -149,7 +149,7 @@ public abstract class Modal extends Window
         if (!isVisible())
         {
             setVisible(true);
-            setPosition((getScreenWidth() - getWidth()) / 2, (getScreenHeight() - getHeight()) / 2);
+            setPosition((screenWidth() - getWidth()) / 2, (screenHeight() - getHeight()) / 2);
             
             setParent(PEX_GUI.MODAL);
             setFocused();
@@ -163,7 +163,7 @@ public abstract class Modal extends Window
         if (isVisible())
         {
             setVisible(false);
-            setPosition(getScreenWidth() + 10, getScreenHeight() + 10);
+            setPosition(screenWidth() + 10, screenHeight() + 10);
             
             setParent(null);
             
