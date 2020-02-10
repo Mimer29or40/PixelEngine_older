@@ -681,9 +681,9 @@ public class Window
         this.mouseWheel = mouseWheel;
     }
     
-    protected boolean onMouseWheel(int dir)
+    protected boolean onMouseWheel(int scrollX, int scrollY)
     {
-        return this.mouseWheel == null || this.mouseWheel.fire(dir);
+        return this.mouseWheel == null || this.mouseWheel.fire(scrollX, scrollY);
     }
     
     private IKeyPressed keyPressed;

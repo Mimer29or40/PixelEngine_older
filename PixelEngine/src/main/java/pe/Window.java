@@ -327,7 +327,7 @@ public class Window
     
     protected static void handleEvents(long time, long delta)
     {
-        Window.LOGGER.debug("Handling Window Events");
+        Window.LOGGER.trace("Handling Window Events");
         
         if (Window.focused != Window.newFocused)
         {

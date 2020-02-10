@@ -282,15 +282,15 @@ public class Slider extends Window
     }
     
     @Override
-    protected boolean onMouseWheel(int dir)
+    protected boolean onMouseWheel(int scrollX, int scrollY)
     {
-        if (super.onMouseWheel(dir))
+        if (super.onMouseWheel(scrollX, scrollY))
         {
-            if (dir < 0 && getValue() > getMin())
+            if (scrollY < 0 && getValue() > getMin())
             {
                 setValue(getValue() - getIncrement());
             }
-            else if (dir > 0 && getValue() < getMax())
+            else if (scrollY > 0 && getValue() < getMax())
             {
                 setValue(getValue() + getIncrement());
             }

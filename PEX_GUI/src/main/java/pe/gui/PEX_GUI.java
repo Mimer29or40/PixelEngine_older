@@ -1,6 +1,7 @@
 package pe.gui;
 
 import pe.*;
+import pe.event.*;
 
 import static pe.PixelEngine.*;
 
@@ -62,251 +63,332 @@ public class PEX_GUI extends PEX
     {
         PEX_GUI.tooltip = new Label(null);
         PEX_GUI.tooltip.setVisible(false);
+    
+        // Events.subscribe(EventMouseScrolled.class, this::scrollEvent);
     }
     
     @Override
     public void beforeUserUpdate(double elapsedTime)
     {
         this.profiler.startSection("Window Events");
-        
-        int mouseX = Mouse.x(), mouseY = Mouse.y();
-        
-        this.profiler.startSection("Mouse Over");
-        
-        PEX_GUI.ROOT.getChildren().forEach(window -> window.mouseOver(mouseX, mouseY, PEX_GUI.MODAL.getChildren().isEmpty()));
-        for (int i = 0; i < PEX_GUI.MODAL.getChildren().size(); i++) PEX_GUI.MODAL.getChildren().get(i).mouseOver(mouseX, mouseY, i + 1 == PEX_GUI.MODAL.getChildren().size());
-        
-        this.profiler.endSection();
-        
-        this.profiler.startSection("Top Window");
-        
-        Window prevTop = PEX_GUI.top;
-        PEX_GUI.top = null;
-        if (PEX_GUI.drag != null)
         {
-            PEX_GUI.top = PEX_GUI.drag;
-        }
-        else if (!PEX_GUI.MODAL.getChildren().isEmpty())
-        {
-            PEX_GUI.top = PEX_GUI.MODAL.getChildren().get(PEX_GUI.MODAL.getChildren().size() - 1).getTop();
-        }
+            int mouseX = Mouse.x(), mouseY = Mouse.y();
         
-        if (PEX_GUI.top == null && PEX_GUI.MODAL.getChildren().isEmpty())
-        {
-            for (Window window : PEX_GUI.ROOT.getChildren())
+            this.profiler.startSection("Mouse Over");
             {
-                PEX_GUI.top = window.getTop();
-                if (PEX_GUI.top != null) break;
-            }
-        }
-        
-        if (prevTop != PEX_GUI.top)
-        {
-            if (prevTop != null) prevTop.onMouseExited();
-            if (PEX_GUI.top != null) PEX_GUI.top.onMouseEntered();
-        }
-        
-        this.profiler.endSection();
-        
-        this.profiler.startSection("ToolTip");
-        
-        if (PEX_GUI.top != null && !PEX_GUI.top.getTooltipText().equals(""))
-        {
-            String tooltip = PEX_GUI.top.getTooltipText();
-            PEX_GUI.tooltip.setVisible(true);
-            int posX = mouseX + 12 / pixelWidth();
-            if (!PEX_GUI.prevTooltip.equals(tooltip))
-            {
-                PEX_GUI.tooltip.setText(tooltip);
-    
-                int maxWidth = screenWidth() - posX - (PEX_GUI.tooltip.getBorderSize() + PEX_GUI.tooltip.getMarginSize()) * 2;
-                
-                String linesString = join(clipTextWidth(tooltip, PEX_GUI.tooltip.getScale(), maxWidth), "\n");
-    
-                PEX_GUI.tooltip.setForegroundSize(textWidth(linesString, PEX_GUI.tooltip.getScale()), textHeight(linesString, PEX_GUI.tooltip.getScale()));
-            }
-            PEX_GUI.tooltip.setPosition(posX, mouseY);
-        }
-        else
-        {
-            PEX_GUI.tooltip.setVisible(false);
-            PEX_GUI.tooltip.setPosition(screenWidth() + 10, screenHeight() + 10);
-        }
-        
-        this.profiler.endSection();
-        
-        this.profiler.startSection("Event Handlers");
-        
-        this.profiler.startSection("Mouse Wheel Events");
-    
-        if (Mouse.scrollY() != 0)
-        {
-            Window window = PEX_GUI.top;
-            while (window != null)
-            {
-                if (window.onMouseWheel(Mouse.scrollY())) break;
-                window = window.getParent();
-            }
-        }
-        
-        this.profiler.endSection();
-        
-        this.profiler.startSection("Mouse Events");
-    
-        for (Mouse.Button button : Mouse.inputs())
-        {
-            if (button.down())
-            {
-                if (PEX_GUI.top == null) setFocused(null);
-    
-                PEX_GUI.clickMouse = button;
-                PEX_GUI.clickX = mouseX;
-                PEX_GUI.clickY = mouseY;
-    
-                PEX_GUI.dragMouse = button;
-                PEX_GUI.dragX = mouseX;
-                PEX_GUI.dragY = mouseY;
-                Window window = PEX_GUI.top;
-                while (window != null)
+                PEX_GUI.ROOT.getChildren().forEach(window -> window.mouseOver(mouseX, mouseY, PEX_GUI.MODAL.getChildren().isEmpty()));
+                for (int i = 0; i < PEX_GUI.MODAL.getChildren().size(); i++)
                 {
-                    if (PEX_GUI.focused != PEX_GUI.top) setFocused(window);
-                    if (window.onMousePressed(button, mouseX - window.getAbsX(), mouseY - window.getAbsY())) break;
-                    window = window.getParent();
+                    PEX_GUI.MODAL.getChildren().get(i).mouseOver(mouseX, mouseY, i + 1 == PEX_GUI.MODAL.getChildren().size());
                 }
             }
-            if (button.up())
+            this.profiler.endSection();
+        
+            this.profiler.startSection("Top Window");
             {
-                PEX_GUI.drag = null;
-                Window window = PEX_GUI.top;
-                while (window != null)
+                Window prevTop = PEX_GUI.top;
+                PEX_GUI.top = null;
+                if (PEX_GUI.drag != null)
                 {
-                    // TODO - Right Click Menu
-                    boolean result = window.onMouseReleased(button, mouseX - window.getAbsX(), mouseY - window.getAbsY());
+                    PEX_GUI.top = PEX_GUI.drag;
+                }
+                else if (!PEX_GUI.MODAL.getChildren().isEmpty())
+                {
+                    PEX_GUI.top = PEX_GUI.MODAL.getChildren().get(PEX_GUI.MODAL.getChildren().size() - 1).getTop();
+                }
             
-                    boolean inClickRange       = Math.abs(mouseX - PEX_GUI.clickX) < 2 && Math.abs(mouseY - PEX_GUI.clickY) < 2;
-                    boolean inDoubleClickRange = Math.abs(mouseX - PEX_GUI.dClickX) < 2 && Math.abs(mouseY - PEX_GUI.dClickY) < 2;
-                    if (inDoubleClickRange && PEX_GUI.dClickMouse == button && getTime() - PEX_GUI.dClickTime < 500_000_000)
-                    {
-                        PEX_GUI.dClickMouse = null;
-                        result = window.onMouseClicked(button, mouseX - window.getAbsX(), mouseY - window.getAbsY(), true) || result;
-                    }
-                    else if (inClickRange && PEX_GUI.clickMouse == button)
-                    {
-                        result = window.onMouseClicked(button, mouseX - window.getAbsX(), mouseY - window.getAbsY(), false) || result;
-                        PEX_GUI.dClickMouse = button;
-                        PEX_GUI.dClickTime = getTime();
-                        PEX_GUI.dClickX = mouseX;
-                        PEX_GUI.dClickY = mouseY;
-                    }
-                    if (result) break;
-                    window = window.getParent();
-                }
-                PEX_GUI.clickMouse = null;
-            }
-            if (button.held())
-            {
-                Window window = PEX_GUI.top;
-                while (window != null)
+                if (PEX_GUI.top == null && PEX_GUI.MODAL.getChildren().isEmpty())
                 {
-                    boolean result = window.onMouseHeld(button, mouseX - window.getAbsX(), mouseY - window.getAbsY());
-                    if (PEX_GUI.dragMouse == button && (PEX_GUI.dragX != mouseX || PEX_GUI.dragY != mouseY))
+                    for (Window window : PEX_GUI.ROOT.getChildren())
                     {
-                        if (window.onMouseDragged(button, mouseX - PEX_GUI.dragX, mouseY - PEX_GUI.dragY))
+                        PEX_GUI.top = window.getTop();
+                        if (PEX_GUI.top != null) break;
+                    }
+                }
+            
+                if (prevTop != PEX_GUI.top)
+                {
+                    if (prevTop != null) prevTop.onMouseExited();
+                    if (PEX_GUI.top != null) PEX_GUI.top.onMouseEntered();
+                }
+            }
+            this.profiler.endSection();
+        
+            this.profiler.startSection("ToolTip");
+            {
+                if (PEX_GUI.top != null && !PEX_GUI.top.getTooltipText().equals(""))
+                {
+                    String tooltip = PEX_GUI.top.getTooltipText();
+                    PEX_GUI.tooltip.setVisible(true);
+                    int posX = mouseX + 12 / pixelWidth();
+                    if (!PEX_GUI.prevTooltip.equals(tooltip))
+                    {
+                        PEX_GUI.tooltip.setText(tooltip);
+                    
+                        int maxWidth = screenWidth() - posX - (PEX_GUI.tooltip.getBorderSize() + PEX_GUI.tooltip.getMarginSize()) * 2;
+                    
+                        String linesString = join(clipTextWidth(tooltip, PEX_GUI.tooltip.getScale(), maxWidth), "\n");
+                    
+                        PEX_GUI.tooltip.setForegroundSize(textWidth(linesString, PEX_GUI.tooltip.getScale()), textHeight(linesString, PEX_GUI.tooltip.getScale()));
+                    }
+                    PEX_GUI.tooltip.setPosition(posX, mouseY);
+                }
+                else
+                {
+                    PEX_GUI.tooltip.setVisible(false);
+                    PEX_GUI.tooltip.setPosition(screenWidth() + 10, screenHeight() + 10);
+                }
+            }
+            this.profiler.endSection();
+        
+            this.profiler.startSection("Event Handlers");
+            {
+                this.profiler.startSection("Mouse Events");
+                {
+                    for (Event e : Events.get(Events.MOUSE_EVENTS))
+                    {
+                        if (e instanceof EventButtonDown)
                         {
-                            result = true;
-                            PEX_GUI.drag = window;
-                            PEX_GUI.dragX = mouseX;
-                            PEX_GUI.dragY = mouseY;
+                            EventButtonDown event = (EventButtonDown) e;
+                        
+                            Window window = PEX_GUI.top;
+                            while (window != null)
+                            {
+                                if (PEX_GUI.focused != PEX_GUI.top) setFocused(window);
+                                if (window.onMousePressed(event.button(), event.x() - window.getAbsX(), event.y() - window.getAbsY())) break;
+                                window = window.getParent();
+                            }
+                        }
+                        else if (e instanceof EventButtonUp)
+                        {
+                            EventButtonUp event = (EventButtonUp) e;
+                        
+                            Window window = PEX_GUI.top;
+                            while (window != null)
+                            {
+                                if (PEX_GUI.focused != PEX_GUI.top) setFocused(window);
+                                if (window.onMouseReleased(event.button(), event.x() - window.getAbsX(), event.y() - window.getAbsY())) break;
+                                window = window.getParent();
+                            }
+                        }
+                        else if (e instanceof EventButtonClicked)
+                        {
+                            EventButtonClicked event = (EventButtonClicked) e;
+                        
+                            Window window = PEX_GUI.top;
+                            while (window != null)
+                            {
+                                if (window.onMouseClicked(event.button(), event.x() - window.getAbsX(), event.y() - window.getAbsY(), event.doubleClicked())) break;
+                                window = window.getParent();
+                            }
+                        }
+                        else if (e instanceof EventButtonHeld)
+                        {
+                            EventButtonHeld event = (EventButtonHeld) e;
+                        
+                            Window window = PEX_GUI.top;
+                            while (window != null)
+                            {
+                                if (window.onMouseHeld(event.button(), event.x() - window.getAbsX(), event.y() - window.getAbsY())) break;
+                                window = window.getParent();
+                            }
+                        }
+                        else if (e instanceof EventButtonRepeat)
+                        {
+                            EventButtonRepeat event = (EventButtonRepeat) e;
+                        
+                            Window window = PEX_GUI.top;
+                            while (window != null)
+                            {
+                                if (window.onMouseRepeated(event.button(), event.x() - window.getAbsX(), event.y() - window.getAbsY())) break;
+                                window = window.getParent();
+                            }
+                        }
+                        else if (e instanceof EventMouseDragged)
+                        {
+                        
+                        }
+                        else if (e instanceof EventMouseScrolled)
+                        {
+                            EventMouseScrolled event = (EventMouseScrolled) e;
+                        
+                            Window window = PEX_GUI.top;
+                            while (window != null)
+                            {
+                                if (window.onMouseWheel(event.x(), event.y())) break;
+                                window = window.getParent();
+                            }
                         }
                     }
-                    if (result) break;
-                    window = window.getParent();
+                    // this.profiler.startSection("Mouse Wheel Events");
+                    // {
+                    //     for (Event e : Events.get(EventMouseScrolled.class))
+                    //     {
+                    //         EventMouseScrolled event  = (EventMouseScrolled) e;
+                    //         Window             window = PEX_GUI.top;
+                    //         while (window != null)
+                    //         {
+                    //             if (window.onMouseWheel(event.x(), event.y())) break;
+                    //             window = window.getParent();
+                    //         }
+                    //     }
+                    // }
+                    // this.profiler.endSection();
+                    //
+                    // for (Mouse.Button button : Mouse.inputs())
+                    // {
+                    //     if (button.down())
+                    //     {
+                    //         if (PEX_GUI.top == null) setFocused(null);
+                    //
+                    //         PEX_GUI.clickMouse = button;
+                    //         PEX_GUI.clickX = mouseX;
+                    //         PEX_GUI.clickY = mouseY;
+                    //
+                    //         PEX_GUI.dragMouse = button;
+                    //         PEX_GUI.dragX = mouseX;
+                    //         PEX_GUI.dragY = mouseY;
+                    //         Window window = PEX_GUI.top;
+                    //         while (window != null)
+                    //         {
+                    //             if (PEX_GUI.focused != PEX_GUI.top) setFocused(window);
+                    //             if (window.onMousePressed(button, mouseX - window.getAbsX(), mouseY - window.getAbsY())) break;
+                    //             window = window.getParent();
+                    //         }
+                    //     }
+                    //     if (button.up())
+                    //     {
+                    //         PEX_GUI.drag = null;
+                    //         Window window = PEX_GUI.top;
+                    //         while (window != null)
+                    //         {
+                    //             // TODO - Right Click Menu
+                    //             boolean result = window.onMouseReleased(button, mouseX - window.getAbsX(), mouseY - window.getAbsY());
+                    //
+                    //             boolean inClickRange       = Math.abs(mouseX - PEX_GUI.clickX) < 2 && Math.abs(mouseY - PEX_GUI.clickY) < 2;
+                    //             boolean inDoubleClickRange = Math.abs(mouseX - PEX_GUI.dClickX) < 2 && Math.abs(mouseY - PEX_GUI.dClickY) < 2;
+                    //             if (inDoubleClickRange && PEX_GUI.dClickMouse == button && getTime() - PEX_GUI.dClickTime < 500_000_000)
+                    //             {
+                    //                 PEX_GUI.dClickMouse = null;
+                    //                 result = window.onMouseClicked(button, mouseX - window.getAbsX(), mouseY - window.getAbsY(), true) || result;
+                    //             }
+                    //             else if (inClickRange && PEX_GUI.clickMouse == button)
+                    //             {
+                    //                 result = window.onMouseClicked(button, mouseX - window.getAbsX(), mouseY - window.getAbsY(), false) || result;
+                    //                 PEX_GUI.dClickMouse = button;
+                    //                 PEX_GUI.dClickTime = getTime();
+                    //                 PEX_GUI.dClickX = mouseX;
+                    //                 PEX_GUI.dClickY = mouseY;
+                    //             }
+                    //             if (result) break;
+                    //             window = window.getParent();
+                    //         }
+                    //         PEX_GUI.clickMouse = null;
+                    //     }
+                    //     if (button.held())
+                    //     {
+                    //         Window window = PEX_GUI.top;
+                    //         while (window != null)
+                    //         {
+                    //             boolean result = window.onMouseHeld(button, mouseX - window.getAbsX(), mouseY - window.getAbsY());
+                    //             if (PEX_GUI.dragMouse == button && (PEX_GUI.dragX != mouseX || PEX_GUI.dragY != mouseY))
+                    //             {
+                    //                 if (window.onMouseDragged(button, mouseX - PEX_GUI.dragX, mouseY - PEX_GUI.dragY))
+                    //                 {
+                    //                     result = true;
+                    //                     PEX_GUI.drag = window;
+                    //                     PEX_GUI.dragX = mouseX;
+                    //                     PEX_GUI.dragY = mouseY;
+                    //                 }
+                    //             }
+                    //             if (result) break;
+                    //             window = window.getParent();
+                    //         }
+                    //     }
+                    //     if (button.repeat())
+                    //     {
+                    //         Window window = PEX_GUI.top;
+                    //         while (window != null)
+                    //         {
+                    //             if (window.onMouseRepeated(button, mouseX - window.getAbsX(), mouseY - window.getAbsY())) break;
+                    //             window = window.getParent();
+                    //         }
+                    //     }
+                    // }
                 }
-            }
-            if (button.repeat())
-            {
-                Window window = PEX_GUI.top;
-                while (window != null)
+                this.profiler.endSection();
+            
+                this.profiler.startSection("Key Events");
                 {
-                    if (window.onMouseRepeated(button, mouseX - window.getAbsX(), mouseY - window.getAbsY())) break;
-                    window = window.getParent();
+                    if (PEX_GUI.focused != null)
+                    {
+                        for (Keyboard.Key key : Keyboard.inputs())
+                        {
+                            if (key.down())
+                            {
+                                Window window = PEX_GUI.focused;
+                                while (window != null)
+                                {
+                                    if (window.onKeyPressed(key)) break;
+                                    window = window.getParent();
+                                }
+                            }
+                            if (key.up())
+                            {
+                                Window window = PEX_GUI.focused;
+                                while (window != null)
+                                {
+                                    if (window.onKeyReleased(key)) break;
+                                    window = window.getParent();
+                                }
+                            }
+                            if (key.held())
+                            {
+                                Window window = PEX_GUI.focused;
+                                while (window != null)
+                                {
+                                    if (window.onKeyHeld(key)) break;
+                                    window = window.getParent();
+                                }
+                            }
+                            if (key.up())
+                            {
+                                Window window = PEX_GUI.focused;
+                                while (window != null)
+                                {
+                                    if (window.onKeyRepeated(key)) break;
+                                    window = window.getParent();
+                                }
+                            }
+                        }
+                    }
                 }
+                this.profiler.endSection();
             }
+            this.profiler.endSection();
         }
-        
         this.profiler.endSection();
-        
-        this.profiler.startSection("Key Events");
-        
-        if (PEX_GUI.focused != null)
-        {
-            for (Keyboard.Key key : Keyboard.inputs())
-            {
-                if (key.down())
-                {
-                    Window window = PEX_GUI.focused;
-                    while (window != null)
-                    {
-                        if (window.onKeyPressed(key)) break;
-                        window = window.getParent();
-                    }
-                }
-                if (key.up())
-                {
-                    Window window = PEX_GUI.focused;
-                    while (window != null)
-                    {
-                        if (window.onKeyReleased(key)) break;
-                        window = window.getParent();
-                    }
-                }
-                if (key.held())
-                {
-                    Window window = PEX_GUI.focused;
-                    while (window != null)
-                    {
-                        if (window.onKeyHeld(key)) break;
-                        window = window.getParent();
-                    }
-                }
-                if (key.up())
-                {
-                    Window window = PEX_GUI.focused;
-                    while (window != null)
-                    {
-                        if (window.onKeyRepeated(key)) break;
-                        window = window.getParent();
-                    }
-                }
-            }
-        }
-        
-        this.profiler.endSection();
-        
-        this.profiler.endSection();
-        
-        this.profiler.endSection();
-        
+    
         this.profiler.startSection("Window Update");
+        {
+            this.profiler.startSection("Windows");
+            {
+                for (Window window : PEX_GUI.ROOT.getChildren()) window.update(elapsedTime);
+            }
+            this.profiler.endSection();
         
-        this.profiler.startSection("Windows");
+            this.profiler.startSection("Modals");
+            {
+                for (Window window : PEX_GUI.MODAL.getChildren()) window.update(elapsedTime);
+            }
+            this.profiler.endSection();
         
-        for (Window window : PEX_GUI.ROOT.getChildren()) window.update(elapsedTime);
-        
-        this.profiler.endSection();
-        
-        this.profiler.startSection("Modals");
-        
-        for (Window window : PEX_GUI.MODAL.getChildren()) window.update(elapsedTime);
-        
-        this.profiler.endSection();
-        
-        this.profiler.startSection("Tooltip");
-        
-        if (PEX_GUI.top != null && PEX_GUI.tooltip.isVisible()) PEX_GUI.tooltip.update(elapsedTime);
-        
-        this.profiler.endSection();
-        
+            this.profiler.startSection("Tooltip");
+            {
+                if (PEX_GUI.top != null && PEX_GUI.tooltip.isVisible()) PEX_GUI.tooltip.update(elapsedTime);
+            }
+            this.profiler.endSection();
+        }
         this.profiler.endSection();
     }
     

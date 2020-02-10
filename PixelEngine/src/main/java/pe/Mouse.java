@@ -122,7 +122,7 @@ public class Mouse
         Mouse.scrollY = Mouse.newScrollY;
         Mouse.newScrollX = 0;
         Mouse.newScrollY = 0;
-        if (Mouse.scrollX != 0 || Mouse.scrollY != 0) Events.post(EventMouseMoved.class, Mouse.scrollX, Mouse.scrollY);
+        if (Mouse.scrollX != 0 || Mouse.scrollY != 0) Events.post(EventMouseScrolled.class, Mouse.scrollX, Mouse.scrollY);
     
         // TODO - Click, Double Click, Drag Events. See PEX_GUI for implementation details
     
