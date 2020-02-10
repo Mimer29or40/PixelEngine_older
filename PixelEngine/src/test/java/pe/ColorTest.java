@@ -31,11 +31,11 @@ public class ColorTest extends PixelEngine
     
     public static void main(String[] args)
     {
-        int r = 255;
-        int g = 255;
-        int b = 255;
-        int a = 255;
-        print(r | (g << 8) | (b << 16) | (a << 24));
+        // int r = 255;
+        // int g = 255;
+        // int b = 255;
+        // int a = 255;
+        // print(r | (g << 8) | (b << 16) | (a << 24));
         start(new ColorTest(), 256, 256, 1, 1);
     }
 }

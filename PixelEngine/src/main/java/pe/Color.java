@@ -7,47 +7,53 @@ import static pe.PixelEngine.randInt;
 @SuppressWarnings("unused")
 public class Color
 {
-    public static final Color WHITE            = new Color(255, 255, 255, true);
-    public static final Color LIGHT_GREY       = new Color(191, 191, 191, true);
-    public static final Color GREY             = new Color(127, 127, 127, true);
-    public static final Color DARK_GREY        = new Color(63, 63, 63, true);
-    public static final Color BLACK            = new Color(0, 0, 0, true);
-    public static final Color BACKGROUND_GREY  = new Color(51, 51, 51, true);
-    public static final Color LIGHTEST_RED     = new Color(255, 191, 191, true);
-    public static final Color LIGHTER_RED      = new Color(255, 127, 127, true);
-    public static final Color LIGHT_RED        = new Color(255, 63, 63, true);
-    public static final Color RED              = new Color(255, 0, 0, true);
-    public static final Color DARK_RED         = new Color(191, 0, 0, true);
-    public static final Color DARKER_RED       = new Color(127, 0, 0, true);
-    public static final Color DARKEST_RED      = new Color(63, 0, 0, true);
-    public static final Color LIGHTEST_YELLOW  = new Color(255, 255, 191, true);
-    public static final Color LIGHTER_YELLOW   = new Color(255, 255, 127, true);
-    public static final Color LIGHT_YELLOW     = new Color(255, 255, 63, true);
-    public static final Color YELLOW           = new Color(255, 255, 0, true);
-    public static final Color DARK_YELLOW      = new Color(191, 191, 0, true);
-    public static final Color DARKER_YELLOW    = new Color(127, 127, 0, true);
-    public static final Color DARKEST_YELLOW   = new Color(63, 63, 0, true);
-    public static final Color LIGHTEST_GREEN   = new Color(191, 255, 191, true);
-    public static final Color LIGHTER_GREEN    = new Color(127, 255, 127, true);
-    public static final Color LIGHT_GREEN      = new Color(63, 255, 63, true);
-    public static final Color GREEN            = new Color(0, 255, 0, true);
-    public static final Color DARK_GREEN       = new Color(0, 191, 0, true);
-    public static final Color DARKER_GREEN     = new Color(0, 127, 0, true);
-    public static final Color DARKEST_GREEN    = new Color(0, 63, 0, true);
-    public static final Color LIGHTEST_CYAN    = new Color(191, 255, 255, true);
-    public static final Color LIGHTER_CYAN     = new Color(127, 255, 255, true);
-    public static final Color LIGHT_CYAN       = new Color(63, 255, 255, true);
-    public static final Color CYAN             = new Color(0, 255, 255, true);
-    public static final Color DARK_CYAN        = new Color(0, 191, 191, true);
-    public static final Color DARKER_CYAN      = new Color(0, 127, 127, true);
-    public static final Color DARKEST_CYAN     = new Color(0, 63, 63, true);
-    public static final Color LIGHTEST_BLUE    = new Color(191, 191, 255, true);
-    public static final Color LIGHTER_BLUE     = new Color(127, 127, 255, true);
-    public static final Color LIGHT_BLUE       = new Color(63, 63, 255, true);
-    public static final Color BLUE             = new Color(0, 0, 255, true);
-    public static final Color DARK_BLUE        = new Color(0, 0, 191, true);
-    public static final Color DARKER_BLUE      = new Color(0, 0, 127, true);
-    public static final Color DARKEST_BLUE     = new Color(0, 0, 63, true);
+    public static final Color WHITE           = new Color(255, 255, 255, true);
+    public static final Color LIGHT_GREY      = new Color(191, 191, 191, true);
+    public static final Color GREY            = new Color(127, 127, 127, true);
+    public static final Color DARK_GREY       = new Color(63, 63, 63, true);
+    public static final Color BLACK           = new Color(0, 0, 0, true);
+    public static final Color BACKGROUND_GREY = new Color(51, 51, 51, true);
+    
+    public static final Color LIGHTEST_RED = new Color(255, 191, 191, true);
+    public static final Color LIGHTER_RED  = new Color(255, 127, 127, true);
+    public static final Color LIGHT_RED    = new Color(255, 63, 63, true);
+    public static final Color RED          = new Color(255, 0, 0, true);
+    public static final Color DARK_RED     = new Color(191, 0, 0, true);
+    public static final Color DARKER_RED   = new Color(127, 0, 0, true);
+    public static final Color DARKEST_RED  = new Color(63, 0, 0, true);
+    
+    public static final Color LIGHTEST_YELLOW = new Color(255, 255, 191, true);
+    public static final Color LIGHTER_YELLOW  = new Color(255, 255, 127, true);
+    public static final Color LIGHT_YELLOW    = new Color(255, 255, 63, true);
+    public static final Color YELLOW          = new Color(255, 255, 0, true);
+    public static final Color DARK_YELLOW     = new Color(191, 191, 0, true);
+    public static final Color DARKER_YELLOW   = new Color(127, 127, 0, true);
+    public static final Color DARKEST_YELLOW  = new Color(63, 63, 0, true);
+    
+    public static final Color LIGHTEST_GREEN = new Color(191, 255, 191, true);
+    public static final Color LIGHTER_GREEN  = new Color(127, 255, 127, true);
+    public static final Color LIGHT_GREEN    = new Color(63, 255, 63, true);
+    public static final Color GREEN          = new Color(0, 255, 0, true);
+    public static final Color DARK_GREEN     = new Color(0, 191, 0, true);
+    public static final Color DARKER_GREEN   = new Color(0, 127, 0, true);
+    public static final Color DARKEST_GREEN  = new Color(0, 63, 0, true);
+    
+    public static final Color LIGHTEST_CYAN = new Color(191, 255, 255, true);
+    public static final Color LIGHTER_CYAN  = new Color(127, 255, 255, true);
+    public static final Color LIGHT_CYAN    = new Color(63, 255, 255, true);
+    public static final Color CYAN          = new Color(0, 255, 255, true);
+    public static final Color DARK_CYAN     = new Color(0, 191, 191, true);
+    public static final Color DARKER_CYAN   = new Color(0, 127, 127, true);
+    public static final Color DARKEST_CYAN  = new Color(0, 63, 63, true);
+    
+    public static final Color LIGHTEST_BLUE = new Color(191, 191, 255, true);
+    public static final Color LIGHTER_BLUE  = new Color(127, 127, 255, true);
+    public static final Color LIGHT_BLUE    = new Color(63, 63, 255, true);
+    public static final Color BLUE          = new Color(0, 0, 255, true);
+    public static final Color DARK_BLUE     = new Color(0, 0, 191, true);
+    public static final Color DARKER_BLUE   = new Color(0, 0, 127, true);
+    public static final Color DARKEST_BLUE  = new Color(0, 0, 63, true);
+    
     public static final Color LIGHTEST_MAGENTA = new Color(255, 191, 255, true);
     public static final Color LIGHTER_MAGENTA  = new Color(255, 127, 255, true);
     public static final Color LIGHT_MAGENTA    = new Color(255, 63, 255, true);
@@ -55,8 +61,10 @@ public class Color
     public static final Color DARK_MAGENTA     = new Color(191, 0, 191, true);
     public static final Color DARKER_MAGENTA   = new Color(127, 0, 127, true);
     public static final Color DARKEST_MAGENTA  = new Color(63, 0, 63, true);
-    public static final Color BLANK            = new Color(0, 0, 0, 0, true);
-    private             int   r, g, b, a;
+    
+    public static final Color BLANK = new Color(0, 0, 0, 0, true);
+    
+    private int r, g, b, a;
     private boolean immutable;
     
     public Color(Number r, Number g, Number b, Number a, boolean immutable)
