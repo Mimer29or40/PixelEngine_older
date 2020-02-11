@@ -611,7 +611,7 @@ public class Window
     
     protected boolean onMouseButtonDown(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mBDown == null || this.mBDown.fire(button, widgetX, widgetY);
+        return this.mBDown != null && this.mBDown.fire(button, widgetX, widgetY);
     }
     
     private IMouseButtonUp mBUp;
@@ -623,7 +623,7 @@ public class Window
     
     protected boolean onMouseButtonUp(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mBUp == null || this.mBUp.fire(button, widgetX, widgetY);
+        return this.mBUp != null && this.mBUp.fire(button, widgetX, widgetY);
     }
     
     private IMouseButtonHeld mBHeld;
@@ -635,7 +635,7 @@ public class Window
     
     protected boolean onMouseButtonHeld(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mBHeld == null || this.mBHeld.fire(button, widgetX, widgetY);
+        return this.mBHeld != null && this.mBHeld.fire(button, widgetX, widgetY);
     }
     
     private IMouseButtonRepeated mBRepeated;
@@ -647,7 +647,7 @@ public class Window
     
     protected boolean onMouseButtonRepeated(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mBRepeated == null || this.mBRepeated.fire(button, widgetX, widgetY);
+        return this.mBRepeated != null && this.mBRepeated.fire(button, widgetX, widgetY);
     }
     
     private IMouseButtonClicked mBClicked;
@@ -659,7 +659,7 @@ public class Window
     
     protected boolean onMouseButtonClicked(Mouse.Button button, int widgetX, int widgetY, boolean doubleClicked)
     {
-        return this.mBClicked == null || this.mBClicked.fire(button, widgetX, widgetY, doubleClicked);
+        return this.mBClicked != null && this.mBClicked.fire(button, widgetX, widgetY, doubleClicked);
     }
     
     private IMouseButtonDragged mBDragged;
@@ -671,7 +671,7 @@ public class Window
     
     protected boolean onMouseButtonDragged(Mouse.Button button, int widgetX, int widgetY, int dragX, int dragY, int relX, int relY)
     {
-        return this.mBDragged == null || this.mBDragged.fire(button, widgetX, widgetY, dragX, dragY, relX, relY);
+        return this.mBDragged != null && this.mBDragged.fire(button, widgetX, widgetY, dragX, dragY, relX, relY);
     }
     
     private IMouseScrolled mScrolled;
@@ -683,7 +683,7 @@ public class Window
     
     protected boolean onMouseScrolled(int scrollX, int scrollY)
     {
-        return this.mScrolled == null || this.mScrolled.fire(scrollX, scrollY);
+        return this.mScrolled != null && this.mScrolled.fire(scrollX, scrollY);
     }
     
     private IKeyboardKeyDown kKDown;
@@ -695,7 +695,7 @@ public class Window
     
     protected boolean onKeyboardKeyDown(Keyboard.Key key)
     {
-        return this.kKDown == null || this.kKDown.fire(key);
+        return this.kKDown != null && this.kKDown.fire(key);
     }
     
     private IKeyboardKeyUp kKUp;
@@ -707,7 +707,7 @@ public class Window
     
     protected boolean onKeyboardKeyUp(Keyboard.Key key)
     {
-        return this.kKUp == null || this.kKUp.fire(key);
+        return this.kKUp != null && this.kKUp.fire(key);
     }
     
     private IKeyboardKeyHeld kKHeld;
@@ -719,7 +719,7 @@ public class Window
     
     protected boolean onKeyboardKeyHeld(Keyboard.Key key)
     {
-        return this.kKHeld == null || this.kKHeld.fire(key);
+        return this.kKHeld != null && this.kKHeld.fire(key);
     }
     
     private IKeyboardKeyRepeated kKRepeated;
@@ -731,7 +731,7 @@ public class Window
     
     protected boolean onKeyboardKeyRepeated(Keyboard.Key key)
     {
-        return this.kKRepeated == null || this.kKRepeated.fire(key);
+        return this.kKRepeated != null && this.kKRepeated.fire(key);
     }
     
     private IKeyboardKeyPressed kKPressed;
@@ -743,7 +743,7 @@ public class Window
     
     protected boolean onKeyboardKeyPressed(Keyboard.Key key, boolean doublePressed)
     {
-        return this.kKPressed == null || this.kKPressed.fire(key, doublePressed);
+        return this.kKPressed != null && this.kKPressed.fire(key, doublePressed);
     }
     
     private IKeyboardKeyTyped kKTyped;
@@ -755,7 +755,7 @@ public class Window
     
     protected boolean onKeyboardKeyTyped(char character)
     {
-        return this.kKTyped == null || this.kKTyped.fire(character);
+        return this.kKTyped != null && this.kKTyped.fire(character);
     }
     
     /*
