@@ -39,7 +39,11 @@ public class TextBox extends Label
     @Override
     protected void updatedText(String prev, String text)
     {
-        if (getTextLimit() > -1 && text.length() > getTextLimit()) return;
+        if (getTextLimit() > -1 && text.length() > getTextLimit())
+        {
+            this.text = prev;
+            return;
+        }
         if (this.validChars != null && this.validChars.size() > 0)
         {
             for (int i = 0; i < text.length(); i++)
