@@ -149,9 +149,9 @@ public class ScrollBar extends Window
     }
     
     @Override
-    protected boolean onMouseHeld(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonHeld(Mouse.Button button, int widgetX, int widgetY)
     {
-        if (super.onMouseHeld(button, widgetX, widgetY) && button == Mouse.LEFT)
+        if (super.onMouseButtonHeld(button, widgetX, widgetY) && button == Mouse.LEFT)
         {
             int mousePos = 0;
             switch (this.orientation)

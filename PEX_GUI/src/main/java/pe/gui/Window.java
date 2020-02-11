@@ -556,9 +556,9 @@ public class Window
     
     private IFocused focused;
     
-    public void onFocused(IFocused widgetFocused)
+    public void onFocused(IFocused focused)
     {
-        this.focused = widgetFocused;
+        this.focused = focused;
     }
     
     protected void onFocused()
@@ -568,9 +568,9 @@ public class Window
     
     private IUnfocused unfocused;
     
-    public void onUnfocused(IUnfocused widgetUnfocused)
+    public void onUnfocused(IUnfocused unfocused)
     {
-        this.unfocused = widgetUnfocused;
+        this.unfocused = unfocused;
     }
     
     protected void onUnfocused()
@@ -578,160 +578,184 @@ public class Window
         if (this.unfocused != null) this.unfocused.fire();
     }
     
-    private IMouseEntered mouseEntered;
+    private IMouseEntered mEntered;
     
     public void onMouseEntered(IMouseEntered mouseEntered)
     {
-        this.mouseEntered = mouseEntered;
+        this.mEntered = mouseEntered;
     }
     
     protected void onMouseEntered()
     {
-        if (this.mouseEntered != null) this.mouseEntered.fire();
+        if (this.mEntered != null) this.mEntered.fire();
     }
     
-    private IMouseExited mouseExited;
+    private IMouseExited mExited;
     
     public void onMouseExited(IMouseExited mouseExited)
     {
-        this.mouseExited = mouseExited;
+        this.mExited = mouseExited;
     }
     
     protected void onMouseExited()
     {
-        if (this.mouseExited != null) this.mouseExited.fire();
+        if (this.mExited != null) this.mExited.fire();
     }
     
-    private IMousePressed mousePressed;
+    private IMouseButtonDown mBDown;
     
-    public void onMousePressed(IMousePressed mousePressed)
+    public void onMouseButtonDown(IMouseButtonDown mouseButtonDown)
     {
-        this.mousePressed = mousePressed;
+        this.mBDown = mouseButtonDown;
     }
     
-    protected boolean onMousePressed(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonDown(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mousePressed == null || this.mousePressed.fire(button, widgetX, widgetY);
+        return this.mBDown == null || this.mBDown.fire(button, widgetX, widgetY);
     }
     
-    private IMouseReleased mouseReleased;
+    private IMouseButtonUp mBUp;
     
-    public void onMouseReleased(IMouseReleased mouseReleased)
+    public void onMouseButtonUp(IMouseButtonUp mouseButtonUp)
     {
-        this.mouseReleased = mouseReleased;
+        this.mBUp = mouseButtonUp;
     }
     
-    protected boolean onMouseReleased(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonUp(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mouseReleased == null || this.mouseReleased.fire(button, widgetX, widgetY);
+        return this.mBUp == null || this.mBUp.fire(button, widgetX, widgetY);
     }
     
-    private IMouseHeld mouseHeld;
+    private IMouseButtonHeld mBHeld;
     
-    public void onMouseHeld(IMouseHeld mouseHeld)
+    public void onMouseButtonHeld(IMouseButtonHeld mouseButtonHeld)
     {
-        this.mouseHeld = mouseHeld;
+        this.mBHeld = mouseButtonHeld;
     }
     
-    protected boolean onMouseHeld(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonHeld(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mouseHeld == null || this.mouseHeld.fire(button, widgetX, widgetY);
+        return this.mBHeld == null || this.mBHeld.fire(button, widgetX, widgetY);
     }
     
-    private IMouseRepeated mouseRepeated;
+    private IMouseButtonRepeated mBRepeated;
     
-    public void onMouseRepeated(IMouseRepeated mouseRepeated)
+    public void onMouseButtonRepeated(IMouseButtonRepeated mouseButtonRepeated)
     {
-        this.mouseRepeated = mouseRepeated;
+        this.mBRepeated = mouseButtonRepeated;
     }
     
-    protected boolean onMouseRepeated(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonRepeated(Mouse.Button button, int widgetX, int widgetY)
     {
-        return this.mouseRepeated == null || this.mouseRepeated.fire(button, widgetX, widgetY);
+        return this.mBRepeated == null || this.mBRepeated.fire(button, widgetX, widgetY);
     }
     
-    private IMouseClicked mouseClicked;
+    private IMouseButtonClicked mBClicked;
     
-    public void onMouseClicked(IMouseClicked mouseClicked)
+    public void onMouseButtonClicked(IMouseButtonClicked mouseButtonClicked)
     {
-        this.mouseClicked = mouseClicked;
+        this.mBClicked = mouseButtonClicked;
     }
     
-    protected boolean onMouseClicked(Mouse.Button button, int widgetX, int widgetY, boolean doubleClicked)
+    protected boolean onMouseButtonClicked(Mouse.Button button, int widgetX, int widgetY, boolean doubleClicked)
     {
-        return this.mouseClicked == null || this.mouseClicked.fire(button, widgetX, widgetY, doubleClicked);
+        return this.mBClicked == null || this.mBClicked.fire(button, widgetX, widgetY, doubleClicked);
     }
     
-    private IMouseDragged mouseDragged;
+    private IMouseButtonDragged mBDragged;
     
-    public void onMouseDragged(IMouseDragged mouseDragged)
+    public void onMouseButtonDragged(IMouseButtonDragged mouseButtonDragged)
     {
-        this.mouseDragged = mouseDragged;
+        this.mBDragged = mouseButtonDragged;
     }
     
-    protected boolean onMouseDragged(Mouse.Button button, int relX, int relY)
+    protected boolean onMouseButtonDragged(Mouse.Button button, int widgetX, int widgetY, int dragX, int dragY, int relX, int relY)
     {
-        return this.mouseDragged == null || this.mouseDragged.fire(button, relX, relY);
+        return this.mBDragged == null || this.mBDragged.fire(button, widgetX, widgetY, dragX, dragY, relX, relY);
     }
     
-    private IMouseWheel mouseWheel;
+    private IMouseScrolled mScrolled;
     
-    public void onMouseWheel(IMouseWheel mouseWheel)
+    public void onMouseScrolled(IMouseScrolled mouseScrolled)
     {
-        this.mouseWheel = mouseWheel;
+        this.mScrolled = mouseScrolled;
     }
     
-    protected boolean onMouseWheel(int scrollX, int scrollY)
+    protected boolean onMouseScrolled(int scrollX, int scrollY)
     {
-        return this.mouseWheel == null || this.mouseWheel.fire(scrollX, scrollY);
+        return this.mScrolled == null || this.mScrolled.fire(scrollX, scrollY);
     }
     
-    private IKeyPressed keyPressed;
+    private IKeyboardKeyDown kKDown;
     
-    public void onKeyPressed(IKeyPressed keyPressed)
+    public void onKeyboardKeyDown(IKeyboardKeyDown keyboardKeyDown)
     {
-        this.keyPressed = keyPressed;
+        this.kKDown = keyboardKeyDown;
     }
     
-    protected boolean onKeyPressed(Keyboard.Key key)
+    protected boolean onKeyboardKeyDown(Keyboard.Key key)
     {
-        return this.keyPressed == null || this.keyPressed.fire(key);
+        return this.kKDown == null || this.kKDown.fire(key);
     }
     
-    private IKeyReleased keyReleased;
+    private IKeyboardKeyUp kKUp;
     
-    public void onKeyReleased(IKeyReleased keyReleased)
+    public void onKeyboardKeyUp(IKeyboardKeyUp keyboardKeyUp)
     {
-        this.keyReleased = keyReleased;
+        this.kKUp = keyboardKeyUp;
     }
     
-    protected boolean onKeyReleased(Keyboard.Key key)
+    protected boolean onKeyboardKeyUp(Keyboard.Key key)
     {
-        return this.keyReleased == null || this.keyReleased.fire(key);
+        return this.kKUp == null || this.kKUp.fire(key);
     }
     
-    private IKeyHeld keyHeld;
+    private IKeyboardKeyHeld kKHeld;
     
-    public void onKeyHeld(IKeyHeld keyHeld)
+    public void onKeyboardKeyHeld(IKeyboardKeyHeld keyboardKeyHeld)
     {
-        this.keyHeld = keyHeld;
+        this.kKHeld = keyboardKeyHeld;
     }
     
-    protected boolean onKeyHeld(Keyboard.Key key)
+    protected boolean onKeyboardKeyHeld(Keyboard.Key key)
     {
-        return this.keyHeld == null || this.keyHeld.fire(key);
+        return this.kKHeld == null || this.kKHeld.fire(key);
     }
     
-    private IKeyRepeated keyRepeated;
+    private IKeyboardKeyRepeated kKRepeated;
     
-    public void onKeyRepeated(IKeyRepeated keyRepeated)
+    public void onKeyboardKeyRepeated(IKeyboardKeyRepeated keyboardKeyRepeated)
     {
-        this.keyRepeated = keyRepeated;
+        this.kKRepeated = keyboardKeyRepeated;
     }
     
-    protected boolean onKeyRepeated(Keyboard.Key key)
+    protected boolean onKeyboardKeyRepeated(Keyboard.Key key)
     {
-        return this.keyRepeated == null || this.keyRepeated.fire(key);
+        return this.kKRepeated == null || this.kKRepeated.fire(key);
+    }
+    
+    private IKeyboardKeyPressed kKPressed;
+    
+    public void onKeyboardKeyPressed(IKeyboardKeyPressed keyboardKeyPressed)
+    {
+        this.kKPressed = keyboardKeyPressed;
+    }
+    
+    protected boolean onKeyboardKeyPressed(Keyboard.Key key, boolean doublePressed)
+    {
+        return this.kKPressed == null || this.kKPressed.fire(key, doublePressed);
+    }
+    
+    private IKeyboardKeyTyped kKTyped;
+    
+    public void onKeyboardKeyTyped(IKeyboardKeyTyped keyboardKeyTyped)
+    {
+        this.kKTyped = keyboardKeyTyped;
+    }
+    
+    protected boolean onKeyboardKeyTyped(char character)
+    {
+        return this.kKTyped == null || this.kKTyped.fire(character);
     }
     
     /*

@@ -144,9 +144,9 @@ public class TextBox extends Label
     }
     
     @Override
-    protected boolean onMousePressed(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonDown(Mouse.Button button, int widgetX, int widgetY)
     {
-        if (super.onMousePressed(button, widgetX, widgetY))
+        if (super.onMouseButtonDown(button, widgetX, widgetY))
         {
             if (button == Mouse.LEFT)
             {
@@ -166,9 +166,9 @@ public class TextBox extends Label
     }
     
     @Override
-    protected boolean onKeyPressed(Keyboard.Key key)
+    protected boolean onKeyboardKeyDown(Keyboard.Key key)
     {
-        if (super.onKeyPressed(key))
+        if (super.onKeyboardKeyDown(key))
         {
             this.repeatingKey = key;
             if (key == Keyboard.BACK)
@@ -250,11 +250,11 @@ public class TextBox extends Label
     }
     
     @Override
-    protected boolean onKeyRepeated(Keyboard.Key key)
+    protected boolean onKeyboardKeyRepeated(Keyboard.Key key)
     {
-        if (super.onKeyRepeated(key))
+        if (super.onKeyboardKeyRepeated(key))
         {
-            if (this.repeatingKey == key) onKeyPressed(key);
+            if (this.repeatingKey == key) onKeyboardKeyDown(key);
             return true;
         }
         return false;

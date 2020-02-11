@@ -156,7 +156,7 @@ public class Mouse
         
             if (button.down)
             {
-                Events.post(EventButtonDown.class, button, Mouse.x, Mouse.y);
+                Events.post(EventMouseButtonDown.class, button, Mouse.x, Mouse.y);
             
                 button.clickX = Mouse.x;
                 button.clickY = Mouse.y;
@@ -169,18 +169,18 @@ public class Mouse
             }
             if (button.up)
             {
-                Events.post(EventButtonUp.class, button, Mouse.x, Mouse.y);
+                Events.post(EventMouseButtonUp.class, button, Mouse.x, Mouse.y);
             
                 boolean inClickRange  = Math.abs(Mouse.x - button.clickX) < 2 && Math.abs(Mouse.y - button.clickY) < 2;
                 boolean inDClickRange = Math.abs(Mouse.x - button.dClickX) < 2 && Math.abs(Mouse.y - button.dClickY) < 2;
             
                 if (inDClickRange && time - button.clickTime < 500_000_000)
                 {
-                    Events.post(EventButtonClicked.class, button, Mouse.x, Mouse.y, true);
+                    Events.post(EventMouseButtonClicked.class, button, Mouse.x, Mouse.y, true);
                 }
                 else if (inClickRange)
                 {
-                    Events.post(EventButtonClicked.class, button, Mouse.x, Mouse.y, false);
+                    Events.post(EventMouseButtonClicked.class, button, Mouse.x, Mouse.y, false);
                     button.dClickX = Mouse.x;
                     button.dClickY = Mouse.y;
                     button.clickTime = time;
@@ -189,14 +189,14 @@ public class Mouse
             }
             if (button.held)
             {
-                Events.post(EventButtonHeld.class, button, Mouse.x, Mouse.y);
-            
+                Events.post(EventMouseButtonHeld.class, button, Mouse.x, Mouse.y);
+        
                 if (Mouse.drag == button && (Mouse.relX != 0 || Mouse.relY != 0))
                 {
-                    Events.post(EventMouseDragged.class, button, Mouse.dragX, Mouse.dragY, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
+                    Events.post(EventMouseButtonDragged.class, button, Mouse.dragX, Mouse.dragY, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
                 }
             }
-            if (button.repeat) Events.post(EventButtonRepeat.class, button, Mouse.x, Mouse.y);
+            if (button.repeat) Events.post(EventMouseButtonRepeat.class, button, Mouse.x, Mouse.y);
         }
     }
     

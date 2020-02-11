@@ -2,9 +2,9 @@ package pe.event;
 
 import pe.Mouse;
 
-public class EventButtonDown extends Event
+public class EventMouseButtonUp extends Event
 {
-    public EventButtonDown(Object[] values)
+    public EventMouseButtonUp(Object[] values)
     {
         super(new String[] {"", "x", "y"}, values);
     }

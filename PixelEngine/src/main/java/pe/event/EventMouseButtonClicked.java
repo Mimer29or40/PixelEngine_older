@@ -2,11 +2,11 @@ package pe.event;
 
 import pe.Mouse;
 
-public class EventButtonUp extends Event
+public class EventMouseButtonClicked extends Event
 {
-    public EventButtonUp(Object[] values)
+    public EventMouseButtonClicked(Object[] values)
     {
-        super(new String[] {"", "x", "y"}, values);
+        super(new String[] {"", "x", "y", "double"}, values);
     }
     
     public Mouse.Button button()
@@ -22,5 +22,10 @@ public class EventButtonUp extends Event
     public int y()
     {
         return (int) this.values[2];
+    }
+    
+    public boolean doubleClicked()
+    {
+        return (boolean) this.values[3];
     }
 }

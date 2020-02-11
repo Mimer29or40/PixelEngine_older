@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="Merg">
+    <list default="true" id="a98964b2-45e2-4c7f-be36-0f3d3c454c21" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyboardKeyPressed.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyboardKeyTyped.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseButtonDragged.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Button.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Modal.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Modal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/PEX_GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/PEX_GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/ScrollBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/ScrollBar.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Slider.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Slider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/TextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/TextBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/Window.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseWheel.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseWheel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyHeld.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyboardKeyHeld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyPressed.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyboardKeyDown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyReleased.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyboardKeyUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyRepeated.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IKeyboardKeyRepeated.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseClicked.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseButtonClicked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseDragged.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseHeld.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseButtonHeld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMousePressed.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseButtonDown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseReleased.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseButtonUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseRepeated.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseButtonRepeated.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseWheel.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/main/java/pe/gui/event/IMouseScrolled.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PEX_GUI/src/test/java/pe/WindowTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Events.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Events.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Keyboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Keyboard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Mouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Mouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventButtonClicked.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventMouseButtonClicked.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventButtonDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventMouseButtonDown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventButtonHeld.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventMouseButtonHeld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventButtonRepeat.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventMouseButtonRepeat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventButtonUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventMouseButtonUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyDown.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyboardKeyDown.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyHeld.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyboardKeyHeld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyPressed.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyboardKeyPressed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyRepeat.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyboardKeyRepeat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyTyped.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyboardKeyTyped.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventKeyboardKeyUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventMouseDragged.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/main/java/pe/event/EventMouseButtonDragged.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PixelEngine/src/test/java/pe/EventsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PixelEngine/src/test/java/pe/EventsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +52,7 @@
       <list>
         <option value="PixelEngine" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -81,6 +114,7 @@
       <recent name="pe" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="pe.gui.event" />
       <recent name="pe.event" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
@@ -425,7 +459,14 @@
       <option name="project" value="LOCAL" />
       <updated>1581279910624</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Started Work on revamping GUI events">
+      <created>1581297431101</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1581297431101</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -444,7 +485,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Initial Structure Commit" />
     <MESSAGE value="Initial Engine Commit" />
     <MESSAGE value="Changed PixelEngine formatting" />
     <MESSAGE value="Vector Extension" />
@@ -469,7 +509,8 @@
     <MESSAGE value="Added the rest of Mouse and Keyboard Events" />
     <MESSAGE value="Added Window Events" />
     <MESSAGE value="Event Groups and Subscriptions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Event Groups and Subscriptions" />
+    <MESSAGE value="Started Work on revamping GUI events" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started Work on revamping GUI events" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -486,19 +527,19 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="755" y="415" width="409" height="289" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581281505755" />
-    <state x="406" y="30" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1581182024800">
+    <state x="406" y="30" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1581381914556">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="406" y="30" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581182024800" />
+    <state x="406" y="30" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581381914556" />
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog" timestamp="1580939935083">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="690" y="310" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580939935083" />
     <state x="690" y="317" key="#com.intellij.util.ui.classpath.ChooseLibrariesDialog/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580914714208" />
-    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581281121546">
+    <state x="341" y="30" width="1316" height="804" key="CommitChangelistDialog2" timestamp="1581297430459">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581281121546" />
+    <state x="341" y="30" width="1379" height="877" key="CommitChangelistDialog2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581297430459" />
     <state x="341" y="73" width="1316" height="804" key="CommitChangelistDialog2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916161731" />
     <state x="714" y="271" key="DetectedRootsChooserDialog" timestamp="1580581520181">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -517,22 +558,22 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="1091" y="523" key="Github.Dialog.Accounts.Choose/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581174827241" />
-    <state width="1619" height="285" key="GridCell.Tab.0.bottom" timestamp="1581295527599">
+    <state width="1575" height="285" key="GridCell.Tab.0.bottom" timestamp="1581382349784">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1619" height="285" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581295527599" />
-    <state width="1619" height="285" key="GridCell.Tab.0.center" timestamp="1581295527598">
+    <state width="1575" height="285" key="GridCell.Tab.0.bottom/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581382349784" />
+    <state width="1575" height="285" key="GridCell.Tab.0.center" timestamp="1581382349784">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1619" height="285" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581295527598" />
-    <state width="1619" height="285" key="GridCell.Tab.0.left" timestamp="1581295527598">
+    <state width="1575" height="285" key="GridCell.Tab.0.center/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581382349784" />
+    <state width="1575" height="285" key="GridCell.Tab.0.left" timestamp="1581382349784">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1619" height="285" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581295527598" />
-    <state width="1619" height="285" key="GridCell.Tab.0.right" timestamp="1581295527598">
+    <state width="1575" height="285" key="GridCell.Tab.0.left/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581382349784" />
+    <state width="1575" height="285" key="GridCell.Tab.0.right" timestamp="1581382349784">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state width="1619" height="285" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581295527598" />
+    <state width="1575" height="285" key="GridCell.Tab.0.right/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581382349784" />
     <state width="1528" height="234" key="GridCell.Tab.1.bottom" timestamp="1581263826176">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
@@ -563,10 +604,10 @@
     </state>
     <state x="397" y="142" width="1241" height="775" key="SettingsEditor/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581180470624" />
     <state x="397" y="151" key="SettingsEditor/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580916233117" />
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581281131240">
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2" timestamp="1581297436041">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581281131240" />
+    <state x="552" y="288" key="Vcs.Push.Dialog.v2/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581297436041" />
     <state x="552" y="296" key="Vcs.Push.Dialog.v2/0.40.1920.1040/-1920.351.1920.1080/1920.213.1600.900@0.40.1920.1040" timestamp="1580912806076" />
     <state x="664" y="449" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1580939894193">
       <screen x="0" y="30" width="1920" height="1050" />
@@ -600,10 +641,10 @@
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
     <state x="343" y="176" key="new project wizard/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1580583739694" />
-    <state x="666" y="174" key="refactoring.ChangeSignatureDialog" timestamp="1581294953419">
+    <state x="666" y="174" key="refactoring.ChangeSignatureDialog" timestamp="1581381422836">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
-    <state x="666" y="174" key="refactoring.ChangeSignatureDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581294953419" />
+    <state x="666" y="174" key="refactoring.ChangeSignatureDialog/0.30.1920.1050/1920.-267.1920.1080@0.30.1920.1050" timestamp="1581381422836" />
     <state x="623" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1580584380551">
       <screen x="0" y="30" width="1920" height="1050" />
     </state>
