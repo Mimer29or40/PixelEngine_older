@@ -182,7 +182,7 @@ public class Keyboard
         String text = Keyboard.capturedText;
         for (int i = 0, n = Keyboard.capturedText.length(); i < n; i++)
         {
-            Events.post(EventKeyTyped.class, Keyboard.capturedText.charAt(i));
+            Events.post(EventKeyboardKeyTyped.class, Keyboard.capturedText.charAt(i));
         }
         Keyboard.capturedText = "";
     
@@ -213,24 +213,24 @@ public class Keyboard
                 key.repeat = true;
             }
             key.prevState = key.state;
-        
-            if (key.down) Events.post(EventKeyDown.class, key);
+    
+            if (key.down) Events.post(EventKeyboardKeyDown.class, key);
             if (key.up)
             {
-                Events.post(EventKeyUp.class, key);
-            
+                Events.post(EventKeyboardKeyUp.class, key);
+        
                 if (time - key.pressTime < 500_000_000)
                 {
-                    Events.post(EventKeyPressed.class, key, true);
+                    Events.post(EventKeyboardKeyPressed.class, key, true);
                 }
                 else
                 {
-                    Events.post(EventKeyPressed.class, key, false);
+                    Events.post(EventKeyboardKeyPressed.class, key, false);
                     key.pressTime = time;
                 }
             }
-            if (key.held) Events.post(EventKeyHeld.class, key);
-            if (key.repeat) Events.post(EventKeyRepeat.class, key);
+            if (key.held) Events.post(EventKeyboardKeyHeld.class, key);
+            if (key.repeat) Events.post(EventKeyboardKeyRepeat.class, key);
         }
     }
     

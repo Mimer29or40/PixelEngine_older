@@ -1,8 +1,8 @@
 package pe.event;
 
-public class EventKeyTyped extends Event
+public class EventKeyboardKeyTyped extends Event
 {
-    public EventKeyTyped(Object[] values)
+    public EventKeyboardKeyTyped(Object[] values)
     {
         super(new String[] {"char"}, values);
     }

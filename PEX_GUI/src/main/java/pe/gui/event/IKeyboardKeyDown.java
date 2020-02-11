@@ -2,7 +2,7 @@ package pe.gui.event;
 
 import pe.Keyboard;
 
-public interface IKeyRepeated
+public interface IKeyboardKeyDown
 {
     boolean fire(Keyboard.Key key);
 }
