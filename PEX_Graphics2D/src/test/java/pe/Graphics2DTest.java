@@ -61,12 +61,12 @@ public class Graphics2DTest extends PixelEngine
         // Multiline Text
         drawString(10, 130, "Your Mouse Position is:\nX=" + mx + "\nY=" + my);
     
-        if (Mouse.LEFT.down) addEvent("Mouse Button LEFT Down");
-        if (Mouse.LEFT.up) addEvent("Mouse Button LEFT Up");
-        if (Mouse.RIGHT.down) addEvent("Mouse Button RIGHT Down");
-        if (Mouse.RIGHT.up) addEvent("Mouse Button RIGHT Up");
-        if (Mouse.MIDDLE.down) addEvent("Mouse Button MIDDLE Down");
-        if (Mouse.MIDDLE.up) addEvent("Mouse Button MIDDLE Up");
+        if (Mouse.LEFT.down()) addEvent("Mouse Button LEFT Down");
+        if (Mouse.LEFT.up()) addEvent("Mouse Button LEFT Up");
+        if (Mouse.RIGHT.down()) addEvent("Mouse Button RIGHT Down");
+        if (Mouse.RIGHT.up()) addEvent("Mouse Button RIGHT Up");
+        if (Mouse.MIDDLE.down()) addEvent("Mouse Button MIDDLE Down");
+        if (Mouse.MIDDLE.up()) addEvent("Mouse Button MIDDLE Up");
     
     
         // Draw Event Log

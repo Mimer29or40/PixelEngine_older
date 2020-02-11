@@ -126,62 +126,62 @@ public class PEX_GFX2D extends PEX
     
     public static void drawLine(Vector2ic p1, Vector2ic p2, Color c, int pattern)
     {
-        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), c, pattern);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), 1, c, pattern);
     }
     
     public static void drawLine(Vector2ic p1, Vector2ic p2, Color c)
     {
-        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), c, 0xFFFFFFFF);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), 1, c, 0xFFFFFFFF);
     }
     
     public static void drawLine(Vector2ic p1, Vector2ic p2, int pattern)
     {
-        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), Color.WHITE, pattern);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), 1, Color.WHITE, pattern);
     }
     
     public static void drawLine(Vector2ic p1, Vector2ic p2)
     {
-        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), Color.WHITE, 0xFFFFFFFF);
+        PixelEngine.drawLine(p1.x(), p1.y(), p2.x(), p2.y(), 1, Color.WHITE, 0xFFFFFFFF);
     }
     
     public static void drawLine(Vector2fc p1, Vector2fc p2, Color c, int pattern)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, pattern);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, c, pattern);
     }
     
     public static void drawLine(Vector2fc p1, Vector2fc p2, Color c)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, 0xFFFFFFFF);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, c, 0xFFFFFFFF);
     }
     
     public static void drawLine(Vector2fc p1, Vector2fc p2, int pattern)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, pattern);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, Color.WHITE, pattern);
     }
     
     public static void drawLine(Vector2fc p1, Vector2fc p2)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, 0xFFFFFFFF);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, Color.WHITE, 0xFFFFFFFF);
     }
     
     public static void drawLine(Vector2dc p1, Vector2dc p2, Color c, int pattern)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, pattern);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, c, pattern);
     }
     
     public static void drawLine(Vector2dc p1, Vector2dc p2, Color c)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), c, 0xFFFFFFFF);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, c, 0xFFFFFFFF);
     }
     
     public static void drawLine(Vector2dc p1, Vector2dc p2, int pattern)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, pattern);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, Color.WHITE, pattern);
     }
     
     public static void drawLine(Vector2dc p1, Vector2dc p2)
     {
-        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), Color.WHITE, 0xFFFFFFFF);
+        PixelEngine.drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), 1, Color.WHITE, 0xFFFFFFFF);
     }
     
     public static void drawCircle(Vector2ic p, int radius, Color c, int mask)

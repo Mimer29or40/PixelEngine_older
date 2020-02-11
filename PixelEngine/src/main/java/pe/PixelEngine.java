@@ -74,7 +74,6 @@ public class PixelEngine
      * Called every frame.
      *
      * @param elapsedTime time in seconds since that last frame. Must be overridden for engine to run
-     *
      * @return True if engine can continue to run
      */
     protected boolean onUserUpdate(double elapsedTime)
@@ -116,10 +115,10 @@ public class PixelEngine
         PixelEngine.pixelW = pixelW;
         PixelEngine.pixelH = pixelH;
         PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
-    
+        
         Window.fullscreen(fullscreen);
         PixelEngine.LOGGER.trace("Fullscreen: %s)", fullscreen);
-    
+        
         Window.vsync(vsync);
         PixelEngine.LOGGER.trace("VSync: %s)", vsync);
         
@@ -132,9 +131,9 @@ public class PixelEngine
         loadExtensions();
         
         PixelEngine.window = PixelEngine.target = new Sprite(screenW, screenH);
-        PixelEngine.prev = new Sprite(screenW, screenH);
-    
-        PixelEngine.running = true;
+        PixelEngine.prev   = new Sprite(screenW, screenH);
+        
+        PixelEngine.running   = true;
         PixelEngine.startTime = System.nanoTime();
         
         try
@@ -148,7 +147,7 @@ public class PixelEngine
                 Window.setup();
                 
                 new Thread(PixelEngine::renderLoop, "Render Loop").start();
-    
+                
                 while (PixelEngine.running) Window.pollEvents();
             }
         }
@@ -156,10 +155,10 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.debug("User Initialization");
             PixelEngine.logic.onUserDestroy();
-    
+            
             PixelEngine.LOGGER.trace("Extension Destruction");
             PixelEngine.extensions.values().forEach(PEX::destroy);
-    
+            
             Window.destroy();
         }
         
@@ -227,7 +226,7 @@ public class PixelEngine
     
     public static void colorMode(IBlendPos pixelFunc)
     {
-        PixelEngine.drawMode = DrawMode.CUSTOM;
+        PixelEngine.drawMode  = DrawMode.CUSTOM;
         PixelEngine.blendFunc = pixelFunc;
     }
     
@@ -311,7 +310,7 @@ public class PixelEngine
         for (int i = 0; i < lines.size(); i++)
         {
             String line = lines.remove(i);
-    
+            
             if (textWidth(line, scale) > maxWidth)
             {
                 String[]      subLines = line.split(" ");
@@ -351,13 +350,13 @@ public class PixelEngine
     public static void print(Object... objects)
     {
         StringBuilder builder = new StringBuilder();
-        for (Object object : objects)
+        for (int i = 0; i < objects.length; i++)
         {
-            builder.append(object);
-            builder.append(" ");
+            builder.append(objects[i]);
+            if (i + 1 < objects.length) builder.append(" ");
         }
         
-        System.out.println(builder.substring(0, builder.length() - 1));
+        System.out.println(builder.toString());
     }
     
     public static void seed(long seed)
@@ -460,7 +459,7 @@ public class PixelEngine
             }
             catch (URISyntaxException ignored)
             {
-    
+            
             }
         }
         return Paths.get(filePath);
@@ -524,130 +523,234 @@ public class PixelEngine
         draw(x, y, Color.WHITE);
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, Color p, int pattern)
+    public static void drawLine(int x1, int y1, int x2, int y2, int width, Color p, int pattern)
     {
         // Bresenham's Algorithm
         
-        int dx, dy, x, y, xi, yi, d, tmp;
-        
-        dx = x2 - x1;
-        dy = y2 - y1;
-        
-        if (dx == 0)
+        if (width <= 1)
         {
-            if (y2 < y1)
-            {
-                tmp = y1;
-                y1 = y2;
-                y2 = tmp;
-            }
-            for (y = y1; y <= y2; y++)
-            {
-                if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x1, y, p);
-            }
-            return;
-        }
-        
-        if (y2 - y1 == 0)
-        {
-            if (x2 < x1)
-            {
-                tmp = x1;
-                x1 = x2;
-                x2 = tmp;
-            }
-            for (x = x1; x <= x2; x++)
-            {
-                if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y1, p);
-            }
-            return;
-        }
-        
-        if (Math.abs(dy) < Math.abs(dx))
-        {
-            if (x1 > x2)
-            {
-                tmp = x1;
-                x1 = x2;
-                x2 = tmp;
-                
-                tmp = y1;
-                y1 = y2;
-                y2 = tmp;
-            }
+            int dx, dy, x, y, xi, yi, d, tmp;
             
             dx = x2 - x1;
             dy = y2 - y1;
-            yi = 1;
-            if (dy < 0)
-            {
-                yi = -1;
-                dy = -dy;
-            }
-            d = 2 * dy - dx;
-            y = y1;
             
-            for (x = x1; x <= x2; x++)
+            if (dx == 0)
             {
-                if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y, p);
-                if (d > 0)
+                if (y2 < y1)
                 {
-                    y += yi;
-                    d = d - 2 * dx;
+                    tmp = y1;
+                    y1  = y2;
+                    y2  = tmp;
                 }
-                d = d + 2 * dy;
+                for (y = y1; y <= y2; y++)
+                {
+                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x1, y, p);
+                }
+                return;
+            }
+            
+            if (y2 - y1 == 0)
+            {
+                if (x2 < x1)
+                {
+                    tmp = x1;
+                    x1  = x2;
+                    x2  = tmp;
+                }
+                for (x = x1; x <= x2; x++)
+                {
+                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y1, p);
+                }
+                return;
+            }
+            
+            if (Math.abs(dy) < Math.abs(dx))
+            {
+                if (x1 > x2)
+                {
+                    tmp = x1;
+                    x1  = x2;
+                    x2  = tmp;
+                    
+                    tmp = y1;
+                    y1  = y2;
+                    y2  = tmp;
+                }
+                
+                dx = x2 - x1;
+                dy = y2 - y1;
+                yi = 1;
+                if (dy < 0)
+                {
+                    yi = -1;
+                    dy = -dy;
+                }
+                d = 2 * dy - dx;
+                y = y1;
+                
+                for (x = x1; x <= x2; x++)
+                {
+                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y, p);
+                    if (d > 0)
+                    {
+                        y += yi;
+                        d = d - 2 * dx;
+                    }
+                    d = d + 2 * dy;
+                }
+            }
+            else
+            {
+                if (y1 > y2)
+                {
+                    tmp = x1;
+                    x1  = x2;
+                    x2  = tmp;
+                    
+                    tmp = y1;
+                    y1  = y2;
+                    y2  = tmp;
+                }
+                
+                dx = x2 - x1;
+                dy = y2 - y1;
+                xi = 1;
+                if (dx < 0)
+                {
+                    xi = -1;
+                    dx = -dx;
+                }
+                d = 2 * dx - dy;
+                x = x1;
+                
+                for (y = y1; y <= y2; y++)
+                {
+                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y, p);
+                    if (d > 0)
+                    {
+                        x = x + xi;
+                        d = d - 2 * dy;
+                    }
+                    d = d + 2 * dx;
+                }
             }
         }
         else
         {
-            if (y1 > y2)
-            {
-                tmp = x1;
-                x1 = x2;
-                x2 = tmp;
-                
-                tmp = y1;
-                y1 = y2;
-                y2 = tmp;
-            }
+            int    dx  = Math.abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
+            int    dy  = Math.abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
+            int    err = dx - dy, e2, x3, y3;                          /* error value e_xy */
+            double ed  = dx + dy == 0 ? 1 : Math.sqrt((double) dx * dx + (double) dy * dy);
             
-            dx = x2 - x1;
-            dy = y2 - y1;
-            xi = 1;
-            if (dx < 0)
-            {
-                xi = -1;
-                dx = -dx;
-            }
-            d = 2 * dx - dy;
-            x = x1;
-            
-            for (y = y1; y <= y2; y++)
-            {
-                if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y, p);
-                if (d > 0)
-                {
-                    x = x + xi;
-                    d = d - 2 * dy;
+            for (width = (width + 1) / 2; ; )
+            {                                   /* pixel loop */
+                draw(x1, y1, p);
+                e2 = err;
+                x3 = x1;
+                if (2 * e2 >= -dx)
+                {                                           /* x step */
+                    for (e2 += dy, y3 = y1; e2 < ed * width && (y2 != y3 || dx > dy); e2 += dx)
+                    { draw(x1, y3 += sy, p); }
+                    if (x1 == x2) break;
+                    e2 = err;
+                    err -= dy;
+                    x1 += sx;
                 }
-                d = d + 2 * dx;
+                if (2 * e2 <= dy)
+                {                                            /* y step */
+                    for (e2 = dx - e2; e2 < ed * width && (x2 != x3 || dx < dy); e2 += dy)
+                    { draw(x3 += sx, y1, p); }
+                    if (y1 == y2) break;
+                    err += dx;
+                    y1 += sy;
+                }
             }
         }
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, Color p)
+    public static void drawLine(int x1, int y1, int x2, int y2, int width, Color p)
     {
-        drawLine(x1, y1, x2, y2, p, 0xFFFFFFFF);
+        drawLine(x1, y1, x2, y2, width, p, 0xFFFFFFFF);
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int pattern)
+    public static void drawLine(int x1, int y1, int x2, int y2, int width, int pattern)
     {
-        drawLine(x1, y1, x2, y2, Color.WHITE, pattern);
+        drawLine(x1, y1, x2, y2, width, Color.WHITE, pattern);
+    }
+    
+    public static void drawLine(int x1, int y1, int x2, int y2, int width)
+    {
+        drawLine(x1, y1, x2, y2, width, Color.WHITE, 0xFFFFFFFF);
+    }
+    
+    public static void drawLine(int x1, int y1, int x2, int y2, Color p)
+    {
+        drawLine(x1, y1, x2, y2, 1, p, 0xFFFFFFFF);
     }
     
     public static void drawLine(int x1, int y1, int x2, int y2)
     {
-        drawLine(x1, y1, x2, y2, Color.WHITE, 0xFFFFFFFF);
+        drawLine(x1, y1, x2, y2, 1, Color.WHITE, 0xFFFFFFFF);
+    }
+    
+    public static void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3, Color p)
+    {
+        // TODO - http://members.chello.at/~easyfilter/bresenham.html
+        int    sx               = x3 - x2, sy = y3 - y2;
+        long   xx               = x1 - x2, yy = y1 - y2, xy;         /* relative values for checks */
+        double dx, dy, err, cur = xx * sy - yy * sx;                    /* curvature */
+        
+        assert (xx * sx <= 0 && yy * sy <= 0);  /* sign of gradient must not change */
+        
+        if (sx * (long) sx + sy * (long) sy > xx * xx + yy * yy)
+        { /* begin with longer part */
+            x3  = x1;
+            x1  = sx + x2;
+            y3  = y1;
+            y1  = sy + y2;
+            cur = -cur;  /* swap P0 P2 */
+        }
+        if (cur != 0)
+        {                                    /* no straight line */
+            xx += sx;
+            xx *= sx = x1 < x3 ? 1 : -1;           /* x step direction */
+            yy += sy;
+            yy *= sy = y1 < y3 ? 1 : -1;           /* y step direction */
+            xy       = 2 * xx * yy;
+            xx *= xx;
+            yy *= yy;          /* differences 2nd degree */
+            if (cur * sx * sy < 0)
+            {                           /* negated curvature? */
+                xx  = -xx;
+                yy  = -yy;
+                xy  = -xy;
+                cur = -cur;
+            }
+            dx  = 4.0 * sy * cur * (x2 - x1) + xx - xy;             /* differences 1st degree */
+            dy  = 4.0 * sx * cur * (y1 - y2) + yy - xy;
+            xx += xx;
+            yy += yy;
+            err = dx + dy + xy;                /* error 1st step */
+            do
+            {
+                draw(x1, y1, p);                  /* plot curve */
+                if (x1 == x3 && y1 == y3) return;  /* last pixel -> curve finished */
+                boolean yStep = 2 * err < dx;      /* save value for test of y step */
+                if (2 * err > dy)
+                {
+                    x1 += sx;
+                    dx -= xy;
+                    err += dy += yy;
+                } /* x step */
+                if (yStep)
+                {
+                    y1 += sy;
+                    dy -= xy;
+                    err += dx += xx;
+                } /* y step */
+            } while (dy < dx);           /* gradient negates -> algorithm fails */
+        }
+        drawLine(x1, y1, x3, y3, p);
     }
     
     public static void drawCircle(int x, int y, int radius, Color p, int mask)
@@ -724,6 +827,56 @@ public class PixelEngine
         fillCircle(x, y, radius, Color.WHITE);
     }
     
+    public static void drawEllipse(int x, int y, int w, int h, Color p)
+    {
+        // TODO - http://members.chello.at/~easyfilter/bresenham.html
+        int  x0  = x - w / 2, y0 = y - h / 2;
+        int  x1  = x + w / 2, y1 = y + h / 2;
+        int  b1  = h & 1; /* values of diameter */
+        long dx  = 4 * (1 - w) * h * h, dy = 4 * (b1 + 1) * w * w; /* error increment */
+        long err = dx + dy + b1 * w * w, e2; /* error of 1.step */
+        
+        if (x0 > x1)
+        {
+            x0 = x1;
+            x1 += w;
+        } /* if called with swapped points */
+        if (y0 > y1) y0 = y1; /* .. exchange them */
+        y0 += (h + 1) / 2;
+        y1 = y0 - b1;   /* starting pixel */
+        w *= 8 * w;
+        b1 = 8 * h * h;
+        
+        do
+        {
+            draw(x1, y0, p); /*   I. Quadrant */
+            draw(x0, y0, p); /*  II. Quadrant */
+            draw(x0, y1, p); /* III. Quadrant */
+            draw(x1, y1, p); /*  IV. Quadrant */
+            e2 = 2 * err;
+            if (e2 <= dy)
+            {
+                y0++;
+                y1--;
+                err += dy += w;
+            }  /* y step */
+            if (e2 >= dx || 2 * err > dy)
+            {
+                x0++;
+                x1--;
+                err += dx += b1;
+            } /* x step */
+        } while (x0 <= x1);
+        
+        while (y0 - y1 < h)
+        {  /* too early stop of flat ellipses w=1 */
+            draw(x0 - 1, y0, p); /* -> finish tip of ellipse */
+            draw(x1 + 1, y0++, p);
+            draw(x0 - 1, y1, p);
+            draw(x1 + 1, y1--, p);
+        }
+    }
+    
     public static void drawRect(int x, int y, int w, int h, Color p)
     {
         drawLine(x, y, x + w - 1, y, p);
@@ -742,8 +895,8 @@ public class PixelEngine
         int x2 = x + w;
         int y2 = y + h;
         
-        x = Math.max(0, Math.min(x, PixelEngine.screenW));
-        y = Math.max(0, Math.min(y, PixelEngine.screenH));
+        x  = Math.max(0, Math.min(x, PixelEngine.screenW));
+        y  = Math.max(0, Math.min(y, PixelEngine.screenH));
         x2 = Math.max(0, Math.min(x2, PixelEngine.screenW));
         y2 = Math.max(0, Math.min(y2, PixelEngine.screenH));
         
@@ -1022,7 +1175,7 @@ public class PixelEngine
                 }
             }
         }
-    
+        
         drawMode(DrawMode.NORMAL);
     }
     
@@ -1056,7 +1209,7 @@ public class PixelEngine
             }
             catch (ReflectiveOperationException ignored)
             {
-    
+            
             }
         }
     }
@@ -1085,7 +1238,7 @@ public class PixelEngine
         
         PixelEngine.LOGGER.trace("Font Sheet Sprite Generated");
         PixelEngine.font = new Sprite(128, 48);
-        Color p  = new Color();
+        Color p = new Color();
         for (int b = 0, px = 0, py = 0; b < 1024; b += 4)
         {
             int sym1 = (int) data.charAt(b) - 48;
@@ -1093,7 +1246,7 @@ public class PixelEngine
             int sym3 = (int) data.charAt(b + 2) - 48;
             int sym4 = (int) data.charAt(b + 3) - 48;
             int r    = sym1 << 18 | sym2 << 12 | sym3 << 6 | sym4;
-    
+            
             for (int i = 0; i < 24; i++)
             {
                 int k = (r & (1 << i)) != 0 ? 255 : 0;
@@ -1128,29 +1281,29 @@ public class PixelEngine
             while (PixelEngine.running)
             {
                 PixelEngine.LOGGER.trace("Frame Started");
-    
-                t = System.nanoTime();
-                dt = t - lastFrame;
+                
+                t         = System.nanoTime();
+                dt        = t - lastFrame;
                 lastFrame = t;
-    
+                
                 PixelEngine.PROFILER.startTick();
                 {
                     PixelEngine.PROFILER.startSection("Events");
                     {
                         Events.clear(); // TODO - Have a way to have events persist and be consumable.
-    
+                        
                         PixelEngine.PROFILER.startSection("Mouse Events");
                         {
                             Mouse.handleEvents(t, dt);
                         }
                         PixelEngine.PROFILER.endSection();
-    
+                        
                         PixelEngine.PROFILER.startSection("Key Events");
                         {
                             Keyboard.handleEvents(t, dt);
                         }
                         PixelEngine.PROFILER.endSection();
-    
+                        
                         PixelEngine.PROFILER.startSection("Window Events");
                         {
                             Window.handleEvents(t, dt);
@@ -1158,7 +1311,7 @@ public class PixelEngine
                         PixelEngine.PROFILER.endSection();
                     }
                     PixelEngine.PROFILER.endSection();
-    
+                    
                     PixelEngine.PROFILER.startSection("PEX Pre");
                     {
                         for (String name : PixelEngine.extensions.keySet())
@@ -1171,7 +1324,7 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+                    
                     PixelEngine.PROFILER.startSection("User Update");
                     {
                         if (!PixelEngine.logic.onUserUpdate(dt / 1_000_000_000D))
@@ -1181,7 +1334,7 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+                    
                     PixelEngine.PROFILER.startSection("PEX Post");
                     {
                         for (String name : PixelEngine.extensions.keySet())
@@ -1194,14 +1347,14 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+                    
                     boolean update;
                     PixelEngine.PROFILER.startSection("Window Update");
                     {
                         update = Window.update();
                     }
                     PixelEngine.PROFILER.endSection();
-    
+                    
                     PixelEngine.PROFILER.startSection("Render");
                     {
                         for (int i = 0; i < PixelEngine.screenW * PixelEngine.screenH; i++)
@@ -1211,38 +1364,38 @@ public class PixelEngine
                             if (update || currData.getInt(4 * i) != prevData.getInt(4 * i))
                             {
                                 PixelEngine.LOGGER.trace("Rendering Frame");
-    
+                                
                                 PixelEngine.PROFILER.startSection("Update/Draw Texture");
                                 {
                                     Window.drawSprite(PixelEngine.window);
                                 }
                                 PixelEngine.PROFILER.endSection();
-    
+                                
                                 PixelEngine.PROFILER.startSection("Swap");
                                 {
                                     Window.swap();
                                 }
                                 PixelEngine.PROFILER.endSection();
-    
+                                
                                 PixelEngine.PROFILER.startSection("Swap Sprites");
                                 {
                                     PixelEngine.window.copy(PixelEngine.prev);
                                 }
                                 PixelEngine.PROFILER.endSection();
-    
+                                
                                 break;
                             }
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+                    
                     PixelEngine.PROFILER.startSection("Stats");
                     {
                         PixelEngine.PROFILER.startSection("Update");
                         {
                             frameTime = System.nanoTime() - t;
-                            minTime = Math.min(minTime, frameTime);
-                            maxTime = Math.max(maxTime, frameTime);
+                            minTime   = Math.min(minTime, frameTime);
+                            maxTime   = Math.max(maxTime, frameTime);
                             totalTime += frameTime;
                             totalFrames++;
                         }
@@ -1254,16 +1407,16 @@ public class PixelEngine
                             PixelEngine.PROFILER.startSection("Update Title");
                             {
                                 lastSecond = t;
-    
+                                
                                 double s = 1000D;
-    
+                                
                                 totalTime /= totalFrames;
-    
+                                
                                 Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
-    
-                                totalTime = 0;
-                                minTime = Long.MAX_VALUE;
-                                maxTime = Long.MIN_VALUE;
+                                
+                                totalTime   = 0;
+                                minTime     = Long.MAX_VALUE;
+                                maxTime     = Long.MIN_VALUE;
                                 totalFrames = 0;
                             }
                             PixelEngine.PROFILER.endSection();
@@ -1272,7 +1425,7 @@ public class PixelEngine
                     PixelEngine.PROFILER.endSection();
                 }
                 PixelEngine.PROFILER.endTick();
-    
+                
                 if (PixelEngine.PROFILER.enabled && PixelEngine.printFrame != null)
                 {
                     String parent = PixelEngine.printFrame.equals("") ? null : PixelEngine.printFrame;

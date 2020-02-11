@@ -11,5 +11,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="PixelEngine" scope="PROVIDED" />
+    <orderEntry type="library" scope="PROVIDED" name="com.google.code.gson:gson:2.8.6" level="application" />
   </component>
 </module>
