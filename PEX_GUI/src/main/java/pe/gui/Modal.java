@@ -22,7 +22,7 @@ public abstract class Modal extends Window
         this.title = new Label(this, title);
         this.title.setPosition(0, 0);
         this.title.setWidth(getWidth());
-        this.title.onMouseButtonDragged((mouse, widgetX, widgetY, dragX, dragY, relX, relY) -> {
+        this.title.onMouseButtonDragged((button, widgetX, widgetY, dragX, dragY, relX, relY) -> {
             setPosition(getX() + relX, getY() + relY);
             return true;
         });
