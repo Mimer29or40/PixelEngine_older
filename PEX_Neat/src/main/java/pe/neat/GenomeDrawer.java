@@ -9,19 +9,19 @@ import java.util.HashMap;
 
 import static pe.PixelEngine.*;
 
-@SuppressWarnings({"SuspiciousNameCombination", "ConstantConditions"})
+@SuppressWarnings({"SuspiciousNameCombination", "ConstantConditions", "unused"})
 public class GenomeDrawer
 {
     public int nodeRadius  = 10;
     public int nodeSpacing = 10;
     
-    public int imageScale = 1;
+    public int imageScale = 4;
     
     public boolean drawDisabledConnections = false;
     
     public final Color textColor = Color.BLACK.copy();
     
-    public final Color backgroundColor = Color.BLANK.copy();
+    public final Color backgroundColor = Color.WHITE.copy();
     
     public final Color nodeBorderColor = Color.BLACK.copy();
     public final Color inputNodeColor  = new Color(50, 200, 100);
@@ -68,7 +68,7 @@ public class GenomeDrawer
         
         int imageWidth  = Math.max((maxLayerCount - 1) * nodeSpacing + 2 * border, 10);
         int imageHeight = Math.max((genome.layerCount - 1) * nodeSpacing + 2 * border, 10);
-        if (this.orientation == Orientation.LEFT && this.orientation == Orientation.RIGHT)
+        if (this.orientation == Orientation.RIGHT || this.orientation == Orientation.LEFT)
         {
             int temp = imageWidth;
             imageWidth  = imageHeight;
@@ -80,12 +80,13 @@ public class GenomeDrawer
             case UP:
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
-                    ArrayList<Node> layer    = allNodes.get(i);
-                    int             layerLen = layer.size();
-                    int             yPos     = border + (genome.layerCount - i - 1) * nodeSpacing;
+                    ArrayList<Node> layer = allNodes.get(i);
+                    
+                    int layerLen = layer.size();
+                    int yPos     = border + (genome.layerCount - i - 1) * nodeSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
-                        int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (j + 1) * imageWidth / (layerLen + 1);
+                        int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageWidth - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
                         nodes.put(layer.get(j), new Pair<>(xPos, yPos));
                     }
                 }
@@ -93,12 +94,13 @@ public class GenomeDrawer
             case DOWN:
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
-                    ArrayList<Node> layer    = allNodes.get(i);
-                    int             layerLen = layer.size();
-                    int             yPos     = border + i * nodeSpacing;
+                    ArrayList<Node> layer = allNodes.get(i);
+                    
+                    int layerLen = layer.size();
+                    int yPos     = border + i * nodeSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
-                        int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (j + 1) * imageWidth / (layerLen + 1);
+                        int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageWidth - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
                         nodes.put(layer.get(j), new Pair<>(xPos, yPos));
                     }
                 }
@@ -106,12 +108,13 @@ public class GenomeDrawer
             case RIGHT:
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
-                    ArrayList<Node> layer    = allNodes.get(i);
-                    int             layerLen = layer.size();
-                    int             xPos     = border + i * nodeSpacing;
+                    ArrayList<Node> layer = allNodes.get(i);
+                    
+                    int layerLen = layer.size();
+                    int xPos     = border + i * nodeSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
-                        int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (j + 1) * imageHeight / (layerLen + 1);
+                        int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageHeight - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
                         nodes.put(layer.get(j), new Pair<>(xPos, yPos));
                     }
                 }
@@ -119,12 +122,13 @@ public class GenomeDrawer
             case LEFT:
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
-                    ArrayList<Node> layer    = allNodes.get(i);
-                    int             layerLen = layer.size();
-                    int             xPos     = border + (genome.layerCount - i - 1) * nodeSpacing;
+                    ArrayList<Node> layer = allNodes.get(i);
+                    
+                    int layerLen = layer.size();
+                    int xPos     = border + (genome.layerCount - i - 1) * nodeSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
-                        int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (j + 1) * imageHeight / (layerLen + 1);
+                        int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageHeight - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
                         nodes.put(layer.get(j), new Pair<>(xPos, yPos));
                     }
                 }
@@ -142,8 +146,8 @@ public class GenomeDrawer
             Pair<Integer, Integer> outNode = nodes.get(con.out);
             if (con.enabled)
             {
+                int   width = (int) Math.max(Math.abs(con.weight) * 5 * this.imageScale, 1);
                 Color color = con.weight > 0 ? this.posConnColor : this.negConnColor;
-                int   width = (int) Math.abs(con.weight) * 5 * this.imageScale;
                 drawLine(inNode.a, inNode.b, outNode.a, outNode.b, width, color);
             }
             else if (this.drawDisabledConnections)
@@ -157,13 +161,9 @@ public class GenomeDrawer
         {
             Pair<Integer, Integer> pos = nodes.get(node);
             
-            int x = pos.a, y = pos.b;
+            fillCircle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale, this.nodeBorderColor);
             
-            int   width = (this.nodeRadius + 1) * this.imageScale;
-            Color color = this.nodeBorderColor;
-            fillCircle(x, y, width, color);
-            
-            width = this.nodeRadius * this.imageScale;
+            Color color = Color.BLANK;
             switch (node.type)
             {
                 case INPUT:
@@ -179,12 +179,13 @@ public class GenomeDrawer
                     color = this.biasNodeColor;
                     break;
             }
-            fillCircle(x, y, width, color);
+            fillCircle(pos.a, pos.b, this.nodeRadius * this.imageScale, color);
             
             String text = "" + node.id;
-            int    w    = textWidth(text, this.imageScale);
-            int    h    = textHeight(text, this.imageScale);
-            drawString(x - w / 2, y - h / 2, text, this.textColor, this.imageScale);
+            
+            int w = textWidth(text, this.imageScale);
+            int h = textHeight(text, this.imageScale);
+            drawString(pos.a - w / 2, pos.b - h / 2, text, this.textColor, this.imageScale);
         }
         
         renderTarget(prev);

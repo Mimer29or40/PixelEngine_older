@@ -2,13 +2,13 @@ package pe.neat;
 
 import static pe.PixelEngine.print;
 
-public class GeneCounting
+public class GeneCountingTest
 {
     public static void main(String[] args)
     {
-        NeatTest.setup(GeneCounting::setup);
+        NeatTest.setup(GeneCountingTest::setup);
         
-        NeatTest.run("GeneCounting", 2, false);
+        NeatTest.run("GeneCountingTest", 2, false);
     }
     
     private static void setup(Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)

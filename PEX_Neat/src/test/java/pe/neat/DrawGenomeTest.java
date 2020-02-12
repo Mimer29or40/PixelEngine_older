@@ -1,22 +1,18 @@
 package pe.neat;
 
 import pe.PixelEngine;
+import pe.Sprite;
 
-import static pe.PixelEngine.print;
+import java.util.Random;
 
-public class SaveLoad
+public class DrawGenomeTest extends PixelEngine
 {
-    public static void main(String[] args)
+    @Override
+    protected boolean onUserCreate()
     {
-        NeatTest.setup(SaveLoad::setup);
-        NeatTest.test(SaveLoad::test);
-        
-        NeatTest.run("GeneCounting", 2, false);
-    }
-    
-    private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)
-    {
-        genome.random.setSeed(1337);
+        Counter nodeInnovation = new Counter();
+        Counter connInnovation = new Counter();
+        Genome  genome         = new Genome(new Random(100));
         
         for (int i = 0; i < 3; i++)
         {
@@ -33,11 +29,16 @@ public class SaveLoad
         genome.addConnection(new Connection(connInnovation.inc(), genome.getNode(0), genome.getNode(4), 1.0, true));
         // genome.addConnection(new Connection(connInnovation.inc(), genome.getNode(2), genome.getNode(4), 1.0, true));
         
-        genome.save("out/saveLoad");
+        GenomeDrawer drawer = new GenomeDrawer();
+        
+        Sprite genomeSprite = drawer.generateSprite(genome);
+        genomeSprite.saveSprite("out/test.png");
+        
+        return false;
     }
     
-    private static void test(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    public static void main(String[] args)
     {
-        Genome.load("out/saveLoad");
+        start(new DrawGenomeTest(), 400, 400, 1, 1);
     }
 }

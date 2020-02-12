@@ -148,7 +148,7 @@ public class Genome
             if (n1.type == Node.Type.BIAS && n2.type == Node.Type.BIAS) continue;
             if (n1.type == Node.Type.OUTPUT && n2.type == Node.Type.OUTPUT) continue;
             
-            if (n1.type == Node.Type.OUTPUT || n2.type == Node.Type.INPUT || n2.type == Node.Type.BIAS)
+            if (n1.type == Node.Type.OUTPUT || n2.type == Node.Type.INPUT || n2.type == Node.Type.BIAS || n1.layer > n2.layer)
             {
                 temp = n1;
                 n1   = n2;
@@ -379,6 +379,11 @@ public class Genome
         }
         
         Genome child = new Genome();
+        
+        for (Node node : genome1.getNodes())
+        {
+            child.addNode(node);
+        }
         
         for (Connection g1Conn : genome1.getConnections())
         {
