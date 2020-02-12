@@ -68,7 +68,7 @@ public class Color
     
     public Color(Number r, Number g, Number b, Number a)
     {
-        this(r, b, g, a, false);
+        this(r, g, b, a, false);
     }
     
     public Color(Number r, Number g, Number b, boolean immutable)
