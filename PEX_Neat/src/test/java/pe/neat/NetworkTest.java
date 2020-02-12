@@ -8,7 +8,7 @@ public class NetworkTest
     {
         NeatTest.setup(NetworkTest::setup);
         
-        NeatTest.run("NeuronTest");
+        NeatTest.run("NeuronTest", false);
     }
     
     private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)

@@ -1,6 +1,7 @@
 package pe.neat;
 
 import pe.Color;
+import pe.DrawMode;
 import pe.Sprite;
 import pe.util.Pair;
 
@@ -29,9 +30,9 @@ public class GenomeDrawer
     public final Color hiddenNodeColor = new Color(200, 50, 100);
     public final Color biasNodeColor   = new Color(200, 100, 50);
     
-    public final Color posConnColor = Color.BLUE.copy();
-    public final Color negConnColor = Color.RED.copy();
-    public final Color disConnColor = new Color(0, 100);
+    public final Color posConnColor = new Color(0, 0, 255, 100);
+    public final Color negConnColor = new Color(255, 0, 0, 100);
+    public final Color disConnColor = new Color(0, 0, 0, 100);
     
     public Orientation orientation = Orientation.RIGHT;
     
@@ -134,11 +135,13 @@ public class GenomeDrawer
                 }
                 break;
         }
-        
-        Sprite sprite = new Sprite(imageWidth, imageHeight, this.backgroundColor);
-        Sprite prev   = renderTarget();
+    
+        Sprite   sprite = new Sprite(imageWidth, imageHeight, this.backgroundColor);
+        Sprite   prev   = renderTarget();
+        DrawMode mode   = drawMode();
         renderTarget(sprite);
-        
+        drawMode(DrawMode.ALPHA);
+    
         // Draw connections first so they are under nodes
         for (Connection con : genome.getConnections())
         {
@@ -187,8 +190,9 @@ public class GenomeDrawer
             int h = textHeight(text, this.imageScale);
             drawString(pos.a - w / 2, pos.b - h / 2, text, this.textColor, this.imageScale);
         }
-        
+    
         renderTarget(prev);
+        drawMode(mode);
         return sprite;
     }
     

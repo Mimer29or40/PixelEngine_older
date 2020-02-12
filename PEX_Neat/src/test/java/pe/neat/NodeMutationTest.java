@@ -12,7 +12,7 @@ public class NodeMutationTest
         NeatTest.setup(NodeMutationTest::setup);
         NeatTest.test(NodeMutationTest::test);
         
-        NeatTest.run("NodeMutationTest");
+        NeatTest.run("NodeMutationTest", drawer);
     }
     
     private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)
@@ -33,7 +33,7 @@ public class NodeMutationTest
     
     private static void test(Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 100; i++)
         {
             print(i);
             genome.nodeMutation(nodeInnovation, connInnovation);
