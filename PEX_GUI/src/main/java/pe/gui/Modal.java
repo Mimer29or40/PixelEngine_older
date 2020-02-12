@@ -22,24 +22,24 @@ public abstract class Modal extends Window
         this.title = new Label(this, title);
         this.title.setPosition(0, 0);
         this.title.setWidth(getWidth());
-        this.title.onMouseDragged((mouse, relX, relY) -> {
+        this.title.onMouseButtonDragged((button, widgetX, widgetY, dragX, dragY, relX, relY) -> {
             setPosition(getX() + relX, getY() + relY);
             return true;
         });
-        this.title.onKeyPressed(key -> key != Keyboard.ESCAPE);
+        this.title.onKeyboardKeyDown(key -> key != Keyboard.ESCAPE);
         
         this.text = new Label(this, text);
         this.text.setPosition(getForegroundOriginX(), getForegroundOriginY());
         this.text.setBorderSize(0);
         this.text.setMarginSize(0);
         this.text.setTextPosition(TextPosition.TOP_LEFT);
-        this.text.onKeyPressed(key -> key != Keyboard.ESCAPE);
+        this.text.onKeyboardKeyDown(key -> key != Keyboard.ESCAPE);
         
         setVisible(false);
         setMarginSize(1);
         
         initButtons();
-        for (Button button : getButtons()) button.onKeyPressed(key -> key != Keyboard.ESCAPE);
+        for (Button button : getButtons()) button.onKeyboardKeyDown(key -> key != Keyboard.ESCAPE);
         
         String linesString = join(clipTextWidth(getText(), this.text.getScale(), 150), "\n");
         setForegroundSize(textWidth(linesString, this.text.getScale()), textHeight(linesString, this.text.getScale()));
@@ -176,9 +176,9 @@ public abstract class Modal extends Window
      */
     
     @Override
-    protected boolean onKeyPressed(Keyboard.Key key)
+    protected boolean onKeyboardKeyDown(Keyboard.Key key)
     {
-        if (super.onKeyPressed(key))
+        if (super.onKeyboardKeyDown(key))
         {
             if (key == Keyboard.ESCAPE) close(0);
             return true;

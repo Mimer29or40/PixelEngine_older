@@ -24,17 +24,17 @@ public class Button extends Label
     
     public void press()
     {
-        onMousePressed(Mouse.NONE, 0, 0);
+        onMouseButtonDown(Mouse.NONE, 0, 0);
     }
     
     public void release()
     {
-        onMouseReleased(Mouse.NONE, 0, 0);
+        onMouseButtonUp(Mouse.NONE, 0, 0);
     }
     
     public void click()
     {
-        onMouseClicked(Mouse.NONE, 0, 0, false);
+        onMouseButtonClicked(Mouse.NONE, 0, 0, false);
     }
     
     /*
@@ -162,9 +162,9 @@ public class Button extends Label
     }
     
     @Override
-    protected boolean onMousePressed(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonDown(Mouse.Button button, int widgetX, int widgetY)
     {
-        if (super.onMousePressed(button, widgetX, widgetY))
+        if (super.onMouseButtonDown(button, widgetX, widgetY))
         {
             if (!isToggleable())
             {
@@ -186,9 +186,9 @@ public class Button extends Label
     }
     
     @Override
-    protected boolean onMouseReleased(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonUp(Mouse.Button button, int widgetX, int widgetY)
     {
-        if (super.onMouseReleased(button, widgetX, widgetY))
+        if (super.onMouseButtonUp(button, widgetX, widgetY))
         {
             if (!isToggleable())
             {
@@ -208,9 +208,9 @@ public class Button extends Label
     }
     
     @Override
-    protected boolean onMouseHeld(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonHeld(Mouse.Button button, int widgetX, int widgetY)
     {
-        if (super.onMouseHeld(button, widgetX, widgetY))
+        if (super.onMouseButtonHeld(button, widgetX, widgetY))
         {
             onButtonHeld(button, widgetX, widgetY);
             if (!isToggleable() && !isPressed())
@@ -224,9 +224,9 @@ public class Button extends Label
     }
     
     @Override
-    protected boolean onMouseClicked(Mouse.Button button, int widgetX, int widgetY, boolean doubleClicked)
+    protected boolean onMouseButtonClicked(Mouse.Button button, int widgetX, int widgetY, boolean doubleClicked)
     {
-        if (super.onMouseClicked(button, widgetX, widgetY, doubleClicked) && isEnabled())
+        if (super.onMouseButtonClicked(button, widgetX, widgetY, doubleClicked) && isEnabled())
         {
             onButtonClicked(button, widgetX, widgetY, doubleClicked);
             return true;
@@ -235,9 +235,9 @@ public class Button extends Label
     }
     
     @Override
-    protected boolean onKeyPressed(Keyboard.Key key)
+    protected boolean onKeyboardKeyDown(Keyboard.Key key)
     {
-        if (super.onKeyPressed(key) && key == Keyboard.SPACE)
+        if (super.onKeyboardKeyDown(key) && key == Keyboard.SPACE)
         {
             onButtonClicked(Mouse.NONE, 0, 0, false);
             return true;

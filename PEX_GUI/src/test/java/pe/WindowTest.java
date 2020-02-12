@@ -28,7 +28,7 @@ public class WindowTest extends PixelEngine
         menu = new Pane(PEX_GUI.ROOT, screenWidth() - screenHeight(), screenHeight(), "Menu");
         menu.setMarginSize(1);
         menu.getTooltipText(() -> "Test");
-        menu.onMouseClicked((mouse, widgetX, widgetY, doubleClicked) -> {
+        menu.onMouseButtonClicked((button, widgetX, widgetY, doubleClicked) -> {
             if (!doubleClicked) addEvent("Menu Clicked: (" + widgetX + ", " + widgetY + ")");
             if (doubleClicked) addEvent("Menu Double Clicked: (" + widgetX + ", " + widgetY + ")");
             return true;

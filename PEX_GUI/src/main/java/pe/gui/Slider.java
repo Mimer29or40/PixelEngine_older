@@ -262,18 +262,18 @@ public class Slider extends Window
      */
     
     @Override
-    protected boolean onMouseHeld(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonHeld(Mouse.Button button, int widgetX, int widgetY)
     {
-        if (super.onMouseHeld(button, widgetX, widgetY) && button == Mouse.LEFT)
+        if (super.onMouseButtonHeld(button, widgetX, widgetY) && button == Mouse.LEFT)
         {
             int barWidth = Math.max(1, Math.min(widgetX - getForegroundOriginX() + 1, getForegroundWidth()));
-            
+        
             if (this.barWidth != barWidth)
             {
                 this.barWidth = barWidth;
-                
+            
                 setValue(this.barIncrements.get(this.barWidth - 1));
-                
+            
                 redraw();
             }
             return true;
@@ -282,15 +282,15 @@ public class Slider extends Window
     }
     
     @Override
-    protected boolean onMouseWheel(int dir)
+    protected boolean onMouseScrolled(int scrollX, int scrollY)
     {
-        if (super.onMouseWheel(dir))
+        if (super.onMouseScrolled(scrollX, scrollY))
         {
-            if (dir < 0 && getValue() > getMin())
+            if (scrollY < 0 && getValue() > getMin())
             {
                 setValue(getValue() - getIncrement());
             }
-            else if (dir > 0 && getValue() < getMax())
+            else if (scrollY > 0 && getValue() < getMax())
             {
                 setValue(getValue() + getIncrement());
             }
@@ -300,9 +300,9 @@ public class Slider extends Window
     }
     
     @Override
-    protected boolean onKeyPressed(Keyboard.Key key)
+    protected boolean onKeyboardKeyDown(Keyboard.Key key)
     {
-        if (super.onKeyPressed(key))
+        if (super.onKeyboardKeyDown(key))
         {
             if (key == Keyboard.LEFT && getValue() > getMin())
             {

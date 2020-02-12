@@ -2,7 +2,7 @@ package pe.gui.event;
 
 import pe.Keyboard;
 
-public interface IKeyPressed
+public interface IKeyboardKeyHeld
 {
     boolean fire(Keyboard.Key key);
 }

@@ -35,7 +35,7 @@ public class EventsTest extends PixelEngine
     protected boolean onUserUpdate(double elapsedTime)
     {
         clear();
-        
+    
         int nLog = 0;
         for (String s : events)
         {
@@ -43,17 +43,17 @@ public class EventsTest extends PixelEngine
             drawString(2, nLog * 8 + 2, s, new Color(c, c, c));
             nLog++;
         }
-        
+    
         // for (Event event : Events.get())
-        // for (Event event : Events.get(EventMouseDragged.class, EventButtonDown.class))
-        // for (Event event : Events.get(EventKeyTyped.class))
+        // for (Event event : Events.get(EventMouseButtonDragged.class, EventMouseButtonDown.class))
+        // for (Event event : Events.get(EventKeyboardKeyTyped.class))
         // for (Event event : Events.get(Events.MOUSE_EVENTS))
         // {
         //     print(event.toString());
         // }
-        
+    
         if (Keyboard.SPACE.down()) Window.fullscreen(!Window.fullscreen());
-        
+    
         return true;
     }
     

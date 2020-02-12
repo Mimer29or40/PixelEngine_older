@@ -25,7 +25,7 @@ public class TextBox extends Label
     public TextBox(Window parent, String text)
     {
         super(parent, text);
-        
+    
         setTextPosition(TextPosition.LEFT);
     }
     
@@ -34,9 +34,16 @@ public class TextBox extends Label
         this(parent, "");
     }
     
+    // TODO - Get Text scroll working by storing full text to another variable and setting text based on cursorPos
+    
     @Override
     protected void updatedText(String prev, String text)
     {
+        if (getTextLimit() > -1 && text.length() > getTextLimit())
+        {
+            this.text = prev;
+            return;
+        }
         if (this.validChars != null && this.validChars.size() > 0)
         {
             for (int i = 0; i < text.length(); i++)
@@ -51,6 +58,31 @@ public class TextBox extends Label
         super.updatedText(prev, text);
         this.cursorPos = Math.max(0, this.cursorPos + (text.length() - prev.length()));
         onTextChanged(this.text);
+    }
+    
+    /*
+     * Text Limit Property
+     */
+    protected int textLimit = -1;
+    
+    public int getTextLimit()
+    {
+        return this.textLimit;
+    }
+    
+    public void setTextLimit(int textLimit)
+    {
+        if (this.textLimit != textLimit)
+        {
+            int prev = this.textLimit;
+            this.textLimit = textLimit;
+            updatedTextLimit(prev, this.textLimit);
+        }
+    }
+    
+    protected void updatedTextLimit(int prev, int textLimit)
+    {
+    
     }
     
     /*
@@ -144,9 +176,9 @@ public class TextBox extends Label
     }
     
     @Override
-    protected boolean onMousePressed(Mouse.Button button, int widgetX, int widgetY)
+    protected boolean onMouseButtonDown(Mouse.Button button, int widgetX, int widgetY)
     {
-        if (super.onMousePressed(button, widgetX, widgetY))
+        if (super.onMouseButtonDown(button, widgetX, widgetY))
         {
             if (button == Mouse.LEFT)
             {
@@ -166,9 +198,9 @@ public class TextBox extends Label
     }
     
     @Override
-    protected boolean onKeyPressed(Keyboard.Key key)
+    protected boolean onKeyboardKeyDown(Keyboard.Key key)
     {
-        if (super.onKeyPressed(key))
+        if (super.onKeyboardKeyDown(key))
         {
             this.repeatingKey = key;
             if (key == Keyboard.BACK)
@@ -226,35 +258,39 @@ public class TextBox extends Label
                 this.cursorPos = Math.min(this.text.length(), this.cursorPos + 1);
                 redraw();
             }
-            else
-            {
-                if (key.baseChar > 0)
-                {
-                    if (this.cursorPos == 0)
-                    {
-                        setText((Keyboard.isShiftDown() ? key.shiftChar : key.baseChar) + this.text);
-                    }
-                    else if (this.cursorPos == this.text.length())
-                    {
-                        setText(this.text + (Keyboard.isShiftDown() ? key.shiftChar : key.baseChar));
-                    }
-                    else
-                    {
-                        setText(this.text.substring(0, this.cursorPos) + (Keyboard.isShiftDown() ? key.shiftChar : key.baseChar) + this.text.substring(this.cursorPos));
-                    }
-                }
-            }
             return true;
         }
         return false;
     }
     
     @Override
-    protected boolean onKeyRepeated(Keyboard.Key key)
+    protected boolean onKeyboardKeyRepeated(Keyboard.Key key)
     {
-        if (super.onKeyRepeated(key))
+        if (super.onKeyboardKeyRepeated(key))
         {
-            if (this.repeatingKey == key) onKeyPressed(key);
+            if (this.repeatingKey == key) onKeyboardKeyDown(key);
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    protected boolean onKeyboardKeyTyped(char character)
+    {
+        if (super.onKeyboardKeyTyped(character))
+        {
+            if (this.cursorPos == 0)
+            {
+                setText(character + this.text);
+            }
+            else if (this.cursorPos == this.text.length())
+            {
+                setText(this.text + character);
+            }
+            else
+            {
+                setText(this.text.substring(0, this.cursorPos) + character + this.text.substring(this.cursorPos));
+            }
             return true;
         }
         return false;
