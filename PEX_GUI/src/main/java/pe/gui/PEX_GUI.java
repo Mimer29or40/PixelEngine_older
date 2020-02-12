@@ -3,6 +3,8 @@ package pe.gui;
 import pe.*;
 import pe.event.*;
 
+import java.util.Objects;
+
 import static pe.PixelEngine.*;
 
 public class PEX_GUI extends PEX
@@ -99,6 +101,7 @@ public class PEX_GUI extends PEX
                     if (prevTop != null) prevTop.onMouseExited();
                     if (PEX_GUI.top != null) PEX_GUI.top.onMouseEntered();
                 }
+                LOGGER.debug(Objects.toString(PEX_GUI.top));
             }
             this.profiler.endSection();
     
@@ -180,7 +183,6 @@ public class PEX_GUI extends PEX
                             Window window = PEX_GUI.top;
                             while (window != null)
                             {
-                                PEX_GUI.drag = window;
                                 if (window.onMouseButtonHeld(event.button(), event.x() - window.getAbsX(), event.y() - window.getAbsY())) break;
                                 window = window.getParent();
                             }
@@ -211,6 +213,7 @@ public class PEX_GUI extends PEX
                                                                 event.relX(),
                                                                 event.relY()))
                                 {
+                                    PEX_GUI.drag = window;
                                     break;
                                 }
                                 window = window.getParent();
