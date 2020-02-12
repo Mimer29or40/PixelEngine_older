@@ -29,19 +29,19 @@ public class Vector4
     
     public static Vector4f randomF()
     {
-        float x = (float) PixelEngine.random(-1.0, 1.0);
-        float y = (float) PixelEngine.random(-1.0, 1.0);
-        float z = (float) PixelEngine.random(-1.0, 1.0);
-        float w = (float) PixelEngine.random(-1.0, 1.0);
+        float x = PixelEngine.random().nextFloat(-1F, 1F);
+        float y = PixelEngine.random().nextFloat(-1F, 1F);
+        float z = PixelEngine.random().nextFloat(-1F, 1F);
+        float w = PixelEngine.random().nextFloat(-1F, 1F);
         return new Vector4f(x, y, z, w).normalize();
     }
     
     public static Vector4d randomD()
     {
-        double x = PixelEngine.random(-1.0, 1.0);
-        double y = PixelEngine.random(-1.0, 1.0);
-        double z = PixelEngine.random(-1.0, 1.0);
-        double w = PixelEngine.random(-1.0, 1.0);
+        double x = PixelEngine.random().nextDouble(-1.0, 1.0);
+        double y = PixelEngine.random().nextDouble(-1.0, 1.0);
+        double z = PixelEngine.random().nextDouble(-1.0, 1.0);
+        double w = PixelEngine.random().nextDouble(-1.0, 1.0);
         return new Vector4d(x, y, z, w).normalize();
     }
 }

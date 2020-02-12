@@ -74,7 +74,6 @@ public class PixelEngine
      * Called every frame.
      *
      * @param elapsedTime time in seconds since that last frame. Must be overridden for engine to run
-     *
      * @return True if engine can continue to run
      */
     protected boolean onUserUpdate(double elapsedTime)
@@ -122,33 +121,33 @@ public class PixelEngine
     
         Window.vsync(vsync);
         PixelEngine.LOGGER.trace("VSync: %s)", vsync);
-        
+    
         if (PixelEngine.screenW == 0 || PixelEngine.screenH == 0) throw new RuntimeException("Screen dimension must be > 0");
         if (PixelEngine.pixelW == 0 || PixelEngine.pixelH == 0) throw new RuntimeException("Color dimension must be > 0");
         PixelEngine.LOGGER.trace("Screen Size and Color Dimensions pass initial test");
-        
-        createFontSheet();
-        
-        loadExtensions();
-        
-        PixelEngine.window = PixelEngine.target = new Sprite(screenW, screenH);
-        PixelEngine.prev = new Sprite(screenW, screenH);
     
-        PixelEngine.running = true;
+        createFontSheet();
+    
+        loadExtensions();
+    
+        PixelEngine.window = PixelEngine.target = new Sprite(screenW, screenH);
+        PixelEngine.prev   = new Sprite(screenW, screenH);
+    
+        PixelEngine.running   = true;
         PixelEngine.startTime = System.nanoTime();
-        
+    
         try
         {
             PixelEngine.LOGGER.debug("Initializing Extensions");
             PixelEngine.extensions.values().forEach(PEX::initialize);
-            
+        
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.onUserCreate())
             {
                 Window.setup();
                 
                 new Thread(PixelEngine::renderLoop, "Render Loop").start();
-    
+            
                 while (PixelEngine.running) Window.pollEvents();
             }
         }
@@ -227,7 +226,7 @@ public class PixelEngine
     
     public static void colorMode(IBlendPos pixelFunc)
     {
-        PixelEngine.drawMode = DrawMode.CUSTOM;
+        PixelEngine.drawMode  = DrawMode.CUSTOM;
         PixelEngine.blendFunc = pixelFunc;
     }
     
@@ -365,29 +364,9 @@ public class PixelEngine
         PixelEngine.RANDOM.setSeed(seed);
     }
     
-    public static double random()
+    public static Random random()
     {
-        return PixelEngine.RANDOM.nextDouble();
-    }
-    
-    public static double random(double upper)
-    {
-        return PixelEngine.RANDOM.nextDouble() * upper;
-    }
-    
-    public static double random(double lower, double upper)
-    {
-        return PixelEngine.RANDOM.nextDouble() * (upper - lower) + lower;
-    }
-    
-    public static int randInt(int upper)
-    {
-        return PixelEngine.RANDOM.nextInt(upper);
-    }
-    
-    public static int randInt(int lower, int upper)
-    {
-        return PixelEngine.RANDOM.nextInt(upper - lower + 1) + lower;
+        return PixelEngine.RANDOM;
     }
     
     public static double map(double x, double xMin, double xMax, double yMin, double yMax)
@@ -538,8 +517,8 @@ public class PixelEngine
             if (y2 < y1)
             {
                 tmp = y1;
-                y1 = y2;
-                y2 = tmp;
+                y1  = y2;
+                y2  = tmp;
             }
             for (y = y1; y <= y2; y++)
             {
@@ -553,8 +532,8 @@ public class PixelEngine
             if (x2 < x1)
             {
                 tmp = x1;
-                x1 = x2;
-                x2 = tmp;
+                x1  = x2;
+                x2  = tmp;
             }
             for (x = x1; x <= x2; x++)
             {
@@ -568,12 +547,12 @@ public class PixelEngine
             if (x1 > x2)
             {
                 tmp = x1;
-                x1 = x2;
-                x2 = tmp;
-                
+                x1  = x2;
+                x2  = tmp;
+    
                 tmp = y1;
-                y1 = y2;
-                y2 = tmp;
+                y1  = y2;
+                y2  = tmp;
             }
             
             dx = x2 - x1;
@@ -603,12 +582,12 @@ public class PixelEngine
             if (y1 > y2)
             {
                 tmp = x1;
-                x1 = x2;
-                x2 = tmp;
-                
+                x1  = x2;
+                x2  = tmp;
+    
                 tmp = y1;
-                y1 = y2;
-                y2 = tmp;
+                y1  = y2;
+                y2  = tmp;
             }
             
             dx = x2 - x1;
@@ -741,12 +720,12 @@ public class PixelEngine
     {
         int x2 = x + w;
         int y2 = y + h;
-        
-        x = Math.max(0, Math.min(x, PixelEngine.screenW));
-        y = Math.max(0, Math.min(y, PixelEngine.screenH));
+    
+        x  = Math.max(0, Math.min(x, PixelEngine.screenW));
+        y  = Math.max(0, Math.min(y, PixelEngine.screenH));
         x2 = Math.max(0, Math.min(x2, PixelEngine.screenW));
         y2 = Math.max(0, Math.min(y2, PixelEngine.screenH));
-        
+    
         for (int i = x; i < x2; i++)
         {
             for (int j = y; j < y2; j++)
@@ -1085,7 +1064,7 @@ public class PixelEngine
         
         PixelEngine.LOGGER.trace("Font Sheet Sprite Generated");
         PixelEngine.font = new Sprite(128, 48);
-        Color p  = new Color();
+        Color p = new Color();
         for (int b = 0, px = 0, py = 0; b < 1024; b += 4)
         {
             int sym1 = (int) data.charAt(b) - 48;
@@ -1129,8 +1108,8 @@ public class PixelEngine
             {
                 PixelEngine.LOGGER.trace("Frame Started");
     
-                t = System.nanoTime();
-                dt = t - lastFrame;
+                t         = System.nanoTime();
+                dt        = t - lastFrame;
                 lastFrame = t;
     
                 PixelEngine.PROFILER.startTick();
@@ -1138,19 +1117,19 @@ public class PixelEngine
                     PixelEngine.PROFILER.startSection("Events");
                     {
                         Events.clear(); // TODO - Have a way to have events persist and be consumable.
-    
+            
                         PixelEngine.PROFILER.startSection("Mouse Events");
                         {
                             Mouse.handleEvents(t, dt);
                         }
                         PixelEngine.PROFILER.endSection();
-    
+            
                         PixelEngine.PROFILER.startSection("Key Events");
                         {
                             Keyboard.handleEvents(t, dt);
                         }
                         PixelEngine.PROFILER.endSection();
-    
+            
                         PixelEngine.PROFILER.startSection("Window Events");
                         {
                             Window.handleEvents(t, dt);
@@ -1158,7 +1137,7 @@ public class PixelEngine
                         PixelEngine.PROFILER.endSection();
                     }
                     PixelEngine.PROFILER.endSection();
-    
+        
                     PixelEngine.PROFILER.startSection("PEX Pre");
                     {
                         for (String name : PixelEngine.extensions.keySet())
@@ -1171,7 +1150,7 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+        
                     PixelEngine.PROFILER.startSection("User Update");
                     {
                         if (!PixelEngine.logic.onUserUpdate(dt / 1_000_000_000D))
@@ -1181,7 +1160,7 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+        
                     PixelEngine.PROFILER.startSection("PEX Post");
                     {
                         for (String name : PixelEngine.extensions.keySet())
@@ -1194,14 +1173,14 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+        
                     boolean update;
                     PixelEngine.PROFILER.startSection("Window Update");
                     {
                         update = Window.update();
                     }
                     PixelEngine.PROFILER.endSection();
-    
+        
                     PixelEngine.PROFILER.startSection("Render");
                     {
                         for (int i = 0; i < PixelEngine.screenW * PixelEngine.screenH; i++)
@@ -1235,14 +1214,14 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+        
                     PixelEngine.PROFILER.startSection("Stats");
                     {
                         PixelEngine.PROFILER.startSection("Update");
                         {
                             frameTime = System.nanoTime() - t;
-                            minTime = Math.min(minTime, frameTime);
-                            maxTime = Math.max(maxTime, frameTime);
+                            minTime   = Math.min(minTime, frameTime);
+                            maxTime   = Math.max(maxTime, frameTime);
                             totalTime += frameTime;
                             totalFrames++;
                         }
@@ -1254,16 +1233,16 @@ public class PixelEngine
                             PixelEngine.PROFILER.startSection("Update Title");
                             {
                                 lastSecond = t;
-    
+        
                                 double s = 1000D;
-    
+        
                                 totalTime /= totalFrames;
-    
+        
                                 Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
-    
-                                totalTime = 0;
-                                minTime = Long.MAX_VALUE;
-                                maxTime = Long.MIN_VALUE;
+        
+                                totalTime   = 0;
+                                minTime     = Long.MAX_VALUE;
+                                maxTime     = Long.MIN_VALUE;
                                 totalFrames = 0;
                             }
                             PixelEngine.PROFILER.endSection();

@@ -2,8 +2,6 @@ package pe;
 
 import java.util.Objects;
 
-import static pe.PixelEngine.randInt;
-
 @SuppressWarnings("unused")
 public class Color
 {
@@ -108,10 +106,10 @@ public class Color
     
     public static Color random(int lower, int upper, boolean alpha, Color out)
     {
-        out.r(randInt(lower, upper));
-        out.g(randInt(lower, upper));
-        out.b(randInt(lower, upper));
-        if (alpha) out.a(randInt(lower, upper));
+        out.r(PixelEngine.random().nextInt(lower, upper));
+        out.g(PixelEngine.random().nextInt(lower, upper));
+        out.b(PixelEngine.random().nextInt(lower, upper));
+        if (alpha) out.a(PixelEngine.random().nextInt(lower, upper));
         return out;
     }
     
