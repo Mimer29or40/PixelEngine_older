@@ -43,7 +43,7 @@ def random_gaussian():
 
 class Settings:
     C1 = 1.0
-    """Excess gene weight. Used ingGenomic distance calculation."""
+    """Excess gene weight. Used in Genomic distance calculation."""
     
     C2 = 1.0
     """Disjoint gene weight. Used in genomic distance calculation."""
@@ -53,7 +53,7 @@ class Settings:
     
     DT = 3.0
     """Genomic distance before two genomes are different species."""
-    
+
     ASEXUAL_REPRODUCTION_RATE = 0.25
     """Rate at which mutation happens without crossover."""
     
