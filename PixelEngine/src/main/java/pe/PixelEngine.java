@@ -140,7 +140,7 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.debug("Initializing Extensions");
             PixelEngine.extensions.values().forEach(PEX::initialize);
-        
+    
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.onUserCreate())
             {
@@ -1262,16 +1262,16 @@ public class PixelEngine
             {
                 PixelEngine.LOGGER.trace("Frame Started");
     
-                t = System.nanoTime();
-                dt = t - lastFrame;
+                t         = System.nanoTime();
+                dt        = t - lastFrame;
                 lastFrame = t;
-                
+    
                 PixelEngine.PROFILER.startTick();
                 {
                     PixelEngine.PROFILER.startSection("Events");
                     {
                         Events.clear(); // TODO - Have a way to have events persist and be consumable.
-                        
+            
                         PixelEngine.PROFILER.startSection("Mouse Events");
                         {
                             Mouse.handleEvents(t, dt);
@@ -1368,14 +1368,14 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-    
+        
                     PixelEngine.PROFILER.startSection("Stats");
                     {
                         PixelEngine.PROFILER.startSection("Update");
                         {
                             frameTime = System.nanoTime() - t;
-                            minTime = Math.min(minTime, frameTime);
-                            maxTime = Math.max(maxTime, frameTime);
+                            minTime   = Math.min(minTime, frameTime);
+                            maxTime   = Math.max(maxTime, frameTime);
                             totalTime += frameTime;
                             totalFrames++;
                         }
@@ -1387,16 +1387,16 @@ public class PixelEngine
                             PixelEngine.PROFILER.startSection("Update Title");
                             {
                                 lastSecond = t;
-    
+        
                                 double s = 1000D;
-    
+        
                                 totalTime /= totalFrames;
-    
+        
                                 Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
-    
-                                totalTime = 0;
-                                minTime = Long.MAX_VALUE;
-                                maxTime = Long.MIN_VALUE;
+        
+                                totalTime   = 0;
+                                minTime     = Long.MAX_VALUE;
+                                maxTime     = Long.MIN_VALUE;
                                 totalFrames = 0;
                             }
                             PixelEngine.PROFILER.endSection();

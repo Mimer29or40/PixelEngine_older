@@ -1,5 +1,7 @@
 package pe.neat;
 
+import pe.Random;
+
 import static pe.PixelEngine.print;
 
 public class NetworkTest
@@ -11,17 +13,17 @@ public class NetworkTest
         NeatTest.run("NeuronTest", false);
     }
     
-    private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
-        genome.random.setSeed(1337);
-    
-        Network net;
+        random.setSeed(1337);
+        
+        Network  net;
         double[] input, output;
-        Node node0, node1, node2, node3, node4, node5;
-    
+        Node     node0, node1, node2, node3, node4, node5;
+        
         print("========== Test 1 ==========");
         genome = new Genome();
-        node0 = genome.addNode(new Node(0, Node.Type.INPUT, 0));
+        node0  = genome.addNode(new Node(0, Node.Type.INPUT, 0));
         node1 = genome.addNode(new Node(1, Node.Type.OUTPUT, 1));
     
         genome.addConnection(new Connection(0, node0, node1, 0.5, true));

@@ -1,5 +1,7 @@
 package pe.neat;
 
+import pe.Random;
+
 import static pe.PixelEngine.print;
 
 public class NeuronTest
@@ -11,16 +13,16 @@ public class NeuronTest
         NeatTest.run("NeuronTest", false);
     }
     
-    private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
-        genome.random.setSeed(1337);
-    
+        random.setSeed(1337);
+        
         print("========== Test 1 ==========");
         Neuron test1 = new Neuron();
         test1.addInput();
         test1.addInput();
         test1.addInput();
-    
+        
         test1.feedInput(1.0);
         print("test1.is_ready()=%s, Actual: False", test1.isReady());
         test1.feedInput(1.0);

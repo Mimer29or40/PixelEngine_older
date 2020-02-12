@@ -1,5 +1,7 @@
 package pe.neat;
 
+import pe.Random;
+
 import static pe.PixelEngine.print;
 
 public class WeightMutationTest
@@ -15,9 +17,9 @@ public class WeightMutationTest
         NeatTest.run("WeightMutationTest", drawer);
     }
     
-    private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
-        genome.random.setSeed(1337);
+        random.setSeed(1337);
         
         Node node0 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
         Node node1 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
@@ -75,7 +77,7 @@ public class WeightMutationTest
         // genome.save(fileName);
     }
     
-    private static void test(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    private static void test(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
         for (int i = 0; i < 100; i++)
         {

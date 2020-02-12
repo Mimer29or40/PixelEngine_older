@@ -1,5 +1,7 @@
 package pe.neat;
 
+import pe.Random;
+
 import static pe.PixelEngine.print;
 
 public class GeneCountingTest
@@ -11,7 +13,7 @@ public class GeneCountingTest
         NeatTest.run("GeneCountingTest", 2, false);
     }
     
-    private static void setup(Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
+    private static void setup(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
     {
         int nodes = 10;
         for (int i = 0; i < nodes; i++)
@@ -20,7 +22,7 @@ public class GeneCountingTest
             genome[0].addNode(node);
             genome[1].addNode(node);
         }
-    
+        
         int cons = 5;
         for (int i = 0; i < cons; i++)
         {

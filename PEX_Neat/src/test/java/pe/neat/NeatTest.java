@@ -1,13 +1,16 @@
 package pe.neat;
 
 import pe.PixelEngine;
+import pe.Random;
 
 @SuppressWarnings("unused")
 public class NeatTest extends PixelEngine
 {
-    private static String name;
-    private static int count;
-    private static boolean output;
+    private static Random random = new Random();
+    
+    private static String       name;
+    private static int          count;
+    private static boolean      output;
     private static GenomeDrawer drawer;
     
     private static ISetupFunc      setupFunc;
@@ -24,28 +27,28 @@ public class NeatTest extends PixelEngine
         for (int i = 0; i < count; i++) connInnovations[i] = new Counter();
     
         Genome[] genomes = new Genome[count];
-        for (int i = 0; i < count; i++) genomes[i] = new Genome();
+        for (int i = 0; i < count; i++) genomes[i] = new Genome(random);
     
-        if (setupFunc != null) setupFunc.setup(genomes[0], nodeInnovations[0], connInnovations[0]);
-        if (setupArrayFunc != null) setupArrayFunc.setup(genomes, nodeInnovations, connInnovations);
-
+        if (setupFunc != null) setupFunc.setup(random, genomes[0], nodeInnovations[0], connInnovations[0]);
+        if (setupArrayFunc != null) setupArrayFunc.setup(random, genomes, nodeInnovations, connInnovations);
+    
         if (output)
         {
             if (count > 1)
             {
                 for (int i = 0; i < count; i++)
                 {
-                     drawer.generateSprite(genomes[i]).saveSprite(String.format("out/%s_%s_before.png", name, i));
+                    drawer.generateSprite(genomes[i]).saveSprite(String.format("out/%s_%s_before.png", name, i));
                 }
             }
             else
             {
-                 drawer.generateSprite(genomes[0]).saveSprite(String.format("out/%s_before.png", name));
+                drawer.generateSprite(genomes[0]).saveSprite(String.format("out/%s_before.png", name));
             }
         }
     
-        if (testFunc != null) testFunc.test(genomes[0], nodeInnovations[0], connInnovations[0]);
-        if (testArrayFunc != null) testArrayFunc.test(genomes, nodeInnovations, connInnovations);
+        if (testFunc != null) testFunc.test(random, genomes[0], nodeInnovations[0], connInnovations[0]);
+        if (testArrayFunc != null) testArrayFunc.test(random, genomes, nodeInnovations, connInnovations);
     
         if (output)
         {
@@ -53,7 +56,7 @@ public class NeatTest extends PixelEngine
             {
                 for (int i = 0; i < count; i++)
                 {
-                     drawer.generateSprite(genomes[i]).saveSprite(String.format("out/%s_%s_after.png", name, i));
+                    drawer.generateSprite(genomes[i]).saveSprite(String.format("out/%s_%s_after.png", name, i));
                 }
             }
             else
@@ -131,21 +134,21 @@ public class NeatTest extends PixelEngine
     
     public interface ISetupFunc
     {
-        void setup(Genome genome, Counter nodeInnovation, Counter connInnovation);
+        void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation);
     }
     
     public interface ITestFunc
     {
-        void test(Genome genome, Counter nodeInnovation, Counter connInnovation);
+        void test(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation);
     }
     
     public interface ISetupArrayFunc
     {
-        void setup(Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation);
+        void setup(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation);
     }
     
     public interface ITestArrayFunc
     {
-        void test(Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation);
+        void test(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation);
     }
 }

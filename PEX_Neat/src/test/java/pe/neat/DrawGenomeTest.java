@@ -1,5 +1,7 @@
 package pe.neat;
 
+import pe.Random;
+
 public class DrawGenomeTest
 {
     public static void main(String[] args)
@@ -9,9 +11,9 @@ public class DrawGenomeTest
         NeatTest.run("DrawGenomeTest");
     }
     
-    private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
-        genome.random.setSeed(100);
+        random.setSeed(100);
         
         for (int i = 0; i < 3; i++)
         {

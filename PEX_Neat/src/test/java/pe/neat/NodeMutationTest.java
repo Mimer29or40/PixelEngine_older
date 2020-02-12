@@ -1,5 +1,7 @@
 package pe.neat;
 
+import pe.Random;
+
 import static pe.PixelEngine.print;
 
 public class NodeMutationTest
@@ -15,10 +17,10 @@ public class NodeMutationTest
         NeatTest.run("NodeMutationTest", drawer);
     }
     
-    private static void setup(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
-        genome.random.setSeed(1337);
-
+        random.setSeed(1337);
+        
         Node input1 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
         Node input2 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
         Node output = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.OUTPUT, 1));
@@ -31,7 +33,7 @@ public class NodeMutationTest
         // genome.save(fileName);
     }
     
-    private static void test(Genome genome, Counter nodeInnovation, Counter connInnovation)
+    private static void test(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
         for (int i = 0; i < 100; i++)
         {

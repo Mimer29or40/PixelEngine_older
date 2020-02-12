@@ -2,6 +2,7 @@ package pe.neat;
 
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import pe.Random;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Random;
 
 import static pe.PixelEngine.getPath;
 
@@ -92,7 +92,7 @@ public class Genome
             }
             else
             {
-                connection.weight = this.random.nextDouble() * 2.0 - 1.0;
+                connection.weight = this.random.nextDouble(-1.0, 1.0);
             }
         }
     }
@@ -103,8 +103,8 @@ public class Genome
         for (Connection connection : getConnections()) if (connection.enabled) suitable.add(connection);
         
         if (suitable.isEmpty()) return;
-        
-        Connection con = suitable.get(this.random.nextInt(suitable.size()));
+    
+        Connection con = this.random.nextIndex(suitable);
         
         con.enabled = false;
         
@@ -137,9 +137,9 @@ public class Genome
         
         for (int attempt = 0; attempt < attempts; attempt++)
         {
-            Node n1 = this.nodes.get(this.random.nextInt(this.nodes.size()));
-            Node n2 = this.nodes.get(this.random.nextInt(this.nodes.size()));
-            
+            Node n1 = this.random.nextIndex(this.nodes.values());
+            Node n2 = this.random.nextIndex(this.nodes.values());
+    
             if (n1.equals(n2)) continue;
             if (n1.layer == n2.layer) continue;
             if (n1.type == Node.Type.INPUT && n2.type == Node.Type.INPUT) continue;
@@ -147,7 +147,7 @@ public class Genome
             if (n1.type == Node.Type.BIAS && n2.type == Node.Type.INPUT) continue;
             if (n1.type == Node.Type.BIAS && n2.type == Node.Type.BIAS) continue;
             if (n1.type == Node.Type.OUTPUT && n2.type == Node.Type.OUTPUT) continue;
-            
+    
             if (n1.type == Node.Type.OUTPUT || n2.type == Node.Type.INPUT || n2.type == Node.Type.BIAS || n1.layer > n2.layer)
             {
                 temp = n1;
@@ -200,8 +200,8 @@ public class Genome
                 }
             }
             if (cont) continue;
-            
-            addConnection(new Connection(connInnovation.inc(), n1, n2, this.random.nextDouble() * 2.0 - 1.0, true));
+    
+            addConnection(new Connection(connInnovation.inc(), n1, n2, this.random.nextDouble(-1.0, 1.0), true));
             return;
         }
     }

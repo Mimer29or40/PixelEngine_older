@@ -1,5 +1,7 @@
 package pe.neat;
 
+import pe.Random;
+
 public class CrossoverTest
 {
     static GenomeDrawer drawer = new GenomeDrawer();
@@ -13,10 +15,9 @@ public class CrossoverTest
         NeatTest.run("CrossoverTest", 3, drawer);
     }
     
-    private static void setup(Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
+    private static void setup(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
     {
-        genome[0].random.setSeed(1337);
-        genome[1].random.setSeed(genome[0].random.nextLong());
+        random.setSeed(1337);
         
         for (int i = 0; i < 3; i++)
         {
@@ -51,7 +52,7 @@ public class CrossoverTest
         genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(0), genome[1].getNode(5), -0.5, true));
     }
     
-    private static void test(Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
+    private static void test(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
     {
         genome[2] = Genome.crossover(genome[0], genome[1], 0.10);
     }
