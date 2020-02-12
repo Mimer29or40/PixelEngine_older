@@ -63,7 +63,7 @@ public abstract class Wave
         @Override
         protected double generate(double time, double freq, double _freq, double custom)
         {
-            return random(-1.0, 1.0);
+            return random().nextDouble(-1.0, 1.0);
         }
     };
     

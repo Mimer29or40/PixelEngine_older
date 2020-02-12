@@ -45,15 +45,15 @@ public class Vector2
     
     public static Vector2f randomF()
     {
-        float x = (float) PixelEngine.random(-1.0, 1.0);
-        float y = (float) PixelEngine.random(-1.0, 1.0);
+        float x = PixelEngine.random().nextFloat(-1F, 1F);
+        float y = PixelEngine.random().nextFloat(-1F, 1F);
         return new Vector2f(x, y).normalize();
     }
     
     public static Vector2d randomD()
     {
-        double x = PixelEngine.random(-1.0, 1.0);
-        double y = PixelEngine.random(-1.0, 1.0);
+        double x = PixelEngine.random().nextDouble(-1.0, 1.0);
+        double y = PixelEngine.random().nextDouble(-1.0, 1.0);
         return new Vector2d(x, y).normalize();
     }
 }

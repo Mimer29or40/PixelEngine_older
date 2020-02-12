@@ -121,26 +121,26 @@ public class PixelEngine
         
         Window.vsync(vsync);
         PixelEngine.LOGGER.trace("VSync: %s)", vsync);
-        
+    
         if (PixelEngine.screenW == 0 || PixelEngine.screenH == 0) throw new RuntimeException("Screen dimension must be > 0");
         if (PixelEngine.pixelW == 0 || PixelEngine.pixelH == 0) throw new RuntimeException("Color dimension must be > 0");
         PixelEngine.LOGGER.trace("Screen Size and Color Dimensions pass initial test");
-        
+    
         createFontSheet();
-        
+    
         loadExtensions();
-        
+    
         PixelEngine.window = PixelEngine.target = new Sprite(screenW, screenH);
         PixelEngine.prev   = new Sprite(screenW, screenH);
-        
+    
         PixelEngine.running   = true;
         PixelEngine.startTime = System.nanoTime();
-        
+    
         try
         {
             PixelEngine.LOGGER.debug("Initializing Extensions");
             PixelEngine.extensions.values().forEach(PEX::initialize);
-            
+        
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.onUserCreate())
             {
@@ -364,29 +364,9 @@ public class PixelEngine
         PixelEngine.RANDOM.setSeed(seed);
     }
     
-    public static double random()
+    public static Random random()
     {
-        return PixelEngine.RANDOM.nextDouble();
-    }
-    
-    public static double random(double upper)
-    {
-        return PixelEngine.RANDOM.nextDouble() * upper;
-    }
-    
-    public static double random(double lower, double upper)
-    {
-        return PixelEngine.RANDOM.nextDouble() * (upper - lower) + lower;
-    }
-    
-    public static int randInt(int upper)
-    {
-        return PixelEngine.RANDOM.nextInt(upper);
-    }
-    
-    public static int randInt(int lower, int upper)
-    {
-        return PixelEngine.RANDOM.nextInt(upper - lower + 1) + lower;
+        return PixelEngine.RANDOM;
     }
     
     public static double map(double x, double xMin, double xMax, double yMin, double yMax)
@@ -899,7 +879,7 @@ public class PixelEngine
         y  = Math.max(0, Math.min(y, PixelEngine.screenH));
         x2 = Math.max(0, Math.min(x2, PixelEngine.screenW));
         y2 = Math.max(0, Math.min(y2, PixelEngine.screenH));
-        
+    
         for (int i = x; i < x2; i++)
         {
             for (int j = y; j < y2; j++)
@@ -1281,9 +1261,9 @@ public class PixelEngine
             while (PixelEngine.running)
             {
                 PixelEngine.LOGGER.trace("Frame Started");
-                
-                t         = System.nanoTime();
-                dt        = t - lastFrame;
+    
+                t = System.nanoTime();
+                dt = t - lastFrame;
                 lastFrame = t;
                 
                 PixelEngine.PROFILER.startTick();
@@ -1388,14 +1368,14 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-                    
+    
                     PixelEngine.PROFILER.startSection("Stats");
                     {
                         PixelEngine.PROFILER.startSection("Update");
                         {
                             frameTime = System.nanoTime() - t;
-                            minTime   = Math.min(minTime, frameTime);
-                            maxTime   = Math.max(maxTime, frameTime);
+                            minTime = Math.min(minTime, frameTime);
+                            maxTime = Math.max(maxTime, frameTime);
                             totalTime += frameTime;
                             totalFrames++;
                         }
@@ -1407,16 +1387,16 @@ public class PixelEngine
                             PixelEngine.PROFILER.startSection("Update Title");
                             {
                                 lastSecond = t;
-                                
+    
                                 double s = 1000D;
-                                
+    
                                 totalTime /= totalFrames;
-                                
+    
                                 Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
-                                
-                                totalTime   = 0;
-                                minTime     = Long.MAX_VALUE;
-                                maxTime     = Long.MIN_VALUE;
+    
+                                totalTime = 0;
+                                minTime = Long.MAX_VALUE;
+                                maxTime = Long.MIN_VALUE;
                                 totalFrames = 0;
                             }
                             PixelEngine.PROFILER.endSection();
