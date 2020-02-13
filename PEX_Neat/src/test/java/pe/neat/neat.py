@@ -713,14 +713,14 @@ class Evaluator:
                 chance = self.settings.DISABLED_GENE_INHERITING_CHANCE
                 child = Genome.crossover(parent1, parent2, chance)
                 
-                if random() < self.settings.MUTATION_RATE:
-                    child.mutate(self.settings.PERTURBING_RATE)
-                
-                if random() < self.settings.ADD_NODE_RATE:
-                    child.node_mutation(self.node_innovation, self.con_innovation)
-                
-                if random() < self.settings.ADD_CONNECTION_RATE:
-                    child.connection_mutation(self.con_innovation, 100)
+            if random() < self.settings.MUTATION_RATE:
+                child.mutate(self.settings.PERTURBING_RATE)
+
+            if random() < self.settings.ADD_NODE_RATE:
+                child.node_mutation(self.node_innovation, self.con_innovation)
+
+            if random() < self.settings.ADD_CONNECTION_RATE:
+                child.connection_mutation(self.con_innovation, 100)
 
             self.next_generation.append(child)
         
@@ -888,11 +888,4 @@ def fitness_plot(fitness, segments=4):
         labels.append(plt.Text(loc, 0, str(loc + 1)))
     plt.xticks(locations, labels)
     canvas.draw()
-    return Image.fromarray(np.roll(
-        np.fromstring(
-            canvas.tostring_argb(),
-            dtype=np.uint8
-        ).reshape((*canvas.get_width_height()[::-1], 4)),
-        3,
-        axis=2
-    ))
+    return Image.fromarray(np.roll(np.fromstring(canvas.tostring_argb(), dtype=np.uint8).reshape((*canvas.get_width_height()[::-1], 4)), 3, axis=2))

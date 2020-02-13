@@ -18,20 +18,20 @@ public class CrossoverTest
     private static void setup(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
     {
         random.setSeed(1337);
-        
+    
         for (int i = 0; i < 3; i++)
         {
             genome[0].addNode(new Node(nodeInnovation[0].inc(), Node.Type.INPUT, 0));
         }
         genome[0].addNode(new Node(nodeInnovation[0].inc(), Node.Type.OUTPUT, 2));
         genome[0].addNode(new Node(nodeInnovation[0].inc(), Node.Type.HIDDEN, 1));
-        
-        genome[0].addConnection(new Connection(connInnovation[0].inc(), genome[0].getNode(0), genome[0].getNode(3), 1.0, true));
-        genome[0].addConnection(new Connection(connInnovation[0].inc(), genome[0].getNode(1), genome[0].getNode(3), 1.0, false));
-        genome[0].addConnection(new Connection(connInnovation[0].inc(), genome[0].getNode(2), genome[0].getNode(3), 1.0, true));
-        genome[0].addConnection(new Connection(connInnovation[0].inc(), genome[0].getNode(1), genome[0].getNode(4), 1.0, true));
-        genome[0].addConnection(new Connection(connInnovation[0].inc(), genome[0].getNode(4), genome[0].getNode(3), 1.0, true));
-        genome[0].addConnection(new Connection(connInnovation[0].inc(), genome[0].getNode(0), genome[0].getNode(4), 1.0, true));
+    
+        genome[0].addConnection(new Connection(connInnovation[0].inc(), 0, 3, 1.0, true));
+        genome[0].addConnection(new Connection(connInnovation[0].inc(), 1, 3, 1.0, false));
+        genome[0].addConnection(new Connection(connInnovation[0].inc(), 2, 3, 1.0, true));
+        genome[0].addConnection(new Connection(connInnovation[0].inc(), 1, 4, 1.0, true));
+        genome[0].addConnection(new Connection(connInnovation[0].inc(), 4, 3, 1.0, true));
+        genome[0].addConnection(new Connection(connInnovation[0].inc(), 0, 4, 1.0, true));
     
         for (int i = 0; i < 3; i++)
         {
@@ -41,15 +41,15 @@ public class CrossoverTest
         genome[1].addNode(new Node(nodeInnovation[1].inc(), Node.Type.HIDDEN, 1));
         genome[1].addNode(new Node(nodeInnovation[1].inc(), Node.Type.HIDDEN, 2));
     
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(0), genome[1].getNode(3), -0.5, true));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(1), genome[1].getNode(3), -0.5, false));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(2), genome[1].getNode(3), -0.5, true));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(1), genome[1].getNode(4), -0.5, true));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(4), genome[1].getNode(3), -0.5, false));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(4), genome[1].getNode(5), -0.5, true));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(5), genome[1].getNode(3), -0.5, true));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(2), genome[1].getNode(4), -0.5, true));
-        genome[1].addConnection(new Connection(connInnovation[1].inc(), genome[1].getNode(0), genome[1].getNode(5), -0.5, true));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 0, 3, -0.5, true));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 1, 3, -0.5, false));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 2, 3, -0.5, true));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 1, 4, -0.5, true));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 4, 3, -0.5, false));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 4, 5, -0.5, true));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 5, 3, -0.5, true));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 2, 4, -0.5, true));
+        genome[1].addConnection(new Connection(connInnovation[1].inc(), 0, 5, -0.5, true));
     }
     
     private static void test(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)

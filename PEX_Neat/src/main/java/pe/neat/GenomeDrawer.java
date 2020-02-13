@@ -45,11 +45,11 @@ public class GenomeDrawer
     
     public GenomeDrawer() { }
     
-    public Sprite generateSprite(Genome genome)
+    public Sprite generateGraph(Genome genome)
     {
         int nodeSpacing = (this.nodeSpacing + this.nodeRadius * 2) * this.imageScale;
         int border      = this.nodeRadius * 2 * this.imageScale;
-        
+    
         // Group all nodes into layer groups
         ArrayList<ArrayList<Node>> allNodes      = new ArrayList<>();
         int                        maxLayerCount = 0;
@@ -65,7 +65,7 @@ public class GenomeDrawer
         }
         
         // Generate point for each node in each layer
-        HashMap<Node, Pair<Integer, Integer>> nodes = new HashMap<>();
+        HashMap<Integer, Pair<Integer, Integer>> nodes = new HashMap<>();
         
         int imageWidth  = Math.max((maxLayerCount - 1) * nodeSpacing + 2 * border, 10);
         int imageHeight = Math.max((genome.layerCount - 1) * nodeSpacing + 2 * border, 10);
@@ -88,7 +88,7 @@ public class GenomeDrawer
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageWidth - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
-                        nodes.put(layer.get(j), new Pair<>(xPos, yPos));
+                        nodes.put(layer.get(j).id, new Pair<>(xPos, yPos));
                     }
                 }
                 break;
@@ -102,7 +102,7 @@ public class GenomeDrawer
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageWidth - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
-                        nodes.put(layer.get(j), new Pair<>(xPos, yPos));
+                        nodes.put(layer.get(j).id, new Pair<>(xPos, yPos));
                     }
                 }
                 break;
@@ -116,7 +116,7 @@ public class GenomeDrawer
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageHeight - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
-                        nodes.put(layer.get(j), new Pair<>(xPos, yPos));
+                        nodes.put(layer.get(j).id, new Pair<>(xPos, yPos));
                     }
                 }
                 break;
@@ -130,7 +130,7 @@ public class GenomeDrawer
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageHeight - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
-                        nodes.put(layer.get(j), new Pair<>(xPos, yPos));
+                        nodes.put(layer.get(j).id, new Pair<>(xPos, yPos));
                     }
                 }
                 break;
@@ -162,7 +162,7 @@ public class GenomeDrawer
         // Draw nodes
         for (Node node : genome.getNodes())
         {
-            Pair<Integer, Integer> pos = nodes.get(node);
+            Pair<Integer, Integer> pos = nodes.get(node.id);
             
             fillCircle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale, this.nodeBorderColor);
             

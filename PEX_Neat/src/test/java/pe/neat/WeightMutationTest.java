@@ -20,60 +20,60 @@ public class WeightMutationTest
     private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
         random.setSeed(1337);
-        
-        Node node0 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
-        Node node1 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
-        Node node2 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.OUTPUT, 2));
-        Node node3 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.OUTPUT, 2));
-        Node node4 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.BIAS, 0));
-        Node node5 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
-        Node node6 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
-        Node node7 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
-        Node node8 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), node0, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node0, node3, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node0, node5, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node0, node6, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node0, node7, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node0, node8, 1.0, true));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), node1, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node1, node3, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node1, node5, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node1, node6, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node1, node7, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node1, node8, 1.0, true));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), node4, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node4, node3, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node4, node5, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node4, node6, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node4, node7, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node4, node8, 1.0, true));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), node5, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node5, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node5, node3, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node5, node3, 1.0, true));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), node6, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node6, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node6, node3, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node6, node3, 1.0, true));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), node7, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node7, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node7, node3, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node7, node3, 1.0, true));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), node8, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node8, node2, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node8, node3, 1.0, true));
-        genome.addConnection(new Connection(connInnovation.inc(), node8, node3, 1.0, true));
-        
+    
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.OUTPUT, 2));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.OUTPUT, 2));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.BIAS, 0));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 0, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 0, 3, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 0, 5, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 0, 6, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 0, 7, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 0, 8, 1.0, true));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 1, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 1, 3, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 1, 5, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 1, 6, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 1, 7, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 1, 8, 1.0, true));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 4, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 4, 3, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 4, 5, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 4, 6, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 4, 7, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 4, 8, 1.0, true));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 5, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 5, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 5, 3, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 5, 3, 1.0, true));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 6, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 6, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 6, 3, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 6, 3, 1.0, true));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 7, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 7, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 7, 3, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 7, 3, 1.0, true));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 8, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 8, 2, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 8, 3, 1.0, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 8, 3, 1.0, true));
+    
         String fileName = name + "/generation_0";
-        drawer.generateSprite(genome).saveSprite(fileName);
+        drawer.generateGraph(genome).saveSprite(fileName);
         // genome.save(fileName);
     }
     
@@ -84,7 +84,7 @@ public class WeightMutationTest
             print(i);
             genome.weightMutation(0.7);
             String fileName = String.format("%s/generation_%s", name, i + 1);
-            drawer.generateSprite(genome).saveSprite(fileName);
+            drawer.generateGraph(genome).saveSprite(fileName);
             // genome.save(fileName);
         }
     }

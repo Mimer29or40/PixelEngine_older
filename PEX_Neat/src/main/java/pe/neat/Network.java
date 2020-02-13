@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class Network
 {
-    private final ArrayList<Node>       inputs  = new ArrayList<>();
-    private final ArrayList<Node>       outputs = new ArrayList<>();
-    private final HashMap<Node, Neuron> neurons = new HashMap<>();
+    private final ArrayList<Integer>       inputs  = new ArrayList<>();
+    private final ArrayList<Integer>       outputs = new ArrayList<>();
+    private final HashMap<Integer, Neuron> neurons = new HashMap<>();
     
     public Network(Genome genome)
     {
@@ -17,13 +17,13 @@ public class Network
             if (node.type == Node.Type.INPUT)
             {
                 neuron.addInput();
-                this.inputs.add(node);
+                this.inputs.add(node.id);
             }
             else if (node.type == Node.Type.OUTPUT)
             {
-                this.outputs.add(node);
+                this.outputs.add(node.id);
             }
-            this.neurons.put(node, neuron);
+            this.neurons.put(node.id, neuron);
         }
         
         for (Connection connection : genome.getConnections())

@@ -9,9 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import static pe.PixelEngine.getPath;
+import static pe.PixelEngine.println;
 
 public class Genome
 {
@@ -87,7 +89,7 @@ public class Genome
         {
             if (this.random.nextDouble() < perturbingRate)
             {
-                connection.weight += this.random.nextGaussian();
+                connection.weight += this.random.nextGaussian() * 0.01;
                 connection.weight = Math.max(-1.0, Math.min(connection.weight, 1.0));
             }
             else
@@ -101,18 +103,18 @@ public class Genome
     {
         ArrayList<Connection> suitable = new ArrayList<>();
         for (Connection connection : getConnections()) if (connection.enabled) suitable.add(connection);
-        
+    
         if (suitable.isEmpty()) return;
     
         Connection con = this.random.nextIndex(suitable);
-        
+    
         con.enabled = false;
-        
-        Node       node = new Node(nodeInnovation.inc(), Node.Type.HIDDEN, con.in.layer + 1);
-        Connection con1 = new Connection(connInnovation.inc(), con.in, node, 1.0, true);
-        Connection con2 = new Connection(connInnovation.inc(), node, con.out, con.weight, true);
-        
-        if (node.layer == con.out.layer)
+    
+        Node       node = new Node(nodeInnovation.inc(), Node.Type.HIDDEN, getNode(con.in).layer + 1);
+        Connection con1 = new Connection(connInnovation.inc(), con.in, node.id, 1.0, true);
+        Connection con2 = new Connection(connInnovation.inc(), node.id, con.out, con.weight, true);
+    
+        if (node.layer == getNode(con.out).layer)
         {
             for (Node n : getNodes())
             {
@@ -131,15 +133,15 @@ public class Genome
     
     public void connectionMutation(Counter connInnovation, int attempts)
     {
-        Node            temp;
-        ArrayList<Node> check = new ArrayList<>();
-        ArrayList<Node> nodes = new ArrayList<>();
-        
+        Node               temp;
+        ArrayList<Integer> check = new ArrayList<>();
+        ArrayList<Integer> nodes = new ArrayList<>();
+    
         for (int attempt = 0; attempt < attempts; attempt++)
         {
             Node n1 = this.random.nextIndex(this.nodes.values());
             Node n2 = this.random.nextIndex(this.nodes.values());
-    
+        
             if (n1.equals(n2)) continue;
             if (n1.layer == n2.layer) continue;
             if (n1.type == Node.Type.INPUT && n2.type == Node.Type.INPUT) continue;
@@ -159,7 +161,7 @@ public class Genome
             nodes.clear();
             for (Connection con : getConnections())
             {
-                if (con.in.equals(n2))
+                if (con.in == n2.id)
                 {
                     check.add(con.out);
                     nodes.add(con.out);
@@ -168,10 +170,10 @@ public class Genome
             
             while (!check.isEmpty())
             {
-                Node node = check.remove(0);
+                Node node = getNode(check.remove(0));
                 for (Connection con : getConnections())
                 {
-                    if (con.in.equals(node))
+                    if (con.in == node.id)
                     {
                         check.add(con.out);
                         nodes.add(con.out);
@@ -180,9 +182,9 @@ public class Genome
             }
             
             boolean cont = false;
-            for (Node node : nodes)
+            for (int node : nodes)
             {
-                if (node.equals(n1))
+                if (node == n1.id)
                 {
                     cont = true;
                     break;
@@ -193,24 +195,46 @@ public class Genome
             cont = false;
             for (Connection con : getConnections())
             {
-                if ((con.in.equals(n1) && con.out.equals(n2)) || (con.in.equals(n2) && con.out.equals(n1)))
+                if ((con.in == n1.id && con.out == n2.id) || (con.in == n2.id && con.out == n1.id))
                 {
                     cont = true;
                     break;
                 }
             }
             if (cont) continue;
-    
-            addConnection(new Connection(connInnovation.inc(), n1, n2, this.random.nextDouble(-1.0, 1.0), true));
+        
+            addConnection(new Connection(connInnovation.inc(), n1.id, n2.id, this.random.nextDouble(-1.0, 1.0), true));
             return;
         }
     }
     
+    public void minimizeLayers()
+    {
+        ArrayList<Integer> layers = new ArrayList<>();
+        for (Node node : getNodes())
+        {
+            if (!layers.contains(node.layer)) layers.add(node.layer);
+        }
+        
+        layers.sort(Comparator.comparingInt(o -> o));
+        
+        println(this.layerCount, layers);
+        
+        for (Node node : getNodes())
+        {
+            for (int newIndex = 0, n = layers.size(); newIndex < n; newIndex++)
+            {
+                if (node.layer == layers.get(newIndex)) node.layer = newIndex;
+            }
+        }
+        this.layerCount = layers.size();
+    }
+    
     public Genome copy()
     {
-        Genome genome = new Genome();
-        for (Node node : getNodes()) genome.addNode(node);
-        for (Connection con : getConnections()) genome.addConnection(con);
+        Genome genome = new Genome(this.random);
+        for (Node node : getNodes()) genome.addNode(node.copy());
+        for (Connection con : getConnections()) genome.addConnection(con.copy());
         return genome;
     }
     
@@ -246,8 +270,8 @@ public class Genome
                         writer.beginObject();
                         {
                             writer.name("id").value(connection.id);
-                            writer.name("in").value(connection.in.id);
-                            writer.name("out").value(connection.out.id);
+                            writer.name("in").value(connection.in);
+                            writer.name("out").value(connection.out);
                             writer.name("weight").value(connection.weight);
                             writer.name("enabled").value(connection.enabled);
                         }
@@ -316,24 +340,24 @@ public class Genome
                         reader.beginObject();
                         {
                             int     id      = -1;
-                            Node    in      = null;
-                            Node    out     = null;
+                            int     in      = -1;
+                            int     out     = -1;
                             double  weight  = 0;
                             boolean enabled = false;
                             while (reader.hasNext())
                             {
                                 String name = reader.nextName();
-                                
+            
                                 switch (name)
                                 {
                                     case "id":
                                         id = reader.nextInt();
                                         break;
                                     case "in":
-                                        in = genome.getNode(reader.nextInt());
+                                        in = reader.nextInt();
                                         break;
                                     case "out":
-                                        out = genome.getNode(reader.nextInt());
+                                        out = reader.nextInt();
                                         break;
                                     case "weight":
                                         weight = reader.nextDouble();
@@ -382,7 +406,7 @@ public class Genome
         
         for (Node node : genome1.getNodes())
         {
-            child.addNode(node);
+            child.addNode(node.copy());
         }
         
         for (Connection g1Conn : genome1.getConnections())

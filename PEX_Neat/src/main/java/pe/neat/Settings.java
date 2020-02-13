@@ -38,30 +38,30 @@ public class Settings
     public static final double SPECIES_DISTANCE = 3.0;
     
     /**
-     * Genomic distance before two genomes are different species
+     * Weight for excess genes
      */
     public static final double EXCESS_GENE_WEIGHT = 1.0;
     
     /**
-     * Genomic distance before two genomes are different species
+     * Weight for disjoint genes
      */
     public static final double DISJOINT_GENE_WEIGHT = 1.0;
     
     /**
-     * Genomic distance before two genomes are different species
+     * Weight for average weight distance
      */
-    public static final double C3 = 0.4;
+    public static final double AVERAGE_WEIGHT_DIFFERENCE_WEIGHT = 0.4;
     
-    public double asexualReproductionRate    = ASEXUAL_REPRODUCTION_RATE;
-    public double weightMutationRate         = WEIGHT_MUTATION_RATE;
-    public double nodeMutationRate           = NODE_MUTATION_RATE;
-    public double connectionMutationRate     = CONNECTION_MUTATION_RATE;
-    public double weightPerturbingRate       = WEIGHT_PERTURBING_RATE;
-    public double disabledGeneInheritingRate = DISABLED_GENE_INHERITING_RATE;
-    public double speciesDistance            = SPECIES_DISTANCE;
-    public double excessGeneWeight           = EXCESS_GENE_WEIGHT;
-    public double disjointGeneWeight         = DISJOINT_GENE_WEIGHT;
-    public double c3                         = C3;
+    public double asexualReproductionRate       = ASEXUAL_REPRODUCTION_RATE;
+    public double weightMutationRate            = WEIGHT_MUTATION_RATE;
+    public double nodeMutationRate              = NODE_MUTATION_RATE;
+    public double connectionMutationRate        = CONNECTION_MUTATION_RATE;
+    public double weightPerturbingRate          = WEIGHT_PERTURBING_RATE;
+    public double disabledGeneInheritingRate    = DISABLED_GENE_INHERITING_RATE;
+    public double speciesDistance               = SPECIES_DISTANCE;
+    public double excessGeneWeight              = EXCESS_GENE_WEIGHT;
+    public double disjointGeneWeight            = DISJOINT_GENE_WEIGHT;
+    public double averageWeightDifferenceWeight = AVERAGE_WEIGHT_DIFFERENCE_WEIGHT;
     
     public int populationSize;
     

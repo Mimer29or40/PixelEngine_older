@@ -13,8 +13,8 @@ public class Neuron
     private final ArrayList<Double> inputs = new ArrayList<>();
     public        double            output = 0.0;
     
-    public final ArrayList<Node>   outputs = new ArrayList<>();
-    public final ArrayList<Double> weights = new ArrayList<>();
+    public final ArrayList<Integer> outputs = new ArrayList<>();
+    public final ArrayList<Double>  weights = new ArrayList<>();
     
     @Override
     public String toString()

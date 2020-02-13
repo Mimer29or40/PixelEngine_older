@@ -1,29 +1,40 @@
 package pe.neat;
 
+import pe.Random;
+
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Evaluator
 {
+    public final Random   random;
     public final Settings settings;
     public final Counter  nodeInnovation;
     public final Counter  connInnovation;
     
-    // public final IEvaluator evaluator;
+    public final Function<Genome, Double> fitnessCalculator;
     
-    private final ArrayList<Genome> genomes = new ArrayList<>();
-    private       Genome            fittest = null;
+    public final ArrayList<Genome> genomes = new ArrayList<>();
+    public       Genome            fittest = null;
     
     private final ArrayList<Genome> lastGen = new ArrayList<>();
     private final ArrayList<Genome> nextGen = new ArrayList<>();
     
-    public Evaluator(Settings settings, Counter nodeInnovation, Counter connInnovation)
+    public Evaluator(Random random, Settings settings, Function<Genome, Double> fitnessCalculator, Supplier<Genome> generator, Counter nodeInnovation, Counter connInnovation)
     {
+        this.random         = random;
         this.settings       = settings;
         this.nodeInnovation = nodeInnovation;
         this.connInnovation = connInnovation;
         
+        this.fitnessCalculator = fitnessCalculator;
         
+        for (int i = 0; i < this.settings.populationSize; i++)
+        {
+            this.genomes.add(generator.get());
+        }
     }
     
     public void evaluateGeneration()
@@ -33,22 +44,47 @@ public class Evaluator
         
         for (Genome genome : this.genomes)
         {
-            // genome.fitness = this.evaluator.evaluate(genome);
+            genome.fitness = this.fitnessCalculator.apply(genome);
         }
-        
-        this.genomes.sort(Comparator.comparingDouble(o -> o.fitness));
+    
+        this.genomes.sort(Comparator.comparingDouble(o -> -o.fitness));
         
         Genome champion = this.genomes.get(0);
         if (this.fittest == null || champion.fitness > this.fittest.fitness) this.fittest = champion;
-        
-        this.genomes.retainAll(this.genomes.subList(0, this.genomes.size() / 10));
+    
+        if (this.genomes.size() > 10) this.genomes.retainAll(this.genomes.subList(0, Math.max(this.genomes.size() / 10, 1)));
         
         this.nextGen.clear();
         this.nextGen.add(champion);
         
         while (this.nextGen.size() < this.settings.populationSize)
         {
-        
+            Genome child;
+            if (this.random.nextDouble() < this.settings.asexualReproductionRate)
+            {
+                Genome parent = this.random.nextIndex(this.genomes);
+                child = parent.copy();
+            }
+            else
+            {
+                Genome parent1 = this.random.nextIndex(this.genomes);
+                Genome parent2 = this.random.nextIndex(this.genomes);
+                child = Genome.crossover(parent1, parent2, this.settings.disabledGeneInheritingRate);
+            }
+            if (this.random.nextDouble() < this.settings.weightMutationRate)
+            {
+                child.weightMutation(this.settings.weightPerturbingRate);
+            }
+            if (this.random.nextDouble() < this.settings.nodeMutationRate)
+            {
+                child.nodeMutation(this.nodeInnovation, this.connInnovation);
+            }
+            if (this.random.nextDouble() < this.settings.connectionMutationRate)
+            {
+                child.connectionMutation(this.connInnovation, 100);
+            }
+            // child.minimizeLayers();
+            this.nextGen.add(child);
         }
         
         this.genomes.clear();

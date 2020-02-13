@@ -20,16 +20,16 @@ public class NodeMutationTest
     private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
         random.setSeed(1337);
-        
-        Node input1 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
-        Node input2 = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
-        Node output = genome.addNode(new Node(nodeInnovation.inc(), Node.Type.OUTPUT, 1));
-        
-        genome.addConnection(new Connection(connInnovation.inc(), input1, output, 0.5, true));
-        genome.addConnection(new Connection(connInnovation.inc(), input2, output, 0.75, true));
-        
+    
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.INPUT, 0));
+        genome.addNode(new Node(nodeInnovation.inc(), Node.Type.OUTPUT, 1));
+    
+        genome.addConnection(new Connection(connInnovation.inc(), 0, 2, 0.5, true));
+        genome.addConnection(new Connection(connInnovation.inc(), 1, 2, 0.75, true));
+    
         String fileName = name + "/generation_0";
-        drawer.generateSprite(genome).saveSprite(fileName);
+        drawer.generateGraph(genome).saveSprite(fileName);
         // genome.save(fileName);
     }
     
@@ -44,7 +44,7 @@ public class NodeMutationTest
                 genome.connectionMutation(connInnovation, 100);
             }
             String fileName = String.format("%s/generation_%s", name, i + 1);
-            drawer.generateSprite(genome).saveSprite(fileName);
+            drawer.generateGraph(genome).saveSprite(fileName);
             // genome.save(fileName);
         }
     }

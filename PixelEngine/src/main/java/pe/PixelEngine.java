@@ -339,15 +339,37 @@ public class PixelEngine
     
     public static void print(Object object)
     {
-        System.out.println(object);
+        System.out.print(object);
     }
     
     public static void print(String format, Object... objects)
     {
-        System.out.println(String.format(format, objects));
+        System.out.print(String.format(format, objects));
     }
     
     public static void print(Object... objects)
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < objects.length; i++)
+        {
+            builder.append(objects[i]);
+            if (i + 1 < objects.length) builder.append(" ");
+        }
+        
+        System.out.print(builder.toString());
+    }
+    
+    public static void println(Object object)
+    {
+        System.out.println(object);
+    }
+    
+    public static void println(String format, Object... objects)
+    {
+        System.out.println(String.format(format, objects));
+    }
+    
+    public static void println(Object... objects)
     {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < objects.length; i++)
