@@ -87,26 +87,26 @@ public class Physics2DTest extends PixelEngine
     
     public static void main(String[] args)
     {
-        print(new Test().toShortString());
-        print(new Test().toLongString());
-        print(new Test1(new Test()).toShortString());
-        print(new Test1(new Test()).toLongString());
-        print(new Event<>(null, "Test", 1.234567890).toShortString());
-        print(new Event<>(null, "Test", 1.234567890).toLongString());
-        print(new ParameterInteger(null, "Test", () -> 1, (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList(1, 2)).toShortString());
-        print(new ParameterInteger(null, "Test", () -> 1, (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList(1, 2)).toLongString());
-        print(new ParameterBoolean(null, "Test", () -> true, (v) -> new Object(), Arrays.asList("true", "false"), Arrays.asList(true, false)).toShortString());
-        print(new ParameterBoolean(null, "Test", () -> true, (v) -> new Object(), Arrays.asList("true", "false"), Arrays.asList(true, false)).toLongString());
-        print(new ParameterString(null, "Test", () -> "true", (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList("true", "false")).toShortString());
-        print(new ParameterString(null, "Test", () -> "true", (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList("true", "false")).toLongString());
-        
+        println(new Test().toShortString());
+        println(new Test().toLongString());
+        println(new Test1(new Test()).toShortString());
+        println(new Test1(new Test()).toLongString());
+        println(new Event<>(null, "Test", 1.234567890).toShortString());
+        println(new Event<>(null, "Test", 1.234567890).toLongString());
+        println(new ParameterInteger(null, "Test", () -> 1, (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList(1, 2)).toShortString());
+        println(new ParameterInteger(null, "Test", () -> 1, (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList(1, 2)).toLongString());
+        println(new ParameterBoolean(null, "Test", () -> true, (v) -> new Object(), Arrays.asList("true", "false"), Arrays.asList(true, false)).toShortString());
+        println(new ParameterBoolean(null, "Test", () -> true, (v) -> new Object(), Arrays.asList("true", "false"), Arrays.asList(true, false)).toLongString());
+        println(new ParameterString(null, "Test", () -> "true", (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList("true", "false")).toShortString());
+        println(new ParameterString(null, "Test", () -> "true", (v) -> new Object(), Arrays.asList("one", "two"), Arrays.asList("true", "false")).toLongString());
+    
         SimList          list      = new SimList();
         ParameterInteger parameter = new ParameterInteger(list, "int", () -> 1, (v) -> new Object());
         list.addParameter(parameter);
-        new GenericObserver(list, (v) -> print("Value Changed: " + v));
-        print(list.toLongString());
+        new GenericObserver(list, (v) -> println("Value Changed: " + v));
+        println(list.toLongString());
         parameter.setValue(10);
-        print(list.toLongString());
+        println(list.toLongString());
         //start(new Physics2DTest());
         //start();
     }

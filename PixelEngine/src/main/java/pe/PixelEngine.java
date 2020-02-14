@@ -1412,7 +1412,7 @@ public class PixelEngine
                 if (PixelEngine.PROFILER.enabled && PixelEngine.printFrame != null)
                 {
                     String parent = PixelEngine.printFrame.equals("") ? null : PixelEngine.printFrame;
-                    print(PixelEngine.PROFILER.getFormattedData(parent));
+                    println(PixelEngine.PROFILER.getFormattedData(parent));
                     PixelEngine.printFrame = null;
                 }
             }

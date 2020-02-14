@@ -31,7 +31,7 @@ public class Pane extends Window
             //@Override
             //protected boolean onMouseClicked(Mouse mouse, int widgetX, int widgetY, boolean doubleClicked)
             //{
-            //    print("Title Clicked");
+            //    println("Title Clicked");
             //    return super.onMouseClicked(mouse, widgetX, widgetY, doubleClicked);
             //}
         };
