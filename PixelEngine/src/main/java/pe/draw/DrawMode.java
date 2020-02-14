@@ -1,4 +1,4 @@
-package pe;
+package pe.draw;
 
 public enum DrawMode
 {

@@ -1,6 +1,7 @@
 package pe.gui;
 
 import pe.*;
+import pe.draw.DrawMode;
 import pe.event.*;
 
 import java.util.Objects;
@@ -352,7 +353,7 @@ public class PEX_GUI extends PEX
             if (window.isVisible())
             {
                 PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.renderTarget(null);
+                PixelEngine.drawTarget(null);
                 drawSprite(window.getX(), window.getY(), window.getSprite(), 1);
             }
         }
@@ -368,7 +369,7 @@ public class PEX_GUI extends PEX
             if (window.isVisible())
             {
                 PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.renderTarget(null);
+                PixelEngine.drawTarget(null);
                 drawSprite(window.getX(), window.getY(), window.getSprite(), 1);
             }
         }
@@ -384,7 +385,7 @@ public class PEX_GUI extends PEX
             if (PEX_GUI.tooltip.isVisible())
             {
                 PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.renderTarget(null);
+                PixelEngine.drawTarget(null);
                 drawSprite(PEX_GUI.tooltip.getX(), PEX_GUI.tooltip.getY(), PEX_GUI.tooltip.getSprite(), 1);
             }
         }

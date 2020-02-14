@@ -1,6 +1,7 @@
 package pe.gui;
 
 import pe.*;
+import pe.draw.DrawMode;
 import pe.gui.event.*;
 
 import java.util.ArrayList;
@@ -848,9 +849,9 @@ public class Window
                 }
                 
                 LOGGER.debug("Redraw: %s", this);
-                
+    
                 PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.renderTarget(getSprite());
+                PixelEngine.drawTarget(getSprite());
                 drawWindow(elapsedTime);
                 
                 drawBorder(elapsedTime);
@@ -887,7 +888,7 @@ public class Window
             if (child.isVisible())
             {
                 PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.renderTarget(getSprite());
+                PixelEngine.drawTarget(getSprite());
                 drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }

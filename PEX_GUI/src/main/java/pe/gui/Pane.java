@@ -1,9 +1,9 @@
 package pe.gui;
 
 import pe.Color;
-import pe.DrawMode;
 import pe.PixelEngine;
 import pe.Sprite;
+import pe.draw.DrawMode;
 
 import static pe.PixelEngine.clear;
 import static pe.PixelEngine.drawSprite;
@@ -138,7 +138,7 @@ public class Pane extends Window
     protected void drawChildren(double elapsedTime)
     {
         PixelEngine.drawMode(DrawMode.NORMAL);
-        PixelEngine.renderTarget(getChildSprite());
+        PixelEngine.drawTarget(getChildSprite());
         clear(Color.BLANK);
     
         for (Window child : getChildren())
@@ -147,13 +147,13 @@ public class Pane extends Window
             if (child.isVisible())
             {
                 PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.renderTarget(child == this.title ? getSprite() : getChildSprite());
+                PixelEngine.drawTarget(child == this.title ? getSprite() : getChildSprite());
                 drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
     
         PixelEngine.drawMode(DrawMode.ALPHA);
-        PixelEngine.renderTarget(getSprite());
+        PixelEngine.drawTarget(getSprite());
         drawSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
     }
 }
