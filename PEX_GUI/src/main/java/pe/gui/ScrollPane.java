@@ -1,8 +1,8 @@
 package pe.gui;
 
 import pe.Color;
-import pe.DrawMode;
 import pe.PixelEngine;
+import pe.draw.DrawMode;
 
 import static pe.PixelEngine.*;
 
@@ -136,7 +136,7 @@ public class ScrollPane extends Pane // TODO
         setInternalHeight();
     
         PixelEngine.drawMode(DrawMode.NORMAL);
-        PixelEngine.renderTarget(getChildSprite());
+        PixelEngine.drawTarget(getChildSprite());
         clear(Color.BLANK);
     
         for (Window child : getChildren())
@@ -145,13 +145,13 @@ public class ScrollPane extends Pane // TODO
             if (child.isVisible())
             {
                 PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.renderTarget(child == this.title ? getSprite() : getChildSprite());
+                PixelEngine.drawTarget(child == this.title ? getSprite() : getChildSprite());
                 drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
     
         PixelEngine.drawMode(DrawMode.ALPHA);
-        PixelEngine.renderTarget(getSprite());
+        PixelEngine.drawTarget(getSprite());
         drawPartialSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), getOffsetX(), getOffsetY(), getForegroundWidth(), getForegroundHeight(), 1);
     }
 }

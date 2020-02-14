@@ -35,7 +35,7 @@ public class ColorTest extends PixelEngine
         int g = 255;
         int b = 255;
         int a = 255;
-        print(r | (g << 8) | (b << 16) | (a << 24));
+        println(r | (g << 8) | (b << 16) | (a << 24));
         start(new ColorTest(), 256, 256, 1, 1);
     }
 }

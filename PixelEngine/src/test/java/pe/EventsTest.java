@@ -49,7 +49,7 @@ public class EventsTest extends PixelEngine
         // for (Event event : Events.get(EventKeyboardKeyTyped.class))
         // for (Event event : Events.get(Events.MOUSE_EVENTS))
         // {
-        //     print(event.toString());
+        //     println(event.toString());
         // }
     
         if (Keyboard.SPACE.down()) Window.fullscreen(!Window.fullscreen());

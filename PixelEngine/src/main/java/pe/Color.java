@@ -1,5 +1,7 @@
 package pe;
 
+import pe.draw.IBlend;
+
 import java.util.Objects;
 
 @SuppressWarnings("unused")
@@ -303,6 +305,7 @@ public class Color
     
     public Color blend(Color other, Color out)
     {
+        if (a() == 255) return out.set(this);
         double a = (double) a() / 255.0;
         double c = 1.0 - a;
         out.r(a * r() + c * other.r());

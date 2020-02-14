@@ -1,6 +1,9 @@
 package pe;
 
 import org.reflections.Reflections;
+import pe.draw.DrawMode;
+import pe.draw.DrawPattern;
+import pe.draw.IBlendPos;
 import pe.util.Pair;
 
 import java.net.URISyntaxException;
@@ -140,7 +143,7 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.debug("Initializing Extensions");
             PixelEngine.extensions.values().forEach(PEX::initialize);
-    
+            
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.onUserCreate())
             {
@@ -224,30 +227,20 @@ public class PixelEngine
         PixelEngine.drawMode = mode;
     }
     
-    public static void colorMode(IBlendPos pixelFunc)
+    public static void drawMode(IBlendPos pixelFunc)
     {
         PixelEngine.drawMode  = DrawMode.CUSTOM;
         PixelEngine.blendFunc = pixelFunc;
     }
     
-    public static Sprite renderTarget()
+    public static Sprite drawTarget()
     {
         return PixelEngine.target;
     }
     
-    public static void renderTarget(Sprite target)
+    public static void drawTarget(Sprite target)
     {
         PixelEngine.target = target != null ? target : PixelEngine.window;
-    }
-    
-    public static int renderTargetWidth()
-    {
-        return PixelEngine.target != null ? PixelEngine.target.width : 0;
-    }
-    
-    public static int renderTargetHeight()
-    {
-        return PixelEngine.target != null ? PixelEngine.target.height : 0;
     }
     
     // -------------
@@ -350,12 +343,11 @@ public class PixelEngine
     public static void print(Object... objects)
     {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < objects.length; i++)
+        for (int i = 0, n = objects.length; i < n; i++)
         {
             builder.append(objects[i]);
-            if (i + 1 < objects.length) builder.append(" ");
+            if (i + 1 < n) builder.append(" ");
         }
-        
         System.out.print(builder.toString());
     }
     
@@ -372,12 +364,11 @@ public class PixelEngine
     public static void println(Object... objects)
     {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < objects.length; i++)
+        for (int i = 0, n = objects.length; i < n; i++)
         {
             builder.append(objects[i]);
-            if (i + 1 < objects.length) builder.append(" ");
+            if (i + 1 < n) builder.append(" ");
         }
-        
         System.out.println(builder.toString());
     }
     
@@ -504,6 +495,11 @@ public class PixelEngine
                 if (p.a() == 255) PixelEngine.target.setPixel(x, y, p);
                 break;
             case ALPHA:
+                if (p.a() == 255)
+                {
+                    PixelEngine.target.setPixel(x, y, p);
+                    break;
+                }
                 Color d = PixelEngine.target.getPixel(x, y);
                 float a = (float) p.a() / 255.0F;
                 float c = 1.0F - a;
@@ -525,143 +521,80 @@ public class PixelEngine
         draw(x, y, Color.WHITE);
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int width, Color p, int pattern)
+    public static void drawLine(int x1, int y1, int x2, int y2, int w, Color p, DrawPattern pattern)
     {
-        // Bresenham's Algorithm
+        if (w < 1) return;
         
-        if (width <= 1)
+        pattern.reset();
+        
+        int dx  = Math.abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
+        int dy  = Math.abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
+        int err = dx - dy, e2; /* error value e_xy */
+        
+        if (w == 1)
         {
-            int dx, dy, x, y, xi, yi, d, tmp;
-            
-            dx = x2 - x1;
-            dy = y2 - y1;
-            
             if (dx == 0)
             {
-                if (y2 < y1)
+                for (; y1 <= y2; y1 += sy)
                 {
-                    tmp = y1;
-                    y1  = y2;
-                    y2  = tmp;
-                }
-                for (y = y1; y <= y2; y++)
-                {
-                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x1, y, p);
+                    if (pattern.shouldDraw()) draw(x1, y1, p);
                 }
                 return;
             }
             
-            if (y2 - y1 == 0)
+            if (dy == 0)
             {
-                if (x2 < x1)
+                for (; x1 <= x2; x1 += sx)
                 {
-                    tmp = x1;
-                    x1  = x2;
-                    x2  = tmp;
-                }
-                for (x = x1; x <= x2; x++)
-                {
-                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y1, p);
+                    if (pattern.shouldDraw()) draw(x1, y1, p);
                 }
                 return;
             }
             
-            if (Math.abs(dy) < Math.abs(dx))
+            for (; ; )
             {
-                if (x1 > x2)
+                if (pattern.shouldDraw()) draw(x1, y1, p);
+                if (x1 == x2 && y1 == y2) break;
+                e2 = err << 1;
+                if (e2 >= -dy)
                 {
-                    tmp = x1;
-                    x1  = x2;
-                    x2  = tmp;
-                    
-                    tmp = y1;
-                    y1  = y2;
-                    y2  = tmp;
-                }
-                
-                dx = x2 - x1;
-                dy = y2 - y1;
-                yi = 1;
-                if (dy < 0)
+                    err -= dy;
+                    x1 += sx;
+                } /* e_xy+e_x > 0 */
+                if (e2 <= dx)
                 {
-                    yi = -1;
-                    dy = -dy;
-                }
-                d = 2 * dy - dx;
-                y = y1;
-                
-                for (x = x1; x <= x2; x++)
-                {
-                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y, p);
-                    if (d > 0)
-                    {
-                        y += yi;
-                        d = d - 2 * dx;
-                    }
-                    d = d + 2 * dy;
-                }
-            }
-            else
-            {
-                if (y1 > y2)
-                {
-                    tmp = x1;
-                    x1  = x2;
-                    x2  = tmp;
-                    
-                    tmp = y1;
-                    y1  = y2;
-                    y2  = tmp;
-                }
-                
-                dx = x2 - x1;
-                dy = y2 - y1;
-                xi = 1;
-                if (dx < 0)
-                {
-                    xi = -1;
-                    dx = -dx;
-                }
-                d = 2 * dx - dy;
-                x = x1;
-                
-                for (y = y1; y <= y2; y++)
-                {
-                    if (((pattern = (pattern << 1) | (pattern >>> 31)) & 1) != 0) draw(x, y, p);
-                    if (d > 0)
-                    {
-                        x = x + xi;
-                        d = d - 2 * dy;
-                    }
-                    d = d + 2 * dx;
-                }
+                    err += dx;
+                    y1 += sy;
+                } /* e_xy+e_y < 0 */
             }
         }
         else
         {
-            int    dx  = Math.abs(x2 - x1), sx = x1 < x2 ? 1 : -1;
-            int    dy  = Math.abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
-            int    err = dx - dy, e2, x3, y3;                          /* error value e_xy */
-            double ed  = dx + dy == 0 ? 1 : Math.sqrt((double) dx * dx + (double) dy * dy);
+            int     x3, y3, e3;
+            double  ed = dx + dy == 0 ? 1 : Math.sqrt(dx * dx + dy * dy);
+            boolean shouldDraw;
             
-            for (width = (width + 1) / 2; ; )
-            {                                   /* pixel loop */
-                draw(x1, y1, p);
-                e2 = err;
-                x3 = x1;
-                if (2 * e2 >= -dx)
-                {                                           /* x step */
-                    for (e2 += dy, y3 = y1; e2 < ed * width && (y2 != y3 || dx > dy); e2 += dx)
-                    { draw(x1, y3 += sy, p); }
+            for (w = (w + 1) / 2; ; )
+            {
+                shouldDraw = pattern.shouldDraw();
+                if (shouldDraw) draw(x1, y1, p);
+                e2 = err << 1;
+                if (e2 >= -dx)
+                {
+                    for (e3 = e2 + dy, y3 = y1; e3 < ed * w && (y2 != y3 || dx > dy); e3 += dx)
+                    {
+                        if (shouldDraw) draw(x1, y3 += sy, p);
+                    }
                     if (x1 == x2) break;
-                    e2 = err;
                     err -= dy;
                     x1 += sx;
                 }
-                if (2 * e2 <= dy)
-                {                                            /* y step */
-                    for (e2 = dx - e2; e2 < ed * width && (x2 != x3 || dx < dy); e2 += dy)
-                    { draw(x3 += sx, y1, p); }
+                if (e2 <= dy)
+                {
+                    for (e3 = dx - e2, x3 = x1; e3 < ed * w && (x2 != x3 || dx < dy); e3 += dy)
+                    {
+                        if (shouldDraw) draw(x3 += sx, y1, p);
+                    }
                     if (y1 == y2) break;
                     err += dx;
                     y1 += sy;
@@ -670,36 +603,42 @@ public class PixelEngine
         }
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int width, Color p)
+    public static void drawLine(int x1, int y1, int x2, int y2, int w, Color p)
     {
-        drawLine(x1, y1, x2, y2, width, p, 0xFFFFFFFF);
+        drawLine(x1, y1, x2, y2, w, p, DrawPattern.SOLID);
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int width, int pattern)
+    public static void drawLine(int x1, int y1, int x2, int y2, int w, DrawPattern pattern)
     {
-        drawLine(x1, y1, x2, y2, width, Color.WHITE, pattern);
+        drawLine(x1, y1, x2, y2, w, Color.WHITE, pattern);
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int width)
+    public static void drawLine(int x1, int y1, int x2, int y2, int w)
     {
-        drawLine(x1, y1, x2, y2, width, Color.WHITE, 0xFFFFFFFF);
+        drawLine(x1, y1, x2, y2, w, Color.WHITE, DrawPattern.SOLID);
     }
     
     public static void drawLine(int x1, int y1, int x2, int y2, Color p)
     {
-        drawLine(x1, y1, x2, y2, 1, p, 0xFFFFFFFF);
+        drawLine(x1, y1, x2, y2, 1, p, DrawPattern.SOLID);
+    }
+    
+    public static void drawLine(int x1, int y1, int x2, int y2, DrawPattern pattern)
+    {
+        drawLine(x1, y1, x2, y2, 1, Color.WHITE, pattern);
     }
     
     public static void drawLine(int x1, int y1, int x2, int y2)
     {
-        drawLine(x1, y1, x2, y2, 1, Color.WHITE, 0xFFFFFFFF);
+        drawLine(x1, y1, x2, y2, 1, Color.WHITE, DrawPattern.SOLID);
     }
     
     public static void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3, Color p)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
-        int    sx               = x3 - x2, sy = y3 - y2;
-        long   xx               = x1 - x2, yy = y1 - y2, xy;         /* relative values for checks */
+        int  sx = x3 - x2, sy = y3 - y2;
+        long xx = x1 - x2, yy = y1 - y2, xy;         /* relative values for checks */
+        
         double dx, dy, err, cur = xx * sy - yy * sx;                    /* curvature */
         
         assert (xx * sx <= 0 && yy * sy <= 0);  /* sign of gradient must not change */
@@ -755,64 +694,44 @@ public class PixelEngine
         drawLine(x1, y1, x3, y3, p);
     }
     
-    public static void drawCircle(int x, int y, int radius, Color p, int mask)
+    public static void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3)
     {
-        int x0 = 0;
-        int y0 = radius;
-        int d  = 3 - 2 * radius;
-        if (radius < 0) return;
-        
-        while (y0 >= x0) // only formulate 1/8 of circle
-        {
-            if ((mask & 0x01) > 0) draw(x + x0, y - y0, p);
-            if ((mask & 0x02) > 0) draw(x + y0, y - x0, p);
-            if ((mask & 0x04) > 0) draw(x + y0, y + x0, p);
-            if ((mask & 0x08) > 0) draw(x + x0, y + y0, p);
-            if ((mask & 0x10) > 0) draw(x - x0, y + y0, p);
-            if ((mask & 0x20) > 0) draw(x - y0, y + x0, p);
-            if ((mask & 0x40) > 0) draw(x - y0, y - x0, p);
-            if ((mask & 0x80) > 0) draw(x - x0, y - y0, p);
-            
-            if (d < 0)
-            {
-                d += 4 * x0++ + 6;
-            }
-            else
-            {
-                d += 4 * (x0++ - y0--) + 10;
-            }
-        }
+        drawBezier(x1, y1, x2, y2, x3, y3, Color.WHITE);
     }
     
     public static void drawCircle(int x, int y, int radius, Color p)
     {
-        drawCircle(x, y, radius, p, 0xFF);
-    }
-    
-    public static void drawCircle(int x, int y, int radius, int mask)
-    {
-        drawCircle(x, y, radius, Color.WHITE, mask);
+        if (radius < 1) return;
+        int xr = -radius, yr = 0, err = 2 - 2 * radius;
+        do
+        {
+            draw(x - xr, y + yr, p); /*   I. Quadrant */
+            draw(x - yr, y - xr, p); /*  II. Quadrant */
+            draw(x + xr, y - yr, p); /* III. Quadrant */
+            draw(x + yr, y + xr, p); /*  IV. Quadrant */
+            radius = err;
+            if (radius <= yr) err += ++yr * 2 + 1;            /* e_xy+e_y < 0 */
+            if (radius > xr || err > yr) err += ++xr * 2 + 1; /* e_xy+e_x > 0 or no 2nd y-step */
+        } while (xr < 0);
     }
     
     public static void drawCircle(int x, int y, int radius)
     {
-        drawCircle(x, y, radius, Color.WHITE, 0xFF);
+        drawCircle(x, y, radius, Color.WHITE);
     }
     
     public static void fillCircle(int x, int y, int radius, Color p)
     {
-        int x0 = 0;
-        int y0 = radius;
-        int d  = 3 - 2 * radius;
-        if (radius < 0) return;
-        
+        if (radius < 1) return;
+        int x0 = 0, y0 = radius, d = 3 - 2 * radius, i;
+    
         while (y0 >= x0)
         {
-            for (int i = x - x0; i <= x + x0; i++) draw(i, y - y0, p);
-            for (int i = x - y0; i <= x + y0; i++) draw(i, y - x0, p);
-            for (int i = x - x0; i <= x + x0; i++) draw(i, y + y0, p);
-            for (int i = x - y0; i <= x + y0; i++) draw(i, y + x0, p);
-            
+            for (i = x - x0; i <= x + x0; i++) draw(i, y - y0, p);
+            for (i = x - y0; i <= x + y0; i++) draw(i, y - x0, p);
+            for (i = x - x0; i <= x + x0; i++) draw(i, y + y0, p);
+            for (i = x - y0; i <= x + y0; i++) draw(i, y + x0, p);
+        
             if (d < 0)
             {
                 d += 4 * x0++ + 6;
@@ -832,6 +751,7 @@ public class PixelEngine
     public static void drawEllipse(int x, int y, int w, int h, Color p)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
+        if (w < 1 || h < 1) return;
         int  x0  = x - w / 2, y0 = y - h / 2;
         int  x1  = x + w / 2, y1 = y + h / 2;
         int  b1  = h & 1; /* values of diameter */
@@ -879,8 +799,68 @@ public class PixelEngine
         }
     }
     
+    public static void drawEllipse(int x, int y, int w, int h)
+    {
+        drawEllipse(x, y, w, h, Color.WHITE);
+    }
+    
+    public static void fillEllipse(int x, int y, int w, int h, Color p)
+    {
+        // TODO - http://members.chello.at/~easyfilter/bresenham.html
+        if (w < 1 || h < 1) return;
+        int  x0  = x - w / 2, y0 = y - h / 2;
+        int  x1  = x + w / 2, y1 = y + h / 2;
+        int  b1  = h & 1; /* values of diameter */
+        long dx  = 4 * (1 - w) * h * h, dy = 4 * (b1 + 1) * w * w; /* error increment */
+        long err = dx + dy + b1 * w * w, e2; /* error of 1.step */
+        
+        if (x0 > x1)
+        {
+            x0 = x1;
+            x1 += w;
+        } /* if called with swapped points */
+        if (y0 > y1) y0 = y1; /* .. exchange them */
+        y0 += (h + 1) / 2;
+        y1 = y0 - b1;   /* starting pixel */
+        w *= 8 * w;
+        b1 = 8 * h * h;
+        
+        do
+        {
+            for (int i = x0; i < x1; i++) draw(i, y0, p);
+            for (int i = x0; i < x1; i++) draw(i, y1, p);
+            e2 = 2 * err;
+            if (e2 <= dy)
+            {
+                y0++;
+                y1--;
+                err += dy += w;
+            }  /* y step */
+            if (e2 >= dx || 2 * err > dy)
+            {
+                x0++;
+                x1--;
+                err += dx += b1;
+            } /* x step */
+        } while (x0 <= x1);
+        
+        while (y0 - y1 < h)
+        {  /* too early stop of flat ellipses w=1 */
+            draw(x0 - 1, y0, p); /* -> finish tip of ellipse */
+            draw(x1 + 1, y0++, p);
+            draw(x0 - 1, y1, p);
+            draw(x1 + 1, y1--, p);
+        }
+    }
+    
+    public static void fillEllipse(int x, int y, int w, int h)
+    {
+        fillEllipse(x, y, w, h, Color.WHITE);
+    }
+    
     public static void drawRect(int x, int y, int w, int h, Color p)
     {
+        if (w < 1 || h < 1) return;
         drawLine(x, y, x + w - 1, y, p);
         drawLine(x + w - 1, y, x + w - 1, y + h - 1, p);
         drawLine(x + w - 1, y + h - 1, x, y + h - 1, p);
@@ -894,6 +874,7 @@ public class PixelEngine
     
     public static void fillRect(int x, int y, int w, int h, Color p)
     {
+        if (w < 1 || h < 1) return;
         int x2 = x + w;
         int y2 = y + h;
         
@@ -1293,7 +1274,7 @@ public class PixelEngine
                     PixelEngine.PROFILER.startSection("Events");
                     {
                         Events.clear(); // TODO - Have a way to have events persist and be consumable.
-            
+                        
                         PixelEngine.PROFILER.startSection("Mouse Events");
                         {
                             Mouse.handleEvents(t, dt);
@@ -1390,7 +1371,7 @@ public class PixelEngine
                         }
                     }
                     PixelEngine.PROFILER.endSection();
-        
+                    
                     PixelEngine.PROFILER.startSection("Stats");
                     {
                         PixelEngine.PROFILER.startSection("Update");
@@ -1409,13 +1390,13 @@ public class PixelEngine
                             PixelEngine.PROFILER.startSection("Update Title");
                             {
                                 lastSecond = t;
-        
+                                
                                 double s = 1000D;
-        
+                                
                                 totalTime /= totalFrames;
-        
+                                
                                 Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
-        
+                                
                                 totalTime   = 0;
                                 minTime     = Long.MAX_VALUE;
                                 maxTime     = Long.MIN_VALUE;
@@ -1431,7 +1412,7 @@ public class PixelEngine
                 if (PixelEngine.PROFILER.enabled && PixelEngine.printFrame != null)
                 {
                     String parent = PixelEngine.printFrame.equals("") ? null : PixelEngine.printFrame;
-                    print(PixelEngine.PROFILER.getFormattedData(parent));
+                    println(PixelEngine.PROFILER.getFormattedData(parent));
                     PixelEngine.printFrame = null;
                 }
             }

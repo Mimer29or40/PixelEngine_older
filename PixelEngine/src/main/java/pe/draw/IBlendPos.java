@@ -1,4 +1,6 @@
-package pe;
+package pe.draw;
+
+import pe.Color;
 
 public interface IBlendPos
 {

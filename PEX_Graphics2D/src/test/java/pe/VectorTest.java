@@ -9,7 +9,7 @@ public class VectorTest extends PixelEngine
     @Override
     protected boolean onUserCreate()
     {
-        print(Vector2.Xf.x());
+        println(Vector2.Xf.x());
         
         return true;
     }

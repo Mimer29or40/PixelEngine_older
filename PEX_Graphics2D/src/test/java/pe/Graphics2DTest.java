@@ -1,5 +1,6 @@
 package pe;
 
+import pe.draw.DrawMode;
 import pe.gfx2d.PEX_GFX2D;
 import pe.gfx2d.Transform2D;
 
