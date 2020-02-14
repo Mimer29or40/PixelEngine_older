@@ -482,6 +482,11 @@ public class PixelEngine
                 if (p.a() == 255) PixelEngine.target.setPixel(x, y, p);
                 break;
             case ALPHA:
+                if (p.a() == 255)
+                {
+                    PixelEngine.target.setPixel(x, y, p);
+                    break;
+                }
                 Color d = PixelEngine.target.getPixel(x, y);
                 float a = (float) p.a() / 255.0F;
                 float c = 1.0F - a;
