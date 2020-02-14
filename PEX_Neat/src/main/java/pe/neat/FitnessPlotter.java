@@ -1,8 +1,8 @@
 package pe.neat;
 
 import pe.Color;
-import pe.DrawMode;
 import pe.Sprite;
+import pe.draw.DrawMode;
 
 import java.util.List;
 
@@ -55,11 +55,11 @@ public class FitnessPlotter
         int minY = this.borderSize;
         int maxX = this.imageWidth - this.borderSize;
         int maxY = this.imageHeight - this.borderSize;
-        
+    
         Sprite   sprite = new Sprite(this.imageWidth, this.imageHeight, this.backgroundColor);
-        Sprite   prev   = renderTarget();
+        Sprite   prev   = drawTarget();
         DrawMode mode   = drawMode();
-        renderTarget(sprite);
+        drawTarget(sprite);
         drawMode(DrawMode.ALPHA);
         
         drawRect(minX, minY, maxX - minX + 1, maxY - minY + 1, this.borderColor);
@@ -99,8 +99,8 @@ public class FitnessPlotter
             
             drawString(minX - 10 - width, y - height / 2, text, this.textColor);
         }
-        
-        renderTarget(prev);
+    
+        drawTarget(prev);
         drawMode(mode);
         return sprite;
     }

@@ -1,8 +1,8 @@
 package pe.neat;
 
 import pe.Color;
-import pe.DrawMode;
 import pe.Sprite;
+import pe.draw.DrawMode;
 import pe.util.Pair;
 
 import java.util.ArrayList;
@@ -132,9 +132,9 @@ public class GenomeDrawer
         }
     
         Sprite   sprite = new Sprite(imageWidth, imageHeight, this.backgroundColor);
-        Sprite   prev   = renderTarget();
+        Sprite   prev   = drawTarget();
         DrawMode mode   = drawMode();
-        renderTarget(sprite);
+        drawTarget(sprite);
         drawMode(DrawMode.ALPHA);
     
         // Draw connections first so they are under nodes
@@ -186,7 +186,7 @@ public class GenomeDrawer
             drawString(pos.a - w / 2, pos.b - h / 2, text, this.textColor, this.imageScale);
         }
     
-        renderTarget(prev);
+        drawTarget(prev);
         drawMode(mode);
         return sprite;
     }
