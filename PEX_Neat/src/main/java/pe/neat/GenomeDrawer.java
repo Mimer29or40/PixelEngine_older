@@ -157,10 +157,13 @@ public class GenomeDrawer
         // Draw nodes
         for (Node node : genome.getNodes())
         {
+            String text = "" + node.id;
+    
+            int w = textWidth(text, this.imageScale);
+            int h = textHeight(text, this.imageScale);
+    
             Pair<Integer, Integer> pos = nodes.get(node.id);
-            
-            fillCircle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale, this.nodeBorderColor);
-            
+    
             Color color = Color.BLANK;
             switch (node.type)
             {
@@ -177,12 +180,17 @@ public class GenomeDrawer
                     color = this.biasNodeColor;
                     break;
             }
-            fillCircle(pos.a, pos.b, this.nodeRadius * this.imageScale, color);
-            
-            String text = "" + node.id;
-            
-            int w = textWidth(text, this.imageScale);
-            int h = textHeight(text, this.imageScale);
+    
+            if (w + this.nodeRadius * this.imageScale > (this.nodeRadius + 1) * this.imageScale)
+            {
+                fillEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale + this.imageScale, (this.nodeRadius + 1) * this.imageScale, this.nodeBorderColor);
+                fillEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale, this.nodeRadius * this.imageScale, color);
+            }
+            else
+            {
+                fillCircle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale, this.nodeBorderColor);
+                fillCircle(pos.a, pos.b, this.nodeRadius * this.imageScale, color);
+            }
             drawString(pos.a - w / 2, pos.b - h / 2, text, this.textColor, this.imageScale);
         }
     

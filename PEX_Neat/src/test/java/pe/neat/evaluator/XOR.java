@@ -26,7 +26,7 @@ public class XOR
                 };
         double[] correct_results = new double[] {0.0, 1.0, 1.0, 0.0};
     
-        Settings settings = new Settings(1000);
+        Settings settings = new Settings(500);
         
         Function<Genome, Double> evaluator = (genome) -> {
             Network net = new Network(genome);
@@ -55,7 +55,7 @@ public class XOR
             println();
         };
     
-        EvaluatorTest.run("XOR", settings, evaluator, printFunc, 1000, drawer);
+        EvaluatorTest.run("XOR", settings, evaluator, printFunc, 500, drawer);
     }
     
     private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
