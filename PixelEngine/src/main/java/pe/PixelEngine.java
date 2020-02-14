@@ -346,7 +346,7 @@ public class PixelEngine
         for (int i = 0, n = objects.length; i < n; i++)
         {
             builder.append(objects[i]);
-            if (i + 1 < 15) builder.append(" ");
+            if (i + 1 < n) builder.append(" ");
         }
         System.out.print(builder.toString());
     }
@@ -367,7 +367,7 @@ public class PixelEngine
         for (int i = 0, n = objects.length; i < n; i++)
         {
             builder.append(objects[i]);
-            if (i + 1 < 15) builder.append(" ");
+            if (i + 1 < n) builder.append(" ");
         }
         System.out.println(builder.toString());
     }
