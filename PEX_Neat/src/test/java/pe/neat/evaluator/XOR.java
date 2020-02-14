@@ -14,7 +14,10 @@ public class XOR
     public static void main(String[] args)
     {
         EvaluatorTest.setup(XOR::setup);
-        
+    
+        GenomeDrawer drawer = new GenomeDrawer();
+        drawer.layerSpacing = 30;
+    
         double[][] inputs = new double[][] {
                 new double[] {0.0, 0.0, 1.0},
                 new double[] {0.0, 1.0, 1.0},
@@ -22,12 +25,12 @@ public class XOR
                 new double[] {1.0, 1.0, 1.0},
                 };
         double[] correct_results = new double[] {0.0, 1.0, 1.0, 0.0};
-        
+    
         Settings settings = new Settings(1000);
         
         Function<Genome, Double> evaluator = (genome) -> {
             Network net = new Network(genome);
-            
+    
             double total = 0;
             for (int i = 0; i < 4; i++)
             {
@@ -35,10 +38,11 @@ public class XOR
                 double   distance = Math.abs(correct_results[i] - outputs[0]);
                 total += distance * distance;
             }
-            
-            if (genome.connections.size() > 20) total += genome.connections.size() - 20;
-            
-            return 100.0 - total * 5.0;
+    
+            // if (genome.connections.size() > 20) total += genome.connections.size() - 20;
+            //
+            // return 100.0 - total * 5.0;
+            return 1.0 / total;
         };
         
         Consumer<Genome> printFunc = (genome) -> {
@@ -50,10 +54,8 @@ public class XOR
             }
             println();
         };
-        
-        EvaluatorTest.run("XOR", settings, evaluator, printFunc, 1000);
-        // 0.11310272658657737, 0.8867979296590385, 0.8922704201357747, 0.10939381931238869
-        // 0.07750781357872998, 0.9207556671398537, 0.9196620240262491, 0.08383385605830368
+    
+        EvaluatorTest.run("XOR", settings, evaluator, printFunc, 1000, drawer);
     }
     
     private static void setup(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)

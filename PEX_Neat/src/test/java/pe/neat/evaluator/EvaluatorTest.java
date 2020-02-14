@@ -35,7 +35,7 @@ public class EvaluatorTest extends PixelEngine
             Genome g = genome.copy();
             for (Connection connection : g.getConnections())
             {
-                connection.weight += random.nextGaussian() * 0.01;
+                connection.weight += g.random.nextGaussian() * 0.01;
                 connection.weight = Math.max(-1.0, Math.min(connection.weight, 1.0));
             }
             return g;

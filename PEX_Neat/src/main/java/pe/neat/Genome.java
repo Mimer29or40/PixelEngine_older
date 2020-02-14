@@ -9,11 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 
 import static pe.PixelEngine.getPath;
-import static pe.PixelEngine.println;
 
 public class Genome
 {
@@ -141,7 +139,7 @@ public class Genome
         {
             Node n1 = this.random.nextIndex(this.nodes.values());
             Node n2 = this.random.nextIndex(this.nodes.values());
-        
+    
             if (n1.equals(n2)) continue;
             if (n1.layer == n2.layer) continue;
             if (n1.type == Node.Type.INPUT && n2.type == Node.Type.INPUT) continue;
@@ -202,32 +200,10 @@ public class Genome
                 }
             }
             if (cont) continue;
-        
+    
             addConnection(new Connection(connInnovation.inc(), n1.id, n2.id, this.random.nextDouble(-1.0, 1.0), true));
             return;
         }
-    }
-    
-    public void minimizeLayers()
-    {
-        ArrayList<Integer> layers = new ArrayList<>();
-        for (Node node : getNodes())
-        {
-            if (!layers.contains(node.layer)) layers.add(node.layer);
-        }
-        
-        layers.sort(Comparator.comparingInt(o -> o));
-        
-        println(this.layerCount, layers);
-        
-        for (Node node : getNodes())
-        {
-            for (int newIndex = 0, n = layers.size(); newIndex < n; newIndex++)
-            {
-                if (node.layer == layers.get(newIndex)) node.layer = newIndex;
-            }
-        }
-        this.layerCount = layers.size();
     }
     
     public Genome copy()
@@ -347,7 +323,7 @@ public class Genome
                             while (reader.hasNext())
                             {
                                 String name = reader.nextName();
-            
+    
                                 switch (name)
                                 {
                                     case "id":
@@ -401,8 +377,8 @@ public class Genome
             genome1 = genome2;
             genome2 = temp;
         }
-        
-        Genome child = new Genome();
+    
+        Genome child = new Genome(genome1.random);
         
         for (Node node : genome1.getNodes())
         {

@@ -10,11 +10,12 @@ import java.util.HashMap;
 
 import static pe.PixelEngine.*;
 
-@SuppressWarnings({"SuspiciousNameCombination", "ConstantConditions", "unused"})
+@SuppressWarnings({"SuspiciousNameCombination", "unused"})
 public class GenomeDrawer
 {
-    public int nodeRadius  = 10;
-    public int nodeSpacing = 10;
+    public int nodeRadius   = 10;
+    public int nodeSpacing  = 10;
+    public int layerSpacing = 10;
     
     public int imageScale = 4;
     
@@ -36,19 +37,13 @@ public class GenomeDrawer
     
     public Orientation orientation = Orientation.RIGHT;
     
-    public GenomeDrawer(int nodeRadius, int nodeSpacing, int imageScale)
-    {
-        this.nodeRadius  = nodeRadius;
-        this.nodeSpacing = nodeSpacing;
-        this.imageScale  = imageScale;
-    }
-    
     public GenomeDrawer() { }
     
     public Sprite generateGraph(Genome genome)
     {
-        int nodeSpacing = (this.nodeSpacing + this.nodeRadius * 2) * this.imageScale;
-        int border      = this.nodeRadius * 2 * this.imageScale;
+        int nodeSpacing  = (this.nodeSpacing + this.nodeRadius * 2) * this.imageScale;
+        int layerSpacing = (this.layerSpacing + this.nodeRadius * 2) * this.imageScale;
+        int border       = this.nodeRadius * 2 * this.imageScale;
     
         // Group all nodes into layer groups
         ArrayList<ArrayList<Node>> allNodes      = new ArrayList<>();
@@ -66,9 +61,9 @@ public class GenomeDrawer
         
         // Generate point for each node in each layer
         HashMap<Integer, Pair<Integer, Integer>> nodes = new HashMap<>();
-        
+    
         int imageWidth  = Math.max((maxLayerCount - 1) * nodeSpacing + 2 * border, 10);
-        int imageHeight = Math.max((genome.layerCount - 1) * nodeSpacing + 2 * border, 10);
+        int imageHeight = Math.max((genome.layerCount - 1) * layerSpacing + 2 * border, 10);
         if (this.orientation == Orientation.RIGHT || this.orientation == Orientation.LEFT)
         {
             int temp = imageWidth;
@@ -82,9 +77,9 @@ public class GenomeDrawer
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
                     ArrayList<Node> layer = allNodes.get(i);
-                    
+    
                     int layerLen = layer.size();
-                    int yPos     = border + (genome.layerCount - i - 1) * nodeSpacing;
+                    int yPos     = border + (genome.layerCount - i - 1) * layerSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageWidth - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
@@ -96,9 +91,9 @@ public class GenomeDrawer
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
                     ArrayList<Node> layer = allNodes.get(i);
-                    
+    
                     int layerLen = layer.size();
-                    int yPos     = border + i * nodeSpacing;
+                    int yPos     = border + i * layerSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int xPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageWidth - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
@@ -110,9 +105,9 @@ public class GenomeDrawer
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
                     ArrayList<Node> layer = allNodes.get(i);
-                    
+    
                     int layerLen = layer.size();
-                    int xPos     = border + i * nodeSpacing;
+                    int xPos     = border + i * layerSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageHeight - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
@@ -124,9 +119,9 @@ public class GenomeDrawer
                 for (int i = 0, ni = allNodes.size(); i < ni; i++)
                 {
                     ArrayList<Node> layer = allNodes.get(i);
-                    
+    
                     int layerLen = layer.size();
-                    int xPos     = border + (genome.layerCount - i - 1) * nodeSpacing;
+                    int xPos     = border + (genome.layerCount - i - 1) * layerSpacing;
                     for (int j = 0, nj = layer.size(); j < nj; j++)
                     {
                         int yPos = layerLen == maxLayerCount ? border + j * nodeSpacing : (imageHeight - (layerLen - 1) * nodeSpacing) / 2 + j * nodeSpacing;
