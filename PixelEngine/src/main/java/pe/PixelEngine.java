@@ -1,9 +1,11 @@
 package pe;
 
 import org.reflections.Reflections;
+import pe.color.Color;
+import pe.color.Colorc;
+import pe.color.IBlendPos;
 import pe.draw.DrawMode;
 import pe.draw.DrawPattern;
-import pe.draw.IBlendPos;
 import pe.util.Pair;
 
 import java.net.URISyntaxException;
@@ -17,12 +19,14 @@ import java.util.regex.Pattern;
 @SuppressWarnings({"unused", "SameParameterValue"})
 public class PixelEngine
 {
-    private static final Logger   LOGGER       = Logger.getLogger();
-    private static final Profiler PROFILER     = new Profiler("Engine");
-    private static final Color    COLOR        = Color.WHITE.copy();
-    private static final String   TITLE        = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
-    private static final Pattern  BOTTOM_CHARS = Pattern.compile(".*[gjpqy,]+.*");
-    private static final Random   RANDOM       = new Random();
+    private static final Logger   LOGGER   = Logger.getLogger();
+    private static final Profiler PROFILER = new Profiler("Engine");
+    private static final Random   RANDOM   = new Random();
+    
+    private static final Color COLOR = new Color(Color.WHITE);
+    
+    private static final String  TITLE        = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
+    private static final Pattern BOTTOM_CHARS = Pattern.compile(".*[gjpqy,]+.*");
     
     private static PixelEngine logic;
     
@@ -472,7 +476,7 @@ public class PixelEngine
     // - Draw -
     // --------
     
-    public static void clear(Color p)
+    public static void clear(Colorc p)
     {
         PixelEngine.target.clear(p);
     }
@@ -482,7 +486,7 @@ public class PixelEngine
         clear(Color.BACKGROUND_GREY);
     }
     
-    public static void draw(int x, int y, Color p)
+    public static void draw(int x, int y, Colorc p)
     {
         if (PixelEngine.target == null) return;
         
@@ -500,7 +504,7 @@ public class PixelEngine
                     PixelEngine.target.setPixel(x, y, p);
                     break;
                 }
-                Color d = PixelEngine.target.getPixel(x, y);
+                Colorc d = PixelEngine.target.getPixel(x, y);
                 float a = (float) p.a() / 255.0F;
                 float c = 1.0F - a;
                 PixelEngine.COLOR.r((int) (a * (float) p.r() + c * (float) d.r()));
@@ -510,7 +514,8 @@ public class PixelEngine
                 PixelEngine.target.setPixel(x, y, PixelEngine.COLOR);
                 break;
             case CUSTOM:
-                Color result = PixelEngine.blendFunc.blend(x, y, p, PixelEngine.target.getPixel(x, y));
+                // TODO
+                Colorc result = PixelEngine.blendFunc.blend(x, y, PixelEngine.target.getPixel(x, y), p);
                 PixelEngine.target.setPixel(x, y, result);
                 break;
         }
@@ -521,7 +526,7 @@ public class PixelEngine
         draw(x, y, Color.WHITE);
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int w, Color p, DrawPattern pattern)
+    public static void drawLine(int x1, int y1, int x2, int y2, int w, Colorc p, DrawPattern pattern)
     {
         if (w < 1) return;
         
@@ -603,7 +608,7 @@ public class PixelEngine
         }
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int w, Color p)
+    public static void drawLine(int x1, int y1, int x2, int y2, int w, Colorc p)
     {
         drawLine(x1, y1, x2, y2, w, p, DrawPattern.SOLID);
     }
@@ -618,7 +623,7 @@ public class PixelEngine
         drawLine(x1, y1, x2, y2, w, Color.WHITE, DrawPattern.SOLID);
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, Color p)
+    public static void drawLine(int x1, int y1, int x2, int y2, Colorc p)
     {
         drawLine(x1, y1, x2, y2, 1, p, DrawPattern.SOLID);
     }
@@ -633,7 +638,7 @@ public class PixelEngine
         drawLine(x1, y1, x2, y2, 1, Color.WHITE, DrawPattern.SOLID);
     }
     
-    public static void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3, Color p)
+    public static void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3, Colorc p)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
         int  sx = x3 - x2, sy = y3 - y2;
@@ -699,7 +704,7 @@ public class PixelEngine
         drawBezier(x1, y1, x2, y2, x3, y3, Color.WHITE);
     }
     
-    public static void drawCircle(int x, int y, int radius, Color p)
+    public static void drawCircle(int x, int y, int radius, Colorc p)
     {
         if (radius < 1) return;
         int xr = -radius, yr = 0, err = 2 - 2 * radius;
@@ -720,18 +725,18 @@ public class PixelEngine
         drawCircle(x, y, radius, Color.WHITE);
     }
     
-    public static void fillCircle(int x, int y, int radius, Color p)
+    public static void fillCircle(int x, int y, int radius, Colorc p)
     {
         if (radius < 1) return;
         int x0 = 0, y0 = radius, d = 3 - 2 * radius, i;
-    
+        
         while (y0 >= x0)
         {
             for (i = x - x0; i <= x + x0; i++) draw(i, y - y0, p);
             for (i = x - y0; i <= x + y0; i++) draw(i, y - x0, p);
             for (i = x - x0; i <= x + x0; i++) draw(i, y + y0, p);
             for (i = x - y0; i <= x + y0; i++) draw(i, y + x0, p);
-        
+            
             if (d < 0)
             {
                 d += 4 * x0++ + 6;
@@ -748,7 +753,7 @@ public class PixelEngine
         fillCircle(x, y, radius, Color.WHITE);
     }
     
-    public static void drawEllipse(int x, int y, int w, int h, Color p)
+    public static void drawEllipse(int x, int y, int w, int h, Colorc p)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
         if (w < 1 || h < 1) return;
@@ -804,7 +809,7 @@ public class PixelEngine
         drawEllipse(x, y, w, h, Color.WHITE);
     }
     
-    public static void fillEllipse(int x, int y, int w, int h, Color p)
+    public static void fillEllipse(int x, int y, int w, int h, Colorc p)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
         if (w < 1 || h < 1) return;
@@ -858,7 +863,7 @@ public class PixelEngine
         fillEllipse(x, y, w, h, Color.WHITE);
     }
     
-    public static void drawRect(int x, int y, int w, int h, Color p)
+    public static void drawRect(int x, int y, int w, int h, Colorc p)
     {
         if (w < 1 || h < 1) return;
         drawLine(x, y, x + w - 1, y, p);
@@ -872,17 +877,17 @@ public class PixelEngine
         drawRect(x, y, w, h, Color.WHITE);
     }
     
-    public static void fillRect(int x, int y, int w, int h, Color p)
+    public static void fillRect(int x, int y, int w, int h, Colorc p)
     {
         if (w < 1 || h < 1) return;
         int x2 = x + w;
         int y2 = y + h;
-    
+        
         x  = Math.max(0, Math.min(x, PixelEngine.screenW));
         y  = Math.max(0, Math.min(y, PixelEngine.screenH));
         x2 = Math.max(0, Math.min(x2, PixelEngine.screenW));
         y2 = Math.max(0, Math.min(y2, PixelEngine.screenH));
-    
+        
         for (int i = x; i < x2; i++)
         {
             for (int j = y; j < y2; j++)
@@ -897,7 +902,7 @@ public class PixelEngine
         fillRect(x, y, w, h, Color.WHITE);
     }
     
-    public static void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color p)
+    public static void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Colorc p)
     {
         drawLine(x1, y1, x2, y2, p);
         drawLine(x2, y2, x3, y3, p);
@@ -909,7 +914,7 @@ public class PixelEngine
         drawTriangle(x1, y1, x2, y2, x3, y3, Color.WHITE);
     }
     
-    public static void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Color p)
+    public static void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Colorc p)
     {
         int minX, minY, maxX, maxY;
         
@@ -1005,8 +1010,8 @@ public class PixelEngine
                             xPercent = u < uMin ? 1.0 - uMin + u : u + 1 > uMax ? uMax - u : 1.0;
                             yPercent = v < vMin ? 1.0 - vMin + v : v + 1 > vMax ? vMax - v : 1.0;
                             pPercent = xPercent * yPercent;
-                            
-                            sprite.getPixel(ox + u, oy + v, p);
+    
+                            p.set(sprite.getPixel(ox + u, oy + v));
                             
                             r += pPercent * p.r();
                             g += pPercent * p.g();
@@ -1039,7 +1044,7 @@ public class PixelEngine
         drawPartialSprite(x, y, sprite, 0, 0, sprite.getWidth(), sprite.getHeight(), 1);
     }
     
-    public static void drawString(int x, int y, String text, Color color, double scale)
+    public static void drawString(int x, int y, String text, Colorc color, double scale)
     {
         if (scale <= 0.0) return;
         
@@ -1049,6 +1054,7 @@ public class PixelEngine
         
         if (scale == (int) scale)
         {
+            // TODO - Previous Draw Mode
             drawMode(color.a() == 255 ? DrawMode.MASK : DrawMode.ALPHA);
             
             for (int ci = 0; ci < text.length(); ci++)
@@ -1158,11 +1164,10 @@ public class PixelEngine
                 }
             }
         }
-    
         drawMode(DrawMode.NORMAL);
     }
     
-    public static void drawString(int x, int y, String text, Color color)
+    public static void drawString(int x, int y, String text, Colorc color)
     {
         drawString(x, y, text, color, 1);
     }

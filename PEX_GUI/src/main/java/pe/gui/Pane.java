@@ -1,8 +1,8 @@
 package pe.gui;
 
-import pe.Color;
 import pe.PixelEngine;
 import pe.Sprite;
+import pe.color.Color;
 import pe.draw.DrawMode;
 
 import static pe.PixelEngine.clear;

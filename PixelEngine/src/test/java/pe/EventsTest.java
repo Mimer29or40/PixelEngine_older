@@ -1,5 +1,6 @@
 package pe;
 
+import pe.color.Color;
 import pe.event.Event;
 
 import java.util.ArrayList;

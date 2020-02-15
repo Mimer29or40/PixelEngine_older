@@ -1,6 +1,8 @@
 package pe;
 
 import org.lwjgl.BufferUtils;
+import pe.color.Color;
+import pe.color.Colorc;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,7 +18,7 @@ import static pe.PixelEngine.getPath;
 @SuppressWarnings("unused")
 public class Sprite
 {
-    private final Color COLOR = new Color(0, 0, 0);
+    private final Color COLOR = new Color();
     
     protected int width      = 0;
     protected int height     = 0;
@@ -31,11 +33,11 @@ public class Sprite
     
     }
     
-    public Sprite(int width, int height, Color initial)
+    public Sprite(int width, int height, Colorc initial)
     {
-        this.width = width;
+        this.width  = width;
         this.height = height;
-        this.data = BufferUtils.createByteBuffer(width * height * 4);
+        this.data   = BufferUtils.createByteBuffer(width * height * 4);
         
         int value = initial.toInt();
         for (int i = 0; i < width * height; i++)
@@ -55,29 +57,29 @@ public class Sprite
         
         try (FileInputStream in = new FileInputStream(getPath(imagePath).toString()))
         {
-            sprite.width = in.read();
-            sprite.height = in.read();
+            sprite.width      = in.read();
+            sprite.height     = in.read();
             sprite.components = in.read();
-            sprite.data = BufferUtils.createByteBuffer(4 * sprite.width * sprite.height);
-            
+            sprite.data       = BufferUtils.createByteBuffer(4 * sprite.width * sprite.height);
+    
             for (int i = 0; in.available() > 0; i++)
             {
                 sprite.data.putInt(4 * i, in.read());
             }
             sprite.data.flip();
-            
+    
             return sprite;
         }
         catch (IOException e)
         {
             System.err.println("PGE Sprite could not be loaded: " + imagePath);
         }
-        
-        sprite.width = 0;
-        sprite.height = 0;
+    
+        sprite.width      = 0;
+        sprite.height     = 0;
         sprite.components = 0;
-        sprite.data = null;
-        
+        sprite.data       = null;
+    
         return sprite;
     }
     
@@ -91,21 +93,21 @@ public class Sprite
         
         if (stbi_info(getPath(imagePath).toString(), width, height, components))
         {
-            sprite.width = width[0];
-            sprite.height = height[0];
+            sprite.width      = width[0];
+            sprite.height     = height[0];
             sprite.components = components[0];
-            sprite.data = stbi_load(getPath(imagePath).toString(), width, height, components, 4);
-            
+            sprite.data       = stbi_load(getPath(imagePath).toString(), width, height, components, 4);
+    
             if (sprite.data != null) return sprite;
         }
-        
+    
         System.err.println("PGE Sprite could not be loaded: " + imagePath);
-        
-        sprite.width = 0;
-        sprite.height = 0;
+    
+        sprite.width      = 0;
+        sprite.height     = 0;
         sprite.components = 0;
-        sprite.data = null;
-        
+        sprite.data       = null;
+    
         return sprite;
     }
     
@@ -153,31 +155,26 @@ public class Sprite
         }
     }
     
-    public Color getPixel(int x, int y, Color out)
+    public Colorc getPixel(int x, int y)
     {
         if (this.sampleMode == Mode.NORMAL)
         {
             if (0 <= x && x < this.width && 0 <= y && y < this.height)
             {
-                return out.fromInt(this.data.getInt(4 * (y * this.width + x)));
+                return this.COLOR.fromInt(this.data.getInt(4 * (y * this.width + x)));
             }
             else
             {
-                return out.set(0, 0, 0, 0);
+                return this.COLOR.set(0, 0, 0, 0);
             }
         }
         else
         {
-            return out.fromInt(this.data.getInt(4 * (Math.abs(y % this.height) * this.width + Math.abs(x % this.width))));
+            return this.COLOR.fromInt(this.data.getInt(4 * (Math.abs(y % this.height) * this.width + Math.abs(x % this.width))));
         }
     }
     
-    public Color getPixel(int x, int y)
-    {
-        return getPixel(x, y, this.COLOR);
-    }
-    
-    public void setPixel(int x, int y, Color p)
+    public void setPixel(int x, int y, Colorc p)
     {
         if (0 <= x && x < this.width && 0 <= y && y < this.height)
         {
@@ -185,20 +182,15 @@ public class Sprite
         }
     }
     
-    public Color sample(float x, float y, Color out)
+    public Colorc sample(float x, float y)
     {
         int sx = Math.min((int) (x * (float) this.width), this.width - 1);
         int sy = Math.min((int) (y * (float) this.height), this.height - 1);
         
-        return getPixel(sx, sy, out);
+        return getPixel(sx, sy);
     }
     
-    public Color sample(float x, float y)
-    {
-        return sample(x, y, this.COLOR);
-    }
-    
-    public Color sampleBL(float u, float v, Color out)
+    public Colorc sampleBL(float u, float v)
     {
         u = u * width - 0.5f;
         v = v * height - 0.5f;
@@ -211,20 +203,15 @@ public class Sprite
         float u_opposite = 1 - u_ratio;
         float v_opposite = 1 - v_ratio;
         
-        Color p1 = getPixel(Math.max(x, 0), Math.max(y, 0)).copy();
-        Color p2 = getPixel(Math.min(x + 1, this.width - 1), Math.max(y, 0)).copy();
-        Color p3 = getPixel(Math.max(x, 0), Math.min(y + 1, this.height - 1)).copy();
-        Color p4 = getPixel(Math.min(x + 1, this.width - 1), Math.min(y + 1, this.height - 1)).copy();
+        Color p1 = new Color(getPixel(Math.max(x, 0), Math.max(y, 0)));
+        Color p2 = new Color(getPixel(Math.min(x + 1, this.width - 1), Math.max(y, 0)));
+        Color p3 = new Color(getPixel(Math.max(x, 0), Math.min(y + 1, this.height - 1)));
+        Color p4 = new Color(getPixel(Math.min(x + 1, this.width - 1), Math.min(y + 1, this.height - 1)));
         
-        return out.set((p1.r() * u_opposite + p2.r() * u_ratio) * v_opposite + (p3.r() * u_opposite + p4.r() * u_ratio) * v_ratio,
-                       (p1.g() * u_opposite + p2.g() * u_ratio) * v_opposite + (p3.g() * u_opposite + p4.g() * u_ratio) * v_ratio,
-                       (p1.b() * u_opposite + p2.b() * u_ratio) * v_opposite + (p3.b() * u_opposite + p4.b() * u_ratio) * v_ratio);
+        return this.COLOR.set((p1.r() * u_opposite + p2.r() * u_ratio) * v_opposite + (p3.r() * u_opposite + p4.r() * u_ratio) * v_ratio,
+                              (p1.g() * u_opposite + p2.g() * u_ratio) * v_opposite + (p3.g() * u_opposite + p4.g() * u_ratio) * v_ratio,
+                              (p1.b() * u_opposite + p2.b() * u_ratio) * v_opposite + (p3.b() * u_opposite + p4.b() * u_ratio) * v_ratio);
         
-    }
-    
-    public Color sampleBL(float u, float v)
-    {
-        return sampleBL(u, v, this.COLOR);
     }
     
     public void clear()
@@ -236,7 +223,7 @@ public class Sprite
         }
     }
     
-    public void clear(Color p)
+    public void clear(Colorc p)
     {
         int color = p.toInt();
         

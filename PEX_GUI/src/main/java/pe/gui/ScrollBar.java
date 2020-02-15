@@ -1,7 +1,7 @@
 package pe.gui;
 
-import pe.Color;
 import pe.Mouse;
+import pe.color.Color;
 import pe.gui.event.IScrolled;
 
 import static pe.PixelEngine.*;

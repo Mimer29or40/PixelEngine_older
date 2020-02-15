@@ -1,6 +1,7 @@
 package pe.gui;
 
-import pe.Color;
+import pe.color.Color;
+import pe.color.Colorc;
 import pe.gui.event.IProgressCompleted;
 
 import static pe.PixelEngine.*;
@@ -67,15 +68,15 @@ public class ProgressBar extends Label
     /*
      * Bar Color Property
      */
-    protected final Color barColor     = Color.BLUE.copy();
-    protected final Color prevBarColor = Color.BLUE.copy();
+    protected final Color barColor     = new Color(Color.BLUE);
+    protected final Color prevBarColor = new Color(Color.BLUE);
     
-    public Color getBarColor()
+    public Colorc getBarColor()
     {
         return this.barColor;
     }
     
-    public void setBarColor(Color barColor)
+    public void setBarColor(Colorc barColor)
     {
         if (!this.barColor.equals(barColor))
         {
@@ -85,7 +86,7 @@ public class ProgressBar extends Label
         }
     }
     
-    protected void updatedBarColor(Color prev, Color barColor)
+    protected void updatedBarColor(Colorc prev, Color barColor)
     {
         redraw();
     }
@@ -93,15 +94,15 @@ public class ProgressBar extends Label
     /*
      * Disable Bar Property
      */
-    protected final Color disabledBarColor     = Color.DARK_BLUE.copy();
-    protected final Color prevDisabledBarColor = Color.DARK_BLUE.copy();
+    protected final Color disabledBarColor     = new Color(Color.DARK_BLUE);
+    protected final Color prevDisabledBarColor = new Color(Color.DARK_BLUE);
     
-    public Color getDisabledBarColor()
+    public Colorc getDisabledBarColor()
     {
         return this.disabledBarColor;
     }
     
-    public void setDisabledBarColor(Color disabledBarColor)
+    public void setDisabledBarColor(Colorc disabledBarColor)
     {
         if (!this.disabledBarColor.equals(disabledBarColor))
         {
@@ -111,7 +112,7 @@ public class ProgressBar extends Label
         }
     }
     
-    protected void updatedDisabledBarColor(Color prev, Color focusedColor)
+    protected void updatedDisabledBarColor(Colorc prev, Color focusedColor)
     {
         redraw();
     }

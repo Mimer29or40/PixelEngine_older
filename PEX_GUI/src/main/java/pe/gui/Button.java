@@ -1,8 +1,9 @@
 package pe.gui;
 
-import pe.Color;
 import pe.Keyboard;
 import pe.Mouse;
+import pe.color.Color;
+import pe.color.Colorc;
 import pe.gui.event.*;
 
 public class Button extends Label
@@ -90,15 +91,15 @@ public class Button extends Label
     /*
      * Hover Color Property
      */
-    protected final Color hoverColor     = Color.BLUE.copy();
-    private final   Color prevHoverColor = Color.BLUE.copy();
+    protected final Color hoverColor     = new Color(Color.BLUE);
+    private final   Color prevHoverColor = new Color(Color.BLUE);
     
-    public Color getHoverColor()
+    public Colorc getHoverColor()
     {
         return this.hoverColor;
     }
     
-    public void setHoverColor(Color hoverColor)
+    public void setHoverColor(Colorc hoverColor)
     {
         if (!this.hoverColor.equals(hoverColor))
         {
@@ -108,7 +109,7 @@ public class Button extends Label
         }
     }
     
-    protected void updatedHoverColor(Color prev, Color hoverColor)
+    protected void updatedHoverColor(Colorc prev, Color hoverColor)
     {
         redraw();
     }
@@ -116,15 +117,15 @@ public class Button extends Label
     /*
      * Pressed Color Property
      */
-    protected final Color pressedColor     = Color.DARK_BLUE.copy();
-    private final   Color prevPressedColor = Color.DARK_BLUE.copy();
+    protected final Color pressedColor     = new Color(Color.DARK_BLUE);
+    private final   Color prevPressedColor = new Color(Color.DARK_BLUE);
     
-    public Color getPressedColor()
+    public Colorc getPressedColor()
     {
         return this.pressedColor;
     }
     
-    public void setPressedColor(Color pressedColor)
+    public void setPressedColor(Colorc pressedColor)
     {
         if (!this.pressedColor.equals(pressedColor))
         {
@@ -134,7 +135,7 @@ public class Button extends Label
         }
     }
     
-    protected void updatedPressedColor(Color prev, Color pressedColor)
+    protected void updatedPressedColor(Colorc prev, Color pressedColor)
     {
         redraw();
     }
@@ -309,7 +310,7 @@ public class Button extends Label
      * Drawing Stuff
      */
     
-    protected Color getBackgroundColor()
+    protected Colorc getBackgroundColor()
     {
         if (isEnabled() && isPressed())
         {

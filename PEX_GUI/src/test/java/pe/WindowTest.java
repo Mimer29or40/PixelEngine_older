@@ -1,5 +1,6 @@
 package pe;
 
+import pe.color.Color;
 import pe.gui.*;
 
 import java.util.ArrayList;

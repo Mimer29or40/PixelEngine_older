@@ -1,7 +1,7 @@
 package pe.gui;
 
-import pe.Color;
 import pe.PixelEngine;
+import pe.color.Color;
 import pe.draw.DrawMode;
 
 import static pe.PixelEngine.*;

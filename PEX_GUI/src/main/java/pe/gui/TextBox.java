@@ -1,8 +1,9 @@
 package pe.gui;
 
-import pe.Color;
 import pe.Keyboard;
 import pe.Mouse;
+import pe.color.Color;
+import pe.color.Colorc;
 import pe.gui.event.ITextChanged;
 import pe.gui.event.ITextEntered;
 
@@ -131,15 +132,15 @@ public class TextBox extends Label
     /*
      * Focused Color Property
      */
-    protected final Color focusedColor     = Color.GREY.copy();
-    protected final Color prevFocusedColor = Color.GREY.copy();
+    protected final Color focusedColor     = new Color(Color.GREY);
+    protected final Color prevFocusedColor = new Color(Color.GREY);
     
-    public Color getFocusedColor()
+    public Colorc getFocusedColor()
     {
         return this.focusedColor;
     }
     
-    public void setFocusedColor(Color focusedColor)
+    public void setFocusedColor(Colorc focusedColor)
     {
         if (!this.focusedColor.equals(focusedColor))
         {
@@ -149,7 +150,7 @@ public class TextBox extends Label
         }
     }
     
-    protected void updatedFocusedColor(Color prev, Color focusedColor)
+    protected void updatedFocusedColor(Colorc prev, Color focusedColor)
     {
         redraw();
     }
