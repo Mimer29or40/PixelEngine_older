@@ -25,7 +25,7 @@ public class EvaluatorTest extends PixelEngine
     {
         Random random = new Random();
         
-        final Genome  genome         = new Genome(random);
+        final Genome  genome         = new Genome();
         final Counter nodeInnovation = new Counter();
         final Counter connInnovation = new Counter();
         
@@ -35,13 +35,13 @@ public class EvaluatorTest extends PixelEngine
             Genome g = genome.copy();
             for (Connection connection : g.getConnections())
             {
-                connection.weight += g.random.nextGaussian() * 0.01;
+                connection.weight += random.nextGaussian() * 0.01;
                 connection.weight = Math.max(-1.0, Math.min(connection.weight, 1.0));
             }
             return g;
         };
-        
-        Evaluator eva = new Evaluator(random, settings, fitnessCalculator, generator, nodeInnovation, connInnovation);
+    
+        Evaluator eva = new Evaluator(random, settings, generator, fitnessCalculator, nodeInnovation, connInnovation);
         
         String name = String.format("out/%s", EvaluatorTest.name);
         

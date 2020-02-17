@@ -54,6 +54,6 @@ public class CrossoverTest
     
     private static void test(Random random, Genome[] genome, Counter[] nodeInnovation, Counter[] connInnovation)
     {
-        genome[2] = Genome.crossover(genome[0], genome[1], 0.10);
+        genome[2] = Genome.crossover(random, genome[0], genome[1], 0.10);
     }
 }

@@ -22,7 +22,8 @@ public class Evaluator
     private final ArrayList<Genome> lastGen = new ArrayList<>();
     private final ArrayList<Genome> nextGen = new ArrayList<>();
     
-    public Evaluator(Random random, Settings settings, Function<Genome, Double> fitnessCalculator, Supplier<Genome> generator, Counter nodeInnovation, Counter connInnovation)
+    public Evaluator(Random random, Settings settings, Supplier<Genome> generator, Function<Genome, Double> fitnessCalculator, Counter nodeInnovation,
+                     Counter connInnovation)
     {
         this.random         = random;
         this.settings       = settings;
@@ -69,19 +70,20 @@ public class Evaluator
             {
                 Genome parent1 = this.random.nextIndex(this.genomes);
                 Genome parent2 = this.random.nextIndex(this.genomes);
-                child = Genome.crossover(parent1, parent2, this.settings.disabledGeneInheritingRate);
+                // TODO - Determine fittest parent;
+                child = Genome.crossover(this.random, parent1, parent2, this.settings.disabledGeneInheritingRate);
             }
             if (this.random.nextDouble() < this.settings.weightMutationRate)
             {
-                child.weightMutation(this.settings.weightPerturbingRate);
+                child.weightMutation(this.random, this.settings.weightPerturbingRate);
             }
             if (this.random.nextDouble() < this.settings.nodeMutationRate)
             {
-                child.nodeMutation(this.nodeInnovation, this.connInnovation);
+                child.nodeMutation(this.random, this.nodeInnovation, this.connInnovation);
             }
             if (this.random.nextDouble() < this.settings.connectionMutationRate)
             {
-                child.connectionMutation(this.connInnovation, 100);
+                child.connectionMutation(this.random, this.connInnovation, 100);
             }
             // child.minimizeLayers();
             this.nextGen.add(child);

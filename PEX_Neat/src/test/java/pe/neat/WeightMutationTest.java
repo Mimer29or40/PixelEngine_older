@@ -2,7 +2,7 @@ package pe.neat;
 
 import pe.Random;
 
-import static pe.PixelEngine.print;
+import static pe.PixelEngine.println;
 
 public class WeightMutationTest
 {
@@ -81,8 +81,8 @@ public class WeightMutationTest
     {
         for (int i = 0; i < 100; i++)
         {
-            print(i);
-            genome.weightMutation(0.7);
+            println(i);
+            genome.weightMutation(random, 0.7);
             String fileName = String.format("%s/generation_%s", name, i + 1);
             drawer.generateGraph(genome).saveSprite(fileName);
             // genome.save(fileName);

@@ -38,10 +38,10 @@ public class NodeMutationTest
         for (int i = 0; i < 100; i++)
         {
             print(i);
-            genome.nodeMutation(nodeInnovation, connInnovation);
+            genome.nodeMutation(random, nodeInnovation, connInnovation);
             for (int j = 0; j < 2; j++)
             {
-                genome.connectionMutation(connInnovation, 100);
+                genome.connectionMutation(random, connInnovation, 100);
             }
             String fileName = String.format("%s/generation_%s", name, i + 1);
             drawer.generateGraph(genome).saveSprite(fileName);

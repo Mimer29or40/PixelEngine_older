@@ -22,7 +22,7 @@ public class NeatTest extends PixelEngine
         Random random = new Random();
     
         Genome[] genomes = new Genome[count];
-        for (int i = 0; i < count; i++) genomes[i] = new Genome(random);
+        for (int i = 0; i < count; i++) genomes[i] = new Genome();
     
         Counter[] nodeInnovations = new Counter[count];
         Counter[] connInnovations = new Counter[count];

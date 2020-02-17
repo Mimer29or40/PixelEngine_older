@@ -41,7 +41,7 @@ public class ConnMutationTest
         for (int i = 0; i < 100; i++)
         {
             print(i);
-            genome.connectionMutation(connInnovation, 10);
+            genome.connectionMutation(random, connInnovation, 10);
             String fileName = String.format("%s/generation_%s", name, i + 1);
             drawer.generateGraph(genome).saveSprite(fileName);
             // genome.save(fileName);

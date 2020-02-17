@@ -15,7 +15,7 @@ import static pe.PixelEngine.getPath;
 
 public class Genome
 {
-    public final Random random;
+    // public final Random random;
     
     public final HashMap<Integer, Node>       nodes       = new HashMap<>();
     public final HashMap<Integer, Connection> connections = new HashMap<>();
@@ -29,14 +29,14 @@ public class Genome
     public int    layerCount;
     public double fitness;
     
-    public Genome(Random random)
-    {
-        this.random = random;
-    }
+    // public Genome(Random random)
+    // {
+    //     this.random = random;
+    // }
     
     public Genome()
     {
-        this(new Random());
+        // this(new Random());
     }
     
     public Iterable<Node> getNodes()
@@ -136,31 +136,31 @@ public class Genome
      *
      * @param perturbingRate The probability to nudge the weight by an amount
      */
-    public void weightMutation(double perturbingRate)
+    public void weightMutation(Random random, double perturbingRate)
     {
         for (Connection connection : getConnections())
         {
-            if (this.random.nextDouble() < perturbingRate)
+            if (random.nextDouble() < perturbingRate)
             {
-                connection.weight += this.random.nextGaussian() * 0.01;
+                connection.weight += random.nextGaussian() * 0.01;
                 connection.weight = Math.max(-1.0, Math.min(connection.weight, 1.0));
             }
             else
             {
-                connection.weight = this.random.nextDouble(-1.0, 1.0);
+                connection.weight = random.nextDouble(-1.0, 1.0);
             }
         }
     }
     
-    public void nodeMutation(Counter nodeInnovation, Counter connInnovation)
+    public void nodeMutation(Random random, Counter nodeInnovation, Counter connInnovation)
     {
         ArrayList<Connection> suitable = new ArrayList<>();
         for (Connection connection : getConnections()) if (connection.enabled) suitable.add(connection);
-    
+        
         if (suitable.isEmpty()) return;
-    
-        Connection con = this.random.nextIndex(suitable);
-    
+        
+        Connection con = random.nextIndex(suitable);
+        
         con.enabled = false;
     
         Node       node = new Node(nodeInnovation.inc(), Node.Type.HIDDEN, getNode(con.in).layer + 1);
@@ -184,17 +184,17 @@ public class Genome
         addConnection(con2);
     }
     
-    public void connectionMutation(Counter connInnovation, int attempts)
+    public void connectionMutation(Random random, Counter connInnovation, int attempts)
     {
         Node               temp;
         ArrayList<Integer> check = new ArrayList<>();
         ArrayList<Integer> nodes = new ArrayList<>();
-    
+        
         for (int attempt = 0; attempt < attempts; attempt++)
         {
-            Node n1 = this.random.nextIndex(this.nodes.values());
-            Node n2 = this.random.nextIndex(this.nodes.values());
-    
+            Node n1 = random.nextIndex(this.nodes.values());
+            Node n2 = random.nextIndex(this.nodes.values());
+            
             if (n1.equals(n2)) continue;
             if (n1.layer == n2.layer) continue;
             if (n1.type == Node.Type.INPUT && n2.type == Node.Type.INPUT) continue;
@@ -202,7 +202,7 @@ public class Genome
             if (n1.type == Node.Type.BIAS && n2.type == Node.Type.INPUT) continue;
             if (n1.type == Node.Type.BIAS && n2.type == Node.Type.BIAS) continue;
             if (n1.type == Node.Type.OUTPUT && n2.type == Node.Type.OUTPUT) continue;
-    
+            
             if (n1.type == Node.Type.OUTPUT || n2.type == Node.Type.INPUT || n2.type == Node.Type.BIAS || n1.layer > n2.layer)
             {
                 temp = n1;
@@ -255,15 +255,15 @@ public class Genome
                 }
             }
             if (cont) continue;
-    
-            addConnection(new Connection(connInnovation.inc(), n1.id, n2.id, this.random.nextDouble(-1.0, 1.0), true));
+            
+            addConnection(new Connection(connInnovation.inc(), n1.id, n2.id, random.nextDouble(-1.0, 1.0), true));
             return;
         }
     }
     
     public Genome copy()
     {
-        Genome genome = new Genome(this.random);
+        Genome genome = new Genome();
         for (Node node : getNodes()) genome.addNode(node.copy());
         for (Connection con : getConnections()) genome.addConnection(con.copy());
         return genome;
@@ -424,7 +424,7 @@ public class Genome
      * @param disableGeneInheritance Chance for new connection to be disabled
      * @return Child genome
      */
-    public static Genome crossover(Genome genome1, Genome genome2, double disableGeneInheritance)
+    public static Genome crossover(Random random, Genome genome1, Genome genome2, double disableGeneInheritance)
     {
         if (genome2.fitness > genome1.fitness)
         {
@@ -432,8 +432,8 @@ public class Genome
             genome1 = genome2;
             genome2 = temp;
         }
-    
-        Genome child = new Genome(genome1.random);
+        
+        Genome child = new Genome();
         
         for (Node node : genome1.getNodes())
         {
@@ -446,9 +446,9 @@ public class Genome
             if (g2Conn != null)
             {
                 // Matching Gene
-                Connection childConn = genome1.random.nextBoolean() ? g1Conn.copy() : g2Conn.copy();
+                Connection childConn = random.nextBoolean() ? g1Conn.copy() : g2Conn.copy();
                 boolean    disabled  = !(g1Conn.enabled && g2Conn.enabled);
-                childConn.enabled = !(disabled && genome1.random.nextDouble() < disableGeneInheritance);
+                childConn.enabled = !(disabled && random.nextDouble() < disableGeneInheritance);
                 child.addConnection(childConn);
             }
             else
