@@ -70,7 +70,13 @@ public class Evaluator
             {
                 Genome parent1 = this.random.nextIndex(this.genomes);
                 Genome parent2 = this.random.nextIndex(this.genomes);
-                // TODO - Determine fittest parent;
+    
+                if (parent2.fitness > parent1.fitness)
+                {
+                    Genome temp = parent1;
+                    parent1 = parent2;
+                    parent2 = temp;
+                }
                 child = Genome.crossover(this.random, parent1, parent2, this.settings.disabledGeneInheritingRate);
             }
             if (this.random.nextDouble() < this.settings.weightMutationRate)

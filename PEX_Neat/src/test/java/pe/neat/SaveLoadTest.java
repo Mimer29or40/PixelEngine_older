@@ -36,6 +36,6 @@ public class SaveLoadTest
     
     private static void test(Random random, Genome genome, Counter nodeInnovation, Counter connInnovation)
     {
-        Genome.load("out/saveLoad");
+        genome = Genome.load("out/saveLoad");
     }
 }

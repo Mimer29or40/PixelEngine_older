@@ -109,6 +109,12 @@ public class Genome
         return connection;
     }
     
+    /**
+     * Calculates the genome based on the inputs
+     *
+     * @param inputs the inputs to the genome
+     * @return the results
+     */
     public double[] calculate(double[] inputs)
     {
         if (inputs.length != this.inputs.size()) throw new RuntimeException("Input length is not correct");
@@ -134,6 +140,7 @@ public class Genome
     /**
      * Mutates the weights for all connections in genome
      *
+     * @param random         The random instance
      * @param perturbingRate The probability to nudge the weight by an amount
      */
     public void weightMutation(Random random, double perturbingRate)
@@ -152,6 +159,13 @@ public class Genome
         }
     }
     
+    /**
+     * Adds a random Node to the genome
+     *
+     * @param random         The random instance
+     * @param nodeInnovation The next ids for the next node
+     * @param connInnovation The next ids for the next connection
+     */
     public void nodeMutation(Random random, Counter nodeInnovation, Counter connInnovation)
     {
         ArrayList<Connection> suitable = new ArrayList<>();
@@ -162,11 +176,11 @@ public class Genome
         Connection con = random.nextIndex(suitable);
         
         con.enabled = false;
-    
+        
         Node       node = new Node(nodeInnovation.inc(), Node.Type.HIDDEN, getNode(con.in).layer + 1);
         Connection con1 = new Connection(connInnovation.inc(), con.in, node.id, 1.0, true);
         Connection con2 = new Connection(connInnovation.inc(), node.id, con.out, con.weight, true);
-    
+        
         if (node.layer == getNode(con.out).layer)
         {
             for (Node n : getNodes())
@@ -184,6 +198,13 @@ public class Genome
         addConnection(con2);
     }
     
+    /**
+     * Adds a random Node to the genome
+     *
+     * @param random         The random instance
+     * @param connInnovation The next ids for the next connection
+     * @param attempts       The amount of times to try to add a connection before stopping
+     */
     public void connectionMutation(Random random, Counter connInnovation, int attempts)
     {
         Node               temp;
@@ -261,6 +282,11 @@ public class Genome
         }
     }
     
+    /**
+     * Created an exact copy of the genome.
+     *
+     * @return the new genome
+     */
     public Genome copy()
     {
         Genome genome = new Genome();
@@ -269,6 +295,11 @@ public class Genome
         return genome;
     }
     
+    /**
+     * Saves the genome to a json file
+     *
+     * @param fileName the file to save the genome to
+     */
     public void save(String fileName)
     {
         if (!fileName.endsWith(".json")) fileName += ".json";
@@ -319,6 +350,12 @@ public class Genome
         }
     }
     
+    /**
+     * Loads a genome from a json file
+     *
+     * @param fileName the file to load the genome from
+     * @return the new genome
+     */
     public static Genome load(String fileName)
     {
         if (!fileName.endsWith(".json")) fileName += ".json";
@@ -329,7 +366,7 @@ public class Genome
             
             reader.beginObject();
             {
-                String nodes = reader.nextName();
+                reader.nextName(); // Nodes
                 reader.beginArray();
                 {
                     while (reader.hasNext())
@@ -363,7 +400,7 @@ public class Genome
                 }
                 reader.endArray();
                 
-                String connections = reader.nextName();
+                reader.nextName(); // Connections
                 reader.beginArray();
                 {
                     while (reader.hasNext())
@@ -378,7 +415,7 @@ public class Genome
                             while (reader.hasNext())
                             {
                                 String name = reader.nextName();
-    
+                                
                                 switch (name)
                                 {
                                     case "id":
@@ -419,6 +456,7 @@ public class Genome
     /**
      * Created a child genome from parent genomes.
      *
+     * @param random                 The random instance
      * @param genome1                Parent genome one. The more fit parent
      * @param genome2                Parent genome two. The less fit parent
      * @param disableGeneInheritance Chance for new connection to be disabled
@@ -426,13 +464,6 @@ public class Genome
      */
     public static Genome crossover(Random random, Genome genome1, Genome genome2, double disableGeneInheritance)
     {
-        if (genome2.fitness > genome1.fitness)
-        {
-            Genome temp = genome1;
-            genome1 = genome2;
-            genome2 = temp;
-        }
-        
         Genome child = new Genome();
         
         for (Node node : genome1.getNodes())
@@ -463,19 +494,19 @@ public class Genome
     /**
      * Determines how similar two genomes are
      *
-     * @param genome1 Genome one
-     * @param genome2 Genome two
-     * @param c1      Weight for excess genes
-     * @param c2      Weight for disjoint genes
-     * @param c3      Weight for average weight distance
+     * @param genome1                       Genome one
+     * @param genome2                       Genome two
+     * @param excessGeneWeight              Weight for excess genes
+     * @param disjointGeneWeight            Weight for disjoint genes
+     * @param averageWeightDifferenceWeight Weight for average weight distance
      * @return Compatibility distance
      */
-    public static double compatibilityDistance(Genome genome1, Genome genome2, double c1, double c2, double c3)
+    public static double compatibilityDistance(Genome genome1, Genome genome2, double excessGeneWeight, double disjointGeneWeight, double averageWeightDifferenceWeight)
     {
         int    excess     = Genome.countExcessGenes(genome1, genome2);
         int    disjoint   = Genome.countDisjointGenes(genome1, genome2);
         double weightDiff = Genome.averageWeightDiff(genome1, genome2);
-        return excess * c1 + disjoint * c2 + weightDiff * c3;
+        return excess * excessGeneWeight + disjoint * disjointGeneWeight + weightDiff * averageWeightDifferenceWeight;
     }
     
     /**
@@ -485,6 +516,7 @@ public class Genome
      * @param genome2 Genome two
      * @return Number of matching genes
      */
+    @SuppressWarnings("DuplicatedCode")
     public static int countMatchingGenes(Genome genome1, Genome genome2)
     {
         int count = 0, innovation1, innovation2;
@@ -517,6 +549,7 @@ public class Genome
      * @param genome2 Genome two
      * @return Number of excess genes
      */
+    @SuppressWarnings("DuplicatedCode")
     public static int countExcessGenes(Genome genome1, Genome genome2)
     {
         int count = 0, innovation1, innovation2;
@@ -549,6 +582,7 @@ public class Genome
      * @param genome2 Genome two
      * @return Number of disjoint genes
      */
+    @SuppressWarnings("DuplicatedCode")
     public static int countDisjointGenes(Genome genome1, Genome genome2)
     {
         int count = 0, innovation1, innovation2;
