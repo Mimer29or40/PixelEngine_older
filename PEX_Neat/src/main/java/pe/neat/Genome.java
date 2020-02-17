@@ -20,6 +20,12 @@ public class Genome
     public final HashMap<Integer, Node>       nodes       = new HashMap<>();
     public final HashMap<Integer, Connection> connections = new HashMap<>();
     
+    public final ArrayList<Node> inputs  = new ArrayList<>();
+    public final ArrayList<Node> outputs = new ArrayList<>();
+    public       Node            bias    = null;
+    
+    public final ArrayList<Node> network = new ArrayList<>();
+    
     public int    layerCount;
     public double fitness;
     
@@ -62,6 +68,32 @@ public class Genome
     {
         this.layerCount = Math.max(this.layerCount, node.layer + 1);
         this.nodes.put(node.id, node);
+    
+        switch (node.type)
+        {
+            case INPUT:
+                this.inputs.add(node);
+                break;
+            case OUTPUT:
+                this.outputs.add(node);
+                break;
+            case BIAS:
+                if (this.bias != null) throw new RuntimeException("Genome can only have ONE bias Node");
+                this.bias = node;
+                break;
+        }
+    
+        boolean addToEnd = true;
+        for (int i = 0, n = this.network.size(); i < n; i++)
+        {
+            if (this.network.get(i).layer > node.layer)
+            {
+                this.network.add(i, node);
+                addToEnd = false;
+                break;
+            }
+        }
+        if (addToEnd) this.network.add(node);
         return node;
     }
     
@@ -73,7 +105,30 @@ public class Genome
     public Connection addConnection(Connection connection)
     {
         this.connections.put(connection.id, connection);
+        getNode(connection.in).outputConnections.add(connection);
         return connection;
+    }
+    
+    public double[] calculate(double[] inputs)
+    {
+        if (inputs.length != this.inputs.size()) throw new RuntimeException("Input length is not correct");
+        
+        this.network.forEach(Node::reset);
+        
+        for (int i = 0; i < inputs.length; i++)
+        {
+            this.inputs.get(i).feedInput(inputs[i]);
+        }
+        
+        for (Node node : this.network)
+        {
+            node.engage(this);
+        }
+        
+        double[] output = new double[this.outputs.size()];
+        for (int i = 0; i < output.length; i++) output[i] = this.outputs.get(i).getOutputValue();
+        
+        return output;
     }
     
     /**

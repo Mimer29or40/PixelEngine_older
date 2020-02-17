@@ -40,7 +40,7 @@ public class PixelEngine
     
     private static Sprite font, prev, window, target;
     
-    private String name;
+    private final String name;
     
     protected PixelEngine()
     {
@@ -535,7 +535,7 @@ public class PixelEngine
         {
             if (dx == 0)
             {
-                for (; y1 <= y2; y1 += sy)
+                for (; y1 != y2; y1 += sy)
                 {
                     if (pattern.shouldDraw()) draw(x1, y1, p);
                 }
@@ -544,7 +544,7 @@ public class PixelEngine
             
             if (dy == 0)
             {
-                for (; x1 <= x2; x1 += sx)
+                for (; x1 != x2; x1 += sx)
                 {
                     if (pattern.shouldDraw()) draw(x1, y1, p);
                 }
