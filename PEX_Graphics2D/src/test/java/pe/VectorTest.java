@@ -1,6 +1,7 @@
 package pe;
 
 import org.joml.Vector2d;
+import pe.color.Color;
 import pe.gfx2d.PEX_GFX2D;
 import pe.vector.Vector2;
 

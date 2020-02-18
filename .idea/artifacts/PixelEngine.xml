@@ -33,6 +33,7 @@
       <element id="extracted-dir" path="$PROJECT_DIR$/../lib/lwjgl-opengl/lwjgl-opengl-natives-linux-arm32.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../lib/lwjgl-opengl/lwjgl-opengl-natives-linux-arm64.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/../lib/lwjgl-opengl/lwjgl-opengl-natives-windows-x86.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../lib/joml-1.9.20.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
