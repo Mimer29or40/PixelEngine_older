@@ -15,29 +15,17 @@ import static pe.PixelEngine.getPath;
 
 public class Genome
 {
-    // public final Random random;
-    
     public final HashMap<Integer, Node>       nodes       = new HashMap<>();
     public final HashMap<Integer, Connection> connections = new HashMap<>();
     
-    public final ArrayList<Node> inputs  = new ArrayList<>();
-    public final ArrayList<Node> outputs = new ArrayList<>();
-    public       Node            bias    = null;
+    private final ArrayList<Node> inputs  = new ArrayList<>();
+    private final ArrayList<Node> outputs = new ArrayList<>();
+    private       Node            bias    = null;
     
     public final ArrayList<Node> network = new ArrayList<>();
     
     public int    layerCount;
     public double fitness;
-    
-    // public Genome(Random random)
-    // {
-    //     this.random = random;
-    // }
-    
-    public Genome()
-    {
-        // this(new Random());
-    }
     
     public Iterable<Node> getNodes()
     {
@@ -59,6 +47,16 @@ public class Genome
         return this.connections.get(i);
     }
     
+    public int inputSize()
+    {
+        return this.inputs.size();
+    }
+    
+    public int outputSize()
+    {
+        return this.outputs.size();
+    }
+    
     /**
      * Adds a node to the node dict with the innovation number as the key
      *
@@ -68,7 +66,7 @@ public class Genome
     {
         this.layerCount = Math.max(this.layerCount, node.layer + 1);
         this.nodes.put(node.id, node);
-    
+        
         switch (node.type)
         {
             case INPUT:
@@ -82,7 +80,7 @@ public class Genome
                 this.bias = node;
                 break;
         }
-    
+        
         boolean addToEnd = true;
         for (int i = 0, n = this.network.size(); i < n; i++)
         {
@@ -112,12 +110,13 @@ public class Genome
     /**
      * Calculates the genome based on the inputs
      *
-     * @param inputs the inputs to the genome
-     * @return the results
+     * @param inputs  the inputs to the genome
+     * @param outputs the outputs of the genome
      */
-    public double[] calculate(double[] inputs)
+    public void calculate(double[] inputs, double[] outputs)
     {
         if (inputs.length != this.inputs.size()) throw new RuntimeException("Input length is not correct");
+        if (outputs.length != this.outputs.size()) throw new RuntimeException("Output length is not correct");
         
         this.network.forEach(Node::reset);
         
@@ -131,10 +130,7 @@ public class Genome
             node.engage(this);
         }
         
-        double[] output = new double[this.outputs.size()];
-        for (int i = 0; i < output.length; i++) output[i] = this.outputs.get(i).getOutputValue();
-        
-        return output;
+        for (int i = 0; i < outputs.length; i++) outputs[i] = this.outputs.get(i).getOutputValue();
     }
     
     /**

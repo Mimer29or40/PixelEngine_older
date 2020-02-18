@@ -29,10 +29,11 @@ public class XOR
         Settings settings = new Settings(500);
         
         Function<Genome, Double> evaluator = (genome) -> {
-            double total = 0;
+            double   total   = 0;
+            double[] outputs = new double[genome.outputs.size()];
             for (int i = 0; i < 4; i++)
             {
-                double[] outputs  = genome.calculate(inputs[i]);
+                genome.calculate(inputs[i], outputs);
                 double   distance = Math.abs(correct_results[i] - outputs[0]);
                 total += distance * distance;
             }
@@ -44,9 +45,10 @@ public class XOR
         };
         
         Consumer<Genome> printFunc = (genome) -> {
+            double[] outputs = new double[genome.outputs.size()];
             for (int i = 0; i < 4; i++)
             {
-                double[] outputs = genome.calculate(inputs[i]);
+                genome.calculate(inputs[i], outputs);
                 print("%s, ", outputs[0]);
             }
             println();

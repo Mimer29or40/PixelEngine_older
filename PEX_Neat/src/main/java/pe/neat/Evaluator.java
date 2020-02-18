@@ -49,15 +49,16 @@ public class Evaluator
         }
     
         this.genomes.sort(Comparator.comparingDouble(o -> -o.fitness));
-        
+    
         Genome champion = this.genomes.get(0);
         if (this.fittest == null || champion.fitness > this.fittest.fitness) this.fittest = champion;
     
         if (this.genomes.size() > 10) this.genomes.retainAll(this.genomes.subList(0, Math.max(this.genomes.size() / 10, 1)));
-        
+    
         this.nextGen.clear();
         this.nextGen.add(champion);
-        
+    
+        Genome temp;
         while (this.nextGen.size() < this.settings.populationSize)
         {
             Genome child;
@@ -73,7 +74,7 @@ public class Evaluator
     
                 if (parent2.fitness > parent1.fitness)
                 {
-                    Genome temp = parent1;
+                    temp    = parent1;
                     parent1 = parent2;
                     parent2 = temp;
                 }
@@ -91,7 +92,6 @@ public class Evaluator
             {
                 child.connectionMutation(this.random, this.connInnovation, 100);
             }
-            // child.minimizeLayers();
             this.nextGen.add(child);
         }
         
