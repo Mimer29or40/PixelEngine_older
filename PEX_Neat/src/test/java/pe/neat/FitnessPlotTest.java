@@ -7,15 +7,15 @@ import java.util.ArrayList;
 public class FitnessPlotTest extends PixelEngine
 {
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         ArrayList<Double> fitnessList = new ArrayList<>();
-        
+    
         for (int i = 0; i < 1000; i++)
         {
             fitnessList.add((double) i / 1000.0);
         }
-        
+    
         FitnessPlotter plotter = new FitnessPlotter();
         
         plotter.generatePlot(fitnessList).saveSprite("out/fitness.png");

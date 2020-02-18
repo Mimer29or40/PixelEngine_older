@@ -1,7 +1,7 @@
 package pe.neat;
 
-import pe.Color;
 import pe.Sprite;
+import pe.color.Color;
 import pe.draw.DrawMode;
 
 import java.util.List;
@@ -15,9 +15,9 @@ public class FitnessPlotter
     
     public int borderSize = 20;
     
-    public final Color backgroundColor = Color.WHITE.copy();
-    public final Color borderColor     = Color.BLACK.copy();
-    public final Color textColor       = Color.BLACK.copy();
+    public final Color backgroundColor = new Color(Color.WHITE);
+    public final Color borderColor     = new Color(Color.BLACK);
+    public final Color textColor       = new Color(Color.BLACK);
     
     // public final Color nodeBorderColor = Color.BLACK.copy();
     // public final Color inputNodeColor  = new Color(50, 200, 100);
@@ -60,7 +60,7 @@ public class FitnessPlotter
         Sprite   prev   = drawTarget();
         DrawMode mode   = drawMode();
         drawTarget(sprite);
-        drawMode(DrawMode.ALPHA);
+        drawMode(DrawMode.BLEND);
         
         drawRect(minX, minY, maxX - minX + 1, maxY - minY + 1, this.borderColor);
         

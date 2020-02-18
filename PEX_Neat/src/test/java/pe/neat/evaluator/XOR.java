@@ -30,7 +30,7 @@ public class XOR
         
         Function<Genome, Double> evaluator = (genome) -> {
             double   total   = 0;
-            double[] outputs = new double[genome.outputs.size()];
+            double[] outputs = new double[genome.outputSize()];
             for (int i = 0; i < 4; i++)
             {
                 genome.calculate(inputs[i], outputs);
@@ -45,7 +45,7 @@ public class XOR
         };
         
         Consumer<Genome> printFunc = (genome) -> {
-            double[] outputs = new double[genome.outputs.size()];
+            double[] outputs = new double[genome.outputSize()];
             for (int i = 0; i < 4; i++)
             {
                 genome.calculate(inputs[i], outputs);

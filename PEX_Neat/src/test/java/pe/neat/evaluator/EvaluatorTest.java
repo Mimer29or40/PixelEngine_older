@@ -21,16 +21,16 @@ public class EvaluatorTest extends PixelEngine
     private static EvaluatorTest.ISetupFunc setupFunc;
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         Random random = new Random();
-        
+    
         final Genome  genome         = new Genome();
         final Counter nodeInnovation = new Counter();
         final Counter connInnovation = new Counter();
-        
+    
         if (setupFunc != null) setupFunc.setup(random, genome, nodeInnovation, connInnovation);
-        
+    
         Supplier<Genome> generator = () -> {
             Genome g = genome.copy();
             for (Connection connection : g.getConnections())

@@ -17,7 +17,7 @@ public class NeatTest extends PixelEngine
     private static ITestArrayFunc  testArrayFunc;
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         Random random = new Random();
     

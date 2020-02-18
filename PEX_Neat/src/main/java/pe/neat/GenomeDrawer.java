@@ -1,7 +1,7 @@
 package pe.neat;
 
-import pe.Color;
 import pe.Sprite;
+import pe.color.Color;
 import pe.draw.DrawMode;
 import pe.util.Pair;
 
@@ -21,11 +21,11 @@ public class GenomeDrawer
     
     public boolean drawDisabledConnections = false;
     
-    public final Color textColor = Color.BLACK.copy();
+    public final Color textColor = new Color(Color.BLACK);
     
-    public final Color backgroundColor = Color.WHITE.copy();
+    public final Color backgroundColor = new Color(Color.WHITE);
     
-    public final Color nodeBorderColor = Color.BLACK.copy();
+    public final Color nodeBorderColor = new Color(Color.BLACK);
     public final Color inputNodeColor  = new Color(50, 200, 100);
     public final Color outputNodeColor = new Color(50, 100, 200);
     public final Color hiddenNodeColor = new Color(200, 50, 100);
@@ -135,7 +135,7 @@ public class GenomeDrawer
         Sprite   prev   = drawTarget();
         DrawMode mode   = drawMode();
         drawTarget(sprite);
-        drawMode(DrawMode.ALPHA);
+        drawMode(DrawMode.BLEND);
     
         // Draw connections first so they are under nodes
         for (Connection con : genome.getConnections())
@@ -164,7 +164,7 @@ public class GenomeDrawer
     
             Pair<Integer, Integer> pos = nodes.get(node.id);
     
-            Color color = Color.BLANK;
+            Color color = new Color(Color.BLANK);
             switch (node.type)
             {
                 case INPUT:
