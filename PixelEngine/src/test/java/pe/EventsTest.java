@@ -16,13 +16,13 @@ public class EventsTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         int lines = (screenHeight() - 2) / 8;
         for (int i = 0; i < lines; i++) events.add("");
-        
+    
         Events.subscribe(Events.INPUT_EVENTS, this::onInputEvent);
-        
+    
         return true;
     }
     
@@ -32,10 +32,10 @@ public class EventsTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         clear();
-    
+        
         int nLog = 0;
         for (String s : events)
         {

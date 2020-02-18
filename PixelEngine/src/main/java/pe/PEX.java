@@ -9,11 +9,15 @@ public abstract class PEX
         this.profiler = profiler;
     }
     
-    public abstract void initialize();
+    public abstract void beforeSetup();
     
-    public abstract void beforeUserUpdate(double elapsedTime);
+    public abstract void afterSetup();
     
-    public abstract void afterUserUpdate(double elapsedTime);
+    public abstract void beforeDraw(double elapsedTime);
     
-    public abstract void destroy();
+    public abstract void afterDraw(double elapsedTime);
+    
+    public abstract void beforeDestroy();
+    
+    public abstract void afterDestroy();
 }

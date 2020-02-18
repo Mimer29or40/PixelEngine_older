@@ -7,22 +7,22 @@ public class SoundTest extends PixelEngine
     SoundFile sound, sound2;
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
-        sound = new SoundFile("sample2.ogg");
+        sound  = new SoundFile("sample2.ogg");
         sound2 = new SoundFile("sample2.ogg");
-        
+    
         sound2.play();
-        
+    
         return true;
     }
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         if (Keyboard.SPACE.down()) sound.play();
         if (Keyboard.SPACE.up()) sound.stop();
-    
+        
         return true;
     }
     

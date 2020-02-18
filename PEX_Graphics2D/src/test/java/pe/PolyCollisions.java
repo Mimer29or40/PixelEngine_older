@@ -18,7 +18,7 @@ public class PolyCollisions extends PixelEngine
     int           mode   = 0;
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         //// Create Pentagon
         //Polygon s1     = new Polygon();
@@ -258,7 +258,7 @@ public class PolyCollisions extends PixelEngine
     
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         //if (getKey(Keyboard.Keyboard.F1).released) this.mode = 0;
         //if (getKey(Keyboard.Keyboard.F2).released) this.mode = 1;

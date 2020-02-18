@@ -6,15 +6,15 @@ public class SpriteTransformations extends PixelEngine
     float  rotate = 0.0f;
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         this.sprCar = Sprite.loadSprite("car_top1.png");
-        
+    
         return true;
     }
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         //if (getKey(Keyboard.Keyboard.Z).held) this.rotate -= 2.0f * elapsedTime;
         //if (getKey(Keyboard.Keyboard.X).held) this.rotate += 2.0f * elapsedTime;

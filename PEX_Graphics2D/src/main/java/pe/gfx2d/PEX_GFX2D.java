@@ -636,26 +636,38 @@ public class PEX_GFX2D extends PEX
     }
     
     @Override
-    public void initialize()
+    public void beforeSetup()
     {
         
     }
     
     @Override
-    public void beforeUserUpdate(double elapsedTime)
+    public void afterSetup()
+    {
+    
+    }
+    
+    @Override
+    public void beforeDraw(double elapsedTime)
     {
         
     }
     
     @Override
-    public void afterUserUpdate(double elapsedTime)
+    public void afterDraw(double elapsedTime)
     {
         
     }
     
     @Override
-    public void destroy()
+    public void beforeDestroy()
     {
         
+    }
+    
+    @Override
+    public void afterDestroy()
+    {
+    
     }
 }

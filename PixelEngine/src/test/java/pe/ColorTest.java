@@ -3,7 +3,7 @@ package pe;
 public class ColorTest extends PixelEngine
 {
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         return true;
     }
@@ -11,7 +11,7 @@ public class ColorTest extends PixelEngine
     Color color = new Color();
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         for (int j = 0; j < screenHeight(); j++)
         {
@@ -24,7 +24,7 @@ public class ColorTest extends PixelEngine
     }
     
     @Override
-    protected void onUserDestroy()
+    protected void destroy()
     {
         
     }

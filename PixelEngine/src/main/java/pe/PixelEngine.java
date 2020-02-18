@@ -40,7 +40,7 @@ public class PixelEngine
     
     private static Sprite font, prev, window, target;
     
-    private String name;
+    private final String name;
     
     protected PixelEngine()
     {
@@ -68,7 +68,7 @@ public class PixelEngine
      *
      * @return True if engine can continue to run
      */
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         return false;
     }
@@ -79,7 +79,7 @@ public class PixelEngine
      * @param elapsedTime time in seconds since that last frame. Must be overridden for engine to run
      * @return True if engine can continue to run
      */
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         return false;
     }
@@ -87,7 +87,7 @@ public class PixelEngine
     /**
      * Called once after engine is put into a stopped state.
      */
-    protected void onUserDestroy()
+    protected void destroy()
     {
         
     }
@@ -141,27 +141,33 @@ public class PixelEngine
     
         try
         {
-            PixelEngine.LOGGER.debug("Initializing Extensions");
-            PixelEngine.extensions.values().forEach(PEX::initialize);
-    
+            PixelEngine.LOGGER.debug("Extension Pre Setup");
+            PixelEngine.extensions.values().forEach(PEX::beforeSetup);
+        
             PixelEngine.LOGGER.debug("User Initialization");
-            if (PixelEngine.logic.onUserCreate())
+            if (PixelEngine.logic.setup())
             {
+                PixelEngine.LOGGER.debug("Extension Post Setup");
+                PixelEngine.extensions.values().forEach(PEX::afterSetup);
+            
                 Window.setup();
-                
+            
                 new Thread(PixelEngine::renderLoop, "Render Loop").start();
-    
+            
                 while (PixelEngine.running) Window.pollEvents();
             }
         }
         finally
         {
+            PixelEngine.LOGGER.trace("Extension Pre Destruction");
+            PixelEngine.extensions.values().forEach(PEX::beforeDestroy);
+        
             PixelEngine.LOGGER.debug("User Initialization");
-            PixelEngine.logic.onUserDestroy();
-    
-            PixelEngine.LOGGER.trace("Extension Destruction");
-            PixelEngine.extensions.values().forEach(PEX::destroy);
-    
+            PixelEngine.logic.destroy();
+        
+            PixelEngine.LOGGER.trace("Extension Post Destruction");
+            PixelEngine.extensions.values().forEach(PEX::afterDestroy);
+        
             Window.destroy();
         }
         
@@ -731,7 +737,7 @@ public class PixelEngine
             for (i = x - y0; i <= x + y0; i++) draw(i, y - x0, p);
             for (i = x - x0; i <= x + x0; i++) draw(i, y + y0, p);
             for (i = x - y0; i <= x + y0; i++) draw(i, y + x0, p);
-        
+    
             if (d < 0)
             {
                 d += 4 * x0++ + 6;
@@ -1301,7 +1307,7 @@ public class PixelEngine
                         {
                             PixelEngine.PROFILER.startSection(name);
                             {
-                                PixelEngine.extensions.get(name).beforeUserUpdate(dt / 1_000_000_000D);
+                                PixelEngine.extensions.get(name).beforeDraw(dt / 1_000_000_000D);
                             }
                             PixelEngine.PROFILER.endSection();
                         }
@@ -1310,7 +1316,7 @@ public class PixelEngine
     
                     PixelEngine.PROFILER.startSection("User Update");
                     {
-                        if (!PixelEngine.logic.onUserUpdate(dt / 1_000_000_000D))
+                        if (!PixelEngine.logic.draw(dt / 1_000_000_000D))
                         {
                             PixelEngine.LOGGER.trace("onUserUpdate return false so engine will stop");
                             PixelEngine.running = false;
@@ -1324,7 +1330,7 @@ public class PixelEngine
                         {
                             PixelEngine.PROFILER.startSection(name);
                             {
-                                PixelEngine.extensions.get(name).afterUserUpdate(dt / 1_000_000_000D);
+                                PixelEngine.extensions.get(name).afterDraw(dt / 1_000_000_000D);
                             }
                             PixelEngine.PROFILER.endSection();
                         }

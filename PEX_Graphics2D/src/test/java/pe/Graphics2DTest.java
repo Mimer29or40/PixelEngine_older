@@ -20,24 +20,24 @@ public class Graphics2DTest extends PixelEngine
     }
     
     @Override
-    public boolean onUserCreate()
+    public boolean setup()
     {
         for (int i = 0; i < 16; i++) events.add("");
-        
+    
         spr = Sprite.loadSprite("zombie.png");
-        
+    
         return true;
     }
     
     @Override
-    public boolean onUserUpdate(double elapsedTime)
+    public boolean draw(double elapsedTime)
     {
         drawMode(DrawMode.NORMAL);
         clear(Color.BLUE);
-    
+        
         drawCircle(32, 32, 30);
         drawCircle(96, 32, 30);
-    
+        
         float mx = Mouse.x();
         float my = Mouse.y();
     

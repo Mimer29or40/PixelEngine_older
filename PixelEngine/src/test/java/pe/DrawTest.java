@@ -415,7 +415,7 @@ public class DrawTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         return true;
     }
@@ -444,7 +444,7 @@ public class DrawTest extends PixelEngine
     int x, y;
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         clear();
         
@@ -460,7 +460,7 @@ public class DrawTest extends PixelEngine
     }
     
     @Override
-    protected void onUserDestroy()
+    protected void destroy()
     {
         // println("OLD Horizontal Avg: %s Min: %s Max: %s", sumLH1 / count, minLH1, maxLH1);
         // println("NEW Horizontal Avg: %s Min: %s Max: %s", sumLH2 / count, minLH2, maxLH2);
