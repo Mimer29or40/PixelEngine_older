@@ -286,47 +286,23 @@ public class Color implements Colorc
     public int hue()
     {
         if (r() == g() && g() == b()) return 0;
-        
+    
         int max = maxComponent();
-        if (r() >= g() && r() >= b())
-        {   //  r() is largest
-            if (b() >= g())
-            {
-                *H = 6. / 6. - 1. / 6. * (b() - g()) / (r() - g());
-                *S = 1. - g() / r();
-            }
-            else
-            {
-                *H = 0. / 6. + 1. / 6. * (g() - b()) / (r() - b());
-                *S = 1. - b() / r();
-            }
+        int mid = midComponent();
+        int min = minComponent();
+    
+        int mix = 255 / 6 * (mid - min) * 255 / (max - min);
+    
+        switch (maxComponentIndex())
+        {
+            case 0:
+                return 6 * 255 / 6 + (minComponentIndex() == 2 ? -mix : mix);
+            case 1:
+                return 2 * 255 / 6 + (minComponentIndex() == 0 ? -mix : mix);
+            case 2:
+                return 4 * 255 / 6 + (minComponentIndex() == 1 ? -mix : mix);
         }
-        else if (g() >= r() && g() >= b())
-        {   //  g() is largest
-            if (r() >= b())
-            {
-                *H = 2. / 6. - 1. / 6. * (r() - b()) / (g() - b());
-                *S = 1. - b() / g();
-            }
-            else
-            {
-                *H = 2. / 6. + 1. / 6. * (b() - r()) / (g() - r());
-                *S = 1. - r() / g();
-            }
-        }
-        else
-        {   //  b() is largest
-            if (g() >= r())
-            {
-                *H = 4. / 6. - 1. / 6. * (g() - r()) / (b() - r());
-                *S = 1. - r() / b();
-            }
-            else
-            {
-                *H = 4. / 6. + 1. / 6. * (r() - g()) / (b() - g());
-                *S = 1. - G / b();
-            }
-        }
+        return 0;
     }
     
     /**
@@ -335,6 +311,11 @@ public class Color implements Colorc
     public int saturation()
     {
         if (r() == g() && g() == b()) return 0;
+    
+        int max = maxComponent();
+        int min = minComponent();
+    
+        return 255 - (min * 255 / max);
     }
     
     /**
