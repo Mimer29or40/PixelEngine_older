@@ -1,12 +1,14 @@
 package pe;
 
+import pe.color.Color;
+import pe.color.Colorc;
 import pe.draw.DrawPattern;
 
 import java.util.ArrayList;
 
 public class DrawTest extends PixelEngine
 {
-    public static void drawLineOld(int x1, int y1, int x2, int y2, Color p, DrawPattern pattern)
+    public static void drawLineOld(int x1, int y1, int x2, int y2, Colorc p, DrawPattern pattern)
     {
         // Bresenham's Algorithm
         
@@ -119,7 +121,7 @@ public class DrawTest extends PixelEngine
         }
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, Color p, DrawPattern pattern)
+    public static void drawLine(int x1, int y1, int x2, int y2, Colorc p, DrawPattern pattern)
     {
         pattern.reset();
         
@@ -163,7 +165,7 @@ public class DrawTest extends PixelEngine
         }
     }
     
-    public static void drawLine(int x1, int y1, int x2, int y2, int width, Color p, DrawPattern pattern)
+    public static void drawLine(int x1, int y1, int x2, int y2, int width, Colorc p, DrawPattern pattern)
     {
         pattern.reset();
         
@@ -279,7 +281,7 @@ public class DrawTest extends PixelEngine
         }
     }
     
-    public static void drawCircleOld(int x, int y, int radius, Color p, int mask)
+    public static void drawCircleOld(int x, int y, int radius, Colorc p, int mask)
     {
         int x0 = 0;
         int y0 = radius;
@@ -308,7 +310,7 @@ public class DrawTest extends PixelEngine
         }
     }
     
-    public static void drawCircle(int x, int y, int radius, Color p, int mask)
+    public static void drawCircle(int x, int y, int radius, Colorc p, int mask)
     {
         if (radius < 0) return;
         int xr = -radius, yr = 0, err = 2 - 2 * radius;
@@ -324,7 +326,7 @@ public class DrawTest extends PixelEngine
         } while (xr < 0);
     }
     
-    public static void fillCircleOld(int x, int y, int radius, Color p)
+    public static void fillCircleOld(int x, int y, int radius, Colorc p)
     {
         if (radius < 0) return;
         int x0 = 0, y0 = radius, d = 3 - 2 * radius, i;
@@ -347,7 +349,7 @@ public class DrawTest extends PixelEngine
         }
     }
     
-    public static void fillCircle(int x, int y, int radius, Color p)
+    public static void fillCircle(int x, int y, int radius, Colorc p)
     {
         if (radius < 0) return;
         int xr = -radius, yr = 0, err = 2 - 2 * radius, i;
@@ -365,7 +367,7 @@ public class DrawTest extends PixelEngine
         } while (xr < 0);
     }
     
-    public static void fillEllipse(int x, int y, int width, int height, Color p)
+    public static void fillEllipse(int x, int y, int width, int height, Colorc p)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
         if (width < 1 || height < 1) return;
@@ -415,7 +417,7 @@ public class DrawTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         return true;
     }
@@ -444,7 +446,7 @@ public class DrawTest extends PixelEngine
     int x, y;
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         clear();
         
@@ -460,7 +462,7 @@ public class DrawTest extends PixelEngine
     }
     
     @Override
-    protected void onUserDestroy()
+    protected void destroy()
     {
         // println("OLD Horizontal Avg: %s Min: %s Max: %s", sumLH1 / count, minLH1, maxLH1);
         // println("NEW Horizontal Avg: %s Min: %s Max: %s", sumLH2 / count, minLH2, maxLH2);

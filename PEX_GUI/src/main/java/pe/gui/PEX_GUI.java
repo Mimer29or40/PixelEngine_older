@@ -4,8 +4,6 @@ import pe.*;
 import pe.draw.DrawMode;
 import pe.event.*;
 
-import java.util.Objects;
-
 import static pe.PixelEngine.*;
 
 public class PEX_GUI extends PEX
@@ -50,21 +48,27 @@ public class PEX_GUI extends PEX
     }
     
     @Override
-    public void initialize()
+    public void beforeSetup()
     {
         PEX_GUI.tooltip = new Label(null);
         PEX_GUI.tooltip.setVisible(false);
-    
+        
         // Events.subscribe(EventMouseScrolled.class, this::scrollEvent);
     }
     
     @Override
-    public void beforeUserUpdate(double elapsedTime)
+    public void afterSetup()
+    {
+    
+    }
+    
+    @Override
+    public void beforeDraw(double elapsedTime)
     {
         this.profiler.startSection("Window Events");
         {
             int mouseX = Mouse.x(), mouseY = Mouse.y();
-    
+            
             this.profiler.startSection("Mouse Over");
             {
                 PEX_GUI.ROOT.getChildren().forEach(window -> window.mouseOver(mouseX, mouseY, PEX_GUI.MODAL.getChildren().isEmpty()));
@@ -102,7 +106,6 @@ public class PEX_GUI extends PEX
                     if (prevTop != null) prevTop.onMouseExited();
                     if (PEX_GUI.top != null) PEX_GUI.top.onMouseEntered();
                 }
-                LOGGER.debug(Objects.toString(PEX_GUI.top));
             }
             this.profiler.endSection();
     
@@ -340,7 +343,7 @@ public class PEX_GUI extends PEX
     }
     
     @Override
-    public void afterUserUpdate(double elapsedTime)
+    public void afterDraw(double elapsedTime)
     {
         this.profiler.startSection("Window Draw");
         
@@ -396,8 +399,14 @@ public class PEX_GUI extends PEX
     }
     
     @Override
-    public void destroy()
+    public void beforeDestroy()
     {
         
+    }
+    
+    @Override
+    public void afterDestroy()
+    {
+    
     }
 }

@@ -1,6 +1,8 @@
 package pe.gui;
 
 import pe.*;
+import pe.color.Color;
+import pe.color.Colorc;
 import pe.draw.DrawMode;
 import pe.gui.event.*;
 
@@ -438,15 +440,15 @@ public class Window
     /*
      * Default Background Color Property
      */
-    protected final Color defaultColor     = Color.WHITE.copy();
-    private final   Color prevDefaultColor = Color.WHITE.copy();
+    protected final Color defaultColor     = new Color(Color.WHITE);
+    private final   Color prevDefaultColor = new Color(Color.WHITE);
     
-    public Color getDefaultColor()
+    public Colorc getDefaultColor()
     {
         return this.defaultColor;
     }
     
-    public void setDefaultColor(Color defaultColor)
+    public void setDefaultColor(Colorc defaultColor)
     {
         if (!this.defaultColor.equals(defaultColor))
         {
@@ -464,10 +466,10 @@ public class Window
     /*
      * Disabled Background Color Property
      */
-    protected final Color disabledColor     = Color.GREY.copy();
-    private final   Color prevDisabledColor = Color.GREY.copy();
+    protected final Color disabledColor     = new Color(Color.GREY);
+    private final   Color prevDisabledColor = new Color(Color.GREY);
     
-    public Color getDisabledColor()
+    public Colorc getDisabledColor()
     {
         return this.disabledColor;
     }
@@ -490,15 +492,15 @@ public class Window
     /*
      * Border Color Property
      */
-    protected final Color borderColor     = Color.BLACK.copy();
-    private final   Color prevBorderColor = Color.BLACK.copy();
+    protected final Color borderColor     = new Color(Color.BLACK);
+    private final   Color prevBorderColor = new Color(Color.BLACK);
     
-    public Color getBorderColor()
+    public Colorc getBorderColor()
     {
         return this.borderColor;
     }
     
-    public void setBorderColor(Color borderColor)
+    public void setBorderColor(Colorc borderColor)
     {
         if (!this.borderColor.equals(borderColor))
         {
@@ -799,7 +801,7 @@ public class Window
      * Drawing Stuff
      */
     
-    protected Color getBackgroundColor()
+    protected Colorc getBackgroundColor()
     {
         return isEnabled() ? getDefaultColor() : getDisabledColor();
     }

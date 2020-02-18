@@ -29,7 +29,8 @@ public class PEX_Sound extends PEX
         if (err != ALC_NO_ERROR) throw new RuntimeException(alcGetString(PEX_Sound.device, err));
     }
     
-    public void initialize()
+    @Override
+    public void beforeSetup()
     {
         LOGGER.info("Initializing Sound System");
         
@@ -47,19 +48,31 @@ public class PEX_Sound extends PEX
     }
     
     @Override
-    public void beforeUserUpdate(double elapsedTime)
+    public void afterSetup()
     {
     
     }
     
     @Override
-    public void afterUserUpdate(double elapsedTime)
+    public void beforeDraw(double elapsedTime)
     {
     
     }
     
     @Override
-    public void destroy()
+    public void afterDraw(double elapsedTime)
+    {
+    
+    }
+    
+    @Override
+    public void beforeDestroy()
+    {
+    
+    }
+    
+    @Override
+    public void afterDestroy()
     {
         alcDestroyContext(PEX_Sound.context);
         alcCloseDevice(PEX_Sound.device);

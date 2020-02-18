@@ -15,6 +15,7 @@
     <orderEntry type="library" name="lwjgl-glfw" level="application" />
     <orderEntry type="library" name="lwjgl-opengl" level="application" />
     <orderEntry type="library" name="lwjgl-stb" level="application" />
+    <orderEntry type="library" name="org.joml:joml:1.9.20" level="application" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.6" level="application" />
   </component>
 </module>

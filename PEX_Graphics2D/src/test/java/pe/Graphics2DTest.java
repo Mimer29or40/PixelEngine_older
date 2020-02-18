@@ -1,5 +1,6 @@
 package pe;
 
+import pe.color.Color;
 import pe.draw.DrawMode;
 import pe.gfx2d.PEX_GFX2D;
 import pe.gfx2d.Transform2D;
@@ -20,24 +21,24 @@ public class Graphics2DTest extends PixelEngine
     }
     
     @Override
-    public boolean onUserCreate()
+    public boolean setup()
     {
         for (int i = 0; i < 16; i++) events.add("");
-        
+    
         spr = Sprite.loadSprite("zombie.png");
-        
+    
         return true;
     }
     
     @Override
-    public boolean onUserUpdate(double elapsedTime)
+    public boolean draw(double elapsedTime)
     {
         drawMode(DrawMode.NORMAL);
         clear(Color.BLUE);
-    
+        
         drawCircle(32, 32, 30);
         drawCircle(96, 32, 30);
-    
+        
         float mx = Mouse.x();
         float my = Mouse.y();
     
@@ -105,7 +106,7 @@ public class Graphics2DTest extends PixelEngine
         // Translate to centre of screen
         t1.translate(320, 240);
     
-        drawMode(DrawMode.ALPHA);
+        drawMode(DrawMode.BLEND);
         
         // Use extension to draw sprite with transform applied
         PEX_GFX2D.drawSprite(spr, t1);

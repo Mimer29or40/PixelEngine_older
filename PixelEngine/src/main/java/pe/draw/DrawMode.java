@@ -2,5 +2,5 @@ package pe.draw;
 
 public enum DrawMode
 {
-    NORMAL, MASK, ALPHA, CUSTOM
+    NORMAL, MASK, BLEND, CUSTOM
 }

@@ -5,7 +5,7 @@ public class PropertyTest extends PixelEngine
     private static final Logger LOGGER = Logger.getLogger();
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         LOGGER.info("Monitor Width: %s Expected: %s", Window.monitorWidth(), 0);
     
@@ -45,13 +45,13 @@ public class PropertyTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         return false;
     }
     
     @Override
-    protected void onUserDestroy()
+    protected void destroy()
     {
     
     }

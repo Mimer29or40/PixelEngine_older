@@ -68,19 +68,19 @@ public class Physics2DTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         return true;
     }
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         return true;
     }
     
     @Override
-    protected void onUserDestroy()
+    protected void destroy()
     {
     
     }

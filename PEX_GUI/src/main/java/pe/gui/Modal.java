@@ -27,20 +27,26 @@ public abstract class Modal extends Window
             return true;
         });
         this.title.onKeyboardKeyDown(key -> key != Keyboard.ESCAPE);
-        
+    
         this.text = new Label(this, text);
         this.text.setPosition(getForegroundOriginX(), getForegroundOriginY());
         this.text.setBorderSize(0);
         this.text.setMarginSize(0);
         this.text.setTextPosition(TextPosition.TOP_LEFT);
         this.text.onKeyboardKeyDown(key -> key != Keyboard.ESCAPE);
-        
+        this.text.onMouseButtonDown((button, widgetX, widgetY) -> false);
+        this.text.onMouseButtonUp((button, widgetX, widgetY) -> false);
+        this.text.onMouseButtonHeld((button, widgetX, widgetY) -> false);
+        this.text.onMouseButtonRepeated((button, widgetX, widgetY) -> false);
+        this.text.onMouseButtonDragged((button, widgetX, widgetY, dragX, dragY, relX, relY) -> false);
+        this.text.onMouseButtonClicked((button, widgetX, widgetY, doubleClicked) -> false);
+    
         setVisible(false);
         setMarginSize(1);
-        
+    
         initButtons();
         for (Button button : getButtons()) button.onKeyboardKeyDown(key -> key != Keyboard.ESCAPE);
-        
+    
         String linesString = join(clipTextWidth(getText(), this.text.getScale(), 150), "\n");
         setForegroundSize(textWidth(linesString, this.text.getScale()), textHeight(linesString, this.text.getScale()));
     }

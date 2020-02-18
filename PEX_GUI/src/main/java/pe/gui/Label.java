@@ -1,6 +1,7 @@
 package pe.gui;
 
-import pe.Color;
+import pe.color.Color;
+import pe.color.Colorc;
 
 import java.util.List;
 
@@ -108,15 +109,15 @@ public class Label extends Window
     /*
      * Text Color Property
      */
-    protected final Color textColor     = Color.BLACK.copy();
-    private final   Color prevTextColor = Color.BLACK.copy();
+    protected final Color textColor     = new Color(Color.BLACK);
+    private final   Color prevTextColor = new Color(Color.BLACK);
     
-    public Color getTextColor()
+    public Colorc getTextColor()
     {
         return this.textColor;
     }
     
-    public void setTextColor(Color textColor)
+    public void setTextColor(Colorc textColor)
     {
         if (!this.textColor.equals(textColor))
         {
@@ -126,7 +127,7 @@ public class Label extends Window
         }
     }
     
-    protected void updatedTextColor(Color prev, Color textColor)
+    protected void updatedTextColor(Colorc prev, Color textColor)
     {
         redraw();
     }

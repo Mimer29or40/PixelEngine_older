@@ -1,5 +1,6 @@
 package pe;
 
+import pe.color.Color;
 import pe.gui.*;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class WindowTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         int lines = (screenHeight() - 2) / 8;
         for (int i = 0; i < lines; i++) events.add("");
@@ -112,7 +113,7 @@ public class WindowTest extends PixelEngine
     }
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         clear();
         

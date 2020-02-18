@@ -1,8 +1,8 @@
 package pe.gui;
 
-import pe.Color;
 import pe.PixelEngine;
 import pe.Sprite;
+import pe.color.Color;
 import pe.draw.DrawMode;
 
 import static pe.PixelEngine.clear;
@@ -152,7 +152,7 @@ public class Pane extends Window
             }
         }
     
-        PixelEngine.drawMode(DrawMode.ALPHA);
+        PixelEngine.drawMode(DrawMode.BLEND);
         PixelEngine.drawTarget(getSprite());
         drawSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
     }

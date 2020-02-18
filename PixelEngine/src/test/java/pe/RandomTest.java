@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RandomTest extends PixelEngine
 {
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         random().setSeed(1337);
     

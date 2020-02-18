@@ -1,8 +1,9 @@
 package pe.gui;
 
-import pe.Color;
 import pe.Keyboard;
 import pe.Mouse;
+import pe.color.Color;
+import pe.color.Colorc;
 import pe.gui.event.ISliderChanged;
 
 import java.util.ArrayList;
@@ -234,15 +235,15 @@ public class Slider extends Window
         genIncrements();
     }
     
-    protected final Color sliderColor     = Color.BLUE.copy();
-    private final   Color prevSliderColor = Color.BLUE.copy();
+    protected final Color sliderColor     = new Color(Color.BLUE);
+    private final   Color prevSliderColor = new Color(Color.BLUE);
     
-    public Color getSliderColor()
+    public Colorc getSliderColor()
     {
         return this.sliderColor;
     }
     
-    public void setSliderColor(Color sliderColor)
+    public void setSliderColor(Colorc sliderColor)
     {
         if (!this.sliderColor.equals(sliderColor))
         {
@@ -252,7 +253,7 @@ public class Slider extends Window
         }
     }
     
-    protected void updatedSliderColor(Color prev, Color focusedColor)
+    protected void updatedSliderColor(Colorc prev, Color focusedColor)
     {
         redraw();
     }

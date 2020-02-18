@@ -1,6 +1,6 @@
 package pe.gui.property;
 
-import pe.Color;
+import pe.color.Color;
 
 public class PixelProperty extends Property<Color>
 {

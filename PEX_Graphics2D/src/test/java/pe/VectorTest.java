@@ -1,26 +1,27 @@
 package pe;
 
 import org.joml.Vector2d;
+import pe.color.Color;
 import pe.gfx2d.PEX_GFX2D;
 import pe.vector.Vector2;
 
 public class VectorTest extends PixelEngine
 {
     @Override
-    protected boolean onUserCreate()
+    protected boolean setup()
     {
         println(Vector2.Xf.x());
-        
+    
         return true;
     }
     
     @Override
-    protected boolean onUserUpdate(double elapsedTime)
+    protected boolean draw(double elapsedTime)
     {
         Vector2d v0 = new Vector2d(0, 0);
         Vector2d v1 = new Vector2d(-1, -1);
         Vector2d v2 = new Vector2d(v1).perpendicular();
-    
+        
         v0.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
         v1.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
         v2.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
