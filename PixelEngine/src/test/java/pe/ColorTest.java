@@ -1,7 +1,7 @@
 package pe;
 
-import pe.color.Blend;
 import pe.color.Color;
+import pe.draw.DrawMode;
 
 public class ColorTest extends PixelEngine
 {
@@ -24,13 +24,14 @@ public class ColorTest extends PixelEngine
         //     }
         // }
     
-        clear();
+        clear(Color.BLANK);
     
-        drawMode((x, y, backdrop, source) -> Blend.ALPHA.blend(backdrop, source, new Color()));
+        // drawMode((x, y, backdrop, source) -> Blend.ALPHA.blend(backdrop, source, new Color()));
+        drawMode(DrawMode.BLEND);
     
-        fillCircle(20, 20, 20, Color.WHITE);
+        fillCircle(20, 20, 20, new Color(254, 0, 0, 255));
     
-        fillCircle(Mouse.x(), Mouse.y(), 20, new Color(255, 0, 0, 127));
+        fillCircle(Mouse.x(), Mouse.y(), 20, new Color(0, 0, 254, 127));
     
         return true;
     }

@@ -150,7 +150,7 @@ public class ScrollPane extends Pane // TODO
             }
         }
     
-        PixelEngine.drawMode(DrawMode.ALPHA);
+        PixelEngine.drawMode(DrawMode.BLEND);
         PixelEngine.drawTarget(getSprite());
         drawPartialSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), getOffsetX(), getOffsetY(), getForegroundWidth(), getForegroundHeight(), 1);
     }

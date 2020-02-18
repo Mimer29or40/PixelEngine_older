@@ -1,5 +1,7 @@
 package pe.color;
 
+import pe.PixelEngine;
+
 /**
  * Interface to a read-only view of a Color.
  *
@@ -169,9 +171,19 @@ public interface Colorc
     int toInt();
     
     /**
-     * @return the luminosity of the color
+     * @return the hue of the color [0..359]
      */
-    int luminosity();
+    int hue();
+    
+    /**
+     * @return the saturation of the color [0..255]
+     */
+    int saturation();
+    
+    /**
+     * @return the brightness of the color [0..255]
+     */
+    int brightness();
     
     /**
      * Determine the component with the biggest absolute value.
@@ -179,6 +191,13 @@ public interface Colorc
      * @return the component, within <code>[0..255]</code>
      */
     int maxComponent();
+    
+    /**
+     * Determine the component with the middle (towards zero) absolute value.
+     *
+     * @return the component, within <code>[0..255]</code>
+     */
+    int midComponent();
     
     /**
      * Determine the component with the smallest (towards zero) absolute value.
@@ -195,11 +214,70 @@ public interface Colorc
     int maxComponentIndex();
     
     /**
+     * Determine the component with the middle (towards zero) absolute value.
+     *
+     * @return the component index, within <code>[0..2]</code>
+     */
+    int midComponentIndex();
+    
+    /**
      * Determine the component with the smallest (towards zero) absolute value.
      *
      * @return the component index, within <code>[0..2]</code>
      */
     int minComponentIndex();
+    
+    /**
+     * Negate this color and store the result in <code>dest</code>.
+     *
+     * @param dest will hold the result
+     * @return dest
+     */
+    Color negate(Color dest);
+    
+    /**
+     * Scales this color and stores the result in <code>dest</code>.
+     *
+     * @param x    scale
+     * @param dest will hold the result
+     * @return dest
+     */
+    default Color scale(double x, Color dest)
+    {
+        return scale(x, false, dest);
+    }
+    
+    /**
+     * Scales this color and stores the result in <code>dest</code>.
+     *
+     * @param x     scale
+     * @param alpha flag to scale the alpha (default: false)
+     * @param dest  will hold the result
+     * @return dest
+     */
+    Color scale(double x, boolean alpha, Color dest);
+    
+    /**
+     * Blend this color with another color and store the result in <code>result</code>.
+     *
+     * @param other  the other color
+     * @param result the result
+     * @return result
+     */
+    default Color blend(Color other, Color result)
+    {
+        return blend(other, PixelEngine.blend(), result);
+    }
+    
+    /**
+     * Negate this color and store the result in <code>result</code>.
+     *
+     * @param other  the other color
+     * @param func   the function that will blend the two colors
+     * @param result the result
+     * @return result
+     */
+    Color blend(Color other, IBlend func, Color result);
     
     // /**
     //  * Add the supplied color to this one and store the result in
@@ -343,14 +421,6 @@ public interface Colorc
     // long gridDistance(int x, int y);
     //
     // /**
-    //  * Negate this color and store the result in <code>dest</code>.
-    //  *
-    //  * @param dest will hold the result
-    //  * @return dest
-    //  */
-    // Vector2i negate(Vector2i dest);
-    //
-    // /**
     //  * Set the components of <code>dest</code> to be the component-wise minimum of this and the other color.
     //  *
     //  * @param v    the other color
@@ -367,18 +437,4 @@ public interface Colorc
     //  * @return dest
     //  */
     // Vector2i max(Vector2ic v, Vector2i dest);
-    //
-    // /**
-    //  * Determine the component with the biggest absolute value.
-    //  *
-    //  * @return the component index, within <code>[0..1]</code>
-    //  */
-    // int maxComponent();
-    //
-    // /**
-    //  * Determine the component with the smallest (towards zero) absolute value.
-    //  *
-    //  * @return the component index, within <code>[0..1]</code>
-    //  */
-    // int minComponent();
 }

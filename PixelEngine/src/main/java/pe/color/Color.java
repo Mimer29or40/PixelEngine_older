@@ -1,8 +1,8 @@
 package pe.color;
 
-import java.util.Objects;
+import pe.PixelEngine;
 
-import static pe.PixelEngine.println;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 public class Color implements Colorc
@@ -64,6 +64,10 @@ public class Color implements Colorc
     public static final Colorc DARKEST_MAGENTA  = new Color(63, 0, 63);
     
     public static final Colorc BLANK = new Color(0, 0, 0, 0);
+    
+    private static final double PR = 0.299;
+    private static final double PG = 0.587;
+    private static final double PB = 0.114;
     
     private int r, g, b, a;
     
@@ -161,7 +165,7 @@ public class Color implements Colorc
         this.a = toColorInt(a);
         return this;
     }
-
+    
     public Color set(Number r, Number g, Number b, Number a)
     {
         return r(r).g(g).b(b).a(a);
@@ -277,12 +281,69 @@ public class Color implements Colorc
     }
     
     /**
+     * @return the hue of the color [0..359]
+     */
+    public int hue()
+    {
+        if (r() == g() && g() == b()) return 0;
+        
+        int max = maxComponent();
+        if (r() >= g() && r() >= b())
+        {   //  r() is largest
+            if (b() >= g())
+            {
+                *H = 6. / 6. - 1. / 6. * (b() - g()) / (r() - g());
+                *S = 1. - g() / r();
+            }
+            else
+            {
+                *H = 0. / 6. + 1. / 6. * (g() - b()) / (r() - b());
+                *S = 1. - b() / r();
+            }
+        }
+        else if (g() >= r() && g() >= b())
+        {   //  g() is largest
+            if (r() >= b())
+            {
+                *H = 2. / 6. - 1. / 6. * (r() - b()) / (g() - b());
+                *S = 1. - b() / g();
+            }
+            else
+            {
+                *H = 2. / 6. + 1. / 6. * (b() - r()) / (g() - r());
+                *S = 1. - r() / g();
+            }
+        }
+        else
+        {   //  b() is largest
+            if (g() >= r())
+            {
+                *H = 4. / 6. - 1. / 6. * (g() - r()) / (b() - r());
+                *S = 1. - r() / b();
+            }
+            else
+            {
+                *H = 4. / 6. + 1. / 6. * (r() - g()) / (b() - g());
+                *S = 1. - G / b();
+            }
+        }
+    }
+    
+    /**
+     * @return the saturation of the color [0..255]
+     */
+    public int saturation()
+    {
+        if (r() == g() && g() == b()) return 0;
+    }
+    
+    /**
      * @return the luminosity of the color
      */
     @Override
-    public int luminosity()
+    public int brightness()
     {
-        return (int) (0.3 * r() + 0.59 * g() + 0.11 * b());
+        return (int) (Math.sqrt(r() * r() * PR + g() * g() * PG + b() * b() * PB));
     }
     
     /**
@@ -293,7 +354,17 @@ public class Color implements Colorc
     @Override
     public int maxComponent()
     {
-        return Math.max(r(), Math.max(g(), b()));
+        return get(maxComponentIndex());
+    }
+    
+    /**
+     * Determine the component with the middle (towards zero) absolute value.
+     *
+     * @return the component, within <code>[0..255]</code>
+     */
+    public int midComponent()
+    {
+        return get(midComponentIndex());
     }
     
     /**
@@ -304,7 +375,7 @@ public class Color implements Colorc
     @Override
     public int minComponent()
     {
-        return Math.min(r(), Math.min(g(), b()));
+        return get(minComponentIndex());
     }
     
     /**
@@ -322,6 +393,21 @@ public class Color implements Colorc
     }
     
     /**
+     * Determine the component with the middle (towards zero) absolute value.
+     *
+     * @return the component index, within <code>[0..2]</code>
+     */
+    public int midComponentIndex()
+    {
+        int min = minComponentIndex();
+        int max = maxComponentIndex();
+        if (min == 0) return max == 1 ? 2 : 1;
+        if (min == 1) return max == 0 ? 2 : 0;
+        if (min == 2) return max == 0 ? 1 : 0;
+        return 0;
+    }
+    
+    /**
      * Determine the component with the smallest (towards zero) absolute value.
      *
      * @return the component index, within <code>[0..2]</code>
@@ -335,107 +421,177 @@ public class Color implements Colorc
         return 0;
     }
     
+    /**
+     * Negate this color.
+     *
+     * @return a color holding the result
+     */
+    public Color negate()
+    {
+        return negate(thisOrNew());
+    }
+    
+    /**
+     * Negate this color and store the result in <code>dest</code>.
+     *
+     * @param dest will hold the result
+     * @return dest
+     */
+    @Override
+    public Color negate(Color dest)
+    {
+        dest.r(255 - r());
+        dest.g(255 - g());
+        dest.b(255 - b());
+        return dest;
+    }
+    
+    /**
+     * Scales this color in place
+     *
+     * @param x scale
+     * @return this
+     */
+    public Color scale(double x)
+    {
+        return scale(x, thisOrNew());
+    }
+    
+    /**
+     * Scales this color in place
+     *
+     * @param x     scale
+     * @param alpha flag to scale the alpha (default: false)
+     * @return this
+     */
+    public Color scale(double x, boolean alpha)
+    {
+        return scale(x, alpha, thisOrNew());
+    }
+    
+    /**
+     * Scales this color and stores the result in <code>dest</code>.
+     *
+     * @param x     scale
+     * @param alpha flag to scale the alpha (default: false)
+     * @param dest  will hold the result
+     * @return dest
+     */
+    public Color scale(double x, boolean alpha, Color dest)
+    {
+        dest.r((int) (r() * x));
+        dest.g((int) (g() * x));
+        dest.b((int) (b() * x));
+        if (alpha) dest.a((int) (a() * x));
+        return dest;
+    }
+    
+    /**
+     * Blend this color with another color in place
+     *
+     * @param other the other color
+     * @return dest
+     */
+    public Color blend(Color other)
+    {
+        return blend(other, thisOrNew());
+    }
+    
+    /**
+     * Negate this color and store the result in <code>dest</code>.
+     *
+     * @param other the other color
+     * @param func  the function that will blend the two colors
+     * @return dest
+     */
+    public Color blend(Color other, IBlend func)
+    {
+        return blend(other, func, thisOrNew());
+    }
+    
+    /**
+     * Negate this color and store the result in <code>dest</code>.
+     *
+     * @param other  the other color
+     * @param func   the function that will blend the two colors
+     * @param result will hold the result
+     * @return dest
+     */
+    public Color blend(Color other, IBlend func, Color result)
+    {
+        return func.blend(this, other, result);
+    }
+    
+    /**
+     * Sets this color to the value described by a 32-bit integer.
+     *
+     * @param x the 32-bit integer
+     * @return this
+     */
     public Color fromInt(int x)
     {
         return set(x, x >> 8, x >> 16, x >> 24);
     }
     
-    public static void main(String[] args)
-    {
-        println(new Color(255, 255, 255, 255).luminosity());
-        println(new Color(0, 0, 0, 0).luminosity());
-        println(new Color(50, 100, 200, 0).luminosity());
-    }
-    
     private static int toColorInt(Number x)
     {
-        int value = x instanceof Float ? (int) ((float) x * 255.0) : x instanceof Double ? (int) ((double) x * 255.0) : (int) x;
+        int value = x instanceof Float ? (int) ((float) x * 255) : x instanceof Double ? (int) ((double) x * 255) : (int) x;
+        // if (value > 255) value = 255;
+        // if (value < 0) value = 0;
         return value & 0xFF;
     }
     
-    // public static Color random(int lower, int upper, boolean alpha, Color out)
-    // {
-    //     out.r(PixelEngine.random().nextInt(lower, upper));
-    //     out.g(PixelEngine.random().nextInt(lower, upper));
-    //     out.b(PixelEngine.random().nextInt(lower, upper));
-    //     if (alpha) out.a(PixelEngine.random().nextInt(lower, upper));
-    //     return out;
-    // }
-    //
-    // public static Color random(int lower, int upper, Color out)
-    // {
-    //     return random(lower, upper, false, out);
-    // }
-    //
-    // public static Color random(int lower, int upper, boolean alpha)
-    // {
-    //     return random(lower, upper, alpha, new Color());
-    // }
-    //
-    // public static Color random(int lower, int upper)
-    // {
-    //     return random(lower, upper, false, new Color());
-    // }
-    //
-    // public static Color random(int upper, Color out)
-    // {
-    //     return random(0, upper, out);
-    // }
-    //
-    // public static Color random(int upper, boolean alpha)
-    // {
-    //     return random(0, upper, alpha, new Color());
-    // }
-    //
-    // public static Color random(int upper)
-    // {
-    //     return random(0, upper, new Color());
-    // }
-    //
-    // public static Color random(Color out)
-    // {
-    //     return random(0, 255, out);
-    // }
-    //
-    // public static Color random(boolean alpha)
-    // {
-    //     return random(0, 255, alpha, new Color());
-    // }
-    //
-    // public static Color random()
-    // {
-    //     return random(0, 255, false, new Color());
-    // }
-    //
-    // public Color scale(double x)
-    // {
-    //     return r((int) (r() * x)).g((int) (g() * x)).b((int) (b() * x)).a((int) (a() * x));
-    // }
-    //
-    // public Color blend(Color other, IBlend func, Color out)
-    // {
-    //     return out.set(func.blend(other, this));
-    // }
-    //
-    // public Color blend(Color other, IBlend func)
-    // {
-    //     return blend(other, func, new Color());
-    // }
-    //
-    // public Color blend(Color other, Color out)
-    // {
-    //     if (a() == 255) return out.set(this);
-    //     double a = (double) a() / 255.0;
-    //     double c = 1.0 - a;
-    //     out.r(a * r() + c * other.r());
-    //     out.g(a * g() + c * other.g());
-    //     out.b(a * b() + c * other.b());
-    //     out.a(a * a() + c * other.a());
-    //     return out;
-    // }
-    //
-    // public Color blend(Color other)
-    // {
-    //     return blend(other, new Color());
-    // }
+    public static Color random(int lower, int upper, boolean alpha, Color out)
+    {
+        out.r(PixelEngine.random().nextInt(lower, upper));
+        out.g(PixelEngine.random().nextInt(lower, upper));
+        out.b(PixelEngine.random().nextInt(lower, upper));
+        if (alpha) out.a(PixelEngine.random().nextInt(lower, upper));
+        return out;
+    }
+    
+    public static Color random(int lower, int upper, Color out)
+    {
+        return random(lower, upper, false, out);
+    }
+    
+    public static Color random(int lower, int upper, boolean alpha)
+    {
+        return random(lower, upper, alpha, new Color());
+    }
+    
+    public static Color random(int lower, int upper)
+    {
+        return random(lower, upper, false, new Color());
+    }
+    
+    public static Color random(int upper, Color out)
+    {
+        return random(0, upper, out);
+    }
+    
+    public static Color random(int upper, boolean alpha)
+    {
+        return random(0, upper, alpha, new Color());
+    }
+    
+    public static Color random(int upper)
+    {
+        return random(0, upper, new Color());
+    }
+    
+    public static Color random(Color out)
+    {
+        return random(0, 255, out);
+    }
+    
+    public static Color random(boolean alpha)
+    {
+        return random(0, 255, alpha, new Color());
+    }
+    
+    public static Color random()
+    {
+        return random(0, 255, false, new Color());
+    }
 }

@@ -106,7 +106,7 @@ public class Graphics2DTest extends PixelEngine
         // Translate to centre of screen
         t1.translate(320, 240);
     
-        drawMode(DrawMode.ALPHA);
+        drawMode(DrawMode.BLEND);
         
         // Use extension to draw sprite with transform applied
         PEX_GFX2D.drawSprite(spr, t1);

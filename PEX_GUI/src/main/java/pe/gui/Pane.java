@@ -152,7 +152,7 @@ public class Pane extends Window
             }
         }
     
-        PixelEngine.drawMode(DrawMode.ALPHA);
+        PixelEngine.drawMode(DrawMode.BLEND);
         PixelEngine.drawTarget(getSprite());
         drawSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
     }
