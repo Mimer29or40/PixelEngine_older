@@ -295,10 +295,13 @@ public class Color implements Colorc
         {
             case 0: // Red is Max
                 h = 43 * (g() - b()) / (max - min);
+                break;
             case 1: // Green is Max
                 h = 85 + 43 * (b() - r()) / (max - min);
+                break;
             case 2: // Blue is Max
                 h = 171 + 43 * (r() - g()) / (max - min);
+                break;
         }
         return h * 360 / 255;
     }
