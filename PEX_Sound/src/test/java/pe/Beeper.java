@@ -108,11 +108,11 @@ public class Beeper extends JApplet
  */
 class BeeperPanel extends JPanel
 {
-    JComboBox sampleRate;
-    JSlider   framesPerWavelength;
-    JLabel    frequency;
-    JCheckBox harmonic;
-    Clip      clip;
+    JComboBox<Integer> sampleRate;
+    JSlider            framesPerWavelength;
+    JLabel             frequency;
+    JCheckBox          harmonic;
+    Clip               clip;
     
     DecimalFormat decimalFormat = new DecimalFormat("###00.00");
     
@@ -135,8 +135,8 @@ class BeeperPanel extends JPanel
         BoxLayout bl      = new BoxLayout(options, BoxLayout.Y_AXIS);
         options.setLayout(bl);
         
-        Integer[] rates = {8000, 11025, 16000, 22050};
-        sampleRate = new JComboBox(rates);
+        Integer[] rates = {8000, 11025, 16000, 22050, 44100};
+        sampleRate = new JComboBox<>(rates);
         sampleRate.setToolTipText("Samples per second");
         sampleRate.setSelectedIndex(1);
         JPanel pSampleRate = new JPanel(new BorderLayout());
@@ -309,9 +309,11 @@ class BeeperPanel extends JPanel
      */
     public float getFrequency()
     {
-        int intST  = (int) sampleRate.getSelectedItem();
+        Object value = sampleRate.getSelectedItem();
+        if (value == null) return 0;
+        int intST  = (int) value;
         int intFPW = framesPerWavelength.getValue();
-        
+    
         return (float) intST / (float) intFPW;
     }
     
@@ -346,12 +348,14 @@ class BeeperPanel extends JPanel
             clip = AudioSystem.getClip();
         }
         boolean addHarmonic = harmonic.isSelected();
-        
-        int intSR  = (int) sampleRate.getSelectedItem();
+    
+        Object value = sampleRate.getSelectedItem();
+        if (value == null) return;
+        int intSR  = (int) value;
         int intFPW = framesPerWavelength.getValue();
-        
+    
         float sampleRate = (float) intSR;
-        
+    
         // oddly, the sound does not loop well for less than
         // around 5 or so, wavelengths
         int    wavelengths = 20;
@@ -361,12 +365,12 @@ class BeeperPanel extends JPanel
                                          true,  // signed
                                          false  // bigendian
         );
-        
-        int maxVol = 127;
+    
+        // int maxVol = 127;
         for (int i = 0; i < intFPW * wavelengths; i++)
         {
             double angle = ((float) (i * 2) / ((float) intFPW)) * (Math.PI);
-            buf[i * 2] = getByteValue(angle);
+            buf[i * 2]       = getByteValue(angle);
             buf[(i * 2) + 1] = addHarmonic ? getByteValue(2 * angle) : buf[i * 2];
         }
         

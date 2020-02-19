@@ -32,6 +32,6 @@ public class Pair<A, B>
     @Override
     public String toString()
     {
-        return "Pair{" + this.a + ", " + this.b + '}';
+        return getClass().getName() + '{' + this.a + ", " + this.b + '}';
     }
 }

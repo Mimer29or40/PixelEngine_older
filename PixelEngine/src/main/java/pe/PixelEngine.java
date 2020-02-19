@@ -7,7 +7,7 @@ import pe.color.Colorc;
 import pe.color.IBlendPos;
 import pe.draw.DrawMode;
 import pe.draw.DrawPattern;
-import pe.util.Pair;
+import pe.util.PairI;
 
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -26,9 +26,9 @@ public class PixelEngine
     
     private static final Color COLOR = new Color(Color.WHITE);
     
-    private static final String                          TITLE        = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
-    private static final Pattern                         BOTTOM_CHARS = Pattern.compile(".*[gjpqy,]+.*");
-    private static final HashSet<Pair<Integer, Integer>> DRAW_CORDS   = new HashSet<>();
+    private static final String         TITLE        = "Pixel Game Engine - %s - FPS(%s) SPF(Avg: %s us, Min: %s us, Max: %s us)";
+    private static final Pattern        BOTTOM_CHARS = Pattern.compile(".*[gjpqy,]+.*");
+    private static final HashSet<PairI> DRAW_CORDS   = new HashSet<>();
     
     private static PixelEngine logic;
     
@@ -406,7 +406,7 @@ public class PixelEngine
         return (x - xMin) * (yMax - yMin) / (xMax - xMin) + yMin;
     }
     
-    public static Pair<Integer, Integer> getFormatNumbers(double[] values)
+    public static PairI getFormatNumbers(double[] values)
     {
         int numI = 1, numD = 0;
         for (double val : values)
@@ -415,7 +415,7 @@ public class PixelEngine
             numI = Math.max(numI, num[0].length());
             if (val != (int) val) numD = Math.max(numD, num[1].length());
         }
-        return new Pair<>(numI, numD);
+        return new PairI(numI, numD);
     }
     
     // TODO - Negative Numbers
@@ -428,7 +428,7 @@ public class PixelEngine
         return String.format(fI + "%s%s%s" + fD, "", I, numD > 0 ? "." : "", D, "");
     }
     
-    public static String format(double x, Pair<Integer, Integer> numbers)
+    public static String format(double x, PairI numbers)
     {
         return format(x, numbers.a, numbers.b);
     }
@@ -543,7 +543,7 @@ public class PixelEngine
             {
                 for (; y1 <= y2; y1 += sy)
                 {
-                    if (pattern.shouldDraw()) DRAW_CORDS.add(new Pair<>(x1, y1));
+                    if (pattern.shouldDraw()) DRAW_CORDS.add(new PairI(x1, y1));
                 }
                 return;
             }
@@ -552,14 +552,14 @@ public class PixelEngine
             {
                 for (; x1 <= x2; x1 += sx)
                 {
-                    if (pattern.shouldDraw()) DRAW_CORDS.add(new Pair<>(x1, y1));
+                    if (pattern.shouldDraw()) DRAW_CORDS.add(new PairI(x1, y1));
                 }
                 return;
             }
             
             for (; ; )
             {
-                if (pattern.shouldDraw()) DRAW_CORDS.add(new Pair<>(x1, y1));
+                if (pattern.shouldDraw()) DRAW_CORDS.add(new PairI(x1, y1));
                 if (x1 == x2 && y1 == y2) break;
                 e2 = err << 1;
                 if (e2 >= -dy)
@@ -583,13 +583,13 @@ public class PixelEngine
             for (w = (w + 1) / 2; ; )
             {
                 shouldDraw = pattern.shouldDraw();
-                if (shouldDraw) DRAW_CORDS.add(new Pair<>(x1, y1));
+                if (shouldDraw) DRAW_CORDS.add(new PairI(x1, y1));
                 e2 = err << 1;
                 if (e2 >= -dx)
                 {
                     for (e3 = e2 + dy, y3 = y1; e3 < ed * w && (y2 != y3 || dx > dy); e3 += dx)
                     {
-                        if (shouldDraw) DRAW_CORDS.add(new Pair<>(x1, y3 += sy));
+                        if (shouldDraw) DRAW_CORDS.add(new PairI(x1, y3 += sy));
                     }
                     if (x1 == x2) break;
                     err -= dy;
@@ -599,7 +599,7 @@ public class PixelEngine
                 {
                     for (e3 = dx - e2, x3 = x1; e3 < ed * w && (x2 != x3 || dx < dy); e3 += dy)
                     {
-                        if (shouldDraw) DRAW_CORDS.add(new Pair<>(x3 += sx, y1));
+                        if (shouldDraw) DRAW_CORDS.add(new PairI(x3 += sx, y1));
                     }
                     if (y1 == y2) break;
                     err += dx;
@@ -607,7 +607,7 @@ public class PixelEngine
                 }
             }
         }
-        for (Pair<Integer, Integer> cord : DRAW_CORDS) draw(cord.a, cord.b, color);
+        for (PairI cord : DRAW_CORDS) draw(cord.a, cord.b, color);
         DRAW_CORDS.clear();
     }
     
@@ -735,11 +735,11 @@ public class PixelEngine
         
         while (y0 >= x0)
         {
-            for (i = x - x0; i <= x + x0; i++) DRAW_CORDS.add(new Pair<>(i, y - y0));
-            for (i = x - y0; i <= x + y0; i++) DRAW_CORDS.add(new Pair<>(i, y - x0));
-            for (i = x - x0; i <= x + x0; i++) DRAW_CORDS.add(new Pair<>(i, y + y0));
-            for (i = x - y0; i <= x + y0; i++) DRAW_CORDS.add(new Pair<>(i, y + x0));
-            
+            for (i = x - x0; i <= x + x0; i++) DRAW_CORDS.add(new PairI(i, y - y0));
+            for (i = x - y0; i <= x + y0; i++) DRAW_CORDS.add(new PairI(i, y - x0));
+            for (i = x - x0; i <= x + x0; i++) DRAW_CORDS.add(new PairI(i, y + y0));
+            for (i = x - y0; i <= x + y0; i++) DRAW_CORDS.add(new PairI(i, y + x0));
+    
             if (d < 0)
             {
                 d += 4 * x0++ + 6;
@@ -749,7 +749,7 @@ public class PixelEngine
                 d += 4 * (x0++ - y0--) + 10;
             }
         }
-        for (Pair<Integer, Integer> cord : DRAW_CORDS) draw(cord.a, cord.b, color);
+        for (PairI cord : DRAW_CORDS) draw(cord.a, cord.b, color);
         DRAW_CORDS.clear();
     }
     
@@ -837,8 +837,8 @@ public class PixelEngine
         
         do
         {
-            for (int i = x0; i < x1; i++) DRAW_CORDS.add(new Pair<>(i, y0));
-            for (int i = x0; i < x1; i++) DRAW_CORDS.add(new Pair<>(i, y1));
+            for (int i = x0; i < x1; i++) DRAW_CORDS.add(new PairI(i, y0));
+            for (int i = x0; i < x1; i++) DRAW_CORDS.add(new PairI(i, y1));
             e2 = 2 * err;
             if (e2 <= dy)
             {
@@ -856,12 +856,12 @@ public class PixelEngine
         
         while (y0 - y1 < h)
         {  /* too early stop of flat ellipses w=1 */
-            DRAW_CORDS.add(new Pair<>(x0 - 1, y0)); /* -> finish tip of ellipse */
-            DRAW_CORDS.add(new Pair<>(x1 + 1, y0++));
-            DRAW_CORDS.add(new Pair<>(x0 - 1, y1));
-            DRAW_CORDS.add(new Pair<>(x1 + 1, y1--));
+            DRAW_CORDS.add(new PairI(x0 - 1, y0)); /* -> finish tip of ellipse */
+            DRAW_CORDS.add(new PairI(x1 + 1, y0++));
+            DRAW_CORDS.add(new PairI(x0 - 1, y1));
+            DRAW_CORDS.add(new PairI(x1 + 1, y1--));
         }
-        for (Pair<Integer, Integer> cord : DRAW_CORDS) draw(cord.a, cord.b, color);
+        for (PairI cord : DRAW_CORDS) draw(cord.a, cord.b, color);
         DRAW_CORDS.clear();
     }
     
@@ -945,10 +945,10 @@ public class PixelEngine
                 pbc = Math.abs(i * (y2 - y3) + x2 * (y3 - j) + x3 * (j - y2));
                 apc = Math.abs(x1 * (j - y3) + i * (y3 - y1) + x3 * (y1 - j));
                 abp = Math.abs(x1 * (y2 - j) + x2 * (j - y1) + i * (y1 - y2));
-                if (abc == pbc + apc + abp) DRAW_CORDS.add(new Pair<>(i, j));
+                if (abc == pbc + apc + abp) DRAW_CORDS.add(new PairI(i, j));
             }
         }
-        for (Pair<Integer, Integer> cord : DRAW_CORDS) draw(cord.a, cord.b, color);
+        for (PairI cord : DRAW_CORDS) draw(cord.a, cord.b, color);
         DRAW_CORDS.clear();
     }
     
@@ -1060,10 +1060,10 @@ public class PixelEngine
         int  sx = 0, sy = 0;
         char c;
         int  ox, oy;
-        
+    
+        DrawMode prev = drawMode();
         if (scale == (int) scale)
         {
-            // TODO - Previous Draw Mode
             drawMode(color.a() == 255 ? DrawMode.MASK : DrawMode.BLEND);
             
             for (int ci = 0; ci < text.length(); ci++)
@@ -1173,7 +1173,7 @@ public class PixelEngine
                 }
             }
         }
-        drawMode(DrawMode.NORMAL);
+        drawMode(prev);
     }
     
     public static void drawString(int x, int y, String text, Colorc color)

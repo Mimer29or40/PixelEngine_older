@@ -174,6 +174,7 @@ public class Keyboard
         return Keyboard.NONE;
     }
     
+    @SuppressWarnings("DuplicatedCode")
     public static void handleEvents(long time, long delta)
     {
         String text = Keyboard.capturedText;
@@ -182,13 +183,13 @@ public class Keyboard
             Events.post(EventKeyboardKeyTyped.class, Keyboard.capturedText.charAt(i));
         }
         Keyboard.capturedText = "";
-    
+        
         for (Key key : inputs())
         {
             key.down   = false;
             key.up     = false;
             key.repeat = false;
-        
+            
             if (key.state != key.prevState)
             {
                 if (key.state == GLFW_PRESS)
@@ -210,12 +211,12 @@ public class Keyboard
                 key.repeat = true;
             }
             key.prevState = key.state;
-        
+            
             if (key.down) Events.post(EventKeyboardKeyDown.class, key);
             if (key.up)
             {
                 Events.post(EventKeyboardKeyUp.class, key);
-    
+                
                 if (time - key.pressTime < 500_000_000)
                 {
                     Events.post(EventKeyboardKeyPressed.class, key, true);

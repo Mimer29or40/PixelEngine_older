@@ -104,31 +104,30 @@ public class Mouse
         return Mouse.scrollY;
     }
     
+    @SuppressWarnings("DuplicatedCode")
     protected static void handleEvents(long time, long delta)
     {
         if (Mouse.entered != Mouse.newEntered) Events.post(EventMouseEntered.class, Mouse.newEntered);
         Mouse.entered = Mouse.newEntered;
-    
+        
         Mouse.relX = Mouse.newX - Mouse.x;
         Mouse.relY = Mouse.newY - Mouse.y;
         Mouse.x    = Mouse.newX;
         Mouse.y    = Mouse.newY;
         if (Mouse.relX != 0 || Mouse.relY != 0) Events.post(EventMouseMoved.class, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
-    
+        
         Mouse.scrollX    = Mouse.newScrollX;
         Mouse.scrollY    = Mouse.newScrollY;
         Mouse.newScrollX = 0;
         Mouse.newScrollY = 0;
         if (Mouse.scrollX != 0 || Mouse.scrollY != 0) Events.post(EventMouseScrolled.class, Mouse.scrollX, Mouse.scrollY);
-    
-        // TODO - Click, Double Click, Drag Events. See PEX_GUI for implementation details
-    
+        
         for (Button button : inputs())
         {
             button.down   = false;
             button.up     = false;
             button.repeat = false;
-        
+            
             if (button.state != button.prevState)
             {
                 if (button.state == GLFW_PRESS)
@@ -150,11 +149,11 @@ public class Mouse
                 button.repeat = true;
             }
             button.prevState = button.state;
-        
+            
             if (button.down)
             {
                 Events.post(EventMouseButtonDown.class, button, Mouse.x, Mouse.y);
-    
+                
                 button.clickX = Mouse.x;
                 button.clickY = Mouse.y;
                 if (Mouse.drag == null)
@@ -167,10 +166,10 @@ public class Mouse
             if (button.up)
             {
                 Events.post(EventMouseButtonUp.class, button, Mouse.x, Mouse.y);
-    
+                
                 boolean inClickRange  = Math.abs(Mouse.x - button.clickX) < 2 && Math.abs(Mouse.y - button.clickY) < 2;
                 boolean inDClickRange = Math.abs(Mouse.x - button.dClickX) < 2 && Math.abs(Mouse.y - button.dClickY) < 2;
-    
+                
                 if (inDClickRange && time - button.clickTime < 500_000_000)
                 {
                     Events.post(EventMouseButtonClicked.class, button, Mouse.x, Mouse.y, true);
@@ -187,7 +186,7 @@ public class Mouse
             if (button.held)
             {
                 Events.post(EventMouseButtonHeld.class, button, Mouse.x, Mouse.y);
-    
+                
                 if (Mouse.drag == button && (Mouse.relX != 0 || Mouse.relY != 0))
                 {
                     Events.post(EventMouseButtonDragged.class, button, Mouse.dragX, Mouse.dragY, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
