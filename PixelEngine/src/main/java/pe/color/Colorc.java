@@ -279,6 +279,24 @@ public interface Colorc
      */
     Color blend(Color other, IBlend func, Color result);
     
+    /**
+     * Returns a color that is brighter than this by a factor.
+     *
+     * @param factor the factor
+     * @param dest   the dest
+     * @return dest
+     */
+    Color brighter(double factor, Color dest);
+    
+    /**
+     * Returns a color that is darker than this by a factor.
+     *
+     * @param factor the factor
+     * @param dest   the dest
+     * @return dest
+     */
+    Color darker(double factor, Color dest);
+    
     // /**
     //  * Add the supplied color to this one and store the result in
     //  * <code>dest</code>.
