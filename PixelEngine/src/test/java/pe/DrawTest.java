@@ -369,7 +369,6 @@ public class DrawTest extends PixelEngine
     
     public static void fillEllipse(int x, int y, int width, int height, Colorc p)
     {
-        // TODO - http://members.chello.at/~easyfilter/bresenham.html
         if (width < 1 || height < 1) return;
         int  x0  = x - width / 2, y0 = y - height / 2;
         int  x1  = x + width / 2, y1 = y + height / 2;

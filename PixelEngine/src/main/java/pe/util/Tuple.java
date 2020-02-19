@@ -34,6 +34,6 @@ public class Tuple<A, B, C>
     @Override
     public String toString()
     {
-        return "Tuple{" + this.a + ", " + this.b + ", " + this.c + '}';
+        return getClass().getName() + '{' + this.a + ", " + this.b + ", " + this.c + '}';
     }
 }
