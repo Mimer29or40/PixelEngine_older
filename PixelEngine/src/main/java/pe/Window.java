@@ -339,7 +339,7 @@ public class Window
         {
             Events.post(EventWindowFullscreen.class, Window.newFullscreen);
             Window.fullscreen = Window.newFullscreen;
-            Window.update = true;
+            Window.update     = true;
             if (Window.fullscreen)
             {
                 Window.fullX = Window.windowX;
@@ -359,7 +359,7 @@ public class Window
         if (Window.vsync != Window.newVsync)
         {
             Events.post(EventWindowVSync.class, Window.newVsync);
-            Window.vsync = Window.newVsync;
+            Window.vsync  = Window.newVsync;
             Window.update = true;
         }
         
@@ -368,7 +368,7 @@ public class Window
             Events.post(EventWindowMoved.class, Window.newWindowX, Window.newWindowY);
             Window.windowX = Window.newWindowX;
             Window.windowY = Window.newWindowY;
-            Window.update = true;
+            Window.update  = true;
         }
         
         if (Window.windowW != Window.newWindowW || Window.windowH != Window.newWindowH)
@@ -376,7 +376,7 @@ public class Window
             Events.post(EventWindowResized.class, Window.newWindowW, Window.newWindowH);
             Window.windowW = Window.newWindowW;
             Window.windowH = Window.newWindowH;
-            Window.update = true;
+            Window.update  = true;
         }
     }
     

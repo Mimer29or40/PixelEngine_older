@@ -151,17 +151,17 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.debug("Extension Pre Setup");
             PixelEngine.extensions.values().forEach(PEX::beforeSetup);
-        
+    
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.setup())
             {
                 PixelEngine.LOGGER.debug("Extension Post Setup");
                 PixelEngine.extensions.values().forEach(PEX::afterSetup);
-            
+    
                 Window.setup();
-            
+    
                 new Thread(PixelEngine::renderLoop, "Render Loop").start();
-            
+    
                 while (PixelEngine.running) Window.pollEvents();
             }
         }
@@ -169,13 +169,13 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.trace("Extension Pre Destruction");
             PixelEngine.extensions.values().forEach(PEX::beforeDestroy);
-        
+    
             PixelEngine.LOGGER.debug("User Initialization");
             PixelEngine.logic.destroy();
-        
+    
             PixelEngine.LOGGER.trace("Extension Post Destruction");
             PixelEngine.extensions.values().forEach(PEX::afterDestroy);
-        
+    
             Window.destroy();
         }
         

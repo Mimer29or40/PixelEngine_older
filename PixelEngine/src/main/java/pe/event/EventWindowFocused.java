@@ -1,5 +1,6 @@
 package pe.event;
 
+@SuppressWarnings("unused")
 public class EventWindowFocused extends Event
 {
     public EventWindowFocused(Object[] values)

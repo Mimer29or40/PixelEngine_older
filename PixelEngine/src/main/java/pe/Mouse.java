@@ -37,10 +37,7 @@ public class Mouse
     private static Button drag;
     private static int    dragX, dragY;
     
-    private Mouse()
-    {
-    
-    }
+    private Mouse() { }
     
     public static double holdDelay()
     {
@@ -114,12 +111,12 @@ public class Mouse
     
         Mouse.relX = Mouse.newX - Mouse.x;
         Mouse.relY = Mouse.newY - Mouse.y;
-        Mouse.x = Mouse.newX;
-        Mouse.y = Mouse.newY;
+        Mouse.x    = Mouse.newX;
+        Mouse.y    = Mouse.newY;
         if (Mouse.relX != 0 || Mouse.relY != 0) Events.post(EventMouseMoved.class, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
     
-        Mouse.scrollX = Mouse.newScrollX;
-        Mouse.scrollY = Mouse.newScrollY;
+        Mouse.scrollX    = Mouse.newScrollX;
+        Mouse.scrollY    = Mouse.newScrollY;
         Mouse.newScrollX = 0;
         Mouse.newScrollY = 0;
         if (Mouse.scrollX != 0 || Mouse.scrollY != 0) Events.post(EventMouseScrolled.class, Mouse.scrollX, Mouse.scrollY);
@@ -128,22 +125,22 @@ public class Mouse
     
         for (Button button : inputs())
         {
-            button.down = false;
-            button.up = false;
+            button.down   = false;
+            button.up     = false;
             button.repeat = false;
         
             if (button.state != button.prevState)
             {
                 if (button.state == GLFW_PRESS)
                 {
-                    button.down = true;
-                    button.held = true;
+                    button.down     = true;
+                    button.held     = true;
                     button.downTime = time;
                 }
                 else if (button.state == GLFW_RELEASE)
                 {
-                    button.up = true;
-                    button.held = false;
+                    button.up       = true;
+                    button.held     = false;
                     button.downTime = Long.MAX_VALUE;
                 }
             }
@@ -157,12 +154,12 @@ public class Mouse
             if (button.down)
             {
                 Events.post(EventMouseButtonDown.class, button, Mouse.x, Mouse.y);
-            
+    
                 button.clickX = Mouse.x;
                 button.clickY = Mouse.y;
                 if (Mouse.drag == null)
                 {
-                    Mouse.drag = button;
+                    Mouse.drag  = button;
                     Mouse.dragX = Mouse.x;
                     Mouse.dragY = Mouse.y;
                 }
@@ -170,10 +167,10 @@ public class Mouse
             if (button.up)
             {
                 Events.post(EventMouseButtonUp.class, button, Mouse.x, Mouse.y);
-            
+    
                 boolean inClickRange  = Math.abs(Mouse.x - button.clickX) < 2 && Math.abs(Mouse.y - button.clickY) < 2;
                 boolean inDClickRange = Math.abs(Mouse.x - button.dClickX) < 2 && Math.abs(Mouse.y - button.dClickY) < 2;
-            
+    
                 if (inDClickRange && time - button.clickTime < 500_000_000)
                 {
                     Events.post(EventMouseButtonClicked.class, button, Mouse.x, Mouse.y, true);
@@ -181,8 +178,8 @@ public class Mouse
                 else if (inClickRange)
                 {
                     Events.post(EventMouseButtonClicked.class, button, Mouse.x, Mouse.y, false);
-                    button.dClickX = Mouse.x;
-                    button.dClickY = Mouse.y;
+                    button.dClickX   = Mouse.x;
+                    button.dClickY   = Mouse.y;
                     button.clickTime = time;
                 }
                 if (Mouse.drag == button) Mouse.drag = null;
@@ -190,7 +187,7 @@ public class Mouse
             if (button.held)
             {
                 Events.post(EventMouseButtonHeld.class, button, Mouse.x, Mouse.y);
-        
+    
                 if (Mouse.drag == button && (Mouse.relX != 0 || Mouse.relY != 0))
                 {
                     Events.post(EventMouseButtonDragged.class, button, Mouse.dragX, Mouse.dragY, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
