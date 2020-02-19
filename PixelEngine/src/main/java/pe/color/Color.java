@@ -285,24 +285,25 @@ public class Color implements Colorc
      */
     public int hue()
     {
-        if (r() == g() && g() == b()) return 0;
-    
         int max = maxComponent();
-        int mid = midComponent();
         int min = minComponent();
     
-        int mix = 255 / 6 * (mid - min) * 255 / (max - min);
+        if (max == 0 || max - min == 0) return 0;
     
+        int h = 0;
         switch (maxComponentIndex())
         {
-            case 0:
-                return 6 * 255 / 6 + (minComponentIndex() == 2 ? -mix : mix);
-            case 1:
-                return 2 * 255 / 6 + (minComponentIndex() == 0 ? -mix : mix);
-            case 2:
-                return 4 * 255 / 6 + (minComponentIndex() == 1 ? -mix : mix);
+            case 0: // Red is Max
+                h = 43 * (g() - b()) / (max - min);
+                break;
+            case 1: // Green is Max
+                h = 85 + 43 * (b() - r()) / (max - min);
+                break;
+            case 2: // Blue is Max
+                h = 171 + 43 * (r() - g()) / (max - min);
+                break;
         }
-        return 0;
+        return h * 360 / 255;
     }
     
     /**
@@ -310,12 +311,12 @@ public class Color implements Colorc
      */
     public int saturation()
     {
-        if (r() == g() && g() == b()) return 0;
-    
         int max = maxComponent();
         int min = minComponent();
     
-        return 255 - (min * 255 / max);
+        if (max == 0) return 0;
+    
+        return (max - min) * 255 / max;
     }
     
     /**
@@ -324,7 +325,7 @@ public class Color implements Colorc
     @Override
     public int brightness()
     {
-        return (int) (Math.sqrt(r() * r() * PR + g() * g() * PG + b() * b() * PB));
+        return maxComponent();
     }
     
     /**
@@ -471,7 +472,7 @@ public class Color implements Colorc
      * Blend this color with another color in place
      *
      * @param other the other color
-     * @return dest
+     * @return this
      */
     public Color blend(Color other)
     {
@@ -483,7 +484,7 @@ public class Color implements Colorc
      *
      * @param other the other color
      * @param func  the function that will blend the two colors
-     * @return dest
+     * @return this
      */
     public Color blend(Color other, IBlend func)
     {
@@ -496,11 +497,69 @@ public class Color implements Colorc
      * @param other  the other color
      * @param func   the function that will blend the two colors
      * @param result will hold the result
-     * @return dest
+     * @return result
      */
     public Color blend(Color other, IBlend func, Color result)
     {
         return func.blend(this, other, result);
+    }
+    
+    /**
+     * Returns this color that is a factor brighter.
+     *
+     * @param factor the factor
+     * @return this
+     */
+    public Color brighter(double factor)
+    {
+        return brighter(factor, thisOrNew());
+    }
+    
+    /**
+     * Returns a color that is brighter than this by a factor.
+     *
+     * @param factor the factor
+     * @param dest   the dest
+     * @return dest
+     */
+    public Color brighter(double factor, Color dest)
+    {
+        int r = r();
+        int g = g();
+        int b = b();
+        int a = a();
+        
+        int i = (int) (1.0 / (1.0 - factor));
+        if (r == 0 && g == 0 && b == 0) return dest.set(i, i, i, a);
+        
+        if (0 < r && r < i) r = i;
+        if (0 < g && g < i) g = i;
+        if (0 < b && b < i) b = i;
+        
+        return dest.set(Math.min((int) (r / factor), 255), Math.min((int) (g / factor), 255), Math.min((int) (b / factor), 255), a);
+    }
+    
+    /**
+     * Returns this color that is a factor darker.
+     *
+     * @param factor the factor
+     * @return this
+     */
+    public Color darker(double factor)
+    {
+        return darker(factor, thisOrNew());
+    }
+    
+    /**
+     * Returns a color that is darker than this by a factor.
+     *
+     * @param factor the factor
+     * @param dest   the dest
+     * @return dest
+     */
+    public Color darker(double factor, Color dest)
+    {
+        return dest.set(Math.max((int) (r() * factor), 0), Math.max((int) (g() * factor), 0), Math.max((int) (b() * factor), 0), a());
     }
     
     /**
@@ -516,10 +575,7 @@ public class Color implements Colorc
     
     private static int toColorInt(Number x)
     {
-        int value = x instanceof Float ? (int) ((float) x * 255) : x instanceof Double ? (int) ((double) x * 255) : (int) x;
-        // if (value > 255) value = 255;
-        // if (value < 0) value = 0;
-        return value & 0xFF;
+        return (x instanceof Float ? (int) ((float) x * 255) : x instanceof Double ? (int) ((double) x * 255) : (int) x) & 0xFF;
     }
     
     public static Color random(int lower, int upper, boolean alpha, Color out)

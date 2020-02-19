@@ -13,11 +13,13 @@ public class Profiler
     
     private static final long WARN_TIME_THRESHOLD = 100_000_000L;
     
-    private final String                    root;
+    private final String root;
+    
     private final Stack<Pair<String, Long>> sections = new Stack<>();
     private final Map<String, Long>         times    = new HashMap<>();
-    public        boolean                   enabled  = false;
-    private       boolean                   started  = false;
+    
+    public  boolean enabled = false;
+    private boolean started = false;
     
     public Profiler(String root)
     {
@@ -202,9 +204,9 @@ public class Profiler
         
         public FrameData(String name, long time, double percentage, double globalPercentage)
         {
-            this.name = name;
-            this.time = time;
-            this.percentage = percentage;
+            this.name             = name;
+            this.time             = time;
+            this.percentage       = percentage;
             this.globalPercentage = globalPercentage;
         }
         

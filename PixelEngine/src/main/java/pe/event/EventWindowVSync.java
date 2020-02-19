@@ -1,5 +1,6 @@
 package pe.event;
 
+@SuppressWarnings("unused")
 public class EventWindowVSync extends Event
 {
     public EventWindowVSync(Object[] values)

@@ -7,7 +7,7 @@ public class Event
     
     public Event(String[] keys, Object[] values)
     {
-        this.keys = keys;
+        this.keys   = keys;
         this.values = values;
     }
     

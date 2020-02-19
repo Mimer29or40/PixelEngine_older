@@ -1,9 +1,10 @@
 package pe.draw;
 
+@SuppressWarnings("unused")
 public class DrawPattern
 {
-    private int initial;
-    private int pattern;
+    private final int initial;
+    private       int pattern;
     
     public DrawPattern(int pattern)
     {

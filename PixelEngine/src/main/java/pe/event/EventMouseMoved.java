@@ -1,5 +1,6 @@
 package pe.event;
 
+@SuppressWarnings("unused")
 public class EventMouseMoved extends Event
 {
     public EventMouseMoved(Object[] values)

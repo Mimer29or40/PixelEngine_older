@@ -1,5 +1,6 @@
 package pe.event;
 
+@SuppressWarnings("unused")
 public class EventWindowFullscreen extends Event
 {
     public EventWindowFullscreen(Object[] values)

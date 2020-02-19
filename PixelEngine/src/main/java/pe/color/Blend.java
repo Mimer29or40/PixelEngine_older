@@ -1,5 +1,6 @@
 package pe.color;
 
+@SuppressWarnings("unused")
 public class Blend implements IBlend
 {
     private BlendFunc     sourceFactor  = BlendFunc.SRC_ALPHA;

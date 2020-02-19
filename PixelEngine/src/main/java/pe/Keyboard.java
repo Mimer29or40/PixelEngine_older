@@ -135,10 +135,7 @@ public class Keyboard
     
     private static String capturedText = "";
     
-    private Keyboard()
-    {
-    
-    }
+    private Keyboard() { }
     
     public static double holdDelay()
     {
@@ -188,22 +185,22 @@ public class Keyboard
     
         for (Key key : inputs())
         {
-            key.down = false;
-            key.up = false;
+            key.down   = false;
+            key.up     = false;
             key.repeat = false;
         
             if (key.state != key.prevState)
             {
                 if (key.state == GLFW_PRESS)
                 {
-                    key.down = true;
-                    key.held = true;
+                    key.down     = true;
+                    key.held     = true;
                     key.downTime = time;
                 }
                 else if (key.state == GLFW_RELEASE)
                 {
-                    key.up = true;
-                    key.held = false;
+                    key.up       = true;
+                    key.held     = false;
                     key.downTime = Long.MAX_VALUE;
                 }
             }
@@ -213,12 +210,12 @@ public class Keyboard
                 key.repeat = true;
             }
             key.prevState = key.state;
-    
+        
             if (key.down) Events.post(EventKeyboardKeyDown.class, key);
             if (key.up)
             {
                 Events.post(EventKeyboardKeyUp.class, key);
-        
+    
                 if (time - key.pressTime < 500_000_000)
                 {
                     Events.post(EventKeyboardKeyPressed.class, key, true);
@@ -283,11 +280,11 @@ public class Keyboard
         private Key(String name, int reference, int baseChar, int shiftChar)
         {
             this.name = name;
-            
-            this.scancode = reference > 0 ? glfwGetKeyScancode(reference) : 0;
-            this.baseChar = (char) baseChar;
+    
+            this.scancode  = reference > 0 ? glfwGetKeyScancode(reference) : 0;
+            this.baseChar  = (char) baseChar;
             this.shiftChar = (char) shiftChar;
-            
+    
             Keyboard.inputs.put(reference, this);
         }
         
