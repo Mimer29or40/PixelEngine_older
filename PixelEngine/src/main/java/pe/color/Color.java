@@ -303,7 +303,7 @@ public class Color implements Colorc
                 h = 171 + 43 * (r() - g()) / (max - min);
                 break;
         }
-        return h * 360 / 255;
+        return h * 359 / 255;
     }
     
     /**
