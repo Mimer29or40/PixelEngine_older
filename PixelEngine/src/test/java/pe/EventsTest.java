@@ -1,6 +1,5 @@
 package pe;
 
-import pe.color.Color;
 import pe.event.Event;
 
 import java.util.ArrayList;
@@ -35,13 +34,14 @@ public class EventsTest extends PixelEngine
     @Override
     protected boolean draw(double elapsedTime)
     {
-        clear();
+        renderer().clear();
         
         int nLog = 0;
         for (String s : events)
         {
             int c = (int) map(nLog, 0, events.size() - 1, 60, 255);
-            drawString(2, nLog * 8 + 2, s, new Color(c, c, c));
+            renderer().stroke(c, c, c);
+            renderer().drawString(2, nLog * 8 + 2, s);
             nLog++;
         }
     

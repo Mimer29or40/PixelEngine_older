@@ -2,7 +2,6 @@ package pe;
 
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
 import pe.event.*;
 
 import java.util.Objects;
@@ -20,15 +19,15 @@ public class Window
     
     private static long glfwWindow;
     
-    private static int viewX, viewY;
-    private static int viewW, viewH;
-    
     private static boolean update = true;
     
     private static int monitorW, monitorH;
     
     private static int windowX, windowY, newWindowX, newWindowY, fullX, fullY;
     private static int windowW, windowH, newWindowW, newWindowH, fullW, fullH;
+    
+    private static int viewX, viewY;
+    private static int viewW, viewH;
     
     private static boolean focused, newFocused;
     
@@ -63,6 +62,26 @@ public class Window
     public static int windowHeight()
     {
         return Window.windowH;
+    }
+    
+    public static int viewX()
+    {
+        return Window.viewX;
+    }
+    
+    public static int viewY()
+    {
+        return Window.viewY;
+    }
+    
+    public static int viewWidth()
+    {
+        return Window.viewW;
+    }
+    
+    public static int viewHeight()
+    {
+        return Window.viewH;
     }
     
     public static boolean focused()
@@ -209,117 +228,6 @@ public class Window
         Window.LOGGER.debug("Window Creation Finished");
     }
     
-    protected static void setupContext()
-    {
-        Window.LOGGER.debug("Creating OpenGL Context");
-        
-        glfwMakeContextCurrent(Window.glfwWindow);
-        
-        GL.createCapabilities();
-        
-        Window.LOGGER.trace("OpenGL: Shader setup");
-        {
-            int program, shader, result;
-            program = glCreateProgram();
-            
-            Window.LOGGER.trace("OpenGL: Vertex Shader");
-            
-            shader = glCreateShader(GL_VERTEX_SHADER);
-            glShaderSource(shader,
-                           "#version 430 core\n" +
-                           "layout(location = 0) in vec2 pos;\n" +
-                           "out vec2 cord;\n" +
-                           "void main(void)\n" +
-                           "{\n" +
-                           "    cord = vec2(pos.x < 0 ? 0.0 : 1.0, pos.y < 0 ? 1.0 : 0.0);\n" +
-                           "    gl_Position = vec4(pos, 0.0, 1.0);\n" +
-                           "}\n");
-            glCompileShader(shader);
-            
-            result = glGetShaderi(shader, GL_COMPILE_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetShaderInfoLog(shader);
-                throw new RuntimeException(String.format("Vertex Shader compile failure: %s", log));
-            }
-            glAttachShader(program, shader);
-            glDeleteShader(shader);
-            
-            Window.LOGGER.trace("OpenGL: Fragment Shader");
-            
-            shader = glCreateShader(GL_FRAGMENT_SHADER);
-            glShaderSource(shader,
-                           "#version 430 core\n" +
-                           "uniform sampler2D text;\n" +
-                           "in vec2 cord;\n" +
-                           "out vec4 color;\n" +
-                           "void main(void)\n" +
-                           "{\n" +
-                           "    color = texture(text, cord);\n" +
-                           "}\n");
-            glCompileShader(shader);
-            
-            result = glGetShaderi(shader, GL_COMPILE_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetShaderInfoLog(shader);
-                throw new RuntimeException(String.format("Fragment Shader compile failure: %s", log));
-            }
-            glAttachShader(program, shader);
-            glDeleteShader(shader);
-            
-            Window.LOGGER.trace("OpenGL: Linking Program");
-            
-            glLinkProgram(program);
-            result = glGetProgrami(program, GL_LINK_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetProgramInfoLog(program);
-                throw new RuntimeException(String.format("Link failure: %s", log));
-            }
-            
-            glValidateProgram(program);
-            result = glGetProgrami(program, GL_VALIDATE_STATUS);
-            if (result != GL_TRUE)
-            {
-                String log = glGetProgramInfoLog(program);
-                throw new RuntimeException(String.format("Validation failure: %s", log));
-            }
-            glUseProgram(program);
-        }
-        Window.LOGGER.trace("OpenGL: Shader Validated");
-        
-        Window.LOGGER.trace("OpenGL: Setting Viewport");
-        
-        glClearColor(0.0F, 0.0F, 0.0F, 1.0F);
-        glViewport(Window.viewX, Window.viewY, Window.viewW, Window.viewH);
-        
-        Window.LOGGER.trace("OpenGL: Building Vertex Array");
-        
-        glBindVertexArray(glGenVertexArrays());
-        glBindBuffer(GL_ARRAY_BUFFER, glGenBuffers());
-        glBufferData(GL_ARRAY_BUFFER, new float[] {-1.0F, 1.0F, -1.0F, -1.0F, 1.0F, -1.0F, -1.0F, 1.0F, 1.0F, -1.0F, 1.0F, 1.0F}, GL_STATIC_DRAW);
-        
-        glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * Float.BYTES, 0);
-        glEnableVertexAttribArray(0);
-        
-        Window.LOGGER.trace("OpenGL: Building Texture");
-        
-        glEnable(GL_TEXTURE_2D);
-        
-        glBindTexture(GL_TEXTURE_2D, glGenTextures());
-        // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, screenWidth(), screenHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, Window.window.getData());
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, screenWidth(), screenHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        
-        glfwSwapBuffers(Window.glfwWindow);
-        glFinish();
-        
-        Window.LOGGER.debug("OpenGL Context Initialized");
-    }
-    
     protected static void pollEvents()
     {
         glfwPollEvents();
@@ -423,19 +331,18 @@ public class Window
             
             glClear(GL_COLOR_BUFFER_BIT);
             glViewport(Window.viewX, Window.viewY, Window.viewW, Window.viewH);
-            
+    
             Window.LOGGER.debug("Viewport Pos(%s, %s) Size(%s, %s)", Window.viewX, Window.viewY, Window.viewW, Window.viewH);
         }
         return Window.update;
     }
     
-    protected static void drawSprite(Sprite sprite)
+    public static void makeCurrent()
     {
-        glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, screenWidth(), screenHeight(), GL_RGBA, GL_UNSIGNED_BYTE, sprite.getData());
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glfwMakeContextCurrent(Window.glfwWindow);
     }
     
-    protected static void swap()
+    public static void swap()
     {
         glfwSwapBuffers(Window.glfwWindow);
         Window.update = false;

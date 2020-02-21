@@ -73,7 +73,7 @@ public class WeightMutationTest
         genome.addConnection(new Connection(connInnovation.inc(), 8, 3, 1.0, true));
     
         String fileName = name + "/generation_0";
-        drawer.generateGraph(genome).saveSprite(fileName);
+        drawer.generateGraph(genome).saveImage(fileName);
         // genome.save(fileName);
     }
     
@@ -84,7 +84,7 @@ public class WeightMutationTest
             println(i);
             genome.weightMutation(random, 0.7);
             String fileName = String.format("%s/generation_%s", name, i + 1);
-            drawer.generateGraph(genome).saveSprite(fileName);
+            drawer.generateGraph(genome).saveImage(fileName);
             // genome.save(fileName);
         }
     }

@@ -2,9 +2,7 @@ package pe.gui;
 
 import pe.PixelEngine;
 import pe.color.Color;
-import pe.draw.DrawMode;
-
-import static pe.PixelEngine.*;
+import pe.render.DrawMode;
 
 public class ScrollPane extends Pane // TODO
 {
@@ -135,23 +133,24 @@ public class ScrollPane extends Pane // TODO
         setInternalWidth();
         setInternalHeight();
     
-        PixelEngine.drawMode(DrawMode.NORMAL);
-        PixelEngine.drawTarget(getChildSprite());
-        clear(Color.BLANK);
+        PixelEngine.renderer().drawMode(DrawMode.NORMAL);
+        PixelEngine.renderer().drawTarget(getChildSprite());
+        PixelEngine.renderer().clear(Color.BLANK);
     
         for (Window child : getChildren())
         {
             child.draw(elapsedTime);
             if (child.isVisible())
             {
-                PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.drawTarget(child == this.title ? getSprite() : getChildSprite());
-                drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
+                PixelEngine.renderer().drawMode(DrawMode.NORMAL);
+                PixelEngine.renderer().drawTarget(child == this.title ? getSprite() : getChildSprite());
+                PixelEngine.renderer().drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
     
-        PixelEngine.drawMode(DrawMode.BLEND);
-        PixelEngine.drawTarget(getSprite());
-        drawPartialSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), getOffsetX(), getOffsetY(), getForegroundWidth(), getForegroundHeight(), 1);
+        PixelEngine.renderer().drawMode(DrawMode.BLEND);
+        PixelEngine.renderer().drawTarget(getSprite());
+        PixelEngine.renderer()
+                   .drawPartialSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), getOffsetX(), getOffsetY(), getForegroundWidth(), getForegroundHeight(), 1);
     }
 }

@@ -1,9 +1,8 @@
 package pe;
 
 import pe.color.Color;
-import pe.draw.DrawMode;
-import pe.gfx2d.PEX_GFX2D;
 import pe.gfx2d.Transform2D;
+import pe.render.DrawMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class Graphics2DTest extends PixelEngine
     {
         for (int i = 0; i < 16; i++) events.add("");
     
-        spr = Sprite.loadSprite("zombie.png");
+        spr = Sprite.loadImage("zombie.png");
     
         return true;
     }
@@ -33,12 +32,12 @@ public class Graphics2DTest extends PixelEngine
     @Override
     public boolean draw(double elapsedTime)
     {
-        drawMode(DrawMode.NORMAL);
-        clear(Color.BLUE);
-        
-        drawCircle(32, 32, 30);
-        drawCircle(96, 32, 30);
-        
+        renderer().drawMode(DrawMode.NORMAL);
+        renderer().clear(Color.BLUE);
+    
+        renderer().drawCircle(32, 32, 30);
+        renderer().drawCircle(96, 32, 30);
+    
         float mx = Mouse.x();
         float my = Mouse.y();
     
@@ -51,17 +50,18 @@ public class Graphics2DTest extends PixelEngine
         py1 = 22.0f * (py1 * pr1) + 32.0f;
         px2 = 22.0f * (px2 * pr2) + 96.0f;
         py2 = 22.0f * (py2 * pr2) + 32.0f;
-        fillCircle((int) px1, (int) py1, 8, Color.CYAN);
-        fillCircle((int) px2, (int) py2, 8, Color.CYAN);
+        renderer().noStroke();
+        renderer().fill(Color.CYAN);
+        renderer().drawCircle((int) px1, (int) py1, 8);
+        renderer().drawCircle((int) px2, (int) py2, 8);
     
-        drawLine(10, 70, 54, 70);    // Lines
-        drawLine(54, 70, 70, 54);
+        renderer().drawLine(10, 70, 54, 70);    // Lines
+        renderer().drawLine(54, 70, 70, 54);
     
-        drawRect(10, 80, 54, 30);
-        fillRect(10, 80, 54, 30);
+        renderer().drawRect(10, 80, 54, 30);
     
         // Multiline Text
-        drawString(10, 130, "Your Mouse Position is:\nX=" + mx + "\nY=" + my);
+        renderer().drawString(10, 130, "Your Mouse Position is:\nX=" + mx + "\nY=" + my);
     
         if (Mouse.LEFT.down()) addEvent("Mouse Button LEFT Down");
         if (Mouse.LEFT.up()) addEvent("Mouse Button LEFT Up");
@@ -75,24 +75,30 @@ public class Graphics2DTest extends PixelEngine
         int nLog = 0;
         for (String s : this.events)
         {
-            drawString(200, nLog * 8 + 20, s, new Color(nLog * 16, nLog * 16, nLog * 16));
+            renderer().stroke(nLog * 16, nLog * 16, nLog * 16);
+            renderer().drawString(200, nLog * 8 + 20, s);
             nLog++;
         }
-        
+    
         // Test Text scaling and colours
-        drawString(0, 360, "Text Scale = 1", Color.WHITE, 1);
-        drawString(0, 368, "Text Scale = 2", Color.BLUE, 2);
-        drawString(0, 384, "Text Scale = 3", Color.RED, 3);
-        drawString(0, 408, "Text Scale = 4", Color.YELLOW, 4);
-        drawString(0, 440, "Text Scale = 5", Color.GREEN, 5);
-        
+        renderer().stroke(Color.WHITE);
+        renderer().drawString(0, 360, "Text Scale = 1", 1);
+        renderer().stroke(Color.BLUE);
+        renderer().drawString(0, 368, "Text Scale = 2", 2);
+        renderer().stroke(Color.RED);
+        renderer().drawString(0, 384, "Text Scale = 3", 3);
+        renderer().stroke(Color.YELLOW);
+        renderer().drawString(0, 408, "Text Scale = 4", 4);
+        renderer().stroke(Color.GREEN);
+        renderer().drawString(0, 440, "Text Scale = 5", 5);
+    
         totalTime += elapsedTime;
-        
+    
         float angle = totalTime;
-        
+    
         // Draw Sprite using extension, first create a transformation stack
         Transform2D t1 = new Transform2D();
-        
+    
         // Translate sprite so center of image is at 0,0
         t1.translate(-250, -35);
         // Scale the sprite
@@ -106,13 +112,13 @@ public class Graphics2DTest extends PixelEngine
         // Translate to centre of screen
         t1.translate(320, 240);
     
-        drawMode(DrawMode.BLEND);
-        
+        renderer().drawMode(DrawMode.BLEND);
+    
         // Use extension to draw sprite with transform applied
-        PEX_GFX2D.drawSprite(spr, t1);
-        
-        drawSprite((int) mx, (int) my, spr, 4);
-        
+        // PEX_GFX2D.drawSprite(spr, t1);
+    
+        renderer().drawSprite((int) mx, (int) my, spr, 4);
+    
         return true;
     }
     

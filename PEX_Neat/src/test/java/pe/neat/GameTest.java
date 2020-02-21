@@ -77,12 +77,12 @@ public class GameTest extends PixelEngine
     @Override
     protected boolean draw(double elapsedTime)
     {
-        clear();
-        
+        renderer().clear();
+    
         if (Keyboard.ESCAPE.down()) return false;
-        
+    
         if (Keyboard.F1.down()) debug = !debug;
-        
+    
         return true;
     }
     
@@ -273,9 +273,9 @@ public class GameTest extends PixelEngine
             if (rocketPos.x - dia < 0) drawRocket(rocketPos.x + screenWidth(), rocketPos.y, accelerate);
             if (rocketPos.y + dia >= screenHeight()) drawRocket(rocketPos.x, rocketPos.y - screenHeight(), accelerate);
             if (rocketPos.y - dia < 0) drawRocket(rocketPos.x, rocketPos.y + screenHeight(), accelerate);
-            
+    
             // ---------- BULLETS ----------
-            for (Bullet bullet : bullets) PixelEngine.draw((int) bullet.pos.x, (int) bullet.pos.y);
+            // for (Bullet bullet : bullets) PixelEngine.draw((int) bullet.pos.x, (int) bullet.pos.y);
             
             // ---------- ASTEROID ----------
             for (Asteroid asteroid : asteroids)
@@ -287,18 +287,18 @@ public class GameTest extends PixelEngine
                 if (asteroid.pos.y + asteroid.radius >= screenHeight()) drawAsteroid(asteroid.pos.x, asteroid.pos.y - screenHeight(), asteroid.radius);
                 if (asteroid.pos.y - asteroid.radius < 0) drawAsteroid(asteroid.pos.x, asteroid.pos.y + screenHeight(), asteroid.radius);
             }
-            
+    
             if (debug)
             {
                 for (Vector2dc ray : fireRays())
                 {
-                    drawLine((int) rocketPos.x(), (int) rocketPos.y(), (int) ray.x(), (int) ray.y());
-                    drawCircle((int) ray.x(), (int) ray.y(), 3);
+                    renderer().drawLine((int) rocketPos.x(), (int) rocketPos.y(), (int) ray.x(), (int) ray.y());
+                    renderer().drawCircle((int) ray.x(), (int) ray.y(), 3);
                 }
             }
-            
-            // drawString(1, 1, String.format("Score: %s", score));
-            //
+    
+            renderer().drawString(1, 1, String.format("Score: %s", score));
+    
             // if (!playing)
             // {
             //     drawScreenText("Press ENTER to Play");
@@ -319,9 +319,12 @@ public class GameTest extends PixelEngine
         {
             int width  = textWidth(text);
             int height = textHeight(text);
-            
-            fillRect((screenWidth() - width) / 2 - 2, (screenHeight() - height) / 2 - 2, width + 4, height + 4, Color.GREY);
-            drawString((screenWidth() - width) / 2, (screenHeight() - height) / 2, text);
+    
+            renderer().noStroke();
+            renderer().fill(Color.GREY);
+            renderer().drawRect((screenWidth() - width) / 2 - 2, (screenHeight() - height) / 2 - 2, width + 4, height + 4);
+            renderer().stroke(Color.BLACK);
+            renderer().drawString((screenWidth() - width) / 2, (screenHeight() - height) / 2, text);
         }
         
         private void overlapScreen(Vector2d pos)
@@ -369,37 +372,39 @@ public class GameTest extends PixelEngine
         {
             double cos = Math.cos(rocketAng);
             double sin = Math.sin(rocketAng);
-            
+    
             int x1 = (int) (x - cos * rocketHeight / 2 + sin * rocketWidth / 2);
             int y1 = (int) (y - sin * rocketHeight / 2 - cos * rocketWidth / 2);
-            
+    
             int x2 = (int) (x - cos * rocketHeight / 2 - sin * rocketWidth / 2);
             int y2 = (int) (y - sin * rocketHeight / 2 + cos * rocketWidth / 2);
-            
+    
             int x3 = (int) (x + cos * rocketHeight / 2);
             int y3 = (int) (y + sin * rocketHeight / 2);
-            
-            drawTriangle(x1, y1, x2, y2, x3, y3);
-            
+    
+            renderer().noFill();
+            renderer().stroke(0);
+            renderer().drawTriangle(x1, y1, x2, y2, x3, y3);
+    
             if (accelerate)
             {
-                
+        
                 x1 = (int) (x - cos * rocketHeight / 2 + sin * rocketWidth / 2 * 0.95);
                 y1 = (int) (y - sin * rocketHeight / 2 - cos * rocketWidth / 2 * 0.95);
-                
+        
                 x2 = (int) (x - cos * rocketHeight / 2 - sin * rocketWidth / 2 * 0.95);
                 y2 = (int) (y - sin * rocketHeight / 2 + cos * rocketWidth / 2 * 0.95);
-                
+        
                 x3 = (int) (x - cos * rocketHeight / 2 * 1.35);
                 y3 = (int) (y - sin * rocketHeight / 2 * 1.35);
-                
-                drawTriangle(x1, y1, x2, y2, x3, y3);
+        
+                renderer().drawTriangle(x1, y1, x2, y2, x3, y3);
             }
         }
         
         private void drawAsteroid(double x, double y, double radius)
         {
-            drawCircle((int) x, (int) y, (int) radius);
+            // drawCircle((int) x, (int) y, (int) radius);
         }
         
         private boolean circleSegmentIntersect(double x1, double y1, double x2, double y2, double px, double py, double radius)

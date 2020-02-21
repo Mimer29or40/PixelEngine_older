@@ -260,46 +260,46 @@ public class PolyCollisions extends PixelEngine
     @Override
     protected boolean draw(double elapsedTime)
     {
-        //if (getKey(Keyboard.Keyboard.F1).released) this.mode = 0;
-        //if (getKey(Keyboard.Keyboard.F2).released) this.mode = 1;
-        //if (getKey(Keyboard.Keyboard.F3).released) this.mode = 2;
-        //if (getKey(Keyboard.Keyboard.F4).released) this.mode = 3;
+        // if (Keyboard.F1.up()) this.mode = 0;
+        // if (Keyboard.F2.up()) this.mode = 1;
+        // if (Keyboard.F3.up()) this.mode = 2;
+        // if (Keyboard.F4.up()) this.mode = 3;
         //
-        //// Shape 1
-        //if (getKey(Keyboard.Keyboard.LEFT).held) this.shapes.get(0).angle -= 2.0f * elapsedTime;
-        //if (getKey(Keyboard.Keyboard.RIGHT).held) this.shapes.get(0).angle += 2.0f * elapsedTime;
+        // // Shape 1
+        // if (getKey(Keyboard.Keyboard.LEFT).held) this.shapes.get(0).angle -= 2.0f * elapsedTime;
+        // if (getKey(Keyboard.Keyboard.RIGHT).held) this.shapes.get(0).angle += 2.0f * elapsedTime;
         //
-        //if (getKey(Keyboard.Keyboard.UP).held)
-        //{
+        // if (getKey(Keyboard.Keyboard.UP).held)
+        // {
         //    this.shapes.get(0).pos.x += (float) Math.cos(this.shapes.get(0).angle) * 60.0f * elapsedTime;
         //    this.shapes.get(0).pos.y += (float) Math.sin(this.shapes.get(0).angle) * 60.0f * elapsedTime;
-        //}
+        // }
         //
-        //if (getKey(Keyboard.Keyboard.DOWN).held)
-        //{
+        // if (getKey(Keyboard.Keyboard.DOWN).held)
+        // {
         //    this.shapes.get(0).pos.x -= (float) Math.cos(this.shapes.get(0).angle) * 60.0f * elapsedTime;
         //    this.shapes.get(0).pos.y -= (float) Math.sin(this.shapes.get(0).angle) * 60.0f * elapsedTime;
-        //}
+        // }
         //
-        //// Shape 2
-        //if (getKey(Keyboard.Keyboard.A).held) this.shapes.get(1).angle -= 2.0f * elapsedTime;
-        //if (getKey(Keyboard.Keyboard.D).held) this.shapes.get(1).angle += 2.0f * elapsedTime;
+        // // Shape 2
+        // if (getKey(Keyboard.Keyboard.A).held) this.shapes.get(1).angle -= 2.0f * elapsedTime;
+        // if (getKey(Keyboard.Keyboard.D).held) this.shapes.get(1).angle += 2.0f * elapsedTime;
         //
-        //if (getKey(Keyboard.Keyboard.W).held)
-        //{
+        // if (getKey(Keyboard.Keyboard.W).held)
+        // {
         //    this.shapes.get(1).pos.x += (float) Math.cos(this.shapes.get(1).angle) * 60.0f * elapsedTime;
         //    this.shapes.get(1).pos.y += (float) Math.sin(this.shapes.get(1).angle) * 60.0f * elapsedTime;
-        //}
+        // }
         //
-        //if (getKey(Keyboard.Keyboard.S).held)
-        //{
+        // if (getKey(Keyboard.Keyboard.S).held)
+        // {
         //    this.shapes.get(1).pos.x -= (float) Math.cos(this.shapes.get(1).angle) * 60.0f * elapsedTime;
         //    this.shapes.get(1).pos.y -= (float) Math.sin(this.shapes.get(1).angle) * 60.0f * elapsedTime;
-        //}
+        // }
         //
-        //// Update Shapes and reset flags
-        //for (Polygon r : this.shapes)
-        //{
+        // // Update Shapes and reset flags
+        // for (Polygon r : this.shapes)
+        // {
         //    // 2D Rotation Transform + 2D Translation
         //    for (int i = 0; i < r.o.size(); i++)
         //    {
@@ -309,11 +309,11 @@ public class PolyCollisions extends PixelEngine
         //    }
         //
         //    r.overlap = false;
-        //}
+        // }
         //
-        //// Check for overlap
-        //for (int m = 0; m < this.shapes.size(); m++)
-        //{
+        // // Check for overlap
+        // for (int m = 0; m < this.shapes.size(); m++)
+        // {
         //    for (int n = m + 1; n < this.shapes.size(); n++)
         //    {
         //        switch (this.mode)
@@ -332,14 +332,14 @@ public class PolyCollisions extends PixelEngine
         //                break;
         //        }
         //    }
-        //}
+        // }
         //
-        //// === Render Display ===
-        //clear(Color.BLUE);
+        // // === Render Display ===
+        // clear(Color.BLUE);
         //
-        //// Draw Shapes
-        //for (Polygon r : this.shapes)
-        //{
+        // // Draw Shapes
+        // for (Polygon r : this.shapes)
+        // {
         //    // Draw Boundary
         //    for (int i = 0; i < r.p.size(); i++)
         //    {
@@ -352,14 +352,14 @@ public class PolyCollisions extends PixelEngine
         //
         //    // Draw Direction
         //    drawLine((int) r.p.get(0).x, (int) r.p.get(0).y, (int) r.pos.x, (int) r.pos.y, (r.overlap ? Color.RED : Color.WHITE));
-        //}
+        // }
         //
-        //// Draw HUD
-        //drawString(8, 10, "F1: SAT", (this.mode == 0 ? Color.RED : Color.YELLOW));
-        //drawString(8, 20, "F2: SAT/STATIC", (this.mode == 1 ? Color.RED : Color.YELLOW));
-        //drawString(8, 30, "F3: DIAG", (this.mode == 2 ? Color.RED : Color.YELLOW));
-        //drawString(8, 40, "F4: DIAG/STATIC", (this.mode == 3 ? Color.RED : Color.YELLOW));
-        
+        // // Draw HUD
+        // drawString(8, 10, "F1: SAT", (this.mode == 0 ? Color.RED : Color.YELLOW));
+        // drawString(8, 20, "F2: SAT/STATIC", (this.mode == 1 ? Color.RED : Color.YELLOW));
+        // drawString(8, 30, "F3: DIAG", (this.mode == 2 ? Color.RED : Color.YELLOW));
+        // drawString(8, 40, "F4: DIAG/STATIC", (this.mode == 3 ? Color.RED : Color.YELLOW));
+    
         return true;
     }
     

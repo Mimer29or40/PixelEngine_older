@@ -10,105 +10,59 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.BufferUtils.zeroBuffer;
-import static org.lwjgl.stb.STBImage.stbi_info;
-import static org.lwjgl.stb.STBImage.stbi_load;
+import static org.lwjgl.stb.STBImage.*;
 import static org.lwjgl.stb.STBImageWrite.stbi_write_png;
 import static pe.PixelEngine.getPath;
 
 @SuppressWarnings("unused")
 public class Sprite
 {
-    private final Color COLOR = new Color();
+    protected static final Logger LOGGER = Logger.getLogger();
     
-    protected int width      = 0;
-    protected int height     = 0;
-    protected int components = 4;
+    protected final Color COLOR = new Color();
+    
+    protected final int width;
+    protected final int height;
+    protected final int channels;
+    
+    protected final ByteBuffer data;
     
     protected Mode sampleMode = Mode.NORMAL;
     
-    protected ByteBuffer data;
-    
-    private Sprite()
+    protected Sprite(int width, int height, int channels, ByteBuffer data)
     {
+        if (channels < 1 || 4 < channels) throw new RuntimeException("Sprites can only have 1-4 channels");
+        
+        this.width    = width;
+        this.height   = height;
+        this.channels = channels;
+        
+        this.data = data;
+    }
     
+    public Sprite(int width, int height, int channels, Colorc initial)
+    {
+        this(width, height, channels, BufferUtils.createByteBuffer(width * height * channels));
+        
+        for (int i = 0; i < width * height; i++)
+        {
+            for (int j = 0; j < this.channels; j++) this.data.put(i * channels + j, (byte) initial.getComponent(j));
+        }
+    }
+    
+    public Sprite(int width, int height, int channels)
+    {
+        this(width, height, channels, Color.BLACK);
     }
     
     public Sprite(int width, int height, Colorc initial)
     {
-        this.width  = width;
-        this.height = height;
-        this.data   = BufferUtils.createByteBuffer(width * height * 4);
-        
-        int value = initial.toInt();
-        for (int i = 0; i < width * height; i++)
-        {
-            this.data.putInt(4 * i, value);
-        }
+        this(width, height, 4, initial);
     }
     
     public Sprite(int width, int height)
     {
-        this(width, height, Color.BLACK);
-    }
-    
-    public static Sprite loadPGESprite(String imagePath)
-    {
-        Sprite sprite = new Sprite();
-        
-        try (FileInputStream in = new FileInputStream(getPath(imagePath).toString()))
-        {
-            sprite.width      = in.read();
-            sprite.height     = in.read();
-            sprite.components = in.read();
-            sprite.data       = BufferUtils.createByteBuffer(4 * sprite.width * sprite.height);
-    
-            for (int i = 0; in.available() > 0; i++)
-            {
-                sprite.data.putInt(4 * i, in.read());
-            }
-            sprite.data.flip();
-    
-            return sprite;
-        }
-        catch (IOException e)
-        {
-            System.err.println("PGE Sprite could not be loaded: " + imagePath);
-        }
-    
-        sprite.width      = 0;
-        sprite.height     = 0;
-        sprite.components = 0;
-        sprite.data       = null;
-    
-        return sprite;
-    }
-    
-    public static Sprite loadSprite(String imagePath)
-    {
-        Sprite sprite = new Sprite();
-        
-        int[] width      = new int[1];
-        int[] height     = new int[1];
-        int[] components = new int[1];
-        
-        if (stbi_info(getPath(imagePath).toString(), width, height, components))
-        {
-            sprite.width      = width[0];
-            sprite.height     = height[0];
-            sprite.components = components[0];
-            sprite.data       = stbi_load(getPath(imagePath).toString(), width, height, components, 4);
-    
-            if (sprite.data != null) return sprite;
-        }
-    
-        System.err.println("PGE Sprite could not be loaded: " + imagePath);
-    
-        sprite.width      = 0;
-        sprite.height     = 0;
-        sprite.components = 0;
-        sprite.data       = null;
-    
-        return sprite;
+        this(width, height, 4, Color.BLACK);
     }
     
     public int getWidth()
@@ -121,9 +75,9 @@ public class Sprite
         return this.height;
     }
     
-    public int getComponents()
+    public int getChannels()
     {
-        return this.components;
+        return this.channels;
     }
     
     public Mode getSampleMode()
@@ -143,16 +97,9 @@ public class Sprite
     
     public void copy(Sprite other)
     {
-        if (this.width != other.width || this.height != other.height) throw new RuntimeException("Sprites are not same size.");
-        
-        for (int j = 0; j < this.height; j++)
-        {
-            for (int i = 0; i < this.width; i++)
-            {
-                int index = 4 * (j * this.width + i);
-                other.data.putInt(index, this.data.getInt(index));
-            }
-        }
+        if (this.width != other.width || this.height != other.height || this.channels != other.channels) throw new RuntimeException("Sprites are not same size.");
+    
+        for (int i = 0, n = this.width * this.height * this.channels; i < n; i++) other.data.put(i, this.data.get(i));
     }
     
     public Colorc getPixel(int x, int y)
@@ -161,24 +108,29 @@ public class Sprite
         {
             if (0 <= x && x < this.width && 0 <= y && y < this.height)
             {
-                return this.COLOR.fromInt(this.data.getInt(4 * (y * this.width + x)));
+                int index = this.channels * (y * this.width + x);
+                for (int i = 0; i < this.channels; i++) this.COLOR.setComponent(i, this.data.get(index + i));
+                return this.COLOR;
             }
             else
             {
-                return this.COLOR.set(0, 0, 0, 0);
+                return this.COLOR.set(0, 0);
             }
         }
         else
         {
-            return this.COLOR.fromInt(this.data.getInt(4 * (Math.abs(y % this.height) * this.width + Math.abs(x % this.width))));
+            int index = this.channels * (Math.abs(y % this.height) * this.width + Math.abs(x % this.width));
+            for (int i = 0; i < this.channels; i++) this.COLOR.setComponent(i, this.data.get(index + i));
+            return this.COLOR;
         }
     }
     
-    public void setPixel(int x, int y, Colorc p)
+    public void setPixel(int x, int y, Colorc color)
     {
         if (0 <= x && x < this.width && 0 <= y && y < this.height)
         {
-            this.data.putInt(4 * (y * this.width + x), p.toInt());
+            int index = this.channels * (y * this.width + x);
+            for (int i = 0; i < this.channels; i++) this.data.put(index + i, (byte) color.getComponent(i));
         }
     }
     
@@ -223,49 +175,92 @@ public class Sprite
         }
     }
     
-    public void clear(Colorc p)
+    public void clear(Colorc color)
     {
-        int color = p.toInt();
-        
-        for (int j = 0; j < this.height; j++)
+        for (int i = 0; i < this.width * this.height; i++)
         {
-            for (int i = 0; i < this.width; i++)
-            {
-                this.data.putInt(4 * (j * this.width + i), color);
-            }
+            for (int j = 0; j < this.channels; j++) this.data.put(i * this.channels + j, (byte) color.getComponent(j));
         }
     }
     
-    public void savePGESprite(String imagePath)
+    public void saveSprite(String filePath)
     {
         if (this.data == null) return;
         
-        try (FileOutputStream out = new FileOutputStream(imagePath))
+        try (FileOutputStream out = new FileOutputStream(filePath))
         {
             out.write(this.width);
             out.write(this.height);
-            out.write(this.components);
-            for (int i = 0; i < this.width * this.height; i++)
-            {
-                out.write(this.data.getInt(4 * i));
-            }
+            out.write(this.channels);
+            for (int i = 0; i < this.width * this.height * this.channels; i++) out.write(this.data.get(i));
         }
         catch (IOException e)
         {
-            System.err.println("PGE Sprite could not be saved: " + imagePath);
+            Sprite.LOGGER.error("Sprite could not be saved: " + filePath);
         }
     }
     
-    public void saveSprite(String imagePath)
+    public void saveImage(String imagePath)
     {
         if (this.data == null) return;
         
         if (!imagePath.endsWith(".png")) imagePath += ".png";
-    
-        if (!stbi_write_png(imagePath, this.width, this.height, this.components, this.data, this.width * 4))
+        
+        if (!stbi_write_png(imagePath, this.width, this.height, this.channels, this.data, this.width * 4))
         {
-            System.err.println("Sprite could not be saved: " + imagePath);
+            Sprite.LOGGER.error("Image could not be saved: " + imagePath);
         }
+    }
+    
+    public static Sprite loadSprite(String filePath)
+    {
+        try (FileInputStream in = new FileInputStream(getPath(filePath).toString()))
+        {
+            int width    = in.read();
+            int height   = in.read();
+            int channels = in.read();
+            
+            ByteBuffer data = BufferUtils.createByteBuffer(width * height * channels);
+            
+            for (int i = 0; in.available() > 0; i++) data.put(i, (byte) in.read());
+            
+            return new Sprite(width, height, channels, data);
+        }
+        catch (IOException e)
+        {
+            Sprite.LOGGER.error("Sprite could not be loaded: " + filePath);
+        }
+        
+        return new Sprite(0, 0, 0, (ByteBuffer) null);
+    }
+    
+    public static Sprite loadImage(String imagePath, boolean flip)
+    {
+        String actualPath = getPath(imagePath).toString();
+        
+        stbi_set_flip_vertically_on_load(flip);
+        
+        int[] width    = new int[1];
+        int[] height   = new int[1];
+        int[] channels = new int[1];
+        
+        if (stbi_info(actualPath, width, height, channels))
+        {
+            return new Sprite(width[0], height[0], channels[0], stbi_load(actualPath, width, height, channels, 0));
+        }
+        else
+        {
+            Sprite.LOGGER.error("Failed to load Sprite: " + imagePath);
+        }
+        
+        stbi_set_flip_vertically_on_load(false);
+        
+        return new Sprite(0, 0, 0, (ByteBuffer) null);
+    }
+    
+    public static Sprite loadImage(String imagePath)
+    {
+        return loadImage(imagePath, false);
     }
     
     public enum Mode

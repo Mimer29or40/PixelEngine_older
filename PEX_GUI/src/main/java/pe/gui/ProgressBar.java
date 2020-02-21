@@ -141,21 +141,20 @@ public class ProgressBar extends Label
     protected void drawWindow(double elapsedTime)
     {
         super.drawWindow(elapsedTime);
-        
-        fillRect(getForegroundOriginX(),
-                 getForegroundOriginY(),
-                 (int) (this.value * getForegroundWidth()),
-                 getForegroundHeight(),
-                 this.enabled ? this.barColor : this.disabledBarColor);
-        
+    
+        renderer().noStroke();
+        renderer().fill(this.enabled ? this.barColor : this.disabledBarColor);
+        renderer().drawRect(getForegroundOriginX(), getForegroundOriginY(), (int) (this.value * getForegroundWidth()), getForegroundHeight());
+    
         if (canDrawValue())
         {
             String text = (int) Math.floor(this.value * 100) + "%";
-    
+        
             int x = (getForegroundWidth() - textWidth(text)) / 2 + getForegroundOriginX();
             int y = (getForegroundHeight() - textHeight(text)) / 2 + getForegroundOriginY();
-    
-            drawString(x, y, text, Color.BLACK);
+        
+            renderer().stroke(Color.BLACK);
+            renderer().drawString(x, y, text);
         }
     }
 }

@@ -2,7 +2,7 @@ package pe.neat;
 
 import pe.Sprite;
 import pe.color.Color;
-import pe.draw.DrawMode;
+import pe.render.DrawMode;
 import pe.util.Pair;
 
 import java.util.ArrayList;
@@ -132,10 +132,10 @@ public class GenomeDrawer
         }
     
         Sprite   sprite = new Sprite(imageWidth, imageHeight, this.backgroundColor);
-        Sprite   prev   = drawTarget();
-        DrawMode mode   = drawMode();
-        drawTarget(sprite);
-        drawMode(DrawMode.BLEND);
+        Sprite   prev   = renderer().drawTarget();
+        DrawMode mode   = renderer().drawMode();
+        renderer().drawTarget(sprite);
+        renderer().drawMode(DrawMode.BLEND);
     
         // Draw connections first so they are under nodes
         for (Connection con : genome.getConnections())
@@ -146,24 +146,31 @@ public class GenomeDrawer
             {
                 int   width = (int) Math.max(Math.abs(con.weight) * 5 * this.imageScale, 1);
                 Color color = con.weight > 0 ? this.posConnColor : this.negConnColor;
-                drawLine(inNode.a, inNode.b, outNode.a, outNode.b, width, color);
+                renderer().noFill();
+                renderer().stroke(color);
+                renderer().strokeWeight(width);
+                renderer().drawLine(inNode.a, inNode.b, outNode.a, outNode.b);
             }
             else if (this.drawDisabledConnections)
             {
-                drawLine(inNode.a, inNode.b, outNode.a, outNode.b, this.imageScale, this.disConnColor);
+                renderer().noFill();
+                renderer().stroke(this.disConnColor);
+                renderer().strokeWeight(this.imageScale);
+                renderer().drawLine(inNode.a, inNode.b, outNode.a, outNode.b);
             }
         }
-        
+        renderer().strokeWeight(1);
+    
         // Draw nodes
         for (Node node : genome.getNodes())
         {
             String text = "" + node.id;
-    
+        
             int w = textWidth(text, this.imageScale);
             int h = textHeight(text, this.imageScale);
-    
+        
             Pair<Integer, Integer> pos = nodes.get(node.id);
-    
+
             Color color = new Color(Color.BLANK);
             switch (node.type)
             {
@@ -180,22 +187,28 @@ public class GenomeDrawer
                     color = this.biasNodeColor;
                     break;
             }
-    
+        
+            renderer().noStroke();
             if (w + this.nodeRadius * this.imageScale > (this.nodeRadius + 1) * this.imageScale)
             {
-                fillEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale + this.imageScale, (this.nodeRadius + 1) * this.imageScale, this.nodeBorderColor);
-                fillEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale, this.nodeRadius * this.imageScale, color);
+                renderer().fill(this.nodeBorderColor);
+                renderer().drawEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale + this.imageScale, (this.nodeRadius + 1) * this.imageScale);
+                renderer().fill(color);
+                renderer().drawEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale, this.nodeRadius * this.imageScale);
             }
             else
             {
-                fillCircle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale, this.nodeBorderColor);
-                fillCircle(pos.a, pos.b, this.nodeRadius * this.imageScale, color);
+                renderer().fill(this.nodeBorderColor);
+                renderer().drawCircle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale);
+                renderer().fill(color);
+                renderer().drawCircle(pos.a, pos.b, this.nodeRadius * this.imageScale);
             }
-            drawString(pos.a - w / 2, pos.b - h / 2, text, this.textColor, this.imageScale);
+            renderer().stroke(this.textColor);
+            renderer().drawString(pos.a - w / 2, pos.b - h / 2, text, this.imageScale);
         }
     
-        drawTarget(prev);
-        drawMode(mode);
+        renderer().drawTarget(prev);
+        renderer().drawMode(mode);
         return sprite;
     }
     

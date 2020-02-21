@@ -165,6 +165,7 @@ public class Label extends Window
     {
         super.drawWindow(elapsedTime);
     
+        renderer().stroke(getTextColor());
         if (textWidth(getText(), getScale()) > getForegroundWidth())
         {
             List<String> lines = clipTextWidth(getText(), getScale(), getForegroundWidth());
@@ -175,13 +176,13 @@ public class Label extends Window
             for (String line : lines)
             {
                 int textX = getForegroundWidth() - textWidth(line, getScale());
-                
+    
                 int hPos = getTextPosition().getHorizontal();
-                
+    
                 int x = hPos > 0 ? textX : hPos == 0 ? textX / 2 : 0;
-                
-                drawString(getForegroundOriginX() + x, getForegroundOriginY() + y, line, getTextColor(), getScale());
-                
+    
+                renderer().drawString(getForegroundOriginX() + x, getForegroundOriginY() + y, line, getScale());
+    
                 y += 8 * getScale();
             }
             
@@ -190,14 +191,14 @@ public class Label extends Window
         {
             int textX = getForegroundWidth() - textWidth(getText(), getScale());
             int textY = getForegroundHeight() - textHeight(getText(), getScale());
-        
+    
             int hPos = getTextPosition().getHorizontal();
             int vPos = getTextPosition().getVertical();
-        
+    
             int x = hPos > 0 ? textX : hPos == 0 ? textX / 2 : 0;
             int y = vPos > 0 ? textY : vPos == 0 ? textY / 2 : 0;
-        
-            drawString(getForegroundOriginX() + x, getForegroundOriginY() + y, getText(), getTextColor(), getScale());
+    
+            renderer().drawString(getForegroundOriginX() + x, getForegroundOriginY() + y, getText(), getScale());
         }
     }
 }

@@ -1,4 +1,4 @@
-package pe.draw;
+package pe.render;
 
 @SuppressWarnings("unused")
 public class DrawPattern

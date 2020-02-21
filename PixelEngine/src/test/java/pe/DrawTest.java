@@ -2,7 +2,7 @@ package pe;
 
 import pe.color.Color;
 import pe.color.Colorc;
-import pe.draw.DrawPattern;
+import pe.render.DrawPattern;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class DrawTest extends PixelEngine
             }
             for (y = y1; y <= y2; y++)
             {
-                if (pattern.shouldDraw()) draw(x1, y, p);
+                if (pattern.shouldDraw()) renderer().draw(x1, y);
             }
             return;
         }
@@ -44,7 +44,7 @@ public class DrawTest extends PixelEngine
             }
             for (x = x1; x <= x2; x++)
             {
-                if (pattern.shouldDraw()) draw(x, y1, p);
+                if (pattern.shouldDraw()) renderer().draw(x, y1);
             }
             return;
         }
@@ -75,7 +75,7 @@ public class DrawTest extends PixelEngine
             
             for (x = x1; x <= x2; x++)
             {
-                if (pattern.shouldDraw()) draw(x, y, p);
+                if (pattern.shouldDraw()) renderer().draw(x, y);
                 if (d > 0)
                 {
                     y += yi;
@@ -110,7 +110,7 @@ public class DrawTest extends PixelEngine
             
             for (y = y1; y <= y2; y++)
             {
-                if (pattern.shouldDraw()) draw(x, y, p);
+                if (pattern.shouldDraw()) renderer().draw(x, y);
                 if (d > 0)
                 {
                     x = x + xi;
@@ -133,7 +133,7 @@ public class DrawTest extends PixelEngine
         {
             for (; y1 <= y2; y1 += sy)
             {
-                if (pattern.shouldDraw()) draw(x1, y1, p);
+                if (pattern.shouldDraw()) renderer().draw(x1, y1);
             }
             return;
         }
@@ -142,14 +142,14 @@ public class DrawTest extends PixelEngine
         {
             for (; x1 <= x2; x1 += sx)
             {
-                if (pattern.shouldDraw()) draw(x1, y1, p);
+                if (pattern.shouldDraw()) renderer().draw(x1, y1);
             }
             return;
         }
         
         for (; ; )
         {  /* loop */
-            if (pattern.shouldDraw()) draw(x1, y1, p);
+            if (pattern.shouldDraw()) renderer().draw(x1, y1);
             if (x1 == x2 && y1 == y2) break;
             e2 = err << 1;
             if (e2 >= -dy)
@@ -179,7 +179,7 @@ public class DrawTest extends PixelEngine
             {
                 for (; y1 <= y2; y1 += sy)
                 {
-                    if (pattern.shouldDraw()) draw(x1, y1, p);
+                    if (pattern.shouldDraw()) renderer().draw(x1, y1);
                 }
                 return;
             }
@@ -188,14 +188,14 @@ public class DrawTest extends PixelEngine
             {
                 for (; x1 <= x2; x1 += sx)
                 {
-                    if (pattern.shouldDraw()) draw(x1, y1, p);
+                    if (pattern.shouldDraw()) renderer().draw(x1, y1);
                 }
                 return;
             }
             
             for (; ; )
             {  /* loop */
-                if (pattern.shouldDraw()) draw(x1, y1, p);
+                if (pattern.shouldDraw()) renderer().draw(x1, y1);
                 if (x1 == x2 && y1 == y2) break;
                 e2 = err << 1;
                 if (e2 >= -dy)
@@ -255,13 +255,13 @@ public class DrawTest extends PixelEngine
             for (width = (width + 1) / 2; ; )
             {
                 shouldDraw = pattern.shouldDraw();/* pixel loop */
-                if (shouldDraw) draw(x1, y1, p);
+                if (shouldDraw) renderer().draw(x1, y1);
                 e2 = err << 1;
                 if (e2 >= -dx)
                 {
                     for (e3 = e2 + dy, y3 = y1; e3 < ed * width && (y2 != y3 || dx > dy); e3 += dx)
                     {
-                        if (shouldDraw) draw(x1, y3 += sy, p);
+                        if (shouldDraw) renderer().draw(x1, y3 += sy);
                     }
                     if (x1 == x2) break;
                     err -= dy;
@@ -271,7 +271,7 @@ public class DrawTest extends PixelEngine
                 {
                     for (e3 = dx - e2, x3 = x1; e3 < ed * width && (x2 != x3 || dx < dy); e3 += dy)
                     {
-                        if (shouldDraw) draw(x3 += sx, y1, p);
+                        if (shouldDraw) renderer().draw(x3 += sx, y1);
                     }
                     if (y1 == y2) break;
                     err += dx;
@@ -290,15 +290,15 @@ public class DrawTest extends PixelEngine
         
         while (y0 >= x0) // only formulate 1/8 of circle
         {
-            if ((mask & 0x01) > 0) draw(x + x0, y - y0, p);
-            if ((mask & 0x02) > 0) draw(x + y0, y - x0, p);
-            if ((mask & 0x04) > 0) draw(x + y0, y + x0, p);
-            if ((mask & 0x08) > 0) draw(x + x0, y + y0, p);
-            if ((mask & 0x10) > 0) draw(x - x0, y + y0, p);
-            if ((mask & 0x20) > 0) draw(x - y0, y + x0, p);
-            if ((mask & 0x40) > 0) draw(x - y0, y - x0, p);
-            if ((mask & 0x80) > 0) draw(x - x0, y - y0, p);
-            
+            if ((mask & 0x01) > 0) renderer().draw(x + x0, y - y0);
+            if ((mask & 0x02) > 0) renderer().draw(x + y0, y - x0);
+            if ((mask & 0x04) > 0) renderer().draw(x + y0, y + x0);
+            if ((mask & 0x08) > 0) renderer().draw(x + x0, y + y0);
+            if ((mask & 0x10) > 0) renderer().draw(x - x0, y + y0);
+            if ((mask & 0x20) > 0) renderer().draw(x - y0, y + x0);
+            if ((mask & 0x40) > 0) renderer().draw(x - y0, y - x0);
+            if ((mask & 0x80) > 0) renderer().draw(x - x0, y - y0);
+    
             if (d < 0)
             {
                 d += 4 * x0++ + 6;
@@ -316,10 +316,10 @@ public class DrawTest extends PixelEngine
         int xr = -radius, yr = 0, err = 2 - 2 * radius;
         do
         {
-            draw(x - xr, y + yr, p); /*   I. Quadrant */
-            draw(x - yr, y - xr, p); /*  II. Quadrant */
-            draw(x + xr, y - yr, p); /* III. Quadrant */
-            draw(x + yr, y + xr, p); /*  IV. Quadrant */
+            renderer().draw(x - xr, y + yr); /*   I. Quadrant */
+            renderer().draw(x - yr, y - xr); /*  II. Quadrant */
+            renderer().draw(x + xr, y - yr); /* III. Quadrant */
+            renderer().draw(x + yr, y + xr); /*  IV. Quadrant */
             radius = err;
             if (radius <= yr) err += ++yr * 2 + 1;            /* e_xy+e_y < 0 */
             if (radius > xr || err > yr) err += ++xr * 2 + 1; /* e_xy+e_x > 0 or no 2nd y-step */
@@ -333,11 +333,11 @@ public class DrawTest extends PixelEngine
         
         while (y0 >= x0)
         {
-            for (i = x - x0; i <= x + x0; i++) draw(i, y - y0, p);
-            for (i = x - y0; i <= x + y0; i++) draw(i, y - x0, p);
-            for (i = x - x0; i <= x + x0; i++) draw(i, y + y0, p);
-            for (i = x - y0; i <= x + y0; i++) draw(i, y + x0, p);
-            
+            for (i = x - x0; i <= x + x0; i++) renderer().draw(i, y - y0);
+            for (i = x - y0; i <= x + y0; i++) renderer().draw(i, y - x0);
+            for (i = x - x0; i <= x + x0; i++) renderer().draw(i, y + y0);
+            for (i = x - y0; i <= x + y0; i++) renderer().draw(i, y + x0);
+    
             if (d < 0)
             {
                 d += 4 * x0++ + 6;
@@ -355,8 +355,8 @@ public class DrawTest extends PixelEngine
         int xr = -radius, yr = 0, err = 2 - 2 * radius, i;
         do
         {
-            for (i = x - -xr; i <= x + -xr; i++) draw(i, y - yr, p); /*   I-II. Quadrant */
-            for (i = x - -xr; i <= x + -xr; i++) draw(i, y + yr, p); /* III-IV. Quadrant */
+            for (i = x - -xr; i <= x + -xr; i++) renderer().draw(i, y - yr); /*   I-II. Quadrant */
+            for (i = x - -xr; i <= x + -xr; i++) renderer().draw(i, y + yr); /* III-IV. Quadrant */
             // draw(x - xr, y + yr, p); /*   I. Quadrant */
             // draw(x - yr, y - xr, p); /*  II. Quadrant */
             // draw(x + xr, y - yr, p); /* III. Quadrant */
@@ -389,8 +389,8 @@ public class DrawTest extends PixelEngine
         
         do
         {
-            for (int i = x0; i < x1; i++) draw(i, y0, p);
-            for (int i = x0; i < x1; i++) draw(i, y1, p);
+            for (int i = x0; i < x1; i++) renderer().draw(i, y0);
+            for (int i = x0; i < x1; i++) renderer().draw(i, y1);
             e2 = 2 * err;
             if (e2 <= dy)
             {
@@ -408,10 +408,10 @@ public class DrawTest extends PixelEngine
         
         while (y0 - y1 < height)
         {  /* too early stop of flat ellipses w=1 */
-            draw(x0 - 1, y0, p); /* -> finish tip of ellipse */
-            draw(x1 + 1, y0++, p);
-            draw(x0 - 1, y1, p);
-            draw(x1 + 1, y1--, p);
+            renderer().draw(x0 - 1, y0); /* -> finish tip of ellipse */
+            renderer().draw(x1 + 1, y0++);
+            renderer().draw(x0 - 1, y1);
+            renderer().draw(x1 + 1, y1--);
         }
     }
     
@@ -447,7 +447,7 @@ public class DrawTest extends PixelEngine
     @Override
     protected boolean draw(double elapsedTime)
     {
-        clear();
+        renderer().clear(51);
         
         count++;
         

@@ -89,14 +89,14 @@ public class Profiler
             {
                 LOGGER.error("Cannot pop from profiler if profiler tick hasn't started");
             }
-            else if (this.times.isEmpty())
+            else if (this.sections.isEmpty())
             {
                 LOGGER.error("Tried to pop one too many times");
             }
             else
             {
                 Pair<String, Long> data = this.sections.pop();
-                
+    
                 String section = data.a;
                 long   delta   = System.nanoTime() - data.b;
                 this.times.put(section, delta);

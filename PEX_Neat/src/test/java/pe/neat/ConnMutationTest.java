@@ -32,7 +32,7 @@ public class ConnMutationTest
         genome.addNode(new Node(nodeInnovation.inc(), Node.Type.HIDDEN, 1));
         
         String fileName = name + "/generation_0";
-        drawer.generateGraph(genome).saveSprite(fileName);
+        drawer.generateGraph(genome).saveImage(fileName);
         // genome.save(fileName);
     }
     
@@ -43,7 +43,7 @@ public class ConnMutationTest
             print(i);
             genome.connectionMutation(random, connInnovation, 10);
             String fileName = String.format("%s/generation_%s", name, i + 1);
-            drawer.generateGraph(genome).saveSprite(fileName);
+            drawer.generateGraph(genome).saveImage(fileName);
             // genome.save(fileName);
         }
     }

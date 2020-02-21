@@ -1,6 +1,5 @@
 package pe;
 
-import pe.color.Color;
 import pe.gui.*;
 
 import java.util.ArrayList;
@@ -115,7 +114,7 @@ public class WindowTest extends PixelEngine
     @Override
     protected boolean draw(double elapsedTime)
     {
-        clear();
+        renderer().clear();
         
         if (Keyboard.M.down()) menu.setVisible(!menu.isVisible());
         
@@ -125,7 +124,8 @@ public class WindowTest extends PixelEngine
             for (String s : events)
             {
                 int c = (int) map(nLog, 0, events.size() - 1, 60, 255);
-                drawString(menu.getWidth() + 2, nLog * 8 + 2, s, new Color(c, c, c));
+                renderer().stroke(c, c, c);
+                renderer().drawString(menu.getWidth() + 2, nLog * 8 + 2, s);
                 nLog++;
             }
         }

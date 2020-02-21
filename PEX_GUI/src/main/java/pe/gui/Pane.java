@@ -3,10 +3,10 @@ package pe.gui;
 import pe.PixelEngine;
 import pe.Sprite;
 import pe.color.Color;
-import pe.draw.DrawMode;
+import pe.render.DrawMode;
 
-import static pe.PixelEngine.clear;
-import static pe.PixelEngine.drawSprite;
+// import static pe.PixelEngine.clear;
+// import static pe.PixelEngine.drawSprite;
 
 public class Pane extends Window
 {
@@ -137,23 +137,23 @@ public class Pane extends Window
     @Override
     protected void drawChildren(double elapsedTime)
     {
-        PixelEngine.drawMode(DrawMode.NORMAL);
-        PixelEngine.drawTarget(getChildSprite());
-        clear(Color.BLANK);
+        PixelEngine.renderer().drawMode(DrawMode.NORMAL);
+        PixelEngine.renderer().drawTarget(getChildSprite());
+        PixelEngine.renderer().clear(Color.BLANK);
     
         for (Window child : getChildren())
         {
             child.draw(elapsedTime);
             if (child.isVisible())
             {
-                PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.drawTarget(child == this.title ? getSprite() : getChildSprite());
-                drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
+                PixelEngine.renderer().drawMode(DrawMode.NORMAL);
+                PixelEngine.renderer().drawTarget(child == this.title ? getSprite() : getChildSprite());
+                PixelEngine.renderer().drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
     
-        PixelEngine.drawMode(DrawMode.BLEND);
-        PixelEngine.drawTarget(getSprite());
-        drawSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
+        PixelEngine.renderer().drawMode(DrawMode.BLEND);
+        PixelEngine.renderer().drawTarget(getSprite());
+        PixelEngine.renderer().drawSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
     }
 }

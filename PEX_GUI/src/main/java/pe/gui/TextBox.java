@@ -10,7 +10,7 @@ import pe.gui.event.ITextEntered;
 import java.util.HashSet;
 import java.util.Set;
 
-import static pe.PixelEngine.drawLine;
+import static pe.PixelEngine.renderer;
 import static pe.PixelEngine.scaleToPixels;
 
 public class TextBox extends Label
@@ -357,7 +357,8 @@ public class TextBox extends Label
         {
             int cursorX = getForegroundOriginX() + scaleToPixels(getScale()) * this.cursorPos;
             int cursorY = getForegroundOriginY();
-            drawLine(cursorX, cursorY, cursorX, cursorY + getForegroundHeight() - 1, this.textColor);
+            renderer().stroke(this.textColor);
+            renderer().drawLine(cursorX, cursorY, cursorX, cursorY + getForegroundHeight() - 1);
         }
     }
 }

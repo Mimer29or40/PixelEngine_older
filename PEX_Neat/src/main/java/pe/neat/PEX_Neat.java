@@ -4,11 +4,8 @@ import pe.Logger;
 import pe.PEX;
 import pe.Profiler;
 import pe.Sprite;
-import pe.draw.DrawMode;
 
 import java.util.function.Supplier;
-
-import static pe.PixelEngine.*;
 
 public class PEX_Neat extends PEX
 {
@@ -281,8 +278,8 @@ public class PEX_Neat extends PEX
                 if (organism.alive)
                 {
                     organism.draw(elapsedTime);
-                    drawString(1, 1, "Fitness: " + Math.round(organism.fitness * 100) / 100);
-                    drawString(1, 10, "Generation: " + (population.generation + 1));
+                    // drawString(1, 1, "Fitness: " + Math.round(organism.fitness * 100) / 100);
+                    // drawString(1, 10, "Generation: " + (population.generation + 1));
                     break;
                 }
             }
@@ -317,12 +314,12 @@ public class PEX_Neat extends PEX
         
             int x = 0;
             int y = 0;
-            drawMode(DrawMode.MASK);
+            // drawMode(DrawMode.MASK);
         
             if (PEX_Neat.runThroughSpecies)
             {
                 Sprite sprite = PEX_Neat.drawGenome.generateGraph(PEX_Neat.speciesChamp.brain);
-                drawSprite(x, y, sprite);
+                // drawSprite(x, y, sprite);
             }
             else if (PEX_Neat.runBest)
             {

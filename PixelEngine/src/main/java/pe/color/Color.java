@@ -107,12 +107,21 @@ public class Color implements Colorc
     }
     
     /**
-     * @return the value of the r component
+     * @return the value of the r component [0..255]
      */
     @Override
     public int r()
     {
         return this.r;
+    }
+    
+    /**
+     * @return the value of the r component [0..1]
+     */
+    @Override
+    public float rf()
+    {
+        return (float) r() / 255F;
     }
     
     public Color r(Number r)
@@ -122,12 +131,21 @@ public class Color implements Colorc
     }
     
     /**
-     * @return the value of the g component
+     * @return the value of the g component [0..255]
      */
     @Override
     public int g()
     {
         return this.g;
+    }
+    
+    /**
+     * @return the value of the g component [0..1]
+     */
+    @Override
+    public float gf()
+    {
+        return (float) g() / 255F;
     }
     
     public Color g(Number g)
@@ -137,12 +155,21 @@ public class Color implements Colorc
     }
     
     /**
-     * @return the value of the b component
+     * @return the value of the b component [0..255]
      */
     @Override
     public int b()
     {
         return this.b;
+    }
+    
+    /**
+     * @return the value of the b component [0..1]
+     */
+    @Override
+    public float bf()
+    {
+        return (float) b() / 255F;
     }
     
     public Color b(Number b)
@@ -152,12 +179,21 @@ public class Color implements Colorc
     }
     
     /**
-     * @return the value of the a component
+     * @return the value of the a component [0..255]
      */
     @Override
     public int a()
     {
         return this.a;
+    }
+    
+    /**
+     * @return the value of the a component [0..1]
+     */
+    @Override
+    public float af()
+    {
+        return (float) a() / 255F;
     }
     
     public Color a(Number a)
@@ -229,7 +265,7 @@ public class Color implements Colorc
      * @throws IllegalArgumentException if <code>component</code> is not within <code>[0..3]</code>
      */
     @Override
-    public int get(int component) throws IllegalArgumentException
+    public int getComponent(int component) throws IllegalArgumentException
     {
         switch (component)
         {
@@ -241,6 +277,23 @@ public class Color implements Colorc
                 return this.b;
             case 3:
                 return this.a;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+    
+    public Color setComponent(int component, Number value) throws IllegalArgumentException
+    {
+        switch (component)
+        {
+            case 0:
+                return r(value);
+            case 1:
+                return g(value);
+            case 2:
+                return b(value);
+            case 3:
+                return a(value);
             default:
                 throw new IllegalArgumentException();
         }
@@ -366,7 +419,7 @@ public class Color implements Colorc
     @Override
     public int maxComponent()
     {
-        return get(maxComponentIndex());
+        return getComponent(maxComponentIndex());
     }
     
     /**
@@ -376,7 +429,7 @@ public class Color implements Colorc
      */
     public int midComponent()
     {
-        return get(midComponentIndex());
+        return getComponent(midComponentIndex());
     }
     
     /**
@@ -387,7 +440,7 @@ public class Color implements Colorc
     @Override
     public int minComponent()
     {
-        return get(minComponentIndex());
+        return getComponent(minComponentIndex());
     }
     
     /**
@@ -605,7 +658,7 @@ public class Color implements Colorc
     
     private static int toColorInt(Number x)
     {
-        return (x instanceof Float ? (int) ((float) x * 255) : x instanceof Double ? (int) ((double) x * 255) : (int) x) & 0xFF;
+        return (x instanceof Float ? (int) ((float) x * 255) : x instanceof Double ? (int) ((double) x * 255) : x instanceof Byte ? (byte) x : (int) x) & 0xFF;
     }
     
     public static Color random(int lower, int upper, boolean alpha, Color out)

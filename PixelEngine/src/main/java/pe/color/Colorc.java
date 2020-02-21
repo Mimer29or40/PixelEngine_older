@@ -11,24 +11,44 @@ import pe.PixelEngine;
 public interface Colorc
 {
     /**
-     * @return the value of the r component
+     * @return the value of the r component [0..255]
      */
     int r();
     
     /**
-     * @return the value of the g component
+     * @return the value of the r component [0..1]
+     */
+    float rf();
+    
+    /**
+     * @return the value of the g component [0..255]
      */
     int g();
     
     /**
-     * @return the value of the b component
+     * @return the value of the g component [0..1]
+     */
+    float gf();
+    
+    /**
+     * @return the value of the b component [0..255]
      */
     int b();
     
     /**
-     * @return the value of the a component
+     * @return the value of the b component [0..1]
+     */
+    float bf();
+    
+    /**
+     * @return the value of the a component [0..255]
      */
     int a();
+    
+    /**
+     * @return the value of the a component [0..1]
+     */
+    float af();
     
     /**
      * Get the value of the specified component of this color.
@@ -37,7 +57,7 @@ public interface Colorc
      * @return the value
      * @throws IllegalArgumentException if <code>component</code> is not within <code>[0..3]</code>
      */
-    int get(int component) throws IllegalArgumentException;
+    int getComponent(int component) throws IllegalArgumentException;
     
     /**
      * Compare the color components of <code>this</code> color with the given <code>(r, g, b, a)</code>

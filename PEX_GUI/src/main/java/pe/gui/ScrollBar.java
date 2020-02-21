@@ -4,7 +4,7 @@ import pe.Mouse;
 import pe.color.Color;
 import pe.gui.event.IScrolled;
 
-import static pe.PixelEngine.*;
+import static pe.PixelEngine.renderer;
 
 public class ScrollBar extends Window
 {
@@ -136,14 +136,16 @@ public class ScrollBar extends Window
     protected void drawWindow(double elapsedTime)
     {
         super.drawWindow(elapsedTime);
-        
+    
+        renderer().noFill();
+        renderer().stroke(Color.BLACK);
         switch (this.orientation)
         {
             case HORIZONTAL:
-                drawRect(mousePos, 0, this.scrollSize, getForegroundHeight(), Color.BLACK);
+                renderer().drawRect(mousePos, 0, this.scrollSize, getForegroundHeight());
                 break;
             case VERTICAL:
-                drawRect(0, mousePos, getForegroundWidth(), this.scrollSize, Color.BLACK);
+                renderer().drawRect(0, mousePos, getForegroundWidth(), this.scrollSize);
                 break;
         }
     }
@@ -197,29 +199,30 @@ public class ScrollBar extends Window
         @Override
         protected void drawWindow(double elapsedTime)
         {
-            clear(Color.BLANK);
-            
+            renderer().clear(Color.BLANK);
+    
             int centerX = getForegroundWidth() / 2, centerY = getForegroundHeight() / 2;
             int leftX   = (getForegroundWidth() - getForegroundHeight()) / 2, rightX = (getForegroundWidth() + getForegroundHeight()) / 2;
             int topY    = (getForegroundHeight() - getForegroundWidth()) / 2, bottomY = (getForegroundHeight() + getForegroundWidth()) / 2;
-            
+    
+            renderer().stroke(getTextColor());
             switch (this.end)
             {
                 case TOP:
-                    drawLine(centerX, 0, 0, getForegroundHeight(), getTextColor());
-                    drawLine(centerX, 0, getForegroundWidth(), getForegroundHeight(), getTextColor());
+                    renderer().drawLine(centerX, 0, 0, getForegroundHeight());
+                    renderer().drawLine(centerX, 0, getForegroundWidth(), getForegroundHeight());
                     break;
                 case BOTTOM:
-                    drawLine(centerX, getForegroundHeight(), 0, 0, getTextColor());
-                    drawLine(centerX, getForegroundHeight(), getForegroundWidth(), 0, getTextColor());
+                    renderer().drawLine(centerX, getForegroundHeight(), 0, 0);
+                    renderer().drawLine(centerX, getForegroundHeight(), getForegroundWidth(), 0);
                     break;
                 case LEFT:
-                    drawLine(0, centerY, getForegroundWidth(), 0, getTextColor());
-                    drawLine(0, centerY, getForegroundWidth(), getForegroundHeight(), getTextColor());
+                    renderer().drawLine(0, centerY, getForegroundWidth(), 0);
+                    renderer().drawLine(0, centerY, getForegroundWidth(), getForegroundHeight());
                     break;
                 case RIGHT:
-                    drawLine(getForegroundWidth(), centerY, 0, 0, getTextColor());
-                    drawLine(getForegroundWidth(), centerY, 0, getForegroundHeight(), getTextColor());
+                    renderer().drawLine(getForegroundWidth(), centerY, 0, 0);
+                    renderer().drawLine(getForegroundWidth(), centerY, 0, getForegroundHeight());
                     break;
                 default:
             }

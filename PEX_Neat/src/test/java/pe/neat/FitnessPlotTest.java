@@ -18,7 +18,7 @@ public class FitnessPlotTest extends PixelEngine
     
         FitnessPlotter plotter = new FitnessPlotter();
         
-        plotter.generatePlot(fitnessList).saveSprite("out/fitness.png");
+        plotter.generatePlot(fitnessList).saveImage("out/fitness.png");
         
         return false;
     }

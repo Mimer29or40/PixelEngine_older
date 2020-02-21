@@ -38,12 +38,12 @@ public class NeatTest extends PixelEngine
             {
                 for (int i = 0; i < count; i++)
                 {
-                    drawer.generateGraph(genomes[i]).saveSprite(String.format("out/%s_%s_before.png", name, i));
+                    drawer.generateGraph(genomes[i]).saveImage(String.format("out/%s_%s_before.png", name, i));
                 }
             }
             else
             {
-                drawer.generateGraph(genomes[0]).saveSprite(String.format("out/%s_before.png", name));
+                drawer.generateGraph(genomes[0]).saveImage(String.format("out/%s_before.png", name));
             }
         }
     
@@ -56,12 +56,12 @@ public class NeatTest extends PixelEngine
             {
                 for (int i = 0; i < count; i++)
                 {
-                    drawer.generateGraph(genomes[i]).saveSprite(String.format("out/%s_%s_after.png", name, i));
+                    drawer.generateGraph(genomes[i]).saveImage(String.format("out/%s_%s_after.png", name, i));
                 }
             }
             else
             {
-                drawer.generateGraph(genomes[0]).saveSprite(String.format("out/%s_after.png", name));
+                drawer.generateGraph(genomes[0]).saveImage(String.format("out/%s_after.png", name));
             }
         }
         return false;

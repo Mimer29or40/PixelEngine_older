@@ -4,7 +4,8 @@ import pe.Keyboard;
 import pe.PEX;
 import pe.Profiler;
 
-import static pe.PixelEngine.*;
+import static pe.PixelEngine.println;
+import static pe.PixelEngine.renderer;
 
 public class PEX_CBNeat extends PEX
 {
@@ -81,36 +82,36 @@ public class PEX_CBNeat extends PEX
         // fill(200);
         // textAlign(LEFT);
         // textSize(30);
-        if (showBestEachGen)
-        {
-            drawString(650, 50, "Score: " + genPlayerTemp.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-            drawString(1150, 50, "Gen: " + (genPlayerTemp.gen + 1));
-        }
-        else if (runThroughSpecies)
-        {
-            drawString(650, 50, "Score: " + speciesChamp.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-            drawString(1150, 50, "Species: " + (upToSpecies + 1));
-            drawString(50, screenHeight() / 2 + 200, "Players in this Species: " + pop.species.get(upToSpecies).players.size());
-        }
-        else if (humanPlaying)
-        {
-            drawString(650, 50, "Score: " + humanPlayer.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-        }
-        else if (runBest)
-        {
-            drawString(650, 50, "Score: " + pop.bestPlayer.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-            drawString(1150, 50, "Gen: " + pop.gen);
-        }
-        else
-        {
-            if (showBest)
-            {
-                drawString(650, 50, "Score: " + pop.pop.get(0).score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-                drawString(1150, 50, "Gen: " + pop.gen);
-                drawString(50, screenHeight() / 2 + 300, "Species: " + pop.species.size());
-                drawString(50, screenHeight() / 2 + 200, "Global Best Score: " + pop.bestScore);
-            }
-        }
+        // if (showBestEachGen)
+        // {
+        //     drawString(650, 50, "Score: " + genPlayerTemp.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+        //     drawString(1150, 50, "Gen: " + (genPlayerTemp.gen + 1));
+        // }
+        // else if (runThroughSpecies)
+        // {
+        //     drawString(650, 50, "Score: " + speciesChamp.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+        //     drawString(1150, 50, "Species: " + (upToSpecies + 1));
+        //     drawString(50, screenHeight() / 2 + 200, "Players in this Species: " + pop.species.get(upToSpecies).players.size());
+        // }
+        // else if (humanPlaying)
+        // {
+        //     drawString(650, 50, "Score: " + humanPlayer.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+        // }
+        // else if (runBest)
+        // {
+        //     drawString(650, 50, "Score: " + pop.bestPlayer.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+        //     drawString(1150, 50, "Gen: " + pop.gen);
+        // }
+        // else
+        // {
+        //     if (showBest)
+        //     {
+        //         drawString(650, 50, "Score: " + pop.pop.get(0).score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+        //         drawString(1150, 50, "Gen: " + pop.gen);
+        //         drawString(50, screenHeight() / 2 + 300, "Species: " + pop.species.size());
+        //         drawString(50, screenHeight() / 2 + 200, "Global Best Score: " + pop.bestScore);
+        //     }
+        // }
     }
     
     public PEX_CBNeat(Profiler profiler)
@@ -135,7 +136,7 @@ public class PEX_CBNeat extends PEX
     @Override
     public void beforeDraw(double elapsedTime)
     {
-        clear();
+        renderer().clear();
         
         if (Keyboard.SPACE.down())
         {

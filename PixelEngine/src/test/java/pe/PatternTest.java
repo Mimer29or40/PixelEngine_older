@@ -1,6 +1,6 @@
 package pe;
 
-import pe.draw.DrawPattern;
+import pe.render.DrawPattern;
 
 import static pe.PixelEngine.print;
 import static pe.PixelEngine.println;

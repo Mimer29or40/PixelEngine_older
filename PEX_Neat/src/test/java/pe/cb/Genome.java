@@ -533,29 +533,32 @@ public class Genome
             from = nodePoses.get(nodeNumbers.indexOf(genes.get(i).fromNode.number));
             to   = nodePoses.get(nodeNumbers.indexOf(genes.get(i).toNode.number));
             double width = map(Math.abs(genes.get(i).weight), 0, 1, 0, 5);
+            renderer().strokeWeight((int) width);
             if (genes.get(i).weight > 0)
             {
-                drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y, (int) width, new Color(0, 0, 0));
+                renderer().stroke(0, 0, 0);
+                renderer().drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y);
             }
             else
             {
-                drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y, (int) width, new Color(0, 0, 255));
+                renderer().stroke(0, 0, 255);
+                renderer().drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y);
             }
         }
         
         //draw nodes last so they appear ontop of the connection lines
         for (int i = 0; i < nodePoses.size(); i++)
         {
-            // fill(255);
-            // stroke(0);
-            // strokeWeight(1);
-            drawEllipse((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20, 20, Color.WHITE);
-            // textSize(10);
-            // fill(0);
-            // textAlign(CENTER, CENTER);
-            
-            
-            drawString((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i));
+            renderer().fill(255);
+            renderer().stroke(0);
+            renderer().strokeWeight(1);
+            renderer().drawEllipse((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20, 20);
+            // renderer().textSize(10);
+            renderer().fill(0);
+            // renderer().textAlign(CENTER, CENTER);
+    
+    
+            renderer().drawString((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i));
         }
     }
 }

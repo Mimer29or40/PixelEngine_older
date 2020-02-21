@@ -3,14 +3,12 @@ package pe.gui;
 import pe.*;
 import pe.color.Color;
 import pe.color.Colorc;
-import pe.draw.DrawMode;
 import pe.gui.event.*;
+import pe.render.DrawMode;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static pe.PixelEngine.*;
 
 @SuppressWarnings("unused")
 public class Window
@@ -844,22 +842,22 @@ public class Window
                 if (this.regen)
                 {
                     LOGGER.debug("Regen: %s", this);
-                    
+    
                     generateSprites(elapsedTime);
-                    
+    
                     this.regen = false;
                 }
-                
+    
                 LOGGER.debug("Redraw: %s", this);
     
-                PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.drawTarget(getSprite());
+                PixelEngine.renderer().drawMode(DrawMode.NORMAL);
+                PixelEngine.renderer().drawTarget(getSprite());
                 drawWindow(elapsedTime);
-                
+    
                 drawBorder(elapsedTime);
-                
+    
                 drawChildren(elapsedTime);
-                
+    
                 this.redraw = false;
             }
         }
@@ -874,12 +872,16 @@ public class Window
     
     protected void drawWindow(double elapsedTime)
     {
-        fillRect(0, 0, getWidth(), getHeight(), getBackgroundColor());
+        PixelEngine.renderer().noStroke();
+        PixelEngine.renderer().fill(getBackgroundColor());
+        PixelEngine.renderer().drawRect(0, 0, getWidth(), getHeight());
     }
     
     protected void drawBorder(double elapsedTime)
     {
-        for (int i = 0; i < getBorderSize(); i++) drawRect(i, i, getWidth() - i * 2, getHeight() - i * 2, getBorderColor());
+        PixelEngine.renderer().stroke(getBorderColor());
+        PixelEngine.renderer().noFill();
+        for (int i = 0; i < getBorderSize(); i++) PixelEngine.renderer().drawRect(i, i, getWidth() - i * 2, getHeight() - i * 2);
     }
     
     protected void drawChildren(double elapsedTime)
@@ -889,9 +891,9 @@ public class Window
             child.draw(elapsedTime);
             if (child.isVisible())
             {
-                PixelEngine.drawMode(DrawMode.NORMAL);
-                PixelEngine.drawTarget(getSprite());
-                drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
+                PixelEngine.renderer().drawMode(DrawMode.NORMAL);
+                PixelEngine.renderer().drawTarget(getSprite());
+                PixelEngine.renderer().drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
     }

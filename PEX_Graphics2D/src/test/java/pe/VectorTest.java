@@ -1,8 +1,6 @@
 package pe;
 
 import org.joml.Vector2d;
-import pe.color.Color;
-import pe.gfx2d.PEX_GFX2D;
 import pe.vector.Vector2;
 
 public class VectorTest extends PixelEngine
@@ -21,12 +19,12 @@ public class VectorTest extends PixelEngine
         Vector2d v0 = new Vector2d(0, 0);
         Vector2d v1 = new Vector2d(-1, -1);
         Vector2d v2 = new Vector2d(v1).perpendicular();
-        
+    
         v0.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
         v1.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
         v2.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
-        PEX_GFX2D.drawLine(v0, v1);
-        PEX_GFX2D.drawLine(v0, v2, Color.RED);
+        // PEX_GFX2D.drawLine(v0, v1);
+        // PEX_GFX2D.drawLine(v0, v2, Color.RED);
     
         return true;
     }
