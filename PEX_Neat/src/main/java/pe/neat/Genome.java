@@ -124,13 +124,36 @@ public class Genome
         {
             this.inputs.get(i).feedInput(inputs[i]);
         }
-        
+    
         for (Node node : this.network)
         {
             node.engage(this);
         }
-        
+    
         for (int i = 0; i < outputs.length; i++) outputs[i] = this.outputs.get(i).getOutputValue();
+    }
+    
+    /**
+     * Mutates the weights for all connections in genome
+     *
+     * @param random         The random instance
+     * @param perturbingRate The probability to nudge the weight by an amount
+     */
+    public void mutate(Random random, Counter nodeInnovation, Counter connInnovation, double perturbingRate,
+                       double weightMutationRate, double nodeMutationRate, double connectionMutationRate)
+    {
+        if (random.nextDouble() < weightMutationRate)
+        {
+            weightMutation(random, perturbingRate);
+        }
+        if (random.nextDouble() < nodeMutationRate)
+        {
+            nodeMutation(random, nodeInnovation, connInnovation);
+        }
+        if (random.nextDouble() < connectionMutationRate)
+        {
+            connectionMutation(random, connInnovation, 100);
+        }
     }
     
     /**

@@ -4,7 +4,7 @@ public abstract class PEX
 {
     protected final Profiler profiler;
     
-    protected PEX(Profiler profiler)
+    public PEX(Profiler profiler)
     {
         this.profiler = profiler;
     }

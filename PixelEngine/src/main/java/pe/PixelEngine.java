@@ -1193,7 +1193,7 @@ public class PixelEngine
     
     private static void loadExtensions()
     {
-        PixelEngine.LOGGER.info("Loading Extensions");
+        PixelEngine.LOGGER.info("Looking for Extensions");
         
         Reflections reflections = new Reflections("pe");
         for (Class<? extends PEX> ext : reflections.getSubTypesOf(PEX.class))
@@ -1201,8 +1201,8 @@ public class PixelEngine
             try
             {
                 String name = ext.getSimpleName();
-                PixelEngine.LOGGER.debug("Found: %s", name);
                 PixelEngine.extensions.put(name, ext.getConstructor(Profiler.class).newInstance(PixelEngine.PROFILER));
+                PixelEngine.LOGGER.info("Loading: %s", name);
             }
             catch (ReflectiveOperationException ignored)
             {
