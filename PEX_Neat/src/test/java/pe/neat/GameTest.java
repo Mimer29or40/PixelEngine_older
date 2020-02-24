@@ -292,12 +292,12 @@ public class GameTest extends PixelEngine
             {
                 for (Vector2dc ray : fireRays())
                 {
-                    renderer().drawLine((int) rocketPos.x(), (int) rocketPos.y(), (int) ray.x(), (int) ray.y());
-                    renderer().drawCircle((int) ray.x(), (int) ray.y(), 3);
+                    renderer().line((int) rocketPos.x(), (int) rocketPos.y(), (int) ray.x(), (int) ray.y());
+                    renderer().circle((int) ray.x(), (int) ray.y(), 3);
                 }
             }
     
-            renderer().drawString(1, 1, String.format("Score: %s", score));
+            renderer().string(1, 1, String.format("Score: %s", score));
     
             // if (!playing)
             // {
@@ -322,9 +322,9 @@ public class GameTest extends PixelEngine
     
             renderer().noStroke();
             renderer().fill(Color.GREY);
-            renderer().drawRect((screenWidth() - width) / 2 - 2, (screenHeight() - height) / 2 - 2, width + 4, height + 4);
+            renderer().rect((screenWidth() - width) / 2 - 2, (screenHeight() - height) / 2 - 2, width + 4, height + 4);
             renderer().stroke(Color.BLACK);
-            renderer().drawString((screenWidth() - width) / 2, (screenHeight() - height) / 2, text);
+            renderer().string((screenWidth() - width) / 2, (screenHeight() - height) / 2, text);
         }
         
         private void overlapScreen(Vector2d pos)
@@ -384,7 +384,7 @@ public class GameTest extends PixelEngine
     
             renderer().noFill();
             renderer().stroke(0);
-            renderer().drawTriangle(x1, y1, x2, y2, x3, y3);
+            renderer().triangle(x1, y1, x2, y2, x3, y3);
     
             if (accelerate)
             {
@@ -397,8 +397,8 @@ public class GameTest extends PixelEngine
         
                 x3 = (int) (x - cos * rocketHeight / 2 * 1.35);
                 y3 = (int) (y - sin * rocketHeight / 2 * 1.35);
-        
-                renderer().drawTriangle(x1, y1, x2, y2, x3, y3);
+    
+                renderer().triangle(x1, y1, x2, y2, x3, y3);
             }
         }
         

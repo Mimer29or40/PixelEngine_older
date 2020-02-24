@@ -144,7 +144,7 @@ public class ProgressBar extends Label
     
         renderer().noStroke();
         renderer().fill(this.enabled ? this.barColor : this.disabledBarColor);
-        renderer().drawRect(getForegroundOriginX(), getForegroundOriginY(), (int) (this.value * getForegroundWidth()), getForegroundHeight());
+        renderer().rect(getForegroundOriginX(), getForegroundOriginY(), (int) (this.value * getForegroundWidth()), getForegroundHeight());
     
         if (canDrawValue())
         {
@@ -152,9 +152,9 @@ public class ProgressBar extends Label
         
             int x = (getForegroundWidth() - textWidth(text)) / 2 + getForegroundOriginX();
             int y = (getForegroundHeight() - textHeight(text)) / 2 + getForegroundOriginY();
-        
+    
             renderer().stroke(Color.BLACK);
-            renderer().drawString(x, y, text);
+            renderer().string(x, y, text);
         }
     }
 }

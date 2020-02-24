@@ -358,7 +358,7 @@ public class TextBox extends Label
             int cursorX = getForegroundOriginX() + scaleToPixels(getScale()) * this.cursorPos;
             int cursorY = getForegroundOriginY();
             renderer().stroke(this.textColor);
-            renderer().drawLine(cursorX, cursorY, cursorX, cursorY + getForegroundHeight() - 1);
+            renderer().line(cursorX, cursorY, cursorX, cursorY + getForegroundHeight() - 1);
         }
     }
 }

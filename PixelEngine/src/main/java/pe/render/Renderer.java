@@ -178,47 +178,47 @@ public abstract class Renderer
     
     protected abstract void clearImpl();
     
-    protected abstract void draw(int x, int y, Colorc color);
+    protected abstract void point(int x, int y, Colorc color);
     
-    public void draw(int x, int y)
+    public void point(int x, int y)
     {
-        draw(x, y, this.stroke);
+        point(x, y, this.stroke);
     }
     
     // TODO - Draw Pattern
-    public abstract void drawLine(int x1, int y1, int x2, int y2);
+    public abstract void line(int x1, int y1, int x2, int y2);
     
-    public abstract void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3);
+    public abstract void bezier(int x1, int y1, int x2, int y2, int x3, int y3);
     
-    public abstract void drawCircle(int x, int y, int radius);
+    public abstract void circle(int x, int y, int radius);
     
-    public abstract void drawEllipse(int x, int y, int w, int h);
+    public abstract void ellipse(int x, int y, int w, int h);
     
-    public abstract void drawRect(int x, int y, int w, int h);
+    public abstract void rect(int x, int y, int w, int h);
     
-    public abstract void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3);
+    public abstract void triangle(int x1, int y1, int x2, int y2, int x3, int y3);
     
-    public abstract void drawPartialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h, double scale);
+    public abstract void partialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h, double scale);
     
-    public void drawPartialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h)
+    public void partialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h)
     {
-        drawPartialSprite(x, y, sprite, ox, oy, w, h, 1);
+        partialSprite(x, y, sprite, ox, oy, w, h, 1);
     }
     
-    public void drawSprite(int x, int y, Sprite sprite, double scale)
+    public void sprite(int x, int y, Sprite sprite, double scale)
     {
-        drawPartialSprite(x, y, sprite, 0, 0, sprite.getWidth(), sprite.getHeight(), scale);
+        partialSprite(x, y, sprite, 0, 0, sprite.getWidth(), sprite.getHeight(), scale);
     }
     
-    public void drawSprite(int x, int y, Sprite sprite)
+    public void sprite(int x, int y, Sprite sprite)
     {
-        drawPartialSprite(x, y, sprite, 0, 0, sprite.getWidth(), sprite.getHeight(), 1);
+        partialSprite(x, y, sprite, 0, 0, sprite.getWidth(), sprite.getHeight(), 1);
     }
     
-    public abstract void drawString(int x, int y, String text, double scale);
+    public abstract void string(int x, int y, String text, double scale);
     
-    public void drawString(int x, int y, String text)
+    public void string(int x, int y, String text)
     {
-        drawString(x, y, text, 1);
+        string(x, y, text, 1);
     }
 }

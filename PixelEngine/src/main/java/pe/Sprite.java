@@ -43,7 +43,6 @@ public class Sprite
     public Sprite(int width, int height, int channels, Colorc initial)
     {
         this(width, height, channels, BufferUtils.createByteBuffer(width * height * channels));
-        
         for (int i = 0; i < width * height; i++)
         {
             for (int j = 0; j < this.channels; j++) this.data.put(i * channels + j, (byte) initial.getComponent(j));
@@ -99,7 +98,17 @@ public class Sprite
     {
         if (this.width != other.width || this.height != other.height || this.channels != other.channels) throw new RuntimeException("Sprites are not same size.");
     
-        for (int i = 0, n = this.width * this.height * this.channels; i < n; i++) other.data.put(i, this.data.get(i));
+        if (this.channels == 4)
+        {
+            for (int i = 0; i < this.width * this.height; i++)
+            {
+                other.data.putInt(i * this.channels, this.data.getInt(i * this.channels));
+            }
+        }
+        else
+        {
+            for (int i = 0, n = this.width * this.height * this.channels; i < n; i++) other.data.put(i, this.data.get(i));
+        }
     }
     
     public Colorc getPixel(int x, int y)
@@ -177,9 +186,20 @@ public class Sprite
     
     public void clear(Colorc color)
     {
-        for (int i = 0; i < this.width * this.height; i++)
+        if (this.channels == 4)
         {
-            for (int j = 0; j < this.channels; j++) this.data.put(i * this.channels + j, (byte) color.getComponent(j));
+            int colorInt = color.toInt();
+            for (int i = 0; i < this.width * this.height; i++)
+            {
+                this.data.putInt(i * this.channels, colorInt);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < this.width * this.height; i++)
+            {
+                for (int j = 0; j < this.channels; j++) this.data.put(i * this.channels + j, (byte) color.getComponent(j));
+            }
         }
     }
     

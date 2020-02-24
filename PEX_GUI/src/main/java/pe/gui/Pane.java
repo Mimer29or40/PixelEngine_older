@@ -148,12 +148,12 @@ public class Pane extends Window
             {
                 PixelEngine.renderer().drawMode(DrawMode.NORMAL);
                 PixelEngine.renderer().drawTarget(child == this.title ? getSprite() : getChildSprite());
-                PixelEngine.renderer().drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
+                PixelEngine.renderer().sprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
     
         PixelEngine.renderer().drawMode(DrawMode.BLEND);
         PixelEngine.renderer().drawTarget(getSprite());
-        PixelEngine.renderer().drawSprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
+        PixelEngine.renderer().sprite(getForegroundOriginX(), getForegroundOriginY(), getChildSprite(), 1);
     }
 }

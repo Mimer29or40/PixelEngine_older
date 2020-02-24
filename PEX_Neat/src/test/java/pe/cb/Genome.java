@@ -537,12 +537,12 @@ public class Genome
             if (genes.get(i).weight > 0)
             {
                 renderer().stroke(0, 0, 0);
-                renderer().drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y);
+                renderer().line((int) from.x, (int) from.y, (int) to.x, (int) to.y);
             }
             else
             {
                 renderer().stroke(0, 0, 255);
-                renderer().drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y);
+                renderer().line((int) from.x, (int) from.y, (int) to.x, (int) to.y);
             }
         }
         
@@ -552,13 +552,13 @@ public class Genome
             renderer().fill(255);
             renderer().stroke(0);
             renderer().strokeWeight(1);
-            renderer().drawEllipse((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20, 20);
+            renderer().ellipse((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20, 20);
             // renderer().textSize(10);
             renderer().fill(0);
             // renderer().textAlign(CENTER, CENTER);
     
     
-            renderer().drawString((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i));
+            renderer().string((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i));
         }
     }
 }

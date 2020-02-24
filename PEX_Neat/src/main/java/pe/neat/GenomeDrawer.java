@@ -149,14 +149,14 @@ public class GenomeDrawer
                 renderer().noFill();
                 renderer().stroke(color);
                 renderer().strokeWeight(width);
-                renderer().drawLine(inNode.a, inNode.b, outNode.a, outNode.b);
+                renderer().line(inNode.a, inNode.b, outNode.a, outNode.b);
             }
             else if (this.drawDisabledConnections)
             {
                 renderer().noFill();
                 renderer().stroke(this.disConnColor);
                 renderer().strokeWeight(this.imageScale);
-                renderer().drawLine(inNode.a, inNode.b, outNode.a, outNode.b);
+                renderer().line(inNode.a, inNode.b, outNode.a, outNode.b);
             }
         }
         renderer().strokeWeight(1);
@@ -192,19 +192,19 @@ public class GenomeDrawer
             if (w + this.nodeRadius * this.imageScale > (this.nodeRadius + 1) * this.imageScale)
             {
                 renderer().fill(this.nodeBorderColor);
-                renderer().drawEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale + this.imageScale, (this.nodeRadius + 1) * this.imageScale);
+                renderer().ellipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale + this.imageScale, (this.nodeRadius + 1) * this.imageScale);
                 renderer().fill(color);
-                renderer().drawEllipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale, this.nodeRadius * this.imageScale);
+                renderer().ellipse(pos.a, pos.b, w + this.nodeRadius * this.imageScale, this.nodeRadius * this.imageScale);
             }
             else
             {
                 renderer().fill(this.nodeBorderColor);
-                renderer().drawCircle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale);
+                renderer().circle(pos.a, pos.b, (this.nodeRadius + 1) * this.imageScale);
                 renderer().fill(color);
-                renderer().drawCircle(pos.a, pos.b, this.nodeRadius * this.imageScale);
+                renderer().circle(pos.a, pos.b, this.nodeRadius * this.imageScale);
             }
             renderer().stroke(this.textColor);
-            renderer().drawString(pos.a - w / 2, pos.b - h / 2, text, this.imageScale);
+            renderer().string(pos.a - w / 2, pos.b - h / 2, text, this.imageScale);
         }
     
         renderer().drawTarget(prev);

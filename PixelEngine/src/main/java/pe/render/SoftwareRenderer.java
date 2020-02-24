@@ -63,29 +63,17 @@ public class SoftwareRenderer extends Renderer
     {
         ByteBuffer currData = this.window.getData();
         ByteBuffer prevData = this.prev.getData();
-        for (int i = 0; i < screenWidth() * screenHeight() * 4; i++)
+        for (int i = 0, n = screenWidth() * screenHeight(); i < n; i++)
         {
-            if (update || (currData.get(i) != prevData.get(i)))
+            if (update || (currData.getInt(i * this.window.getChannels()) != prevData.getInt(i * this.window.getChannels())))
             {
-                profiler.startSection("Update/Draw Texture");
-                {
-                    this.window.upload();
-                    glDrawArrays(GL_TRIANGLES, 0, 6);
-                }
-                profiler.endSection();
-                
-                profiler.startSection("Swap");
-                {
-                    Window.swap();
-                }
-                profiler.endSection();
-                
-                profiler.startSection("Swap Sprites");
-                {
-                    this.window.copy(this.prev);
-                }
-                profiler.endSection();
-                
+                this.window.upload();
+                glDrawArrays(GL_TRIANGLES, 0, 6);
+        
+                Window.swap();
+        
+                this.window.copy(this.prev);
+        
                 break;
             }
         }
@@ -97,7 +85,7 @@ public class SoftwareRenderer extends Renderer
         this.target.clear(this.clear);
     }
     
-    public void draw(int x, int y, Colorc color)
+    public void point(int x, int y, Colorc color)
     {
         if (this.target == null) return;
         
@@ -119,7 +107,7 @@ public class SoftwareRenderer extends Renderer
     }
     
     @Override
-    public void drawLine(int x1, int y1, int x2, int y2)
+    public void line(int x1, int y1, int x2, int y2)
     {
         DrawPattern pattern = DrawPattern.SOLID;
         pattern.reset();
@@ -199,12 +187,12 @@ public class SoftwareRenderer extends Renderer
                 }
             }
         }
-        for (PairI cord : this.drawCords) draw(cord.a, cord.b, this.stroke);
+        for (PairI cord : this.drawCords) point(cord.a, cord.b, this.stroke);
         this.drawCords.clear();
     }
     
     @Override
-    public void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3)
+    public void bezier(int x1, int y1, int x2, int y2, int x3, int y3)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
         int  sx = x3 - x2, sy = y3 - y2;
@@ -245,7 +233,7 @@ public class SoftwareRenderer extends Renderer
             err = dx + dy + xy;                /* error 1st step */
             do
             {
-                draw(x1, y1, this.stroke);                  /* plot curve */
+                point(x1, y1, this.stroke);                  /* plot curve */
                 if (x1 == x3 && y1 == y3) return;  /* last pixel -> curve finished */
                 boolean yStep = 2 * err < dx;      /* save value for test of y step */
                 if (2 * err > dy)
@@ -262,11 +250,11 @@ public class SoftwareRenderer extends Renderer
                 } /* y step */
             } while (dy < dx);           /* gradient negates -> algorithm fails */
         }
-        drawLine(x1, y1, x3, y3);
+        line(x1, y1, x3, y3);
     }
     
     @Override
-    public void drawCircle(int x, int y, int radius)
+    public void circle(int x, int y, int radius)
     {
         if (radius < 1) return;
         if (this.fill.a() != 0)
@@ -289,7 +277,7 @@ public class SoftwareRenderer extends Renderer
                     d += 4 * (x0++ - y0--) + 10;
                 }
             }
-            for (PairI cord : this.drawCords) draw(cord.a, cord.b, this.fill);
+            for (PairI cord : this.drawCords) point(cord.a, cord.b, this.fill);
             this.drawCords.clear();
         }
         if (this.stroke.a() != 0)
@@ -297,10 +285,10 @@ public class SoftwareRenderer extends Renderer
             int xr = -radius, yr = 0, err = 2 - 2 * radius;
             do
             {
-                draw(x - xr, y + yr, this.stroke); /*   I. Quadrant */
-                draw(x - yr, y - xr, this.stroke); /*  II. Quadrant */
-                draw(x + xr, y - yr, this.stroke); /* III. Quadrant */
-                draw(x + yr, y + xr, this.stroke); /*  IV. Quadrant */
+                point(x - xr, y + yr, this.stroke); /*   I. Quadrant */
+                point(x - yr, y - xr, this.stroke); /*  II. Quadrant */
+                point(x + xr, y - yr, this.stroke); /* III. Quadrant */
+                point(x + yr, y + xr, this.stroke); /*  IV. Quadrant */
                 radius = err;
                 if (radius <= yr) err += ++yr * 2 + 1;            /* e_xy+e_y < 0 */
                 if (radius > xr || err > yr) err += ++xr * 2 + 1; /* e_xy+e_x > 0 or no 2nd y-step */
@@ -309,7 +297,7 @@ public class SoftwareRenderer extends Renderer
     }
     
     @Override
-    public void drawEllipse(int x, int y, int w, int h)
+    public void ellipse(int x, int y, int w, int h)
     {
         // TODO - http://members.chello.at/~easyfilter/bresenham.html
         if (w < 1 || h < 1) return;
@@ -359,7 +347,7 @@ public class SoftwareRenderer extends Renderer
                 this.drawCords.add(new PairI(x0 - 1, y1));
                 this.drawCords.add(new PairI(x1 + 1, y1--));
             }
-            for (PairI cord : this.drawCords) draw(cord.a, cord.b, this.fill);
+            for (PairI cord : this.drawCords) point(cord.a, cord.b, this.fill);
             this.drawCords.clear();
         }
         if (this.stroke.a() != 0)
@@ -383,10 +371,10 @@ public class SoftwareRenderer extends Renderer
             
             do
             {
-                draw(x1, y0, this.stroke); /*   I. Quadrant */
-                draw(x0, y0, this.stroke); /*  II. Quadrant */
-                draw(x0, y1, this.stroke); /* III. Quadrant */
-                draw(x1, y1, this.stroke); /*  IV. Quadrant */
+                point(x1, y0, this.stroke); /*   I. Quadrant */
+                point(x0, y0, this.stroke); /*  II. Quadrant */
+                point(x0, y1, this.stroke); /* III. Quadrant */
+                point(x1, y1, this.stroke); /*  IV. Quadrant */
                 e2 = 2 * err;
                 if (e2 <= dy)
                 {
@@ -404,16 +392,16 @@ public class SoftwareRenderer extends Renderer
             
             while (y0 - y1 < h)
             {  /* too early stop of flat ellipses w=1 */
-                draw(x0 - 1, y0, this.stroke); /* -> finish tip of ellipse */
-                draw(x1 + 1, y0++, this.stroke);
-                draw(x0 - 1, y1, this.stroke);
-                draw(x1 + 1, y1--, this.stroke);
+                point(x0 - 1, y0, this.stroke); /* -> finish tip of ellipse */
+                point(x1 + 1, y0++, this.stroke);
+                point(x0 - 1, y1, this.stroke);
+                point(x1 + 1, y1--, this.stroke);
             }
         }
     }
     
     @Override
-    public void drawRect(int x, int y, int w, int h)
+    public void rect(int x, int y, int w, int h)
     {
         if (w < 1 || h < 1) return;
         
@@ -431,21 +419,21 @@ public class SoftwareRenderer extends Renderer
             {
                 for (int j = y; j < y2; j++)
                 {
-                    draw(i, j, this.fill);
+                    point(i, j, this.fill);
                 }
             }
         }
         if (this.stroke.a() != 0)
         {
-            drawLine(x, y, x + w - 1, y);
-            drawLine(x + w - 1, y, x + w - 1, y + h - 1);
-            drawLine(x + w - 1, y + h - 1, x, y + h - 1);
-            drawLine(x, y + h - 1, x, y);
+            line(x, y, x + w - 1, y);
+            line(x + w - 1, y, x + w - 1, y + h - 1);
+            line(x + w - 1, y + h - 1, x, y + h - 1);
+            line(x, y + h - 1, x, y);
         }
     }
     
     @Override
-    public void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
+    public void triangle(int x1, int y1, int x2, int y2, int x3, int y3)
     {
         if (this.fill.a() != 0)
         {
@@ -474,19 +462,19 @@ public class SoftwareRenderer extends Renderer
                     if (abc == pbc + apc + abp) this.drawCords.add(new PairI(i, j));
                 }
             }
-            for (PairI cord : this.drawCords) draw(cord.a, cord.b, this.fill);
+            for (PairI cord : this.drawCords) point(cord.a, cord.b, this.fill);
             this.drawCords.clear();
         }
         if (this.stroke.a() != 0)
         {
-            drawLine(x1, y1, x2, y2);
-            drawLine(x2, y2, x3, y3);
-            drawLine(x3, y3, x1, y1);
+            line(x1, y1, x2, y2);
+            line(x2, y2, x3, y3);
+            line(x3, y3, x1, y1);
         }
     }
     
     @Override
-    public void drawPartialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h, double scale)
+    public void partialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h, double scale)
     {
         if (scale <= 0.0 || sprite == null) return;
         
@@ -498,7 +486,7 @@ public class SoftwareRenderer extends Renderer
                 {
                     for (int j = 0; j < h; j++)
                     {
-                        draw(x + i, y + j, sprite.getPixel(i + ox, j + oy));
+                        point(x + i, y + j, sprite.getPixel(i + ox, j + oy));
                     }
                 }
             }
@@ -512,7 +500,7 @@ public class SoftwareRenderer extends Renderer
                         {
                             for (int js = 0; js < scale; js++)
                             {
-                                draw(x + (i * (int) scale) + is, y + (j * (int) scale) + js, sprite.getPixel(i + ox, j + oy));
+                                point(x + (i * (int) scale) + is, y + (j * (int) scale) + js, sprite.getPixel(i + ox, j + oy));
                             }
                         }
                     }
@@ -559,16 +547,16 @@ public class SoftwareRenderer extends Renderer
                             total += pPercent * 255;
                         }
                     }
-                    
+    
                     p.set((float) (r / total), (float) (g / total), (float) (b / total), (float) (a / total));
-                    draw(x + i, y + j, p);
+                    point(x + i, y + j, p);
                 }
             }
         }
     }
     
     @Override
-    public void drawString(int x, int y, String text, double scale)
+    public void string(int x, int y, String text, double scale)
     {
         if (scale <= 0.0) return;
         
@@ -601,7 +589,7 @@ public class SoftwareRenderer extends Renderer
                         {
                             for (int j = 0; j < 8; j++)
                             {
-                                if (this.font.getPixel(i + ox * 8, j + oy * 8).r() > 0) draw(x + sx + i, y + sy + j, this.stroke);
+                                if (this.font.getPixel(i + ox * 8, j + oy * 8).r() > 0) point(x + sx + i, y + sy + j, this.stroke);
                             }
                         }
                     }
@@ -617,7 +605,7 @@ public class SoftwareRenderer extends Renderer
                                     {
                                         for (int js = 0; js < scale; js++)
                                         {
-                                            draw(x + sx + (i * (int) scale) + is, y + sy + (j * (int) scale) + js, this.stroke);
+                                            point(x + sx + (i * (int) scale) + is, y + sy + (j * (int) scale) + js, this.stroke);
                                         }
                                     }
                                 }
@@ -680,7 +668,7 @@ public class SoftwareRenderer extends Renderer
                             {
                                 this.color.set(this.stroke);
                                 this.color.a((int) (this.stroke.a() * p / total));
-                                draw(x + sx + i, y + sy + j, this.color);
+                                point(x + sx + i, y + sy + j, this.color);
                             }
                         }
                     }

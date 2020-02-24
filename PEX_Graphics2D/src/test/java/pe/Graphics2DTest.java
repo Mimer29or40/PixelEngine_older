@@ -35,8 +35,8 @@ public class Graphics2DTest extends PixelEngine
         renderer().drawMode(DrawMode.NORMAL);
         renderer().clear(Color.BLUE);
     
-        renderer().drawCircle(32, 32, 30);
-        renderer().drawCircle(96, 32, 30);
+        renderer().circle(32, 32, 30);
+        renderer().circle(96, 32, 30);
     
         float mx = Mouse.x();
         float my = Mouse.y();
@@ -52,16 +52,16 @@ public class Graphics2DTest extends PixelEngine
         py2 = 22.0f * (py2 * pr2) + 32.0f;
         renderer().noStroke();
         renderer().fill(Color.CYAN);
-        renderer().drawCircle((int) px1, (int) py1, 8);
-        renderer().drawCircle((int) px2, (int) py2, 8);
+        renderer().circle((int) px1, (int) py1, 8);
+        renderer().circle((int) px2, (int) py2, 8);
     
-        renderer().drawLine(10, 70, 54, 70);    // Lines
-        renderer().drawLine(54, 70, 70, 54);
+        renderer().line(10, 70, 54, 70);    // Lines
+        renderer().line(54, 70, 70, 54);
     
-        renderer().drawRect(10, 80, 54, 30);
+        renderer().rect(10, 80, 54, 30);
     
         // Multiline Text
-        renderer().drawString(10, 130, "Your Mouse Position is:\nX=" + mx + "\nY=" + my);
+        renderer().string(10, 130, "Your Mouse Position is:\nX=" + mx + "\nY=" + my);
     
         if (Mouse.LEFT.down()) addEvent("Mouse Button LEFT Down");
         if (Mouse.LEFT.up()) addEvent("Mouse Button LEFT Up");
@@ -76,21 +76,21 @@ public class Graphics2DTest extends PixelEngine
         for (String s : this.events)
         {
             renderer().stroke(nLog * 16, nLog * 16, nLog * 16);
-            renderer().drawString(200, nLog * 8 + 20, s);
+            renderer().string(200, nLog * 8 + 20, s);
             nLog++;
         }
     
         // Test Text scaling and colours
         renderer().stroke(Color.WHITE);
-        renderer().drawString(0, 360, "Text Scale = 1", 1);
+        renderer().string(0, 360, "Text Scale = 1", 1);
         renderer().stroke(Color.BLUE);
-        renderer().drawString(0, 368, "Text Scale = 2", 2);
+        renderer().string(0, 368, "Text Scale = 2", 2);
         renderer().stroke(Color.RED);
-        renderer().drawString(0, 384, "Text Scale = 3", 3);
+        renderer().string(0, 384, "Text Scale = 3", 3);
         renderer().stroke(Color.YELLOW);
-        renderer().drawString(0, 408, "Text Scale = 4", 4);
+        renderer().string(0, 408, "Text Scale = 4", 4);
         renderer().stroke(Color.GREEN);
-        renderer().drawString(0, 440, "Text Scale = 5", 5);
+        renderer().string(0, 440, "Text Scale = 5", 5);
     
         totalTime += elapsedTime;
     
@@ -117,7 +117,7 @@ public class Graphics2DTest extends PixelEngine
         // Use extension to draw sprite with transform applied
         // PEX_GFX2D.drawSprite(spr, t1);
     
-        renderer().drawSprite((int) mx, (int) my, spr, 4);
+        renderer().sprite((int) mx, (int) my, spr, 4);
     
         return true;
     }

@@ -874,14 +874,14 @@ public class Window
     {
         PixelEngine.renderer().noStroke();
         PixelEngine.renderer().fill(getBackgroundColor());
-        PixelEngine.renderer().drawRect(0, 0, getWidth(), getHeight());
+        PixelEngine.renderer().rect(0, 0, getWidth(), getHeight());
     }
     
     protected void drawBorder(double elapsedTime)
     {
         PixelEngine.renderer().stroke(getBorderColor());
         PixelEngine.renderer().noFill();
-        for (int i = 0; i < getBorderSize(); i++) PixelEngine.renderer().drawRect(i, i, getWidth() - i * 2, getHeight() - i * 2);
+        for (int i = 0; i < getBorderSize(); i++) PixelEngine.renderer().rect(i, i, getWidth() - i * 2, getHeight() - i * 2);
     }
     
     protected void drawChildren(double elapsedTime)
@@ -893,7 +893,7 @@ public class Window
             {
                 PixelEngine.renderer().drawMode(DrawMode.NORMAL);
                 PixelEngine.renderer().drawTarget(getSprite());
-                PixelEngine.renderer().drawSprite(child.getX(), child.getY(), child.getSprite(), 1);
+                PixelEngine.renderer().sprite(child.getX(), child.getY(), child.getSprite(), 1);
             }
         }
     }

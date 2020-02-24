@@ -29,14 +29,14 @@ public class ColorTest extends PixelEngine
         renderer().drawMode(DrawMode.BLEND);
         renderer().stroke(255, 0, 0);
     
-        renderer().drawLine(0, 0, Mouse.x(), Mouse.y());
+        renderer().line(0, 0, Mouse.x(), Mouse.y());
     
         renderer().noStroke();
         renderer().fill(254, 0, 0, 255);
-        renderer().drawCircle(20, 20, 20);
+        renderer().circle(20, 20, 20);
     
         renderer().fill(0, 0, 254, 127);
-        renderer().drawCircle(Mouse.x(), Mouse.y(), 20);
+        renderer().circle(Mouse.x(), Mouse.y(), 20);
     
         if (Keyboard.SPACE.down())
         {

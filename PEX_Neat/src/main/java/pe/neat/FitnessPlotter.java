@@ -64,16 +64,16 @@ public class FitnessPlotter
     
         renderer().stroke(this.borderColor);
         renderer().noFill();
-        renderer().drawRect(minX, minY, maxX - minX + 1, maxY - minY + 1);
+        renderer().rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
     
         int prevX = minX, prevY = maxY;
         for (int i = 0; i < size; i++)
         {
             int x = (int) map(i, 0, size - 1, minX, maxX);
             int y = (int) map(fitnessArray.get(i), minValue, maxValue, maxY, minY);
-        
+    
             renderer().stroke(Color.RED);
-            renderer().drawLine(x, y, prevX, prevY);
+            renderer().line(x, y, prevX, prevY);
             prevX = x;
             prevY = y;
         }
@@ -83,28 +83,28 @@ public class FitnessPlotter
             int x = (int) map(i, 0, 4, minX, maxX);
     
             renderer().stroke(this.borderColor);
-            renderer().drawLine(x, maxY, x, maxY + 5);
+            renderer().line(x, maxY, x, maxY + 5);
     
             String text  = "" + (int) map(i, 0, 4, 0, size);
             int    width = textWidth(text);
     
             renderer().stroke(this.textColor);
-            renderer().drawString(x - width / 2, maxY + 10, text);
+            renderer().string(x - width / 2, maxY + 10, text);
         }
     
         for (int i = 0; i < 5; i++)
         {
             int y = (int) map(i, 0, 4, maxY, minY);
-        
+    
             renderer().stroke(this.borderColor);
-            renderer().drawLine(minX, y, minX - 5, y);
+            renderer().line(minX, y, minX - 5, y);
         
             String text   = "" + (float) map(i, 0, 4, minValue, maxValue);
             int    width  = textWidth(text);
             int    height = textHeight(text);
-        
+    
             renderer().stroke(this.textColor);
-            renderer().drawString(minX - 10 - width, y - height / 2, text);
+            renderer().string(minX - 10 - width, y - height / 2, text);
         }
     
         renderer().drawTarget(prev);

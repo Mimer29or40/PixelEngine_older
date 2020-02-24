@@ -341,7 +341,7 @@ public class Slider extends Window
     
         renderer().noStroke();
         renderer().fill(getSliderColor());
-        renderer().drawRect(getForegroundOriginX(), getForegroundOriginY(), this.barWidth, getForegroundHeight());
+        renderer().rect(getForegroundOriginX(), getForegroundOriginY(), this.barWidth, getForegroundHeight());
     
         String text = getValue() == (int) getValue() ? String.valueOf((int) getValue()) : String.valueOf(round(getValue(), 3));
     
@@ -349,6 +349,6 @@ public class Slider extends Window
         int y = (getForegroundHeight() - textHeight(text)) / 2;
     
         renderer().stroke(Color.BLACK);
-        renderer().drawString(getForegroundOriginX() + x, getForegroundOriginY() + y, text);
+        renderer().string(getForegroundOriginX() + x, getForegroundOriginY() + y, text);
     }
 }

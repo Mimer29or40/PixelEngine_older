@@ -30,10 +30,10 @@ public class OpenGLRenderer extends Renderer
     }
     
     @Override
-    protected void draw(int x, int y, Colorc color)
+    protected void point(int x, int y, Colorc color)
     {
         if (color.a() == 0) return;
-        
+    
         // self.vertex.set(p.base.xyz, GL_DYNAMIC_DRAW)
         //
         // self.point_shader.use()
@@ -46,49 +46,49 @@ public class OpenGLRenderer extends Renderer
     }
     
     @Override
-    public void drawLine(int x1, int y1, int x2, int y2)
+    public void line(int x1, int y1, int x2, int y2)
     {
     
     }
     
     @Override
-    public void drawBezier(int x1, int y1, int x2, int y2, int x3, int y3)
+    public void bezier(int x1, int y1, int x2, int y2, int x3, int y3)
     {
     
     }
     
     @Override
-    public void drawCircle(int x, int y, int radius)
+    public void circle(int x, int y, int radius)
     {
     
     }
     
     @Override
-    public void drawEllipse(int x, int y, int w, int h)
+    public void ellipse(int x, int y, int w, int h)
     {
     
     }
     
     @Override
-    public void drawRect(int x, int y, int w, int h)
+    public void rect(int x, int y, int w, int h)
     {
     
     }
     
     @Override
-    public void drawTriangle(int x1, int y1, int x2, int y2, int x3, int y3)
+    public void triangle(int x1, int y1, int x2, int y2, int x3, int y3)
     {
     
     }
     
     @Override
-    public void drawPartialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h, double scale)
+    public void partialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h, double scale)
     {
     
     }
     
     @Override
-    public void drawString(int x, int y, String text, double scale)
+    public void string(int x, int y, String text, double scale)
     {
     
     }

@@ -357,7 +357,7 @@ public class PEX_GUI extends PEX
             {
                 PixelEngine.renderer().drawMode(DrawMode.NORMAL);
                 PixelEngine.renderer().drawTarget(null);
-                PixelEngine.renderer().drawSprite(window.getX(), window.getY(), window.getSprite(), 1);
+                PixelEngine.renderer().sprite(window.getX(), window.getY(), window.getSprite(), 1);
             }
         }
         
@@ -373,7 +373,7 @@ public class PEX_GUI extends PEX
             {
                 PixelEngine.renderer().drawMode(DrawMode.NORMAL);
                 PixelEngine.renderer().drawTarget(null);
-                PixelEngine.renderer().drawSprite(window.getX(), window.getY(), window.getSprite(), 1);
+                PixelEngine.renderer().sprite(window.getX(), window.getY(), window.getSprite(), 1);
             }
         }
         
@@ -389,7 +389,7 @@ public class PEX_GUI extends PEX
             {
                 PixelEngine.renderer().drawMode(DrawMode.NORMAL);
                 PixelEngine.renderer().drawTarget(null);
-                PixelEngine.renderer().drawSprite(PEX_GUI.tooltip.getX(), PEX_GUI.tooltip.getY(), PEX_GUI.tooltip.getSprite(), 1);
+                PixelEngine.renderer().sprite(PEX_GUI.tooltip.getX(), PEX_GUI.tooltip.getY(), PEX_GUI.tooltip.getSprite(), 1);
             }
         }
         

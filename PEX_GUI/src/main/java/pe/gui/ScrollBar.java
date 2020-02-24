@@ -142,10 +142,10 @@ public class ScrollBar extends Window
         switch (this.orientation)
         {
             case HORIZONTAL:
-                renderer().drawRect(mousePos, 0, this.scrollSize, getForegroundHeight());
+                renderer().rect(mousePos, 0, this.scrollSize, getForegroundHeight());
                 break;
             case VERTICAL:
-                renderer().drawRect(0, mousePos, getForegroundWidth(), this.scrollSize);
+                renderer().rect(0, mousePos, getForegroundWidth(), this.scrollSize);
                 break;
         }
     }
@@ -209,20 +209,20 @@ public class ScrollBar extends Window
             switch (this.end)
             {
                 case TOP:
-                    renderer().drawLine(centerX, 0, 0, getForegroundHeight());
-                    renderer().drawLine(centerX, 0, getForegroundWidth(), getForegroundHeight());
+                    renderer().line(centerX, 0, 0, getForegroundHeight());
+                    renderer().line(centerX, 0, getForegroundWidth(), getForegroundHeight());
                     break;
                 case BOTTOM:
-                    renderer().drawLine(centerX, getForegroundHeight(), 0, 0);
-                    renderer().drawLine(centerX, getForegroundHeight(), getForegroundWidth(), 0);
+                    renderer().line(centerX, getForegroundHeight(), 0, 0);
+                    renderer().line(centerX, getForegroundHeight(), getForegroundWidth(), 0);
                     break;
                 case LEFT:
-                    renderer().drawLine(0, centerY, getForegroundWidth(), 0);
-                    renderer().drawLine(0, centerY, getForegroundWidth(), getForegroundHeight());
+                    renderer().line(0, centerY, getForegroundWidth(), 0);
+                    renderer().line(0, centerY, getForegroundWidth(), getForegroundHeight());
                     break;
                 case RIGHT:
-                    renderer().drawLine(getForegroundWidth(), centerY, 0, 0);
-                    renderer().drawLine(getForegroundWidth(), centerY, 0, getForegroundHeight());
+                    renderer().line(getForegroundWidth(), centerY, 0, 0);
+                    renderer().line(getForegroundWidth(), centerY, 0, getForegroundHeight());
                     break;
                 default:
             }

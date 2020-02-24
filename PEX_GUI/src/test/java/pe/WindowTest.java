@@ -125,7 +125,7 @@ public class WindowTest extends PixelEngine
             {
                 int c = (int) map(nLog, 0, events.size() - 1, 60, 255);
                 renderer().stroke(c, c, c);
-                renderer().drawString(menu.getWidth() + 2, nLog * 8 + 2, s);
+                renderer().string(menu.getWidth() + 2, nLog * 8 + 2, s);
                 nLog++;
             }
         }

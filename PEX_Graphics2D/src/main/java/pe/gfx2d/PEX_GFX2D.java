@@ -93,219 +93,219 @@ public class PEX_GFX2D extends PEX
                 float ox = transform.backward_x(i, j, 0.0F);
                 float oy = transform.backward_y(i, j, 0.0F);
                 renderer().stroke(sprite.getPixel((int) (ox + 0.5f), (int) (oy + 0.5f)));
-                renderer().draw((int) i, (int) j);
+                renderer().point((int) i, (int) j);
             }
         }
     }
 
     public static void draw(Vector2ic p)
     {
-        renderer().draw(p.x(), p.y());
+        renderer().point(p.x(), p.y());
     }
 
     public static void draw(Vector2fc p)
     {
-        renderer().draw((int) p.x(), (int) p.y());
+        renderer().point((int) p.x(), (int) p.y());
     }
 
     public static void draw(Vector2dc p)
     {
-        renderer().draw((int) p.x(), (int) p.y());
+        renderer().point((int) p.x(), (int) p.y());
     }
 
     public static void drawLine(Vector2ic p1, Vector2ic p2, DrawPattern pattern)
     {
-        renderer().drawLine(p1.x(), p1.y(), p2.x(), p2.y());
+        renderer().line(p1.x(), p1.y(), p2.x(), p2.y());
     }
 
     public static void drawLine(Vector2ic p1, Vector2ic p2)
     {
-        renderer().drawLine(p1.x(), p1.y(), p2.x(), p2.y());
+        renderer().line(p1.x(), p1.y(), p2.x(), p2.y());
     }
 
     public static void drawLine(Vector2fc p1, Vector2fc p2, DrawPattern pattern)
     {
-        renderer().drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
+        renderer().line((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
     }
 
     public static void drawLine(Vector2fc p1, Vector2fc p2)
     {
-        renderer().drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
+        renderer().line((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
     }
 
     public static void drawLine(Vector2dc p1, Vector2dc p2, DrawPattern pattern)
     {
-        renderer().drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
+        renderer().line((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
     }
 
     public static void drawLine(Vector2dc p1, Vector2dc p2)
     {
-        renderer().drawLine((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
+        renderer().line((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y());
     }
 
     public static void drawBezier(Vector2ic p1, Vector2ic p2, Vector2ic p3)
     {
-        renderer().drawBezier(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y());
+        renderer().bezier(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y());
     }
 
     public static void drawBezier(Vector2fc p1, Vector2fc p2, Vector2fc p3)
     {
-        renderer().drawBezier((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
+        renderer().bezier((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
     }
 
     public static void drawBezier(Vector2dc p1, Vector2dc p2, Vector2dc p3)
     {
-        renderer().drawBezier((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
+        renderer().bezier((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
     }
 
     public static void drawCircle(Vector2ic p, int radius)
     {
-        renderer().drawCircle(p.x(), p.y(), radius);
+        renderer().circle(p.x(), p.y(), radius);
     }
 
     public static void drawCircle(Vector2fc p, int radius)
     {
-        renderer().drawCircle((int) p.x(), (int) p.y(), radius);
+        renderer().circle((int) p.x(), (int) p.y(), radius);
     }
 
     public static void drawCircle(Vector2dc p, int radius)
     {
-        renderer().drawCircle((int) p.x(), (int) p.y(), radius);
+        renderer().circle((int) p.x(), (int) p.y(), radius);
     }
 
     public static void drawEllipse(Vector2ic p, Vector2ic s)
     {
-        renderer().drawEllipse(p.x(), p.y(), s.x(), s.y());
+        renderer().ellipse(p.x(), p.y(), s.x(), s.y());
     }
 
     public static void drawEllipse(Vector2fc p, Vector2fc s)
     {
-        renderer().drawEllipse((int) p.x(), (int) p.y(), (int) s.x(), (int) s.y());
+        renderer().ellipse((int) p.x(), (int) p.y(), (int) s.x(), (int) s.y());
     }
 
     public static void drawEllipse(Vector2dc p, Vector2dc s)
     {
-        renderer().drawEllipse((int) p.x(), (int) p.y(), (int) s.x(), (int) s.y());
+        renderer().ellipse((int) p.x(), (int) p.y(), (int) s.x(), (int) s.y());
     }
 
     public static void drawRect(Vector2ic p, int w, int h)
     {
-        renderer().drawRect(p.x(), p.y(), w, h);
+        renderer().rect(p.x(), p.y(), w, h);
     }
 
     public static void drawRect(Vector2fc p, int w, int h)
     {
-        renderer().drawRect((int) p.x(), (int) p.y(), w, h);
+        renderer().rect((int) p.x(), (int) p.y(), w, h);
     }
 
     public static void drawRect(Vector2dc p, int w, int h)
     {
-        renderer().drawRect((int) p.x(), (int) p.y(), w, h);
+        renderer().rect((int) p.x(), (int) p.y(), w, h);
     }
     
     public static void drawTriangle(Vector2ic p1, Vector2ic p2, Vector2ic p3)
     {
-        renderer().drawTriangle(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y());
+        renderer().triangle(p1.x(), p1.y(), p2.x(), p2.y(), p3.x(), p3.y());
     }
     
     public static void drawTriangle(Vector2fc p1, Vector2fc p2, Vector2fc p3)
     {
-        renderer().drawTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
+        renderer().triangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
     }
     
     public static void drawTriangle(Vector2dc p1, Vector2dc p2, Vector2dc p3)
     {
-        renderer().drawTriangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
+        renderer().triangle((int) p1.x(), (int) p1.y(), (int) p2.x(), (int) p2.y(), (int) p3.x(), (int) p3.y());
     }
     
     public static void drawSprite(Vector2ic p, Sprite sprite, int scale)
     {
-        renderer().drawSprite(p.x(), p.y(), sprite, scale);
+        renderer().sprite(p.x(), p.y(), sprite, scale);
     }
     
     public static void drawSprite(Vector2ic p, Sprite sprite)
     {
-        renderer().drawSprite(p.x(), p.y(), sprite, 1);
+        renderer().sprite(p.x(), p.y(), sprite, 1);
     }
     
     public static void drawSprite(Vector2fc p, Sprite sprite, int scale)
     {
-        renderer().drawSprite((int) p.x(), (int) p.y(), sprite, scale);
+        renderer().sprite((int) p.x(), (int) p.y(), sprite, scale);
     }
     
     public static void drawSprite(Vector2fc p, Sprite sprite)
     {
-        renderer().drawSprite((int) p.x(), (int) p.y(), sprite, 1);
+        renderer().sprite((int) p.x(), (int) p.y(), sprite, 1);
     }
     
     public static void drawSprite(Vector2dc p, Sprite sprite, int scale)
     {
-        renderer().drawSprite((int) p.x(), (int) p.y(), sprite, scale);
+        renderer().sprite((int) p.x(), (int) p.y(), sprite, scale);
     }
     
     public static void drawSprite(Vector2dc p, Sprite sprite)
     {
-        renderer().drawSprite((int) p.x(), (int) p.y(), sprite, 1);
+        renderer().sprite((int) p.x(), (int) p.y(), sprite, 1);
     }
     
     public static void drawPartialSprite(Vector2ic p, Sprite sprite, int ox, int oy, int w, int h, int scale)
     {
-        renderer().drawPartialSprite(p.x(), p.y(), sprite, ox, oy, w, h, scale);
+        renderer().partialSprite(p.x(), p.y(), sprite, ox, oy, w, h, scale);
     }
     
     public static void drawPartialSprite(Vector2ic p, Sprite sprite, int ox, int oy, int w, int h)
     {
-        renderer().drawPartialSprite(p.x(), p.y(), sprite, ox, oy, w, h, 1);
+        renderer().partialSprite(p.x(), p.y(), sprite, ox, oy, w, h, 1);
     }
     
     public static void drawPartialSprite(Vector2fc p, Sprite sprite, int ox, int oy, int w, int h, int scale)
     {
-        renderer().drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, scale);
+        renderer().partialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, scale);
     }
     
     public static void drawPartialSprite(Vector2fc p, Sprite sprite, int ox, int oy, int w, int h)
     {
-        renderer().drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, 1);
+        renderer().partialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, 1);
     }
     
     public static void drawPartialSprite(Vector2dc p, Sprite sprite, int ox, int oy, int w, int h, int scale)
     {
-        renderer().drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, scale);
+        renderer().partialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, scale);
     }
     
     public static void drawPartialSprite(Vector2dc p, Sprite sprite, int ox, int oy, int w, int h)
     {
-        renderer().drawPartialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, 1);
+        renderer().partialSprite((int) p.x(), (int) p.y(), sprite, ox, oy, w, h, 1);
     }
     
     public static void drawString(Vector2ic p, String text, int scale)
     {
-        renderer().drawString(p.x(), p.y(), text, scale);
+        renderer().string(p.x(), p.y(), text, scale);
     }
     
     public static void drawString(Vector2ic p, String text)
     {
-        renderer().drawString(p.x(), p.y(), text, 1);
+        renderer().string(p.x(), p.y(), text, 1);
     }
     
     public static void drawString(Vector2fc p, String text, int scale)
     {
-        renderer().drawString((int) p.x(), (int) p.y(), text, scale);
+        renderer().string((int) p.x(), (int) p.y(), text, scale);
     }
     
     public static void drawString(Vector2fc p, String text)
     {
-        renderer().drawString((int) p.x(), (int) p.y(), text, 1);
+        renderer().string((int) p.x(), (int) p.y(), text, 1);
     }
     
     public static void drawString(Vector2dc p, String text, int scale)
     {
-        renderer().drawString((int) p.x(), (int) p.y(), text, scale);
+        renderer().string((int) p.x(), (int) p.y(), text, scale);
     }
     
     public static void drawString(Vector2dc p, String text)
     {
-        renderer().drawString((int) p.x(), (int) p.y(), text, 1);
+        renderer().string((int) p.x(), (int) p.y(), text, 1);
     }
     
     @Override
