@@ -14,6 +14,8 @@ public class VertexArray
     private final int                vao;
     private final ArrayList<Integer> vboList = new ArrayList<>();
     
+    private boolean setup = false;
+    
     public VertexArray()
     {
         this.vao = glGenVertexArrays();
@@ -51,16 +53,17 @@ public class VertexArray
     public VertexArray add(int size, int[] data, int usage)
     {
         int vbo = glGenBuffers();
-        
+    
         glBindVertexArray(this.vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, data, usage);
-        
+    
         glVertexAttribPointer(this.vboList.size(), size, GL_INT, false, 0, 0);
-        glEnableVertexAttribArray(this.vboList.size());
-        
+    
         this.vboList.add(vbo);
-        
+    
+        glBindVertexArray(0);
+    
         return this;
     }
     
@@ -72,16 +75,17 @@ public class VertexArray
     public VertexArray add(int size, float[] data, int usage)
     {
         int vbo = glGenBuffers();
-        
+    
         glBindVertexArray(this.vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, data, usage);
-        
+    
         glVertexAttribPointer(this.vboList.size(), size, GL_FLOAT, false, 0, 0);
-        glEnableVertexAttribArray(this.vboList.size());
-        
+    
         this.vboList.add(vbo);
-        
+    
+        glBindVertexArray(0);
+    
         return this;
     }
     

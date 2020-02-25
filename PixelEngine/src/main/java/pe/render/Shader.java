@@ -41,16 +41,6 @@ public class Shader
         return loadFile("Vertex", GL_VERTEX_SHADER, file);
     }
     
-    public Shader loadFragment(String source)
-    {
-        return load("Fragment", GL_FRAGMENT_SHADER, source);
-    }
-    
-    public Shader loadFragmentFile(String file)
-    {
-        return loadFile("Fragment", GL_FRAGMENT_SHADER, file);
-    }
-    
     public Shader loadGeometry(String source)
     {
         return load("Geometry", GL_GEOMETRY_SHADER, source);
@@ -59,6 +49,16 @@ public class Shader
     public Shader loadGeometryFile(String file)
     {
         return loadFile("Geometry", GL_GEOMETRY_SHADER, file);
+    }
+    
+    public Shader loadFragment(String source)
+    {
+        return load("Fragment", GL_FRAGMENT_SHADER, source);
+    }
+    
+    public Shader loadFragmentFile(String file)
+    {
+        return loadFile("Fragment", GL_FRAGMENT_SHADER, file);
     }
     
     public Shader validate()

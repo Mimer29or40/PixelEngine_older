@@ -3,8 +3,8 @@ package pe;
 import org.reflections.Reflections;
 import pe.color.Blend;
 import pe.color.Color;
+import pe.render.OpenGLRenderer;
 import pe.render.Renderer;
-import pe.render.SoftwareRenderer;
 import pe.util.PairI;
 
 import java.net.URISyntaxException;
@@ -135,10 +135,8 @@ public class PixelEngine
         if (PixelEngine.pixelW == 0 || PixelEngine.pixelH == 0) throw new RuntimeException("Color dimension must be > 0");
         PixelEngine.LOGGER.trace("Screen Size and Color Dimensions pass initial test");
     
-        PixelEngine.renderer = new SoftwareRenderer();
-        // PixelEngine.renderer.init();
-    
-        // createFontSheet();
+        // PixelEngine.renderer = new SoftwareRenderer();
+        PixelEngine.renderer = new OpenGLRenderer();
     
         loadExtensions();
     

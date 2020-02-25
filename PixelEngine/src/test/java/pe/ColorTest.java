@@ -1,7 +1,6 @@
 package pe;
 
 import pe.color.Color;
-import pe.render.DrawMode;
 
 public class ColorTest extends PixelEngine
 {
@@ -23,20 +22,21 @@ public class ColorTest extends PixelEngine
         //     }
         // }
     
-        renderer().clear(Color.BLANK);
+        renderer().clear(Color.BLACK);
     
-        // renderer().drawMode((x, y, backdrop, source) -> Blend.ALPHA.blend(backdrop, source, new Color()));
-        renderer().drawMode(DrawMode.BLEND);
+        // // renderer().drawMode((x, y, backdrop, source) -> Blend.ALPHA.blend(backdrop, source, new Color()));
+        // renderer().drawMode(DrawMode.BLEND);
         renderer().stroke(255, 0, 0);
     
         renderer().line(0, 0, Mouse.x(), Mouse.y());
+        // renderer().line(-1, -1, 1, 1);
     
-        renderer().noStroke();
-        renderer().fill(254, 0, 0, 255);
-        renderer().circle(20, 20, 20);
-    
-        renderer().fill(0, 0, 254, 127);
-        renderer().circle(Mouse.x(), Mouse.y(), 20);
+        // renderer().noStroke();
+        // renderer().fill(254, 0, 0, 255);
+        // renderer().circle(20, 20, 20);
+        //
+        // renderer().fill(0, 0, 254, 127);
+        // renderer().circle(Mouse.x(), Mouse.y(), 20);
     
         if (Keyboard.SPACE.down())
         {

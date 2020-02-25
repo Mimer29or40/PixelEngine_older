@@ -67,13 +67,10 @@ public class SoftwareRenderer extends Renderer
         {
             if (update || (currData.getInt(i * this.window.getChannels()) != prevData.getInt(i * this.window.getChannels())))
             {
+                this.window.copy(this.prev);
                 this.window.upload();
                 glDrawArrays(GL_TRIANGLES, 0, 6);
-        
                 Window.swap();
-        
-                this.window.copy(this.prev);
-        
                 break;
             }
         }
@@ -681,7 +678,7 @@ public class SoftwareRenderer extends Renderer
     
     private void createFontSheet()
     {
-        // PixelEngine.LOGGER.debug("Generating Font Data");
+        Renderer.LOGGER.debug("Generating Font Data");
         
         String data = "";
         data += "?Q`0001oOch0o01o@F40o0<AGD4090LAGD<090@A7ch0?00O7Q`0600>00000000";
@@ -723,6 +720,6 @@ public class SoftwareRenderer extends Renderer
                 }
             }
         }
-        // PixelEngine.LOGGER.trace("Font Sheet Generation Finished");
+        Renderer.LOGGER.trace("Font Sheet Generation Finished");
     }
 }

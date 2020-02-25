@@ -12,25 +12,6 @@ public abstract class Renderer
 {
     protected static final Logger LOGGER = Logger.getLogger();
     
-    // public static final Renderer INSTANCE = createInstance();
-    //
-    // private static Renderer createInstance()
-    // {
-    //     Renderer renderer;
-    //     // try
-    //     // {
-    //     //     if (Options.NO_UNSAFE)
-    //     //         renderer = new MemUtil.MemUtilNIO();
-    //     //     else
-    //     //         renderer = new MemUtil.MemUtilUnsafe();
-    //     // }
-    //     // catch (Throwable e)
-    //     // {
-    //     //     renderer = new MemUtil.MemUtilNIO();
-    //     // }
-    //     return renderer;
-    // }
-    
     protected Texture window, prev;
     protected Sprite font, target;
     
