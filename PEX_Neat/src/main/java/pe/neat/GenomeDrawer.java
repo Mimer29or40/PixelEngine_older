@@ -43,7 +43,7 @@ public class GenomeDrawer
     {
         int nodeSpacing  = (this.nodeSpacing + this.nodeRadius * 2) * this.imageScale;
         int layerSpacing = (this.layerSpacing + this.nodeRadius * 2) * this.imageScale;
-        int border       = this.nodeRadius * 2 * this.imageScale;
+        int border       = (this.nodeSpacing + this.nodeRadius) * this.imageScale;
     
         // Group all nodes into layer groups
         ArrayList<ArrayList<Node>> allNodes      = new ArrayList<>();

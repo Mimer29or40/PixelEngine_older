@@ -1,9 +1,10 @@
 package pe.neat;
 
-import pe.Logger;
+import pe.Keyboard;
 import pe.PEX;
 import pe.Profiler;
-import pe.Sprite;
+import pe.Random;
+import pe.color.Color;
 import pe.draw.DrawMode;
 
 import java.util.function.Supplier;
@@ -12,7 +13,7 @@ import static pe.PixelEngine.*;
 
 public class PEX_Neat extends PEX
 {
-    private static final Logger LOGGER = Logger.getLogger();
+    // private static final Logger LOGGER = Logger.getLogger();
     
     /**
      * Rate at which mutation happens without crossover
@@ -64,55 +65,36 @@ public class PEX_Neat extends PEX
      */
     public static final double AVERAGE_WEIGHT_DIFFERENCE_WEIGHT = 0.4;
     
-    private static int        populationSize;
+    public static final Random random = new Random();
+    
+    private static Supplier<Organism> defaultOrganism;
+    
     private static Population population;
+    private static int        populationSize;
     
-    private static Supplier<Organism> organismFactory;
+    private static Organism userOrganism;
     
-    /**
-     * Flag to show the best of the previous generation
-     */
-    public static boolean showBest = true;
+    private static GenomeDrawer genomeDrawer;
     
-    /**
-     * Flag if the all time best organism is being replayed
-     */
-    public static boolean runBest = false;
+    private static boolean runFlag;
+    private static boolean playFlag;
     
-    /**
-     * Flag if the user is playing
-     */
-    public static boolean humanPlaying = false;
+    private static boolean showHelp       = false;
+    private static boolean userPlaying    = false;
+    private static boolean showBest       = true;
+    private static boolean cycleOrganisms = false;
+    private static boolean drawBrain      = false;
     
-    public static Organism humanPlayer;
+    private static int currentOrganism = 0;
     
-    public static boolean  runThroughSpecies = false;
-    public static int      upToSpecies       = 0;
-    public static Organism speciesChamp;
-    
-    public static boolean showBrain = false;
-    
-    public static boolean  showBestEachGen = false;
-    public static int      upToGen         = 0;
-    public static Organism genPlayerTemp;
-    
-    public static boolean showNothing = false;
-    
-    public static final GenomeDrawer drawGenome = new GenomeDrawer();
-    
-    public static void setOrganismFactory(Supplier<Organism> factory)
+    public static void setDefaultOrganism(Supplier<Organism> defaultOrganism)
     {
-        PEX_Neat.organismFactory = factory;
+        PEX_Neat.defaultOrganism = defaultOrganism;
     }
     
-    public static void setPopulationSize(int size)
+    public static void setPopulationSize(int populationSize)
     {
-        if (PEX_Neat.population != null)
-        {
-            PEX_Neat.LOGGER.warn("Population size can only be used in setup");
-            return;
-        }
-        PEX_Neat.populationSize = size;
+        PEX_Neat.populationSize = populationSize;
     }
     
     public PEX_Neat(Profiler profiler)
@@ -121,268 +103,199 @@ public class PEX_Neat extends PEX
     }
     
     @Override
-    public void beforeSetup()
-    {
-    
-    }
+    public void beforeSetup() { }
     
     @Override
     public void afterSetup()
     {
-        PEX_Neat.population = new Population(PEX_Neat.populationSize, PEX_Neat.organismFactory);
-    
-        PEX_Neat.genPlayerTemp = organismFactory.get();
+        PEX_Neat.playFlag = PEX_Neat.defaultOrganism != null;
+        PEX_Neat.runFlag  = PEX_Neat.playFlag && PEX_Neat.populationSize > 0;
+        
+        if (PEX_Neat.playFlag) PEX_Neat.userOrganism = defaultOrganism.get();
+        
+        if (PEX_Neat.runFlag)
+        {
+            PEX_Neat.population = new Population(PEX_Neat.random, PEX_Neat.populationSize, PEX_Neat.defaultOrganism);
+            
+            PEX_Neat.genomeDrawer = new GenomeDrawer();
+            PEX_Neat.genomeDrawer.backgroundColor.set(Color.BLANK);
+            PEX_Neat.genomeDrawer.imageScale   = 1;
+            PEX_Neat.genomeDrawer.nodeSpacing  = 1;
+            PEX_Neat.genomeDrawer.layerSpacing = 1;
+        }
     }
     
     @Override
     public void beforeDraw(double elapsedTime)
     {
-        // if (Keyboard.SPACE.down()) PEX_Neat.showBest = !PEX_Neat.showBest;
-        // if (Keyboard.B.down()) PEX_Neat.runBest = !PEX_Neat.runBest;
-        // if (Keyboard.S.down())
-        // {
-        //     PEX_Neat.runThroughSpecies = !PEX_Neat.runThroughSpecies;
-        //     PEX_Neat.upToSpecies       = 0;
-        //     // PEX_Neat.genPlayerTemp     = PEX_Neat.population.species.get(PEX_Neat.upToSpecies).champion.clone();
-        // }
-        // if (Keyboard.G.down())
-        // {
-        //     PEX_Neat.showBestEachGen = !PEX_Neat.showBestEachGen;
-        //     PEX_Neat.upToGen         = 0;
-        //     // PEX_Neat.genPlayerTemp   = PEX_Neat.population.genPlayers.get(PEX_Neat.upToGen).clone();
-        // }
-        // if (Keyboard.N.down()) PEX_Neat.showNothing = !PEX_Neat.showNothing;
-        // if (Keyboard.P.down())
-        // {
-        //     PEX_Neat.humanPlaying = !PEX_Neat.humanPlaying;
-        //     PEX_Neat.humanPlayer  = PEX_Neat.organismFactory.get();
-        // }
-        // if (Keyboard.RIGHT.down())
-        // {
-        //     if (PEX_Neat.runThroughSpecies)
-        //     {//if showing the species in the current generation then move on to the next species
-        //         PEX_Neat.upToSpecies++;
-        //         // if (PEX_Neat.upToSpecies >= PEX_Neat.population.species.size())
-        //         // {
-        //         //     PEX_Neat.runThroughSpecies = false;
-        //         // }
-        //         // else
-        //         // {
-        //         //     PEX_Neat.speciesChamp = PEX_Neat.population.species.get(PEX_Neat.upToSpecies).champ.cloneForReplay();
-        //         // }
-        //     }
-        //     else if (PEX_Neat.showBestEachGen)
-        //     {//if showing the best player each generation then move on to the next generation
-        //         PEX_Neat.upToGen++;
-        //         // if (upToGen >= PEX_Neat.population.genPlayers.size())
-        //         // {//if reached the current generation then exit out of the showing generations mode
-        //         //     PEX_Neat.showBestEachGen = false;
-        //         // }
-        //         // else
-        //         // {
-        //         //     PEX_Neat.genPlayerTemp = PEX_Neat.population.genPlayers.get(PEX_Neat.upToGen).cloneForReplay();
-        //         // }
-        //     }
-        // }
-        population.updateGeneration(elapsedTime);
-        population.calculateFitness();
-    
-        if (population.done())
+        if (PEX_Neat.runFlag)
         {
-            population.naturalSelection();
+            if (Keyboard.F1.down()) PEX_Neat.showHelp = !PEX_Neat.showHelp;
+            if (Keyboard.F2.down())
+            {
+                PEX_Neat.userPlaying    = true;
+                PEX_Neat.showBest       = false;
+                PEX_Neat.cycleOrganisms = false;
+            }
+            if (Keyboard.F3.down())
+            {
+                PEX_Neat.userPlaying    = false;
+                PEX_Neat.showBest       = true;
+                PEX_Neat.cycleOrganisms = false;
+            }
+            if (Keyboard.F4.down())
+            {
+                PEX_Neat.userPlaying    = false;
+                PEX_Neat.showBest       = false;
+                PEX_Neat.cycleOrganisms = true;
+            }
+            if (Keyboard.F12.down()) PEX_Neat.drawBrain = !PEX_Neat.drawBrain;
+        
+            if (PEX_Neat.cycleOrganisms)
+            {
+                if (Keyboard.LEFT.down()) PEX_Neat.currentOrganism--;
+                if (Keyboard.RIGHT.down()) PEX_Neat.currentOrganism++;
+            
+                if (PEX_Neat.currentOrganism < 0) PEX_Neat.currentOrganism = PEX_Neat.populationSize - 1;
+                if (PEX_Neat.currentOrganism > PEX_Neat.populationSize - 1) PEX_Neat.currentOrganism = 0;
+            }
+        
+            if (PEX_Neat.userPlaying)
+            {
+                PEX_Neat.userOrganism.update(elapsedTime, true);
+                // TODO - Check if user has died and show game over until user presses a button, then return to simulation
+            }
+            else
+            {
+                if (PEX_Neat.population.update(elapsedTime))
+                {
+                    PEX_Neat.population.naturalSelection();
+                }
+            }
         }
-    
-        // if (PEX_Neat.showBestEachGen)
-        // {//show the best of each gen
-        //     if (PEX_Neat.genPlayerTemp.alive)
-        //     {//if current gen player is not dead then update it
-        //
-        //         PEX_Neat.genPlayerTemp.gatherInputs(elapsedTime);
-        //         PEX_Neat.genPlayerTemp.processInputs(elapsedTime);
-        //     }
-        //     else
-        //     {//if dead move on to the next generation
-        //         PEX_Neat.upToGen++;
-        //         // if (PEX_Neat.upToGen >= PEX_Neat.population.genPlayers.size())
-        //         // {//if at the end then return to the start and stop doing it
-        //         //     PEX_Neat.upToGen         = 0;
-        //         //     PEX_Neat.showBestEachGen = false;
-        //         // }
-        //         // else
-        //         // {//if not at the end then get the next generation
-        //         //     PEX_Neat.genPlayerTemp = PEX_Neat.population.genPlayers.get(PEX_Neat.upToGen).cloneForReplay();
-        //         // }
-        //     }
-        // }
-        // else if (PEX_Neat.runThroughSpecies) //show all the species
-        // {
-        //     if (PEX_Neat.speciesChamp.alive)
-        //     {//if best player is not dead
-        //         PEX_Neat.speciesChamp.gatherInputs(elapsedTime);
-        //         PEX_Neat.speciesChamp.processInputs(elapsedTime);
-        //     }
-        //     else
-        //     {//once dead
-        //         PEX_Neat.upToSpecies++;
-        //         // if (PEX_Neat.upToSpecies >= PEX_Neat.population.species.size())
-        //         // {
-        //         //     PEX_Neat.runThroughSpecies = false;
-        //         // }
-        //         // else
-        //         // {
-        //         //     PEX_Neat.speciesChamp = PEX_Neat.population.species.get(PEX_Neat.upToSpecies).champ.cloneForReplay();
-        //         // }
-        //     }
-        // }
-        // else if (PEX_Neat.humanPlaying)
-        // {//if the user is controling the ship[
-        //     if (PEX_Neat.humanPlayer.alive)
-        //     {//if the player isnt dead then move and show the player based on input
-        //         PEX_Neat.humanPlayer.gatherInputs(elapsedTime);
-        //     }
-        //     else
-        //     {//once done return to ai
-        //         PEX_Neat.humanPlaying = false;
-        //     }
-        // }
-        // else if (PEX_Neat.runBest) //if just evolving normally
-        // {// if replaying the best ever game
-        //     // if (!PEX_Neat.population.bestPlayer.dead)
-        //     // {//if best player is not dead
-        //     //     PEX_Neat.population.bestPlayer.look();
-        //     //     PEX_Neat.population.bestPlayer.think();
-        //     //     PEX_Neat.population.bestPlayer.update();
-        //     //     PEX_Neat.population.bestPlayer.show();
-        //     // }
-        //     // else
-        //     {//once dead
-        //         PEX_Neat.runBest = false;//stop replaying it
-        //         // PEX_Neat.population.bestPlayer = PEX_Neat.population.bestPlayer.cloneForReplay();//reset the best player so it can play again
-        //     }
-        // }
-        // else if (!PEX_Neat.population.done())
-        // {//if any players are alive then update them
-        //     PEX_Neat.population.updateAlive();
-        // }
-        // else
-        // {//all dead
-        //     // genetic algorithm
-        //     PEX_Neat.population.naturalSelection();
-        // }
+        else if (PEX_Neat.playFlag)
+        {
+            PEX_Neat.userOrganism.update(elapsedTime, true);
+        }
     }
     
     @Override
     public void afterDraw(double elapsedTime)
     {
-        if (!PEX_Neat.showNothing)
+        if (PEX_Neat.runFlag)
         {
-            for (Organism organism : population.organisms)
-            {
-                if (organism.alive)
-                {
-                    organism.draw(elapsedTime);
-                    drawString(1, 1, "Fitness: " + Math.round(organism.fitness * 100) / 100);
-                    drawString(1, 10, "Generation: " + (population.generation + 1));
-                    break;
-                }
-            }
+            String text;
+            int    x, y;
         
-            // if (PEX_Neat.showBestEachGen && PEX_Neat.genPlayerTemp.alive)
-            // {
-            //     PEX_Neat.genPlayerTemp.draw(elapsedTime);
-            // }
-            // else if (PEX_Neat.runThroughSpecies && PEX_Neat.speciesChamp.alive) //show all the species
-            // {
-            //     PEX_Neat.genPlayerTemp.draw(elapsedTime);
-            // }
-            // else if (PEX_Neat.humanPlaying && PEX_Neat.humanPlayer.alive)
-            // {
-            //     PEX_Neat.genPlayerTemp.draw(elapsedTime);
-            // }
-            // else if (runBest) //if just evolving normally
-            // {// if replaying the best ever game
-            //     // if (!PEX_Neat.population.bestPlayer.dead)
-            //     // {//if best player is not dead
-            //     //     PEX_Neat.population.bestPlayer.look();
-            //     //     PEX_Neat.population.bestPlayer.think();
-            //     //     PEX_Neat.population.bestPlayer.update();
-            //     //     PEX_Neat.population.bestPlayer.show();
-            //     // }
-            //     // else
-            //     {//once dead
-            //         PEX_Neat.runBest = false;//stop replaying it
-            //         // PEX_Neat.population.bestPlayer = PEX_Neat.population.bestPlayer.cloneForReplay();//reset the best player so it can play again
-            //     }
-            // }
-        
-            int x = 0;
-            int y = 0;
-            drawMode(DrawMode.MASK);
-        
-            if (PEX_Neat.runThroughSpecies)
+            if (PEX_Neat.userPlaying)
             {
-                Sprite sprite = PEX_Neat.drawGenome.generateGraph(PEX_Neat.speciesChamp.brain);
-                drawSprite(x, y, sprite);
-            }
-            else if (PEX_Neat.runBest)
-            {
-                // Sprite sprite = PEX_Neat.drawGenome.generateGraph(PEX_Neat.population.bestPlayer.brain);
-                // drawSprite(x, y, sprite);
-            }
-            else if (PEX_Neat.humanPlaying)
-            {
-                PEX_Neat.showBrain = false;
-            }
-            else if (PEX_Neat.showBestEachGen)
-            {
-                // Sprite sprite = PEX_Neat.drawGenome.generateGraph(PEX_Neat.genPlayerTemp.brain);
-                // drawSprite(x, y, sprite);
+                PEX_Neat.userOrganism.draw(elapsedTime);
+                drawString(1, screenHeight() - 8 - 1, "User Playing");
             }
             else
             {
-                // Sprite sprite = PEX_Neat.drawGenome.generateGraph(PEX_Neat.population.pop.get(0).brain);
-                // drawSprite(x, y, sprite);
+                Organism current = null;
+                if (PEX_Neat.showBest) { current = PEX_Neat.population.champion; }
+                else if (PEX_Neat.cycleOrganisms) current = PEX_Neat.population.organisms.get(PEX_Neat.currentOrganism);
+            
+                if (current != null)
+                {
+                    current.draw(elapsedTime);
+                
+                    if (PEX_Neat.drawBrain)
+                    {
+                        drawMode(DrawMode.BLEND);
+                        drawSprite(0, 0, PEX_Neat.genomeDrawer.generateGraph(current.brain));
+                        drawMode(DrawMode.NORMAL);
+                    }
+                }
+            
+                if (PEX_Neat.showBest)
+                {
+                    text = "Showing Champion Organism";
+                    x    = 1;
+                    y    = screenHeight() - textHeight(text) - 1;
+                    drawString(x, y, text);
+                }
+                else if (PEX_Neat.cycleOrganisms)
+                {
+                    text = "Current Organism: " + (PEX_Neat.currentOrganism + 1);
+                    x    = 1;
+                    y    = screenHeight() - textHeight(text) - 1;
+                    drawString(x, y, text);
+                }
+            
+                text = "Generation: " + (PEX_Neat.population.generation + 1);
+                x    = screenWidth() - textWidth(text) - 1;
+                y    = 1;
+                drawString(x, y, text);
             }
         
-            // if (PEX_Neat.showBestEachGen)
-            // {
-            //     drawString(1, 1, "Fitness: " + PEX_Neat.genPlayerTemp.fitness);
-            //     // drawString(1, 10, "Generation: " + PEX_Neat.population.fitness);
-            // }
-            // else if (PEX_Neat.runThroughSpecies)
-            // {
-            //     drawString(1, 1, "Fitness: " + PEX_Neat.speciesChamp.fitness);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-            //     drawString(1, 10, "Species: " + (PEX_Neat.upToSpecies + 1));
-            //     // drawString(50, screenHeight() / 2 + 200, "Players in this Species: " + PEX_Neat.population.species.get(upToSpecies).players.size());
-            // }
-            // else if (PEX_Neat.humanPlaying)
-            // {
-            //     drawString(1, 1, "Fitness: " + PEX_Neat.humanPlayer.fitness);
-            // }
-            // else if (PEX_Neat.runBest)
-            // {
-            //     // drawString(650, 50, "Score: " + PEX_Neat.population.bestPlayer.score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-            //     // drawString(1150, 50, "Gen: " + PEX_Neat.population.gen);
-            // }
-            // else if (PEX_Neat.showBest)
-            // {
-            //     // drawString(650, 50, "Score: " + PEX_Neat.population.pop.get(0).score);//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-            //     // drawString(1150, 50, "Gen: " + PEX_Neat.population.gen);
-            //     // drawString(50, screenHeight() / 2 + 300, "Species: " + PEX_Neat.population.species.size());
-            //     // drawString(50, screenHeight() / 2 + 200, "Global Best Score: " + PEX_Neat.population.bestScore);
-            // }
+            if (PEX_Neat.showHelp)
+            {
+                x    = 1;
+                y    = 1;
+                text = " F1: Show this Menu";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F2: Play Game";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F3: Show Champion";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F4: Cycle Organisms";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F5: ";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F6: ";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F7: ";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F8: ";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = " F9: ";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = "F10: ";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = "F11: ";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = "F12: Show Brain";
+                drawString(x, y, text);
+            
+                y += textHeight(text) + 1;
+                text = "LEFT/RIGHT: Cycle between organisms";
+                drawString(x, y, text);
+            }
+        }
+        else if (PEX_Neat.playFlag)
+        {
+            PEX_Neat.userOrganism.draw(elapsedTime);
         }
     }
     
     @Override
-    public void beforeDestroy()
-    {
-    
-    }
+    public void beforeDestroy() { }
     
     @Override
-    public void afterDestroy()
-    {
-    
-    }
+    public void afterDestroy() { }
 }

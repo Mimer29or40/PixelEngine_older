@@ -1,6 +1,7 @@
-package pe.neat;
+package pe.neat.functionality;
 
 import pe.Random;
+import pe.neat.*;
 
 import static pe.PixelEngine.println;
 

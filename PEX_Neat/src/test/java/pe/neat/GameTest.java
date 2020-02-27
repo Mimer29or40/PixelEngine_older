@@ -11,8 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import static pe.neat.PEX_Neat.setOrganismFactory;
-import static pe.neat.PEX_Neat.setPopulationSize;
+// import static pe.neat.PEX_Neat.setOrganismFactory;
+// import static pe.neat.PEX_Neat.setPopulationSize;
 
 public class GameTest extends PixelEngine
 {
@@ -61,16 +61,16 @@ public class GameTest extends PixelEngine
                 }
                 genome.addConnection(new Connection(connInno.inc(), bias.id, ni + j, 0, true));
             }
-            
+    
             return genome;
         };
-        
-        setOrganismFactory(() -> new Game(createBrain));
-        
-        setPopulationSize(10);
-        
-        PEX_Neat.showBestEachGen = true;
-        
+    
+        // setOrganismFactory(() -> new Game(createBrain));
+        //
+        // setPopulationSize(10);
+        //
+        // PEX_Neat.showBestEachGen = true;
+    
         return true;
     }
     
@@ -147,9 +147,9 @@ public class GameTest extends PixelEngine
             random = new Random();
             rocketPos.set(screenWidth() / 2.0, screenHeight() / 2.0);
         }
-        
+    
         @Override
-        public void gatherInputs(double elapsedTime)
+        public void gatherInputs(double elapsedTime, boolean userPlaying)
         {
             Vector2dc[] rays = fireRays();
             for (int i = 0, n = this.inputs.length; i < n; i++)
@@ -157,9 +157,9 @@ public class GameTest extends PixelEngine
                 this.inputs[i] = this.rocketPos.distance(rays[i]);
             }
         }
-        
+    
         @Override
-        public void makeDecision(double elapsedTime, int decision)
+        public void makeDecision(double elapsedTime, boolean userPlaying, int decision)
         {
             // accelerate   = Keyboard.W.held() || Keyboard.UP.held();
             // rotateRight  = Keyboard.D.held() || Keyboard.RIGHT.held();

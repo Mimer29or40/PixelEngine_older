@@ -1,12 +1,12 @@
-package pe.cb;
+package pe.neat.cb;
 
 import org.joml.Vector2d;
 import pe.color.Color;
+import pe.color.Colorc;
 
 import java.util.ArrayList;
 
 import static pe.PixelEngine.*;
-import static pe.cb.PEX_CBNeat.nextConnectionNo;
 
 public class Genome
 {
@@ -17,12 +17,12 @@ public class Genome
     public int                       layers   = 2;
     public int                       nextNode = 0;
     public int                       biasNode;
-    
-    public ArrayList<Node> network = new ArrayList<Node>();//a list of the nodes in the order that they need to be considered in the NN
+    public ArrayList<Node>           network  = new ArrayList<>();//a list of the nodes in the order that they need to be considered in the NN
     
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public Genome(int in, int out)
     {
+        int localNextConnectionNumber = 0;
         //set input number and output number
         inputs  = in;
         outputs = out;
@@ -42,11 +42,30 @@ public class Genome
             nodes.get(i + inputs).layer = 1;
             nextNode++;
         }
-        
+    
         nodes.add(new Node(nextNode));//bias node
         biasNode = nextNode;
         nextNode++;
         nodes.get(biasNode).layer = 0;
+    
+        //connect inputs to all outputs outputs
+        for (int i = 0; i < in; i++)
+        {
+            //add the bare minimum amount of connections to the array with random weights and unique innovation numbers
+            for (int j = 0; j < outputs; j++)
+            {
+            
+                genes.add(new ConnectionGene(nodes.get(i), nodes.get(inputs + j), random().nextDouble(-1, 1), localNextConnectionNumber));
+                localNextConnectionNumber++;
+            }
+        }
+    
+        //connect the bias
+        for (int i = 0; i < outputs; i++)
+        {
+            genes.add(new ConnectionGene(nodes.get(biasNode), nodes.get(inputs + i), random().nextDouble(-1, 1), localNextConnectionNumber));
+            localNextConnectionNumber++;
+        }
     }
     
     
@@ -77,7 +96,7 @@ public class Genome
         }
         
         for (int i = 0; i < genes.size(); i++)
-        {//for each ConnectionGene
+        {//for each ConnectionGene 
             genes.get(i).fromNode.outputConnections.add(genes.get(i));//add it to node
         }
     }
@@ -114,7 +133,7 @@ public class Genome
     }
     
     //----------------------------------------------------------------------------------------------------------------------------------------
-    //sets up the NN as a list of nodes in order to be engaged
+    //sets up the NN as a list of nodes in order to be engaged 
     
     public void generateNetwork()
     {
@@ -136,20 +155,15 @@ public class Genome
     
     //-----------------------------------------------------------------------------------------------------------------------------------------
     //mutate the NN by adding a new node
-    //it does this by picking a random connection and disabling it then 2 new connections are added
+    //it does this by picking a random connection and disabling it then 2 new connections are added 
     //1 between the input node of the disabled connection and the new node
     //and the other between the new node and the output of the disabled connection
     public void addNode(ArrayList<ConnectionHistory> innovationHistory)
     {
         //pick a random connection to create a node between
-        if (genes.size() == 0)
-        {
-            addConnection(innovationHistory);
-            return;
-        }
         int randomConnection = random().nextInt(genes.size());
-        
-        while (genes.get(randomConnection).fromNode == nodes.get(biasNode) && genes.size() != 1)
+    
+        while (genes.get(randomConnection).fromNode == nodes.get(biasNode))
         {//dont disconnect bias
             randomConnection = random().nextInt(genes.size());
         }
@@ -171,7 +185,7 @@ public class Genome
         
         
         connectionInnovationNumber = getInnovationNumber(innovationHistory, nodes.get(biasNode), getNode(newNodeNo));
-        //connect the bias to the new node with a weight of 0
+        //connect the bias to the new node with a weight of 0 
         genes.add(new ConnectionGene(nodes.get(biasNode), getNode(newNodeNo), 0, connectionInnovationNumber));
         
         //if the layer of the new node is equal to the layer of the output node of the old connection then a new layer needs to be created
@@ -200,13 +214,14 @@ public class Genome
             println("connection failed");
             return;
         }
-        
-        
+    
+    
         //get random nodes
         int randomNode1 = random().nextInt(nodes.size());
         int randomNode2 = random().nextInt(nodes.size());
-        while (randomConnectionNodesAreShit(randomNode1, randomNode2))
-        {//while the random nodes are no good
+        while (nodes.get(randomNode1).layer == nodes.get(randomNode2).layer
+               || nodes.get(randomNode1).isConnectedTo(nodes.get(randomNode2)))
+        { //while the random nodes are no good
             //get new ones
             randomNode1 = random().nextInt(nodes.size());
             randomNode2 = random().nextInt(nodes.size());
@@ -218,24 +233,14 @@ public class Genome
             randomNode2 = randomNode1;
             randomNode1 = temp;
         }
-        
+    
         //get the innovation number of the connection
-        //this will be a new number if no identical genome has mutated in the same way
+        //this will be a new number if no identical genome has mutated in the same way 
         int connectionInnovationNumber = getInnovationNumber(innovationHistory, nodes.get(randomNode1), nodes.get(randomNode2));
         //add the connection with a random array
         
         genes.add(new ConnectionGene(nodes.get(randomNode1), nodes.get(randomNode2), random().nextDouble(-1, 1), connectionInnovationNumber));//changed this so if error here
         connectNodes();
-    }
-    
-    //-------------------------------------------------------------------------------------------------------------------------------------------
-    public boolean randomConnectionNodesAreShit(int r1, int r2)
-    {
-        if (nodes.get(r1).layer == nodes.get(r2).layer) return true; // if the nodes are in the same layer
-        if (nodes.get(r1).isConnectedTo(nodes.get(r2))) return true; //if the nodes are already connected
-        
-        
-        return false;
     }
     
     //-------------------------------------------------------------------------------------------------------------------------------------------
@@ -245,7 +250,7 @@ public class Genome
     public int getInnovationNumber(ArrayList<ConnectionHistory> innovationHistory, Node from, Node to)
     {
         boolean isNew                      = true;
-        int     connectionInnovationNumber = nextConnectionNo;
+        int     connectionInnovationNumber = PEX_CBNeat.nextConnectionNo;
         for (int i = 0; i < innovationHistory.size(); i++)
         {//for each previous mutation
             if (innovationHistory.get(i).matches(this, from, to))
@@ -263,10 +268,10 @@ public class Genome
             {//set the innovation numbers
                 innoNumbers.add(genes.get(i).innovationNo);
             }
-            
-            //then add this mutation to the innovationHistory
+    
+            //then add this mutation to the innovationHistory 
             innovationHistory.add(new ConnectionHistory(from.number, to.number, connectionInnovationNumber, innoNumbers));
-            nextConnectionNo++;
+            PEX_CBNeat.nextConnectionNo++;
         }
         return connectionInnovationNumber;
     }
@@ -293,15 +298,12 @@ public class Genome
             {//for each layer infront of this layer
                 nodesInFront += nodesInLayers[j];//add up nodes
             }
-            
+        
             maxConnections += nodesInLayers[i] * nodesInFront;
         }
-        
-        if (maxConnections == genes.size())
-        {//if the number of connections is equal to the max number of connections possible then it is full
-            return true;
-        }
-        return false;
+    
+        //if the number of connections is equal to the max number of connections possible then it is full
+        return maxConnections == genes.size();
     }
     
     
@@ -309,11 +311,6 @@ public class Genome
     //mutates the genome
     public void mutate(ArrayList<ConnectionHistory> innovationHistory)
     {
-        if (genes.size() == 0)
-        {
-            addConnection(innovationHistory);
-        }
-        
         double rand1 = random().nextDouble();
         if (rand1 < 0.8)
         { // 80% of the time mutate weights
@@ -324,15 +321,15 @@ public class Genome
         }
         //5% of the time add a new connection
         double rand2 = random().nextDouble();
-        if (rand2 < 0.08)
+        if (rand2 < 0.05)
         {
             addConnection(innovationHistory);
         }
-        
-        
-        //1% of the time add a node
+    
+    
+        //3% of the time add a node
         double rand3 = random().nextDouble();
-        if (rand3 < 0.02)
+        if (rand3 < 0.03)
         {
             addNode(innovationHistory);
         }
@@ -431,7 +428,7 @@ public class Genome
     }
     
     //----------------------------------------------------------------------------------------------------------------------------------------
-    //prints out info about the genome to the console
+    //prints out info about the genome to the console 
     public void printGenome()
     {
         println("Print genome  layers:", layers);
@@ -443,7 +440,7 @@ public class Genome
         }
         println("Genes");
         for (int i = 0; i < genes.size(); i++)
-        {//for each ConnectionGene
+        {//for each ConnectionGene 
             println("gene " + genes.get(i).innovationNo, "From node " + genes.get(i).fromNode.number, "To node " + genes.get(i).toNode.number,
                     "is enabled " + genes.get(i).enabled, "from layer " + genes.get(i).fromNode.layer, "to layer " + genes.get(i).toNode.layer, "weight: " + genes.get(i).weight);
         }
@@ -480,22 +477,19 @@ public class Genome
     
     //----------------------------------------------------------------------------------------------------------------------------------------
     //draw the genome on the screen
-    public void drawGenome(int startX, int startY, int w, int h)
+    public void drawGenome()
     {
         //i know its ugly but it works (and is not that important) so I'm not going to mess with it
-        ArrayList<ArrayList<Node>> allNodes    = new ArrayList<>();
-        ArrayList<Vector2d>        nodePoses   = new ArrayList<>();
-        ArrayList<Integer>         nodeNumbers = new ArrayList<>();
+        ArrayList<ArrayList<Node>> allNodes    = new ArrayList<ArrayList<Node>>();
+        ArrayList<Vector2d>        nodePoses   = new ArrayList<Vector2d>();
+        ArrayList<Integer>         nodeNumbers = new ArrayList<Integer>();
         
         //get the positions on the screen that each node is supposed to be in
-        
-        
-        //split the nodes into layers
         for (int i = 0; i < layers; i++)
         {
             ArrayList<Node> temp = new ArrayList<Node>();
             for (int j = 0; j < nodes.size(); j++)
-            {//for each node
+            {//for each node 
                 if (nodes.get(j).layer == i)
                 {//check if it is in this layer
                     temp.add(nodes.get(j)); //add it to this layer
@@ -504,20 +498,20 @@ public class Genome
             allNodes.add(temp);//add this layer to all nodes
         }
         
-        //for each layer add the position of the node on the screen to the node posses arraylist
-        Color color = new Color(255, 0, 0);
         for (int i = 0; i < layers; i++)
         {
-            float x = startX + (float) ((i + 1) * w) / (float) (layers + 1.0);
+            double x = (double) ((i + 1) * screenWidth()) / (layers + 1.0);
             for (int j = 0; j < allNodes.get(i).size(); j++)
-            {//for the position in the layer
-                float y = startY + ((float) (j + 1.0) * h) / (float) (allNodes.get(i).size() + 1.0);
+            {
+                double y = ((j + 1.0) * screenHeight()) / (allNodes.get(i).size() + 1.0);
                 nodePoses.add(new Vector2d(x, y));
                 nodeNumbers.add(allNodes.get(i).get(j).number);
             }
         }
         
-        //draw connections
+        //draw connections 
+        // stroke(0);
+        // strokeWeight(2);
         for (int i = 0; i < genes.size(); i++)
         {
             // if (genes.get(i).enabled)
@@ -532,15 +526,19 @@ public class Genome
             Vector2d to;
             from = nodePoses.get(nodeNumbers.indexOf(genes.get(i).fromNode.number));
             to   = nodePoses.get(nodeNumbers.indexOf(genes.get(i).toNode.number));
-            double width = map(Math.abs(genes.get(i).weight), 0, 1, 0, 5);
+            Colorc c;
             if (genes.get(i).weight > 0)
             {
-                drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y, (int) width, new Color(0, 0, 0));
+                // stroke(255, 0, 0);
+                c = Color.RED;
             }
             else
             {
-                drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y, (int) width, new Color(0, 0, 255));
+                // stroke(0, 0, 255);
+                c = Color.BLUE;
             }
+            // strokeWeight(map(abs(genes.get(i).weight), 0, 1, 0, 5));
+            drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y, (int) map(Math.abs(genes.get(i).weight), 0, 1, 0, 5), c);
         }
         
         //draw nodes last so they appear ontop of the connection lines
@@ -549,13 +547,15 @@ public class Genome
             // fill(255);
             // stroke(0);
             // strokeWeight(1);
-            drawEllipse((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20, 20, Color.WHITE);
+            // ellipse(nodePoses.get(i).x, nodePoses.get(i).y, 20, 20);
+            drawCircle((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20, Color.WHITE);
             // textSize(10);
             // fill(0);
             // textAlign(CENTER, CENTER);
-            
-            
-            drawString((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i));
+    
+    
+            // text(nodeNumbers.get(i), nodePoses.get(i).x, nodePoses.get(i).y);
+            drawString((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i), Color.BLACK);
         }
     }
 }

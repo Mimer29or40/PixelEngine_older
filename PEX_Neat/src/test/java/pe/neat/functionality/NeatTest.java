@@ -1,7 +1,10 @@
-package pe.neat;
+package pe.neat.functionality;
 
 import pe.PixelEngine;
 import pe.Random;
+import pe.neat.Counter;
+import pe.neat.Genome;
+import pe.neat.GenomeDrawer;
 
 @SuppressWarnings("unused")
 public class NeatTest extends PixelEngine

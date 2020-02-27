@@ -1,4 +1,4 @@
-package pe.cb;
+package pe.neat.cb;
 
 import static pe.PixelEngine.random;
 

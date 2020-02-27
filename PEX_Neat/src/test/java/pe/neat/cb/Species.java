@@ -1,4 +1,4 @@
-package pe.cb;
+package pe.neat.cb;
 
 import java.util.ArrayList;
 
@@ -16,9 +16,9 @@ public class Species
     
     //--------------------------------------------
     //coefficients for testing compatibility 
-    public double excessCoeff            = 1;
-    public double weightDiffCoeff        = 0.5;
-    public double compatibilityThreshold = 3;
+    public double excessCoeff            = 1.5;
+    public double weightDiffCoeff        = 0.8;
+    public double compatibilityThreshold = 1;
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //empty constructor
     
@@ -43,15 +43,9 @@ public class Species
     public boolean sameSpecies(Genome g)
     {
         double compatibility;
-        double excessAndDisjoint = getExcessDisjoint(g, rep);//get the number of excess and disjoint genes between this player and the current species rep
-        double averageWeightDiff = averageWeightDiff(g, rep);//get the average weight difference between matching genes
-        
-        
-        double largeGenomeNormaliser = g.genes.size() - 20;
-        if (largeGenomeNormaliser < 1)
-        {
-            largeGenomeNormaliser = 1;
-        }
+        double excessAndDisjoint     = getExcessDisjoint(g, rep);//get the number of excess and disjoint genes between this player and the current species rep
+        double averageWeightDiff     = averageWeightDiff(g, rep);//get the average weight difference between matching genes
+        double largeGenomeNormaliser = 1;
         
         compatibility = (excessCoeff * excessAndDisjoint / largeGenomeNormaliser) + (weightDiffCoeff * averageWeightDiff);//compatablilty formula
         return (compatibilityThreshold > compatibility);

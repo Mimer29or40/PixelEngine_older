@@ -1,11 +1,8 @@
-package pe.cb;
+package pe.neat.cb;
 
 import java.util.ArrayList;
 
-import static pe.PixelEngine.print;
 import static pe.PixelEngine.println;
-import static pe.cb.PEX_CBNeat.showNothing;
-import static pe.neat.PEX_Neat.showBest;
 
 public class Population
 {
@@ -19,8 +16,6 @@ public class Population
     public ArrayList<Player>            genPlayers        = new ArrayList<>();
     public ArrayList<Species>           species           = new ArrayList<>();
     
-    public boolean massExtinctionEvent = false;
-    public boolean newStage            = false;
     
     //------------------------------------------------------------------------------------------------------------------------------------------
     //constructor
@@ -31,7 +26,6 @@ public class Population
         {
             pop.add(new Player());
             pop.get(i).brain.generateNetwork();
-            pop.get(i).brain.mutate(innovationHistory);
         }
     }
     
@@ -47,10 +41,10 @@ public class Population
                 pop.get(i).look();//get inputs for brain
                 pop.get(i).think();//use outputs from neural network
                 pop.get(i).update();//move the player according to the outputs from the neural network
-                if (!showNothing && (!showBest || i == 0))
-                {
-                    pop.get(i).show();
-                }
+                // if (!showBest || i == 0)
+                // {//dont show dead players
+                //     pop.get(i).show();
+                // }
             }
         }
     }
@@ -74,14 +68,13 @@ public class Population
     public void setBestPlayer()
     {
         Player tempBest = species.get(0).players.get(0);
-        tempBest.gen = gen;
-        
+    
+        genPlayers.add(tempBest);
         
         //if best this gen is better than the global best score then set the global best as the best this gen
         
         if (tempBest.score > bestScore)
         {
-            genPlayers.add(tempBest.cloneForReplay());
             println("old best:", bestScore);
             println("new best:", tempBest.score);
             bestScore  = tempBest.score;
@@ -96,54 +89,39 @@ public class Population
         speciate();//seperate the population into species
         calculateFitness();//calculate the fitness of each player
         sortSpecies();//sort the species to be ranked in fitness order, best first
-        if (massExtinctionEvent)
-        {
-            massExtinction();
-            massExtinctionEvent = false;
-        }
         cullSpecies();//kill off the bottom half of each species
         setBestPlayer();//save the best player of this gen
         killStaleSpecies();//remove species which haven't improved in the last 15(ish) generations
         killBadSpecies();//kill species which are so bad that they cant reproduce
-        
-        
-        println("generation", gen, "Number of mutations", innovationHistory.size(), "species: " + species.size(), "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-        
-        
-        float             averageSum = getAvgFitnessSum();
+    
+    
+        double            averageSum = getAvgFitnessSum();
         ArrayList<Player> children   = new ArrayList<Player>();//the next generation
-        println("Species:");
-        for (int j = 0; j < species.size(); j++)
+        for (Species s : species)
         {//for each species
-            
-            println("best unadjusted fitness:", species.get(j).bestFitness);
-            for (int i = 0; i < species.get(j).players.size(); i++)
-            {
-                print("player " + i, "fitness: " + species.get(j).players.get(i).fitness, "score " + species.get(j).players.get(i).score, ' ');
-            }
-            println();
-            children.add(species.get(j).champ.cloneForReplay());//add champion without any mutation
-            
-            int NoOfChildren = (int) Math.floor(species.get(j).averageFitness / averageSum * pop.size()) -
-                               1;//the number of children this species is allowed, note -1 is because the champ is already added
+            children.add(s.players.get(0).clone());//add champion without any mutation
+            int NoOfChildren =
+                    (int) Math.floor(s.averageFitness / averageSum * pop.size()) - 1;//the number of children this species is allowed, note -1 is because the champ is already added
             for (int i = 0; i < NoOfChildren; i++)
             {//get the calculated amount of children from this species
-                children.add(species.get(j).giveMeBaby(innovationHistory));
+                children.add(s.giveMeBaby(innovationHistory));
             }
         }
-        
+    
         while (children.size() < pop.size())
         {//if not enough babies (due to flooring the number of children to get a whole int)
             children.add(species.get(0).giveMeBaby(innovationHistory));//get babies from the best species
         }
+    
         pop.clear();
-        pop.addAll(children); //set the children as the current population
+        pop = (ArrayList) children.clone(); //set the children as the current population
+    
         gen += 1;
+        println("generation", gen, "Number of mutations", innovationHistory.size(), "species: " + species.size());
         for (int i = 0; i < pop.size(); i++)
         {//generate networks for each of the children
             pop.get(i).brain.generateNetwork();
         }
-        
     }
     
     //------------------------------------------------------------------------------------------------------------------------------------------
@@ -177,10 +155,12 @@ public class Population
     //calculates the fitness of all of the players
     public void calculateFitness()
     {
+    
         for (int i = 1; i < pop.size(); i++)
         {
             pop.get(i).calculateFitness();
         }
+    
     }
     
     //------------------------------------------------------------------------------------------------------------------------------------------
@@ -212,15 +192,14 @@ public class Population
             species.remove(maxIndex);
             i--;
         }
-        species.clear();
-        species.addAll(temp);
+        species = (ArrayList) temp.clone();
     }
     
     //------------------------------------------------------------------------------------------------------------------------------------------
     //kills all species which haven't improved in 15 generations
     public void killStaleSpecies()
     {
-        for (int i = 2; i < species.size(); i++)
+        for (int i = 1; i < species.size(); i++)
         {
             if (species.get(i).staleness >= 15)
             {
@@ -234,7 +213,7 @@ public class Population
     //if a species sucks so much that it wont even be allocated 1 child for the next generation then kill it now
     public void killBadSpecies()
     {
-        float averageSum = getAvgFitnessSum();
+        double averageSum = getAvgFitnessSum();
         
         for (int i = 1; i < species.size(); i++)
         {
@@ -248,9 +227,9 @@ public class Population
     
     //------------------------------------------------------------------------------------------------------------------------------------------
     //returns the sum of each species average fitness
-    public float getAvgFitnessSum()
+    public double getAvgFitnessSum()
     {
-        float averageSum = 0;
+        double averageSum = 0;
         for (Species s : species)
         {
             averageSum += s.averageFitness;
@@ -267,16 +246,6 @@ public class Population
             s.cull(); //kill bottom half
             s.fitnessSharing();//also while we're at it lets do fitness sharing
             s.setAverage();//reset averages because they will have changed
-        }
-    }
-    
-    
-    public void massExtinction()
-    {
-        for (int i = 5; i < species.size(); i++)
-        {
-            species.remove(i);//sad
-            i--;
         }
     }
 }

@@ -30,9 +30,9 @@ public abstract class Organism
         this(initialGenome.get());
     }
     
-    public abstract void gatherInputs(double elapsedTime);
+    protected abstract void gatherInputs(double elapsedTime, boolean userPlaying);
     
-    public void processInputs(double elapsedTime)
+    protected void processInputs(double elapsedTime, boolean userPlaying)
     {
         this.lifeTime += elapsedTime;
         
@@ -48,14 +48,21 @@ public abstract class Organism
                 decision = i;
             }
         }
-        makeDecision(elapsedTime, decision);
+        makeDecision(elapsedTime, userPlaying, decision);
     }
     
-    public abstract void makeDecision(double elapsedTime, int decision);
+    protected abstract void makeDecision(double elapsedTime, boolean userPlaying, int decision);
+    
+    protected abstract void calculateFitness();
+    
+    public void update(double elapsedTime, boolean userPlaying)
+    {
+        gatherInputs(elapsedTime, userPlaying);
+        processInputs(elapsedTime, userPlaying);
+        calculateFitness();
+    }
     
     public abstract void draw(double elapsedTime);
-    
-    public abstract void calculateFitness();
     
     public Organism copy(Organism other)
     {

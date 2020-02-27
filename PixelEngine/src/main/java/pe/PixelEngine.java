@@ -1193,7 +1193,7 @@ public class PixelEngine
     
     private static void loadExtensions()
     {
-        PixelEngine.LOGGER.info("Looking for Extensions");
+        PixelEngine.LOGGER.debug("Looking for Extensions");
         
         Reflections reflections = new Reflections("pe");
         for (Class<? extends PEX> ext : reflections.getSubTypesOf(PEX.class))

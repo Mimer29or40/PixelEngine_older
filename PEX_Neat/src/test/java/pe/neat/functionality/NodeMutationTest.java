@@ -1,13 +1,14 @@
-package pe.neat;
+package pe.neat.functionality;
 
 import pe.Random;
+import pe.neat.*;
 
 import static pe.PixelEngine.print;
 
 public class NodeMutationTest
 {
     static GenomeDrawer drawer = new GenomeDrawer();
-    static String name = "out/mutation/node";
+    static String       name   = "out/mutation/node";
     
     public static void main(String[] args)
     {
