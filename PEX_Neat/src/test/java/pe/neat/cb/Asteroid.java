@@ -312,9 +312,9 @@ public class Asteroid
         {
             //add 2 smaller asteroids to the chunks array with slightly different velocities
             Vector2d velocity = new Vector2d(vel.x, vel.y);
-            velocity.add(random().nextGaussian(), random().nextGaussian());
+            velocity.add(nextGaussian(), nextGaussian());
             chunks.add(new Asteroid(pos.x, pos.y, velocity.x, velocity.y, size - 1));
-            velocity.add(random().nextGaussian(), random().nextGaussian());
+            velocity.add(nextGaussian(), nextGaussian());
             chunks.add(new Asteroid(pos.x, pos.y, velocity.x, velocity.y, size - 1));
         }
     }

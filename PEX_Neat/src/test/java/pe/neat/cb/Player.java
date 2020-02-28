@@ -54,17 +54,17 @@ public class Player
         vel      = new Vector2d();
         acc      = new Vector2d();
         rotation = 0;
-        SeedUsed = random().nextLong(1000000000);//create and store a seed
-        random().setSeed(SeedUsed);
-        
+        SeedUsed = nextLong(1000000000);//create and store a seed
+        setSeed(SeedUsed);
+    
         //generate asteroids
-        asteroids.add(new Asteroid(random().nextInt(screenWidth()), 0, random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
-        asteroids.add(new Asteroid(random().nextInt(screenWidth()), 0, random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
-        asteroids.add(new Asteroid(0, random().nextInt(screenHeight()), random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
-        asteroids.add(new Asteroid(random().nextInt(screenWidth()), random().nextInt(screenHeight()), random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(nextInt(screenWidth()), 0, nextDouble(-1, 1), nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(nextInt(screenWidth()), 0, nextDouble(-1, 1), nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(0, nextInt(screenHeight()), nextDouble(-1, 1), nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(nextInt(screenWidth()), nextInt(screenHeight()), nextDouble(-1, 1), nextDouble(-1, 1), 3));
         //aim the fifth one at the player
-        double randX = random().nextDouble(screenWidth());
-        double randY = -50 + Math.floor(random().nextDouble(2)) * (screenHeight() + 100);
+        double randX = nextDouble(screenWidth());
+        double randY = -50 + Math.floor(nextDouble(2)) * (screenHeight() + 100);
         asteroids.add(new Asteroid(randX, randY, pos.x - randX, pos.y - randY, 3));
         brain = new Genome(33, 4);
     }
@@ -79,15 +79,15 @@ public class Player
         acc      = new Vector2d();
         rotation = 0;
         SeedUsed = seed;//use the parameter seed to set the asteroids at the same position as the last one
-        random().setSeed(SeedUsed);
+        setSeed(SeedUsed);
         //generate asteroids
-        asteroids.add(new Asteroid(random().nextInt(screenWidth()), 0, random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
-        asteroids.add(new Asteroid(random().nextInt(screenWidth()), 0, random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
-        asteroids.add(new Asteroid(0, random().nextInt(screenHeight()), random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
-        asteroids.add(new Asteroid(random().nextInt(screenWidth()), random().nextInt(screenHeight()), random().nextDouble(-1, 1), random().nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(nextInt(screenWidth()), 0, nextDouble(-1, 1), nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(nextInt(screenWidth()), 0, nextDouble(-1, 1), nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(0, nextInt(screenHeight()), nextDouble(-1, 1), nextDouble(-1, 1), 3));
+        asteroids.add(new Asteroid(nextInt(screenWidth()), nextInt(screenHeight()), nextDouble(-1, 1), nextDouble(-1, 1), 3));
         //aim the fifth one at the player
-        double randX = random().nextDouble(screenWidth());
-        double randY = -50 + Math.floor(random().nextDouble(2)) * (screenHeight() + 100);
+        double randX = nextDouble(screenWidth());
+        double randY = -50 + Math.floor(nextDouble(2)) * (screenHeight() + 100);
         asteroids.add(new Asteroid(randX, randY, pos.x - randX, pos.y - randY, 3));
     }
     
@@ -141,18 +141,18 @@ public class Player
             
             if (replay)
             {//if replaying use the seeds from the arrayList
-                random().setSeed(seedsUsed.get(upToSeedNo));
+                setSeed(seedsUsed.get(upToSeedNo));
                 upToSeedNo++;
             }
             else
             {//if not generate the seeds and then save them
-                long seed = random().nextLong(1000000);
+                long seed = nextLong(1000000);
                 seedsUsed.add(seed);
-                random().setSeed(seed);
+                setSeed(seed);
             }
             //aim the asteroid at the player to encourage movement
-            double randX = random().nextDouble(screenWidth());
-            double randY = -50 + Math.floor(random().nextDouble(2)) * (screenHeight() + 100);
+            double randX = nextDouble(screenWidth());
+            double randY = -50 + Math.floor(nextDouble(2)) * (screenHeight() + 100);
             asteroids.add(new Asteroid(randX, randY, pos.x - randX, pos.y - randY, 3));
             asteroidCount = 1000;
         }

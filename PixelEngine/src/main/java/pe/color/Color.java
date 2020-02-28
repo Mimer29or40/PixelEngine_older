@@ -610,10 +610,10 @@ public class Color implements Colorc
     
     public static Color random(int lower, int upper, boolean alpha, Color out)
     {
-        out.r(PixelEngine.random().nextInt(lower, upper));
-        out.g(PixelEngine.random().nextInt(lower, upper));
-        out.b(PixelEngine.random().nextInt(lower, upper));
-        if (alpha) out.a(PixelEngine.random().nextInt(lower, upper));
+        out.r(PixelEngine.nextInt(lower, upper));
+        out.g(PixelEngine.nextInt(lower, upper));
+        out.b(PixelEngine.nextInt(lower, upper));
+        if (alpha) out.a(PixelEngine.nextInt(lower, upper));
         return out;
     }
     

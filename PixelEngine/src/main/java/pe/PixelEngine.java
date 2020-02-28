@@ -391,16 +391,6 @@ public class PixelEngine
         System.out.println(builder.toString());
     }
     
-    public static void seed(long seed)
-    {
-        PixelEngine.RANDOM.setSeed(seed);
-    }
-    
-    public static Random random()
-    {
-        return PixelEngine.RANDOM;
-    }
-    
     public static double map(double x, double xMin, double xMax, double yMin, double yMax)
     {
         return (x - xMin) * (yMax - yMin) / (xMax - xMin) + yMin;
@@ -495,6 +485,140 @@ public class PixelEngine
     public static void disableExtension(String extension)
     {
         if (PixelEngine.extensions.containsKey(extension)) PixelEngine.extensions.get(extension).disable();
+    }
+    
+    // ----------
+    // - Random -
+    // ----------
+    
+    public static Random random()
+    {
+        return PixelEngine.RANDOM;
+    }
+    
+    public static void setSeed(long seed)
+    {
+        PixelEngine.RANDOM.setSeed(seed);
+    }
+    
+    public static boolean nextBoolean()
+    {
+        return PixelEngine.RANDOM.nextBoolean();
+    }
+    
+    public static int nextInt()
+    {
+        return PixelEngine.RANDOM.nextInt();
+    }
+    
+    public static int nextInt(int limit)
+    {
+        return PixelEngine.RANDOM.nextInt(limit);
+    }
+    
+    public static int nextInt(int origin, int limit)
+    {
+        return PixelEngine.RANDOM.nextInt(origin, limit);
+    }
+    
+    public static long nextLong()
+    {
+        return PixelEngine.RANDOM.nextLong();
+    }
+    
+    public static long nextLong(long limit)
+    {
+        return PixelEngine.RANDOM.nextLong(limit);
+    }
+    
+    public static long nextLong(long origin, long limit)
+    {
+        return PixelEngine.RANDOM.nextLong(origin, limit);
+    }
+    
+    public static float nextFloat()
+    {
+        return PixelEngine.RANDOM.nextFloat();
+    }
+    
+    public static float nextFloat(float limit)
+    {
+        return PixelEngine.RANDOM.nextFloat(limit);
+    }
+    
+    public static float nextFloat(float origin, float limit)
+    {
+        return PixelEngine.RANDOM.nextFloat(origin, limit);
+    }
+    
+    public static double nextDouble()
+    {
+        return PixelEngine.RANDOM.nextDouble();
+    }
+    
+    public static double nextDouble(double limit)
+    {
+        return PixelEngine.RANDOM.nextDouble(limit);
+    }
+    
+    public static double nextDouble(double origin, double limit)
+    {
+        return PixelEngine.RANDOM.nextDouble(origin, limit);
+    }
+    
+    public static double nextGaussian()
+    {
+        return PixelEngine.RANDOM.nextGaussian();
+    }
+    
+    public static int nextIndex(int[] array)
+    {
+        return PixelEngine.RANDOM.nextIndex(array);
+    }
+    
+    public static long nextIndex(long[] array)
+    {
+        return PixelEngine.RANDOM.nextIndex(array);
+    }
+    
+    public static float nextIndex(float[] array)
+    {
+        return PixelEngine.RANDOM.nextIndex(array);
+    }
+    
+    public static double nextIndex(double[] array)
+    {
+        return PixelEngine.RANDOM.nextIndex(array);
+    }
+    
+    public static <T> T nextIndex(T[] array)
+    {
+        return PixelEngine.RANDOM.nextIndex(array);
+    }
+    
+    public static <T> T nextIndex(Collection<T> collection)
+    {
+        return PixelEngine.RANDOM.nextIndex(collection);
+    }
+    
+    public static int choose(int... options)
+    {
+        return PixelEngine.RANDOM.nextIndex(options);
+    }
+    
+    public static long choose(long... options)
+    {
+        return PixelEngine.RANDOM.nextIndex(options);
+    }
+    
+    public static float choose(float... options)
+    {
+        return PixelEngine.RANDOM.nextIndex(options);
+    }
+    
+    public static double choose(double... options)
+    {
+        return PixelEngine.RANDOM.nextIndex(options);
     }
     
     // --------

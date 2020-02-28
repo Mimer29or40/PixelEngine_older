@@ -2,7 +2,7 @@ package pe.sound;
 
 import java.util.ArrayList;
 
-import static pe.PixelEngine.random;
+import static pe.PixelEngine.nextDouble;
 
 public abstract class Wave
 {
@@ -63,7 +63,7 @@ public abstract class Wave
         @Override
         protected double generate(double time, double freq, double _freq, double custom)
         {
-            return random().nextDouble(-1.0, 1.0);
+            return nextDouble(-1.0, 1.0);
         }
     };
     

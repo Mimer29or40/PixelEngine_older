@@ -55,7 +55,7 @@ public class Genome
             for (int j = 0; j < outputs; j++)
             {
             
-                genes.add(new ConnectionGene(nodes.get(i), nodes.get(inputs + j), random().nextDouble(-1, 1), localNextConnectionNumber));
+                genes.add(new ConnectionGene(nodes.get(i), nodes.get(inputs + j), nextDouble(-1, 1), localNextConnectionNumber));
                 localNextConnectionNumber++;
             }
         }
@@ -63,7 +63,7 @@ public class Genome
         //connect the bias
         for (int i = 0; i < outputs; i++)
         {
-            genes.add(new ConnectionGene(nodes.get(biasNode), nodes.get(inputs + i), random().nextDouble(-1, 1), localNextConnectionNumber));
+            genes.add(new ConnectionGene(nodes.get(biasNode), nodes.get(inputs + i), nextDouble(-1, 1), localNextConnectionNumber));
             localNextConnectionNumber++;
         }
     }
@@ -161,11 +161,11 @@ public class Genome
     public void addNode(ArrayList<ConnectionHistory> innovationHistory)
     {
         //pick a random connection to create a node between
-        int randomConnection = random().nextInt(genes.size());
+        int randomConnection = nextInt(genes.size());
     
         while (genes.get(randomConnection).fromNode == nodes.get(biasNode))
         {//dont disconnect bias
-            randomConnection = random().nextInt(genes.size());
+            randomConnection = nextInt(genes.size());
         }
         
         genes.get(randomConnection).enabled = false;//disable it
@@ -217,14 +217,14 @@ public class Genome
     
     
         //get random nodes
-        int randomNode1 = random().nextInt(nodes.size());
-        int randomNode2 = random().nextInt(nodes.size());
+        int randomNode1 = nextInt(nodes.size());
+        int randomNode2 = nextInt(nodes.size());
         while (nodes.get(randomNode1).layer == nodes.get(randomNode2).layer
                || nodes.get(randomNode1).isConnectedTo(nodes.get(randomNode2)))
         { //while the random nodes are no good
             //get new ones
-            randomNode1 = random().nextInt(nodes.size());
-            randomNode2 = random().nextInt(nodes.size());
+            randomNode1 = nextInt(nodes.size());
+            randomNode2 = nextInt(nodes.size());
         }
         int temp;
         if (nodes.get(randomNode1).layer > nodes.get(randomNode2).layer)
@@ -238,8 +238,8 @@ public class Genome
         //this will be a new number if no identical genome has mutated in the same way 
         int connectionInnovationNumber = getInnovationNumber(innovationHistory, nodes.get(randomNode1), nodes.get(randomNode2));
         //add the connection with a random array
-        
-        genes.add(new ConnectionGene(nodes.get(randomNode1), nodes.get(randomNode2), random().nextDouble(-1, 1), connectionInnovationNumber));//changed this so if error here
+    
+        genes.add(new ConnectionGene(nodes.get(randomNode1), nodes.get(randomNode2), nextDouble(-1, 1), connectionInnovationNumber));//changed this so if error here
         connectNodes();
     }
     
@@ -311,7 +311,7 @@ public class Genome
     //mutates the genome
     public void mutate(ArrayList<ConnectionHistory> innovationHistory)
     {
-        double rand1 = random().nextDouble();
+        double rand1 = nextDouble();
         if (rand1 < 0.8)
         { // 80% of the time mutate weights
             for (int i = 0; i < genes.size(); i++)
@@ -320,7 +320,7 @@ public class Genome
             }
         }
         //5% of the time add a new connection
-        double rand2 = random().nextDouble();
+        double rand2 = nextDouble();
         if (rand2 < 0.05)
         {
             addConnection(innovationHistory);
@@ -328,7 +328,7 @@ public class Genome
     
     
         //3% of the time add a node
-        double rand3 = random().nextDouble();
+        double rand3 = nextDouble();
         if (rand3 < 0.03)
         {
             addNode(innovationHistory);
@@ -357,13 +357,13 @@ public class Genome
             {//if the genes match
                 if (!genes.get(i).enabled || !parent2.genes.get(parent2gene).enabled)
                 {//if either of the matching genes are disabled
-                    
-                    if (random().nextDouble() < 0.75)
+    
+                    if (nextDouble() < 0.75)
                     {//75% of the time disabel the childs gene
                         setEnabled = false;
                     }
                 }
-                double rand = random().nextDouble();
+                double rand = nextDouble();
                 if (rand < 0.5)
                 {
                     childGenes.add(genes.get(i));

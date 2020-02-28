@@ -2,8 +2,8 @@ package pe.neat.cb;
 
 import java.util.ArrayList;
 
+import static pe.PixelEngine.nextDouble;
 import static pe.PixelEngine.print;
-import static pe.PixelEngine.random;
 
 public class Species
 {
@@ -174,13 +174,13 @@ public class Species
     public Player giveMeBaby(ArrayList<ConnectionHistory> innovationHistory)
     {
         Player baby;
-        if (random().nextDouble() < 0.25)
+        if (nextDouble() < 0.25)
         {//25% of the time there is no crossover and the child is simply a clone of a random(ish) player
             baby = selectPlayer().clone();
         }
         else
         {//75% of the time do crossover 
-            
+        
             //get 2 random(ish) parents 
             Player parent1 = selectPlayer();
             Player parent2 = selectPlayer();
@@ -208,8 +208,8 @@ public class Species
         {
             fitnessSum += players.get(i).fitness;
         }
-        
-        double rand       = random().nextDouble(fitnessSum);
+    
+        double rand       = nextDouble(fitnessSum);
         double runningSum = 0;
         
         for (int i = 0; i < players.size(); i++)
