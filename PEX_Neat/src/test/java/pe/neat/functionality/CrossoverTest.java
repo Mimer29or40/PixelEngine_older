@@ -1,6 +1,7 @@
-package pe.neat;
+package pe.neat.functionality;
 
 import pe.Random;
+import pe.neat.*;
 
 public class CrossoverTest
 {

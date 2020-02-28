@@ -10,15 +10,15 @@ import static pe.PixelEngine.println;
 
 public class Population
 {
-    public final Random random = new Random();
+    public final Random random;
     
-    public final Counter nodeInno = new Counter();
-    public final Counter connInno = new Counter();
+    public final Counter nodeInno;
+    public final Counter connInno;
     
-    public final int populationSize;
+    public final int                populationSize;
+    public final Supplier<Organism> organismFactory;
     
     public final ArrayList<Organism> organisms = new ArrayList<>();
-    public final Supplier<Organism>  organismFactory;
     
     public Organism champion;
     
@@ -26,54 +26,61 @@ public class Population
     
     public int generation = 0;
     
-    public Population(int size, Supplier<Organism> organismFactory)
+    public Population(Random random, int size, Supplier<Organism> organismFactory)
     {
+        this.random = random;
+        
         this.populationSize  = size;
         this.organismFactory = organismFactory;
         
-        for (int i = 0; i < size; i++)
+        Organism defaultOrganism = this.organismFactory.get();
+        this.organisms.add(defaultOrganism);
+        
+        this.nodeInno = new Counter(defaultOrganism.brain.nodes.size());
+        this.connInno = new Counter(defaultOrganism.brain.connections.size());
+        
+        for (int i = 1; i < this.populationSize; i++)
         {
-            Organism organism = organismFactory.get();
+            Organism organism = this.organismFactory.get();
             organism.brain.mutate(this.random, this.nodeInno, this.connInno, PEX_Neat.WEIGHT_PERTURBING_RATE,
                                   PEX_Neat.WEIGHT_MUTATION_RATE, PEX_Neat.NODE_MUTATION_RATE, PEX_Neat.CONNECTION_MUTATION_RATE);
             this.organisms.add(organism);
-        }
-    }
-    
-    public void updateGeneration(double elapsedTime)
-    {
-        for (Organism organism : this.organisms)
-        {
-            if (organism.alive)
-            {
-                organism.gatherInputs(elapsedTime);
-                organism.processInputs(elapsedTime);
-                // if (!showNothing && (!showBest || i == 0))
-                // {
-                //     organism.draw(elapsedTime);
-                // }
-                organism.calculateFitness();
-            }
+            this.champion = organism;
         }
     }
     
     /**
+     * Updates all organisms
+     *
      * @return True if all organisms are dead
      */
-    public boolean done()
+    public boolean update(double elapsedTime)
     {
+        int deadCount = 0;
         for (Organism organism : this.organisms)
         {
-            if (organism.alive) return false;
+            if (organism.alive)
+            {
+                organism.update(elapsedTime, false);
+            }
+            else
+            {
+                deadCount++;
+            }
         }
-        return true;
+        return deadCount == this.populationSize;
+    }
+    
+    public void draw(double elapsedTime)
+    {
+    
     }
     
     public void naturalSelection()
     {
         this.generation++;
-        
-        speciate();//seperate the population into species
+    
+        speciate(); //separate the population into species
         calculateFitness();//calculate the fitness of each player
         sortSpecies();//sort the species to be ranked in fitness order, best first
         if (massExtinctionEvent)
@@ -92,9 +99,10 @@ public class Population
         
         Organism champion = this.organisms.get(0);
         if (this.champion == null || champion.fitness > this.champion.fitness) this.champion = champion;
+        this.champion = this.champion.copy(this.organismFactory.get());
         
         ArrayList<Organism> nextGen = new ArrayList<>();
-        nextGen.add(champion);
+        nextGen.add(this.champion);
         
         Organism temp;
         while (nextGen.size() < this.populationSize)
@@ -102,14 +110,14 @@ public class Population
             Organism child;
             if (this.random.nextDouble() < PEX_Neat.ASEXUAL_REPRODUCTION_RATE)
             {
-                Organism parent = this.random.nextIndex(this.organisms);
+                Organism parent = selectOrganism();
                 child = parent.copy(organismFactory.get());
             }
             else
             {
-                Organism parent1 = this.random.nextIndex(this.organisms);
-                Organism parent2 = this.random.nextIndex(this.organisms);
-                
+                Organism parent1 = selectOrganism();
+                Organism parent2 = selectOrganism();
+    
                 if (parent2.fitness > parent1.fitness)
                 {
                     temp    = parent1;
@@ -220,7 +228,7 @@ public class Population
     //calculates the fitness of all of the players
     void calculateFitness()
     {
-        for (int i = 1; i < this.organisms.size(); i++) this.organisms.get(i).calculateFitness();
+        for (Organism organism : this.organisms) organism.calculateFitness();
     }
     
     //------------------------------------------------------------------------------------------------------------------------------------------
@@ -318,5 +326,22 @@ public class Population
         //     species.remove(i);//sad
         //     i--;
         // }
+    }
+    
+    private Organism selectOrganism()
+    {
+        double total = 0, sum = 0;
+        for (Organism organism : this.organisms)
+        {
+            total += organism.fitness;
+        }
+        
+        double rand = this.random.nextDouble(total);
+        for (Organism organism : this.organisms)
+        {
+            sum += organism.fitness;
+            if (sum > rand) return organism;
+        }
+        return this.random.nextIndex(this.organisms);
     }
 }

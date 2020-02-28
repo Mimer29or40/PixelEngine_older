@@ -1,6 +1,7 @@
-package pe.cb;
+package pe.neat.cb;
 
-import static pe.PixelEngine.random;
+import static pe.PixelEngine.nextDouble;
+import static pe.PixelEngine.nextGaussian;
 
 public class ConnectionGene
 {
@@ -24,14 +25,14 @@ public class ConnectionGene
     //changes the weight
     public void mutateWeight()
     {
-        double rand2 = random().nextDouble();
+        double rand2 = nextDouble();
         if (rand2 < 0.1)
         {//10% of the time completely change the weight
-            weight = random().nextDouble(-1, 1);
+            weight = nextDouble(-1, 1);
         }
         else
         {//otherwise slightly change it
-            weight += random().nextGaussian() / 50;
+            weight += nextGaussian() / 50;
             //keep weight between bounds
             if (weight > 1)
             {

@@ -1,6 +1,7 @@
-package pe.neat;
+package pe.neat.functionality;
 
 import pe.PixelEngine;
+import pe.neat.FitnessPlotter;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package pe.cb;
+package pe.neat.cb;
 
 import org.joml.Vector2i;
 

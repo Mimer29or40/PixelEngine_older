@@ -39,12 +39,7 @@ public class PixelEngine
     private static int pixelW, pixelH;
     
     private static       Renderer renderer;
-    // TODO - Push/Pop
-    // private static       DrawMode  drawMode = DrawMode.NORMAL;
     private static final Blend    blend = new Blend();
-    // private static       IBlendPos blendFunc;
-    
-    // private static Sprite font, prev, window, target;
     
     private final String name;
     
@@ -124,10 +119,10 @@ public class PixelEngine
         PixelEngine.pixelW = pixelW;
         PixelEngine.pixelH = pixelH;
         PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
-    
+        
         Window.fullscreen(fullscreen);
         PixelEngine.LOGGER.trace("Fullscreen: %s)", fullscreen);
-    
+        
         Window.vsync(vsync);
         PixelEngine.LOGGER.trace("VSync: %s)", vsync);
     
@@ -147,7 +142,7 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.debug("Extension Pre Setup");
             PixelEngine.extensions.values().forEach(PEX::beforeSetup);
-        
+            
             PixelEngine.LOGGER.debug("User Initialization");
             if (PixelEngine.logic.setup())
             {
@@ -367,16 +362,6 @@ public class PixelEngine
         System.out.println(builder.toString());
     }
     
-    public static void seed(long seed)
-    {
-        PixelEngine.RANDOM.setSeed(seed);
-    }
-    
-    public static Random random()
-    {
-        return PixelEngine.RANDOM;
-    }
-    
     public static double map(double x, double xMin, double xMax, double yMin, double yMax)
     {
         return (x - xMin) * (yMax - yMin) / (xMax - xMin) + yMin;
@@ -463,9 +448,19 @@ public class PixelEngine
         if (PixelEngine.PROFILER.enabled) PixelEngine.printFrame = parent;
     }
     
+    public static void enableExtension(String extension)
+    {
+        if (PixelEngine.extensions.containsKey(extension)) PixelEngine.extensions.get(extension).enable();
+    }
+    
+    public static void disableExtension(String extension)
+    {
+        if (PixelEngine.extensions.containsKey(extension)) PixelEngine.extensions.get(extension).disable();
+    }
+    
     private static void loadExtensions()
     {
-        PixelEngine.LOGGER.info("Looking for Extensions");
+        PixelEngine.LOGGER.debug("Looking for Extensions");
         
         Reflections reflections = new Reflections("pe");
         for (Class<? extends PEX> ext : reflections.getSubTypesOf(PEX.class))
@@ -485,18 +480,17 @@ public class PixelEngine
     
     private static void renderLoop()
     {
-        // Window.setupContext();
         PixelEngine.renderer.init();
     
         long t, dt;
         long lastFrame  = System.nanoTime();
         long lastSecond = 0;
-    
+        
         long frameTime;
         long minTime   = Long.MAX_VALUE;
         long maxTime   = Long.MIN_VALUE;
         long totalTime = 0;
-    
+        
         int totalFrames = 0;
         
         try
@@ -539,11 +533,14 @@ public class PixelEngine
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
-                            PixelEngine.PROFILER.startSection(name);
+                            if (PixelEngine.extensions.get(name).isEnabled())
                             {
-                                PixelEngine.extensions.get(name).beforeDraw(dt / 1_000_000_000D);
+                                PixelEngine.PROFILER.startSection(name);
+                                {
+                                    PixelEngine.extensions.get(name).beforeDraw(dt / 1_000_000_000D);
+                                }
+                                PixelEngine.PROFILER.endSection();
                             }
-                            PixelEngine.PROFILER.endSection();
                         }
                     }
                     PixelEngine.PROFILER.endSection();
@@ -562,11 +559,14 @@ public class PixelEngine
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
-                            PixelEngine.PROFILER.startSection(name);
+                            if (PixelEngine.extensions.get(name).isEnabled())
                             {
-                                PixelEngine.extensions.get(name).afterDraw(dt / 1_000_000_000D);
+                                PixelEngine.PROFILER.startSection(name);
+                                {
+                                    PixelEngine.extensions.get(name).afterDraw(dt / 1_000_000_000D);
+                                }
+                                PixelEngine.PROFILER.endSection();
                             }
-                            PixelEngine.PROFILER.endSection();
                         }
                     }
                     PixelEngine.PROFILER.endSection();

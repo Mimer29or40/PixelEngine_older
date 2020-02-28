@@ -497,8 +497,7 @@ public class Genome
             {
                 // Matching Gene
                 Connection childConn = random.nextBoolean() ? g1Conn.copy() : g2Conn.copy();
-                boolean    disabled  = !(g1Conn.enabled && g2Conn.enabled);
-                childConn.enabled = !(disabled && random.nextDouble() < disableGeneInheritance);
+                childConn.enabled = !(!(g1Conn.enabled && g2Conn.enabled) && random.nextDouble() < disableGeneInheritance);
                 child.addConnection(childConn);
             }
             else

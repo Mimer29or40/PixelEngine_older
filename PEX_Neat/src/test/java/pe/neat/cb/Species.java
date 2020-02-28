@@ -1,9 +1,9 @@
-package pe.cb;
+package pe.neat.cb;
 
 import java.util.ArrayList;
 
+import static pe.PixelEngine.nextDouble;
 import static pe.PixelEngine.print;
-import static pe.PixelEngine.random;
 
 public class Species
 {
@@ -16,9 +16,9 @@ public class Species
     
     //--------------------------------------------
     //coefficients for testing compatibility 
-    public double excessCoeff            = 1;
-    public double weightDiffCoeff        = 0.5;
-    public double compatibilityThreshold = 3;
+    public double excessCoeff            = 1.5;
+    public double weightDiffCoeff        = 0.8;
+    public double compatibilityThreshold = 1;
     //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //empty constructor
     
@@ -43,15 +43,9 @@ public class Species
     public boolean sameSpecies(Genome g)
     {
         double compatibility;
-        double excessAndDisjoint = getExcessDisjoint(g, rep);//get the number of excess and disjoint genes between this player and the current species rep
-        double averageWeightDiff = averageWeightDiff(g, rep);//get the average weight difference between matching genes
-        
-        
-        double largeGenomeNormaliser = g.genes.size() - 20;
-        if (largeGenomeNormaliser < 1)
-        {
-            largeGenomeNormaliser = 1;
-        }
+        double excessAndDisjoint     = getExcessDisjoint(g, rep);//get the number of excess and disjoint genes between this player and the current species rep
+        double averageWeightDiff     = averageWeightDiff(g, rep);//get the average weight difference between matching genes
+        double largeGenomeNormaliser = 1;
         
         compatibility = (excessCoeff * excessAndDisjoint / largeGenomeNormaliser) + (weightDiffCoeff * averageWeightDiff);//compatablilty formula
         return (compatibilityThreshold > compatibility);
@@ -180,13 +174,13 @@ public class Species
     public Player giveMeBaby(ArrayList<ConnectionHistory> innovationHistory)
     {
         Player baby;
-        if (random().nextDouble() < 0.25)
+        if (nextDouble() < 0.25)
         {//25% of the time there is no crossover and the child is simply a clone of a random(ish) player
             baby = selectPlayer().clone();
         }
         else
         {//75% of the time do crossover 
-            
+        
             //get 2 random(ish) parents 
             Player parent1 = selectPlayer();
             Player parent2 = selectPlayer();
@@ -214,8 +208,8 @@ public class Species
         {
             fitnessSum += players.get(i).fitness;
         }
-        
-        double rand       = random().nextDouble(fitnessSum);
+    
+        double rand       = nextDouble(fitnessSum);
         double runningSum = 0;
         
         for (int i = 0; i < players.size(); i++)

@@ -1,4 +1,6 @@
-package pe.neat;
+package pe.neat.functionality;
+
+import pe.neat.Node;
 
 import java.util.HashMap;
 import java.util.TreeMap;

@@ -50,17 +50,17 @@ public class Vector3
     
     public static Vector3f randomF()
     {
-        float x = PixelEngine.random().nextFloat(-1F, 1F);
-        float y = PixelEngine.random().nextFloat(-1F, 1F);
-        float z = PixelEngine.random().nextFloat(-1F, 1F);
+        float x = PixelEngine.nextFloat(-1F, 1F);
+        float y = PixelEngine.nextFloat(-1F, 1F);
+        float z = PixelEngine.nextFloat(-1F, 1F);
         return new Vector3f(x, y, z).normalize();
     }
     
     public static Vector3d randomD()
     {
-        double x = PixelEngine.random().nextDouble(-1.0, 1.0);
-        double y = PixelEngine.random().nextDouble(-1.0, 1.0);
-        double z = PixelEngine.random().nextDouble(-1.0, 1.0);
+        double x = PixelEngine.nextDouble(-1.0, 1.0);
+        double y = PixelEngine.nextDouble(-1.0, 1.0);
+        double z = PixelEngine.nextDouble(-1.0, 1.0);
         return new Vector3d(x, y, z).normalize();
     }
 }

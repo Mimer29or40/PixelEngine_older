@@ -4,9 +4,26 @@ public abstract class PEX
 {
     protected final Profiler profiler;
     
+    protected boolean enabled = true;
+    
     public PEX(Profiler profiler)
     {
         this.profiler = profiler;
+    }
+    
+    public void enable()
+    {
+        this.enabled = true;
+    }
+    
+    public void disable()
+    {
+        this.enabled = false;
+    }
+    
+    public boolean isEnabled()
+    {
+        return this.enabled;
     }
     
     public abstract void beforeSetup();
