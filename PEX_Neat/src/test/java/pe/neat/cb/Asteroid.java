@@ -61,7 +61,9 @@ public class Asteroid
             // noFill();
             // stroke(255);
             // polygon(pos.x, pos.y, radius, 12);//draw the dodecahedrons
-            drawCircle((int) pos.x, (int) pos.y, (int) radius, Color.WHITE);
+            stroke(Color.WHITE);
+            noFill();
+            circle((int) pos.x, (int) pos.y, (int) radius);
         }
     }
     

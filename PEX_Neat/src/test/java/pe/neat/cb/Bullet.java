@@ -47,9 +47,11 @@ public class Bullet
     {
         if (!off)
         {
+            noStroke();
+            fill(Color.WHITE);
             // fill(255);
             // ellipse(pos.x, pos.y, 3, 3);
-            drawCircle((int) pos.x, (int) pos.y, 3, Color.WHITE);
+            circle((int) pos.x, (int) pos.y, 3);
         }
     }
     

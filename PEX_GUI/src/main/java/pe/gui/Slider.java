@@ -349,6 +349,6 @@ public class Slider extends Window
         int y = (getForegroundHeight() - textHeight(text)) / 2;
     
         renderer().stroke(Color.BLACK);
-        renderer().string(getForegroundOriginX() + x, getForegroundOriginY() + y, text);
+        renderer().text(getForegroundOriginX() + x, getForegroundOriginY() + y, text);
     }
 }

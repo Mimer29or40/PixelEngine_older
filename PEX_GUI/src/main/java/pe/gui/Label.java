@@ -181,7 +181,7 @@ public class Label extends Window
     
                 int x = hPos > 0 ? textX : hPos == 0 ? textX / 2 : 0;
     
-                renderer().string(getForegroundOriginX() + x, getForegroundOriginY() + y, line, getScale());
+                renderer().text(getForegroundOriginX() + x, getForegroundOriginY() + y, line, getScale());
     
                 y += 8 * getScale();
             }
@@ -198,7 +198,7 @@ public class Label extends Window
             int x = hPos > 0 ? textX : hPos == 0 ? textX / 2 : 0;
             int y = vPos > 0 ? textY : vPos == 0 ? textY / 2 : 0;
     
-            renderer().string(getForegroundOriginX() + x, getForegroundOriginY() + y, getText(), getScale());
+            renderer().text(getForegroundOriginX() + x, getForegroundOriginY() + y, getText(), getScale());
         }
     }
 }

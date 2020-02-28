@@ -196,10 +196,10 @@ public abstract class Renderer
         partialSprite(x, y, sprite, 0, 0, sprite.getWidth(), sprite.getHeight(), 1);
     }
     
-    public abstract void string(int x, int y, String text, double scale);
+    public abstract void text(int x, int y, String text, double scale);
     
-    public void string(int x, int y, String text)
+    public void text(int x, int y, String text)
     {
-        string(x, y, text, 1);
+        text(x, y, text, 1);
     }
 }

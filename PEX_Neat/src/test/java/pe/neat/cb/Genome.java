@@ -1,8 +1,6 @@
 package pe.neat.cb;
 
 import org.joml.Vector2d;
-import pe.color.Color;
-import pe.color.Colorc;
 
 import java.util.ArrayList;
 
@@ -526,36 +524,36 @@ public class Genome
             Vector2d to;
             from = nodePoses.get(nodeNumbers.indexOf(genes.get(i).fromNode.number));
             to   = nodePoses.get(nodeNumbers.indexOf(genes.get(i).toNode.number));
-            Colorc c;
+            // Colorc c;
             if (genes.get(i).weight > 0)
             {
-                // stroke(255, 0, 0);
-                c = Color.RED;
+                stroke(255, 0, 0);
+                // c = Color.RED;
             }
             else
             {
-                // stroke(0, 0, 255);
-                c = Color.BLUE;
+                stroke(0, 0, 255);
+                // c = Color.BLUE;
             }
-            // strokeWeight(map(abs(genes.get(i).weight), 0, 1, 0, 5));
-            drawLine((int) from.x, (int) from.y, (int) to.x, (int) to.y, (int) map(Math.abs(genes.get(i).weight), 0, 1, 0, 5), c);
+            strokeWeight((int) map(Math.abs(genes.get(i).weight), 0, 1, 0, 5));
+            line((int) from.x, (int) from.y, (int) to.x, (int) to.y);
         }
         
         //draw nodes last so they appear ontop of the connection lines
         for (int i = 0; i < nodePoses.size(); i++)
         {
-            // fill(255);
-            // stroke(0);
+            fill(255);
+            stroke(0);
             // strokeWeight(1);
             // ellipse(nodePoses.get(i).x, nodePoses.get(i).y, 20, 20);
-            drawCircle((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20, Color.WHITE);
+            circle((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, 20);
             // textSize(10);
-            // fill(0);
+            fill(0);
             // textAlign(CENTER, CENTER);
     
     
             // text(nodeNumbers.get(i), nodePoses.get(i).x, nodePoses.get(i).y);
-            drawString((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i), Color.BLACK);
+            string((int) nodePoses.get(i).x, (int) nodePoses.get(i).y, "" + nodeNumbers.get(i));
         }
     }
 }

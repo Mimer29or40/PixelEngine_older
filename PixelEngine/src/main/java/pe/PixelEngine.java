@@ -3,6 +3,9 @@ package pe;
 import org.reflections.Reflections;
 import pe.color.Blend;
 import pe.color.Color;
+import pe.color.Colorc;
+import pe.color.IBlendPos;
+import pe.render.DrawMode;
 import pe.render.OpenGLRenderer;
 import pe.render.Renderer;
 import pe.util.PairI;
@@ -19,7 +22,6 @@ public class PixelEngine
 {
     private static final Logger   LOGGER   = Logger.getLogger();
     private static final Profiler PROFILER = new Profiler("Engine");
-    private static final Random   RANDOM   = new Random();
     
     private static final Color COLOR = new Color(Color.WHITE);
     
@@ -37,6 +39,8 @@ public class PixelEngine
     
     private static int screenW, screenH;
     private static int pixelW, pixelH;
+    
+    private static final Random random = new Random();
     
     private static       Renderer renderer;
     private static final Blend    blend = new Blend();
@@ -456,6 +460,329 @@ public class PixelEngine
     public static void disableExtension(String extension)
     {
         if (PixelEngine.extensions.containsKey(extension)) PixelEngine.extensions.get(extension).disable();
+    }
+    
+    // ----------
+    // - Random -
+    // ----------
+    
+    public static Random random()
+    {
+        return PixelEngine.random;
+    }
+    
+    public static void setSeed(long seed)
+    {
+        PixelEngine.random.setSeed(seed);
+    }
+    
+    public static boolean nextBoolean()
+    {
+        return PixelEngine.random.nextBoolean();
+    }
+    
+    public static int nextInt()
+    {
+        return PixelEngine.random.nextInt();
+    }
+    
+    public static int nextInt(int limit)
+    {
+        return PixelEngine.random.nextInt(limit);
+    }
+    
+    public static int nextInt(int origin, int limit)
+    {
+        return PixelEngine.random.nextInt(origin, limit);
+    }
+    
+    public static long nextLong()
+    {
+        return PixelEngine.random.nextLong();
+    }
+    
+    public static long nextLong(long limit)
+    {
+        return PixelEngine.random.nextLong(limit);
+    }
+    
+    public static long nextLong(long origin, long limit)
+    {
+        return PixelEngine.random.nextLong(origin, limit);
+    }
+    
+    public static float nextFloat()
+    {
+        return PixelEngine.random.nextFloat();
+    }
+    
+    public static float nextFloat(float limit)
+    {
+        return PixelEngine.random.nextFloat(limit);
+    }
+    
+    public static float nextFloat(float origin, float limit)
+    {
+        return PixelEngine.random.nextFloat(origin, limit);
+    }
+    
+    public static double nextDouble()
+    {
+        return PixelEngine.random.nextDouble();
+    }
+    
+    public static double nextDouble(double limit)
+    {
+        return PixelEngine.random.nextDouble(limit);
+    }
+    
+    public static double nextDouble(double origin, double limit)
+    {
+        return PixelEngine.random.nextDouble(origin, limit);
+    }
+    
+    public static double nextGaussian()
+    {
+        return PixelEngine.random.nextGaussian();
+    }
+    
+    public static int nextIndex(int[] array)
+    {
+        return PixelEngine.random.nextIndex(array);
+    }
+    
+    public static long nextIndex(long[] array)
+    {
+        return PixelEngine.random.nextIndex(array);
+    }
+    
+    public static float nextIndex(float[] array)
+    {
+        return PixelEngine.random.nextIndex(array);
+    }
+    
+    public static double nextIndex(double[] array)
+    {
+        return PixelEngine.random.nextIndex(array);
+    }
+    
+    public static <T> T nextIndex(T[] array)
+    {
+        return PixelEngine.random.nextIndex(array);
+    }
+    
+    public static <T> T nextIndex(Collection<T> collection)
+    {
+        return PixelEngine.random.nextIndex(collection);
+    }
+    
+    public static int choose(int... options)
+    {
+        return PixelEngine.random.nextIndex(options);
+    }
+    
+    public static long choose(long... options)
+    {
+        return PixelEngine.random.nextIndex(options);
+    }
+    
+    public static float choose(float... options)
+    {
+        return PixelEngine.random.nextIndex(options);
+    }
+    
+    public static double choose(double... options)
+    {
+        return PixelEngine.random.nextIndex(options);
+    }
+    
+    // ------------
+    // - Renderer -
+    // ------------
+    
+    public static Sprite drawTarget()
+    {
+        return PixelEngine.renderer.drawTarget();
+    }
+    
+    public static void drawTarget(Sprite target)
+    {
+        PixelEngine.renderer.drawTarget(target);
+    }
+    
+    public static DrawMode drawMode()
+    {
+        return PixelEngine.renderer.drawMode();
+    }
+    
+    public static void drawMode(DrawMode mode)
+    {
+        PixelEngine.renderer.drawMode(mode);
+    }
+    
+    public static void drawMode(IBlendPos pixelFunc)
+    {
+        PixelEngine.renderer.drawMode(pixelFunc);
+    }
+    
+    public static void stroke(Number r, Number g, Number b, Number a)
+    {
+        PixelEngine.renderer.stroke(r, g, b, a);
+    }
+    
+    public static void stroke(Number r, Number g, Number b)
+    {
+        PixelEngine.renderer.stroke(r, g, b);
+    }
+    
+    public static void stroke(Number grey, Number a)
+    {
+        PixelEngine.renderer.stroke(grey, a);
+    }
+    
+    public static void stroke(Number grey)
+    {
+        PixelEngine.renderer.stroke(grey);
+    }
+    
+    public static void stroke(Colorc color)
+    {
+        PixelEngine.renderer.stroke(color);
+    }
+    
+    public static void noStroke()
+    {
+        PixelEngine.renderer.noStroke();
+    }
+    
+    public static void fill(Number r, Number g, Number b, Number a)
+    {
+        PixelEngine.renderer.fill(r, g, b, a);
+    }
+    
+    public static void fill(Number r, Number g, Number b)
+    {
+        PixelEngine.renderer.fill(r, g, b);
+    }
+    
+    public static void fill(Number grey, Number a)
+    {
+        PixelEngine.renderer.fill(grey, a);
+    }
+    
+    public static void fill(Number grey)
+    {
+        PixelEngine.renderer.fill(grey);
+    }
+    
+    public static void fill(Colorc color)
+    {
+        PixelEngine.renderer.fill(color);
+    }
+    
+    public static void noFill()
+    {
+        PixelEngine.renderer.noFill();
+    }
+    
+    public static void strokeWeight(int strokeWeight)
+    {
+        PixelEngine.renderer.strokeWeight(strokeWeight);
+    }
+    
+    public static void clear(Number r, Number g, Number b, Number a)
+    {
+        PixelEngine.renderer.clear(r, g, b, a);
+    }
+    
+    public static void clear(Number r, Number g, Number b)
+    {
+        PixelEngine.renderer.clear(r, g, b);
+    }
+    
+    public static void clear(Number grey, Number a)
+    {
+        PixelEngine.renderer.clear(grey, a);
+    }
+    
+    public static void clear(Number grey)
+    {
+        PixelEngine.renderer.clear(grey);
+    }
+    
+    public static void clear()
+    {
+        PixelEngine.renderer.clear();
+    }
+    
+    public static void clear(Colorc color)
+    {
+        PixelEngine.renderer.clear(color);
+    }
+    
+    public static void point(int x, int y)
+    {
+        PixelEngine.renderer.point(x, y);
+    }
+    
+    public static void line(int x1, int y1, int x2, int y2)
+    {
+        PixelEngine.renderer.line(x1, y1, x2, y2);
+    }
+    
+    public static void bezier(int x1, int y1, int x2, int y2, int x3, int y3)
+    {
+        PixelEngine.renderer.bezier(x1, y1, x2, y2, x3, y3);
+    }
+    
+    public static void circle(int x, int y, int radius)
+    {
+        PixelEngine.renderer.circle(x, y, radius);
+    }
+    
+    public static void ellipse(int x, int y, int w, int h)
+    {
+        PixelEngine.renderer.ellipse(x, y, w, h);
+    }
+    
+    public static void rect(int x, int y, int w, int h)
+    {
+        PixelEngine.renderer.rect(x, y, w, h);
+    }
+    
+    public static void triangle(int x1, int y1, int x2, int y2, int x3, int y3)
+    {
+        PixelEngine.renderer.triangle(x1, y1, x2, y2, x3, y3);
+    }
+    
+    public static void partialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h, double scale)
+    {
+        PixelEngine.renderer.partialSprite(x, y, sprite, ox, oy, w, h, scale);
+    }
+    
+    public static void partialSprite(int x, int y, Sprite sprite, int ox, int oy, int w, int h)
+    {
+        PixelEngine.renderer.partialSprite(x, y, sprite, ox, oy, w, h);
+    }
+    
+    public static void sprite(int x, int y, Sprite sprite, double scale)
+    {
+        PixelEngine.renderer.sprite(x, y, sprite, scale);
+    }
+    
+    public static void sprite(int x, int y, Sprite sprite)
+    {
+        PixelEngine.renderer.sprite(x, y, sprite);
+    }
+    
+    public static void string(int x, int y, String text, double scale)
+    {
+        PixelEngine.renderer.text(x, y, text, scale);
+    }
+    
+    public static void string(int x, int y, String text)
+    {
+        PixelEngine.renderer.text(x, y, text);
     }
     
     private static void loadExtensions()

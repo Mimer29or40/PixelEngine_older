@@ -45,31 +45,31 @@ public class PEX_CBNeat extends PEX
             // textFont(font);
             // fill(255);
             // textAlign(LEFT);
-            drawString(80, 60, "Score: " + genPlayerTemp.score);
-            drawString(screenWidth() - 250, 60, "Gen: " + (upToGen + 1));
+            string(80, 60, "Score: " + genPlayerTemp.score);
+            string(screenWidth() - 250, 60, "Gen: " + (upToGen + 1));
         }
         else if (runThroughSpecies)
         {
             // textFont(font);
             // fill(255);
             // textAlign(LEFT);
-            drawString(80, 60, "Score: " + speciesChamp.score);
-            drawString(screenWidth() - 250, 60, "Species: " + (upToSpecies + 1));
+            string(80, 60, "Score: " + speciesChamp.score);
+            string(screenWidth() - 250, 60, "Species: " + (upToSpecies + 1));
         }
         else if (humanPlaying)
         {
             // textFont(font);
             // fill(255);
             // textAlign(LEFT);
-            drawString(80, 60, "Score: " + humanPlayer.score);
+            string(80, 60, "Score: " + humanPlayer.score);
         }
         else if (runBest)
         {
             // textFont(font);
             // fill(255);
             // textAlign(LEFT);
-            drawString(80, 60, "Score: " + pop.bestPlayer.score);
-            drawString(screenWidth() - 200, 60, "Gen: " + pop.gen);
+            string(80, 60, "Score: " + pop.bestPlayer.score);
+            string(screenWidth() - 200, 60, "Gen: " + pop.gen);
         }
         else
         {
@@ -78,8 +78,8 @@ public class PEX_CBNeat extends PEX
                 // textFont(font);
                 // fill(255);
                 // textAlign(LEFT);
-                drawString(80, 60, "Score: " + pop.pop.get(0).score);
-                drawString(screenWidth() - 200, 60, "Gen: " + pop.gen);
+                string(80, 60, "Score: " + pop.pop.get(0).score);
+                string(screenWidth() - 200, 60, "Gen: " + pop.gen);
             }
         }
     }

@@ -154,7 +154,7 @@ public class ProgressBar extends Label
             int y = (getForegroundHeight() - textHeight(text)) / 2 + getForegroundOriginY();
     
             renderer().stroke(Color.BLACK);
-            renderer().string(x, y, text);
+            renderer().text(x, y, text);
         }
     }
 }

@@ -204,7 +204,7 @@ public class GenomeDrawer
                 renderer().circle(pos.a, pos.b, this.nodeRadius * this.imageScale);
             }
             renderer().stroke(this.textColor);
-            renderer().string(pos.a - w / 2, pos.b - h / 2, text, this.imageScale);
+            renderer().text(pos.a - w / 2, pos.b - h / 2, text, this.imageScale);
         }
     
         renderer().drawTarget(prev);

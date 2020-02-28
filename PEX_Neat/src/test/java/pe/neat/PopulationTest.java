@@ -108,13 +108,16 @@ public class PopulationTest extends PixelEngine
         public void draw(double elapsedTime)
         {
             clear();
-            
-            drawCircle(x, y, radius);
-            
-            if (x - radius < 0) drawCircle(x + screenWidth(), y, radius);
-            if (x + radius > screenWidth() - 1) drawCircle(x - screenWidth(), y, radius);
-            if (y - radius < 0) drawCircle(x, y + screenHeight(), radius);
-            if (y + radius > screenHeight() - 1) drawCircle(x, y - screenHeight(), radius);
+    
+            noFill();
+            stroke(255);
+    
+            circle(x, y, radius);
+    
+            if (x - radius < 0) circle(x + screenWidth(), y, radius);
+            if (x + radius > screenWidth() - 1) circle(x - screenWidth(), y, radius);
+            if (y - radius < 0) circle(x, y + screenHeight(), radius);
+            if (y + radius > screenHeight() - 1) circle(x, y - screenHeight(), radius);
         }
         
         @Override

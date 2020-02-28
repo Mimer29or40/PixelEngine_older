@@ -89,7 +89,7 @@ public class FitnessPlotter
             int    width = textWidth(text);
     
             renderer().stroke(this.textColor);
-            renderer().string(x - width / 2, maxY + 10, text);
+            renderer().text(x - width / 2, maxY + 10, text);
         }
     
         for (int i = 0; i < 5; i++)
@@ -104,7 +104,7 @@ public class FitnessPlotter
             int    height = textHeight(text);
     
             renderer().stroke(this.textColor);
-            renderer().string(minX - 10 - width, y - height / 2, text);
+            renderer().text(minX - 10 - width, y - height / 2, text);
         }
     
         renderer().drawTarget(prev);

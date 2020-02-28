@@ -237,31 +237,33 @@ public class Player
                 int    rocketHeight = 36;
                 double cos          = Math.cos(rotation);
                 double sin          = Math.sin(rotation);
-                
+    
                 int x1 = (int) (pos.x - cos * rocketHeight / 2 + sin * rocketWidth / 2);
                 int y1 = (int) (pos.y - sin * rocketHeight / 2 - cos * rocketWidth / 2);
-                
+    
                 int x2 = (int) (pos.x - cos * rocketHeight / 2 - sin * rocketWidth / 2);
                 int y2 = (int) (pos.y - sin * rocketHeight / 2 + cos * rocketWidth / 2);
-                
+    
                 int x3 = (int) (pos.x + cos * rocketHeight / 2);
                 int y3 = (int) (pos.y + sin * rocketHeight / 2);
-                
-                drawTriangle(x1, y1, x2, y2, x3, y3);
-                
+    
+                noFill();
+                stroke(255);
+                triangle(x1, y1, x2, y2, x3, y3);
+    
                 if (boosting)
                 {
-                    
+        
                     x1 = (int) (pos.x - cos * rocketHeight / 2 + sin * rocketWidth / 2 * 0.95);
                     y1 = (int) (pos.y - sin * rocketHeight / 2 - cos * rocketWidth / 2 * 0.95);
-                    
+        
                     x2 = (int) (pos.x - cos * rocketHeight / 2 - sin * rocketWidth / 2 * 0.95);
                     y2 = (int) (pos.y - sin * rocketHeight / 2 + cos * rocketWidth / 2 * 0.95);
                     
                     x3 = (int) (pos.x - cos * rocketHeight / 2 * 1.35);
                     y3 = (int) (pos.y - sin * rocketHeight / 2 * 1.35);
-                    
-                    drawTriangle(x1, y1, x2, y2, x3, y3);
+        
+                    triangle(x1, y1, x2, y2, x3, y3);
                 }
             }
         }

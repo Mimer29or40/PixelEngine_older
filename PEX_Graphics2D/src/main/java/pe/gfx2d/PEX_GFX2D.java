@@ -280,32 +280,32 @@ public class PEX_GFX2D extends PEX
     
     public static void drawString(Vector2ic p, String text, int scale)
     {
-        renderer().string(p.x(), p.y(), text, scale);
+        renderer().text(p.x(), p.y(), text, scale);
     }
     
     public static void drawString(Vector2ic p, String text)
     {
-        renderer().string(p.x(), p.y(), text, 1);
+        renderer().text(p.x(), p.y(), text, 1);
     }
     
     public static void drawString(Vector2fc p, String text, int scale)
     {
-        renderer().string((int) p.x(), (int) p.y(), text, scale);
+        renderer().text((int) p.x(), (int) p.y(), text, scale);
     }
     
     public static void drawString(Vector2fc p, String text)
     {
-        renderer().string((int) p.x(), (int) p.y(), text, 1);
+        renderer().text((int) p.x(), (int) p.y(), text, 1);
     }
     
     public static void drawString(Vector2dc p, String text, int scale)
     {
-        renderer().string((int) p.x(), (int) p.y(), text, scale);
+        renderer().text((int) p.x(), (int) p.y(), text, scale);
     }
     
     public static void drawString(Vector2dc p, String text)
     {
-        renderer().string((int) p.x(), (int) p.y(), text, 1);
+        renderer().text((int) p.x(), (int) p.y(), text, 1);
     }
     
     @Override

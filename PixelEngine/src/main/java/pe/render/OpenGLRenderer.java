@@ -159,7 +159,7 @@ public class OpenGLRenderer extends Renderer
     }
     
     @Override
-    public void string(int x, int y, String text, double scale)
+    public void text(int x, int y, String text, double scale)
     {
     
     }

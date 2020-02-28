@@ -288,29 +288,32 @@ public class GameTest extends PixelEngine
             if (rocketPos.y + Math.max(rocketWidth, rocketHeight) >= screenHeight()) drawRocket(rocketPos.x, rocketPos.y - screenHeight(), accelerate);
             if (rocketPos.y - Math.max(rocketWidth, rocketHeight) < 0) drawRocket(rocketPos.x, rocketPos.y + screenHeight(), accelerate);
     
+            noFill();
+            stroke(255);
+    
             // ---------- BULLETS ----------
-            for (Bullet bullet : bullets) PixelEngine.draw((int) bullet.pos.x, (int) bullet.pos.y);
+            for (Bullet bullet : bullets) point((int) bullet.pos.x, (int) bullet.pos.y);
     
             // ---------- ASTEROID ----------
             for (Asteroid asteroid : asteroids)
             {
-                drawCircle((int) asteroid.pos.x, (int) asteroid.pos.y, (int) asteroid.radius);
-                if (asteroid.pos.x + asteroid.radius >= screenWidth()) drawCircle((int) asteroid.pos.x - screenWidth(), (int) asteroid.pos.y, (int) asteroid.radius);
-                if (asteroid.pos.x - asteroid.radius < 0) drawCircle((int) asteroid.pos.x + screenWidth(), (int) asteroid.pos.y, (int) asteroid.radius);
-                if (asteroid.pos.y + asteroid.radius >= screenHeight()) drawCircle((int) asteroid.pos.x, (int) asteroid.pos.y - screenHeight(), (int) asteroid.radius);
-                if (asteroid.pos.y - asteroid.radius < 0) drawCircle((int) asteroid.pos.x, (int) asteroid.pos.y + screenHeight(), (int) asteroid.radius);
+                circle((int) asteroid.pos.x, (int) asteroid.pos.y, (int) asteroid.radius);
+                if (asteroid.pos.x + asteroid.radius >= screenWidth()) circle((int) asteroid.pos.x - screenWidth(), (int) asteroid.pos.y, (int) asteroid.radius);
+                if (asteroid.pos.x - asteroid.radius < 0) circle((int) asteroid.pos.x + screenWidth(), (int) asteroid.pos.y, (int) asteroid.radius);
+                if (asteroid.pos.y + asteroid.radius >= screenHeight()) circle((int) asteroid.pos.x, (int) asteroid.pos.y - screenHeight(), (int) asteroid.radius);
+                if (asteroid.pos.y - asteroid.radius < 0) circle((int) asteroid.pos.x, (int) asteroid.pos.y + screenHeight(), (int) asteroid.radius);
             }
             
             if (debug)
             {
                 for (Vector2dc ray : fireRays())
                 {
-                    drawLine((int) rocketPos.x(), (int) rocketPos.y(), (int) ray.x(), (int) ray.y());
-                    drawCircle((int) ray.x(), (int) ray.y(), 3);
+                    line((int) rocketPos.x(), (int) rocketPos.y(), (int) ray.x(), (int) ray.y());
+                    circle((int) ray.x(), (int) ray.y(), 3);
                 }
             }
     
-            drawString(1, 1, "Score: " + score);
+            string(1, 1, "Score: " + score);
         }
         
         @Override
@@ -367,31 +370,34 @@ public class GameTest extends PixelEngine
         {
             double cos = Math.cos(rocketAng);
             double sin = Math.sin(rocketAng);
-            
+    
             int x1 = (int) (x - cos * rocketHeight / 2 + sin * rocketWidth / 2);
             int y1 = (int) (y - sin * rocketHeight / 2 - cos * rocketWidth / 2);
-            
+    
             int x2 = (int) (x - cos * rocketHeight / 2 - sin * rocketWidth / 2);
             int y2 = (int) (y - sin * rocketHeight / 2 + cos * rocketWidth / 2);
-            
+    
             int x3 = (int) (x + cos * rocketHeight / 2);
             int y3 = (int) (y + sin * rocketHeight / 2);
-            
-            drawTriangle(x1, y1, x2, y2, x3, y3);
-            
+    
+            noFill();
+            stroke(255);
+    
+            triangle(x1, y1, x2, y2, x3, y3);
+    
             if (accelerate)
             {
-                
+        
                 x1 = (int) (x - cos * rocketHeight / 2 + sin * rocketWidth / 2 * 0.95);
                 y1 = (int) (y - sin * rocketHeight / 2 - cos * rocketWidth / 2 * 0.95);
-                
+        
                 x2 = (int) (x - cos * rocketHeight / 2 - sin * rocketWidth / 2 * 0.95);
                 y2 = (int) (y - sin * rocketHeight / 2 + cos * rocketWidth / 2 * 0.95);
                 
                 x3 = (int) (x - cos * rocketHeight / 2 * 1.35);
                 y3 = (int) (y - sin * rocketHeight / 2 * 1.35);
-                
-                drawTriangle(x1, y1, x2, y2, x3, y3);
+        
+                triangle(x1, y1, x2, y2, x3, y3);
             }
         }
     

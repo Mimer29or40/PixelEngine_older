@@ -5,7 +5,7 @@ import pe.PEX;
 import pe.Profiler;
 import pe.Random;
 import pe.color.Color;
-import pe.draw.DrawMode;
+import pe.render.DrawMode;
 
 import java.util.function.Supplier;
 
@@ -217,7 +217,7 @@ public class PEX_Neat extends PEX
             if (PEX_Neat.userPlaying)
             {
                 PEX_Neat.userOrganism.draw(elapsedTime);
-                drawString(1, screenHeight() - 8 - 1, "User Playing");
+                string(1, screenHeight() - 8 - 1, "User Playing");
         
                 if (!PEX_Neat.userOrganism.alive) drawScreenText("DEAD");
             }
@@ -255,7 +255,7 @@ public class PEX_Neat extends PEX
                     if (PEX_Neat.drawBrain)
                     {
                         drawMode(DrawMode.BLEND);
-                        drawSprite(0, 0, PEX_Neat.genomeDrawer.generateGraph(current.brain));
+                        sprite(0, 0, PEX_Neat.genomeDrawer.generateGraph(current.brain));
                         drawMode(DrawMode.NORMAL);
                     }
                 }
@@ -265,32 +265,32 @@ public class PEX_Neat extends PEX
                     text = "Organism: " + (PEX_Neat.currentOrganism + 1);
                     x    = 1;
                     y    = screenHeight() - textHeight(text) - 1;
-                    drawString(x, y, text);
+                    string(x, y, text);
                 }
                 if (PEX_Neat.showChamp)
                 {
                     text = "Champion Organism";
                     x    = 1;
                     y    = screenHeight() - textHeight(text) - 1;
-                    drawString(x, y, text);
+                    string(x, y, text);
                 }
                 if (PEX_Neat.showBest)
                 {
                     text = "Best Organism";
                     x    = 1;
                     y    = screenHeight() - textHeight(text) - 1;
-                    drawString(x, y, text);
+                    string(x, y, text);
                 }
-        
+    
                 text = "Generation: " + (PEX_Neat.population.generation + 1);
                 x    = screenWidth() - textWidth(text) - 1;
                 y    = 1;
-                drawString(x, y, text);
-        
+                string(x, y, text);
+    
                 y += textHeight(text) + 1;
                 text = "Fitness: " + round(fitness, 3);
                 x    = screenWidth() - textWidth(text) - 1;
-                drawString(x, y, text);
+                string(x, y, text);
             }
     
             if (PEX_Neat.showHelp)
@@ -298,59 +298,59 @@ public class PEX_Neat extends PEX
                 x    = 1;
                 y    = 1;
                 text = " F1: Show this Menu";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F2: Play Game";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F3: Cycle Organisms";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F4: Show Champion";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F5: Show Best";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F6: ";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F7: ";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F8: ";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = " F9: ";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = "F10: ";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = "F11: ";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = "F12: Show Brain";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = "LEFT/RIGHT: Cycle between organisms";
-                drawString(x, y, text);
+                string(x, y, text);
     
                 y += textHeight(text) + 1;
                 text = "MINUS/EQUALS: Change time scale";
-                drawString(x, y, text);
+                string(x, y, text);
             }
         }
         else if (PEX_Neat.playFlag)
@@ -371,8 +371,9 @@ public class PEX_Neat extends PEX
     {
         int width  = textWidth(text);
         int height = textHeight(text);
-        
-        fillRect((screenWidth() - width) / 2 - 2, (screenHeight() - height) / 2 - 2, width + 4, height + 4, Color.GREY);
-        drawString((screenWidth() - width) / 2, (screenHeight() - height) / 2, text);
+    
+        fill(Color.GREY);
+        rect((screenWidth() - width) / 2 - 2, (screenHeight() - height) / 2 - 2, width + 4, height + 4);
+        string((screenWidth() - width) / 2, (screenHeight() - height) / 2, text);
     }
 }

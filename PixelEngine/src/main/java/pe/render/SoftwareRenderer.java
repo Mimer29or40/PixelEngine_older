@@ -553,14 +553,14 @@ public class SoftwareRenderer extends Renderer
     }
     
     @Override
-    public void string(int x, int y, String text, double scale)
+    public void text(int x, int y, String text, double scale)
     {
         if (scale <= 0.0) return;
-        
+    
         int  sx = 0, sy = 0;
         char c;
         int  ox, oy;
-        
+    
         DrawMode prev = drawMode();
         if (scale == (int) scale)
         {
