@@ -487,6 +487,16 @@ public class PixelEngine
         if (PixelEngine.PROFILER.enabled) PixelEngine.printFrame = parent;
     }
     
+    public static void enableExtension(String extension)
+    {
+        if (PixelEngine.extensions.containsKey(extension)) PixelEngine.extensions.get(extension).enable();
+    }
+    
+    public static void disableExtension(String extension)
+    {
+        if (PixelEngine.extensions.containsKey(extension)) PixelEngine.extensions.get(extension).disable();
+    }
+    
     // --------
     // - Draw -
     // --------
@@ -1313,11 +1323,14 @@ public class PixelEngine
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
-                            PixelEngine.PROFILER.startSection(name);
+                            if (PixelEngine.extensions.get(name).isEnabled())
                             {
-                                PixelEngine.extensions.get(name).beforeDraw(dt / 1_000_000_000D);
+                                PixelEngine.PROFILER.startSection(name);
+                                {
+                                    PixelEngine.extensions.get(name).beforeDraw(dt / 1_000_000_000D);
+                                }
+                                PixelEngine.PROFILER.endSection();
                             }
-                            PixelEngine.PROFILER.endSection();
                         }
                     }
                     PixelEngine.PROFILER.endSection();
@@ -1336,11 +1349,14 @@ public class PixelEngine
                     {
                         for (String name : PixelEngine.extensions.keySet())
                         {
-                            PixelEngine.PROFILER.startSection(name);
+                            if (PixelEngine.extensions.get(name).isEnabled())
                             {
-                                PixelEngine.extensions.get(name).afterDraw(dt / 1_000_000_000D);
+                                PixelEngine.PROFILER.startSection(name);
+                                {
+                                    PixelEngine.extensions.get(name).afterDraw(dt / 1_000_000_000D);
+                                }
+                                PixelEngine.PROFILER.endSection();
                             }
-                            PixelEngine.PROFILER.endSection();
                         }
                     }
                     PixelEngine.PROFILER.endSection();

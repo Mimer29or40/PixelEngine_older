@@ -38,20 +38,10 @@ public abstract class Organism
         
         this.brain.calculate(this.inputs, this.outputs);
         
-        int    decision = 0;
-        double max      = 0;
-        for (int i = 0, n = outputs.length; i < n; i++)
-        {
-            if (outputs[i] > max)
-            {
-                max      = outputs[i];
-                decision = i;
-            }
-        }
-        makeDecision(elapsedTime, userPlaying, decision);
+        makeDecision(elapsedTime, userPlaying);
     }
     
-    protected abstract void makeDecision(double elapsedTime, boolean userPlaying, int decision);
+    protected abstract void makeDecision(double elapsedTime, boolean userPlaying);
     
     protected abstract void calculateFitness();
     

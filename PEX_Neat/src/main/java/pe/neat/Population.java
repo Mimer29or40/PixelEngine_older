@@ -99,9 +99,10 @@ public class Population
         
         Organism champion = this.organisms.get(0);
         if (this.champion == null || champion.fitness > this.champion.fitness) this.champion = champion;
+        this.champion = this.champion.copy(this.organismFactory.get());
         
         ArrayList<Organism> nextGen = new ArrayList<>();
-        nextGen.add(champion);
+        nextGen.add(this.champion);
         
         Organism temp;
         while (nextGen.size() < this.populationSize)
@@ -109,14 +110,14 @@ public class Population
             Organism child;
             if (this.random.nextDouble() < PEX_Neat.ASEXUAL_REPRODUCTION_RATE)
             {
-                Organism parent = this.random.nextIndex(this.organisms);
+                Organism parent = selectOrganism();
                 child = parent.copy(organismFactory.get());
             }
             else
             {
-                Organism parent1 = this.random.nextIndex(this.organisms);
-                Organism parent2 = this.random.nextIndex(this.organisms);
-                
+                Organism parent1 = selectOrganism();
+                Organism parent2 = selectOrganism();
+    
                 if (parent2.fitness > parent1.fitness)
                 {
                     temp    = parent1;
@@ -325,5 +326,22 @@ public class Population
         //     species.remove(i);//sad
         //     i--;
         // }
+    }
+    
+    private Organism selectOrganism()
+    {
+        double total = 0, sum = 0;
+        for (Organism organism : this.organisms)
+        {
+            total += organism.fitness;
+        }
+        
+        double rand = this.random.nextDouble(total);
+        for (Organism organism : this.organisms)
+        {
+            sum += organism.fitness;
+            if (sum > rand) return organism;
+        }
+        return this.random.nextIndex(this.organisms);
     }
 }

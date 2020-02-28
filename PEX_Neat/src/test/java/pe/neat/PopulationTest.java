@@ -1,6 +1,8 @@
-package pe;
+package pe.neat;
 
-import pe.neat.*;
+import pe.Keyboard;
+import pe.Mouse;
+import pe.PixelEngine;
 
 import java.util.function.Supplier;
 
@@ -34,11 +36,13 @@ public class PopulationTest extends PixelEngine
             }
             initialBrain.addConnection(new Connection(connInno.inc(), inSize + outSize, inSize + i, 0, true));
         }
-        
+    
         PEX_Neat.setDefaultOrganism(() -> new Game(initialBrain.copy()));
         PEX_Neat.setPopulationSize(10);
         PEX_Neat.random.setSeed(10);
-        
+    
+        disableExtension("PEX_CBNeat");
+    
         return true;
     }
     
@@ -75,9 +79,9 @@ public class PopulationTest extends PixelEngine
             this.inputs[0] = (x - Mouse.x()) / (double) screenWidth();
             this.inputs[1] = (y - Mouse.y()) / (double) screenHeight();
         }
-        
+    
         @Override
-        public void makeDecision(double elapsedTime, boolean userPlaying, int decision)
+        public void makeDecision(double elapsedTime, boolean userPlaying)
         {
             if (userPlaying)
             {
@@ -88,22 +92,10 @@ public class PopulationTest extends PixelEngine
             }
             else
             {
-                
-                switch (decision)
-                {
-                    case 0:
-                        y -= 1;
-                        break;
-                    case 1:
-                        y += 1;
-                        break;
-                    case 2:
-                        x -= 1;
-                        break;
-                    case 3:
-                        x += 1;
-                        break;
-                }
+                if (outputs[0] > 0.8) y -= 1;
+                if (outputs[1] > 0.8) y += 1;
+                if (outputs[2] > 0.8) x -= 1;
+                if (outputs[3] > 0.8) x += 1;
             }
             
             if (x < 0) x = screenWidth() - 1;

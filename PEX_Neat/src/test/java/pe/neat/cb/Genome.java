@@ -345,13 +345,13 @@ public class Genome
         child.layers   = layers;
         child.nextNode = nextNode;
         child.biasNode = biasNode;
-        ArrayList<ConnectionGene> childGenes = new ArrayList<ConnectionGene>();//list of genes to be inherrited form the parents
-        ArrayList<Boolean>        isEnabled  = new ArrayList<Boolean>();
+        ArrayList<ConnectionGene> childGenes = new ArrayList<>();//list of genes to be inherrited form the parents
+        ArrayList<Boolean>        isEnabled  = new ArrayList<>();
         //all inherrited genes
         for (int i = 0; i < genes.size(); i++)
         {
             boolean setEnabled = true;//is this node in the chlid going to be enabled
-            
+        
             int parent2gene = matchingGene(parent2, genes.get(i).innovationNo);
             if (parent2gene != -1)
             {//if the genes match
