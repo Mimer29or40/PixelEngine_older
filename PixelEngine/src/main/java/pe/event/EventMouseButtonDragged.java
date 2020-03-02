@@ -1,12 +1,14 @@
 package pe.event;
 
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
 import pe.Mouse;
 
 public class EventMouseButtonDragged extends Event
 {
     public EventMouseButtonDragged(Object[] values)
     {
-        super(new String[] {"", "dragX", "dragY", "x", "y", "relX", "relY"}, values);
+        super(new String[] {"", "dragPos", "pos", "rel"}, values);
     }
     
     public Mouse.Button button()
@@ -14,33 +16,48 @@ public class EventMouseButtonDragged extends Event
         return (Mouse.Button) this.values[0];
     }
     
+    public Vector2ic dragPos()
+    {
+        return (Vector2i) this.values[1];
+    }
+    
+    public Vector2ic pos()
+    {
+        return (Vector2i) this.values[2];
+    }
+    
+    public Vector2ic rel()
+    {
+        return (Vector2i) this.values[3];
+    }
+    
     public int dragX()
     {
-        return (int) this.values[1];
+        return dragPos().x();
     }
     
     public int dragY()
     {
-        return (int) this.values[2];
+        return dragPos().y();
     }
     
     public int x()
     {
-        return (int) this.values[3];
+        return pos().x();
     }
     
     public int y()
     {
-        return (int) this.values[4];
+        return pos().y();
     }
     
     public int relX()
     {
-        return (int) this.values[5];
+        return rel().x();
     }
     
     public int relY()
     {
-        return (int) this.values[6];
+        return rel().y();
     }
 }

@@ -39,8 +39,8 @@ public class PixelEngine
     private static boolean running;
     private static long    startTime;
     
-    private static int screenW, screenH;
-    private static int pixelW, pixelH;
+    private static final Vector2i screenSize = new Vector2i();
+    private static final Vector2i pixelSize  = new Vector2i();
     
     private static final Random random = new Random();
     
@@ -117,27 +117,26 @@ public class PixelEngine
     protected static void start(PixelEngine logic, int screenW, int screenH, int pixelW, int pixelH, boolean fullscreen, boolean vsync)
     {
         PixelEngine.LOGGER.info("Engine Started");
-        
+    
         if (PixelEngine.logic != null) throw new RuntimeException("PixelEngine can only be constructed once.");
         PixelEngine.LOGGER.trace("Setting Logic");
         PixelEngine.logic = logic;
-        
-        PixelEngine.screenW = screenW;
-        PixelEngine.screenH = screenH;
+    
+        PixelEngine.screenSize.set(screenW, screenH);
         PixelEngine.LOGGER.trace("Screen Size (%s, %s)", screenW, screenH);
-        
-        PixelEngine.pixelW = pixelW;
-        PixelEngine.pixelH = pixelH;
+    
+        PixelEngine.pixelSize.x = pixelW;
+        PixelEngine.pixelSize.y = pixelH;
         PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
-        
+    
         Window.fullscreen(fullscreen);
         PixelEngine.LOGGER.trace("Fullscreen: %s)", fullscreen);
-        
+    
         Window.vsync(vsync);
         PixelEngine.LOGGER.trace("VSync: %s)", vsync);
     
-        if (PixelEngine.screenW == 0 || PixelEngine.screenH == 0) throw new RuntimeException("Screen dimension must be > 0");
-        if (PixelEngine.pixelW == 0 || PixelEngine.pixelH == 0) throw new RuntimeException("Color dimension must be > 0");
+        if (PixelEngine.screenSize.x == 0 || PixelEngine.screenSize.y == 0) throw new RuntimeException("Screen dimension must be > 0");
+        if (PixelEngine.pixelSize.x == 0 || PixelEngine.pixelSize.y == 0) throw new RuntimeException("Pixel dimension must be > 0");
         PixelEngine.LOGGER.trace("Screen Size and Color Dimensions pass initial test");
     
         createFontSheet();
@@ -214,24 +213,34 @@ public class PixelEngine
     // - Properties -
     // --------------
     
+    public static Vector2ic screenSize()
+    {
+        return PixelEngine.screenSize;
+    }
+    
     public static int screenWidth()
     {
-        return PixelEngine.screenW;
+        return PixelEngine.screenSize.x;
     }
     
     public static int screenHeight()
     {
-        return PixelEngine.screenH;
+        return PixelEngine.screenSize.y;
+    }
+    
+    public static Vector2ic pixelSize()
+    {
+        return PixelEngine.screenSize;
     }
     
     public static int pixelWidth()
     {
-        return PixelEngine.pixelW;
+        return PixelEngine.pixelSize.x;
     }
     
     public static int pixelHeight()
     {
-        return PixelEngine.pixelH;
+        return PixelEngine.pixelSize.y;
     }
     
     public static DrawMode drawMode()
@@ -1191,12 +1200,12 @@ public class PixelEngine
         if (w < 1 || h < 1) return;
         int x2 = x + w;
         int y2 = y + h;
-        
-        x  = Math.max(0, Math.min(x, PixelEngine.screenW));
-        y  = Math.max(0, Math.min(y, PixelEngine.screenH));
-        x2 = Math.max(0, Math.min(x2, PixelEngine.screenW));
-        y2 = Math.max(0, Math.min(y2, PixelEngine.screenH));
-        
+    
+        x  = Math.max(0, Math.min(x, PixelEngine.screenSize.x));
+        y  = Math.max(0, Math.min(y, PixelEngine.screenSize.y));
+        x2 = Math.max(0, Math.min(x2, PixelEngine.screenSize.x));
+        y2 = Math.max(0, Math.min(y2, PixelEngine.screenSize.y));
+    
         for (int i = x; i < x2; i++)
         {
             for (int j = y; j < y2; j++)
@@ -1226,20 +1235,20 @@ public class PixelEngine
     public static void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Colorc color)
     {
         int minX, minY, maxX, maxY;
-        
+    
         minX = Math.min(x1, Math.min(x2, x3));
         minY = Math.min(y1, Math.min(y2, y3));
         maxX = Math.max(x1, Math.max(x2, x3));
         maxY = Math.max(y1, Math.max(y2, y3));
-        
-        minX = Math.max(0, Math.min(minX, PixelEngine.screenW));
-        minY = Math.max(0, Math.min(minY, PixelEngine.screenH));
-        maxX = Math.max(0, Math.min(maxX, PixelEngine.screenW));
-        maxY = Math.max(0, Math.min(maxY, PixelEngine.screenH));
-        
+    
+        minX = Math.max(0, Math.min(minX, PixelEngine.screenSize.x));
+        minY = Math.max(0, Math.min(minY, PixelEngine.screenSize.y));
+        maxX = Math.max(0, Math.min(maxX, PixelEngine.screenSize.x));
+        maxY = Math.max(0, Math.min(maxY, PixelEngine.screenSize.y));
+    
         int abc = Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
         int abp, apc, pbc;
-        
+    
         for (int i = minX; i <= maxX; i++)
         {
             for (int j = minY; j <= maxY; j++)
@@ -1662,14 +1671,14 @@ public class PixelEngine
                     
                     PixelEngine.PROFILER.startSection("Render");
                     {
-                        for (int i = 0; i < PixelEngine.screenW * PixelEngine.screenH; i++)
+                        for (int i = 0; i < PixelEngine.screenSize.x * PixelEngine.screenSize.y; i++)
                         {
                             ByteBuffer currData = PixelEngine.window.getData();
                             ByteBuffer prevData = PixelEngine.prev.getData();
                             if (update || currData.getInt(4 * i) != prevData.getInt(4 * i))
                             {
                                 PixelEngine.LOGGER.trace("Rendering Frame");
-                                
+            
                                 PixelEngine.PROFILER.startSection("Update/Draw Texture");
                                 {
                                     Window.drawSprite(PixelEngine.window);
