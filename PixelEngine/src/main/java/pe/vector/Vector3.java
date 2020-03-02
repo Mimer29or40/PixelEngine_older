@@ -1,7 +1,6 @@
 package pe.vector;
 
 import org.joml.*;
-import pe.PixelEngine;
 
 import java.lang.Math;
 
@@ -46,21 +45,5 @@ public class Vector3
     public static Vector3d fromAngle(double angle, double pitch)
     {
         return fromAngle(angle, pitch, new Vector3d());
-    }
-    
-    public static Vector3f randomF()
-    {
-        float x = PixelEngine.nextFloat(-1F, 1F);
-        float y = PixelEngine.nextFloat(-1F, 1F);
-        float z = PixelEngine.nextFloat(-1F, 1F);
-        return new Vector3f(x, y, z).normalize();
-    }
-    
-    public static Vector3d randomD()
-    {
-        double x = PixelEngine.nextDouble(-1.0, 1.0);
-        double y = PixelEngine.nextDouble(-1.0, 1.0);
-        double z = PixelEngine.nextDouble(-1.0, 1.0);
-        return new Vector3d(x, y, z).normalize();
     }
 }

@@ -1,5 +1,6 @@
 package pe;
 
+import org.joml.*;
 import org.reflections.Reflections;
 import pe.color.Blend;
 import pe.color.Color;
@@ -9,6 +10,7 @@ import pe.draw.DrawMode;
 import pe.draw.DrawPattern;
 import pe.util.PairI;
 
+import java.lang.Math;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -22,7 +24,6 @@ public class PixelEngine
 {
     private static final Logger   LOGGER   = Logger.getLogger();
     private static final Profiler PROFILER = new Profiler("Engine");
-    private static final Random   RANDOM   = new Random();
     
     private static final Color COLOR = new Color(Color.WHITE);
     
@@ -40,6 +41,8 @@ public class PixelEngine
     
     private static int screenW, screenH;
     private static int pixelW, pixelH;
+    
+    private static final Random random = new Random();
     
     // TODO - Push/Pop
     private static       DrawMode  drawMode = DrawMode.NORMAL;
@@ -493,132 +496,297 @@ public class PixelEngine
     
     public static Random random()
     {
-        return PixelEngine.RANDOM;
+        return PixelEngine.random;
     }
     
     public static void setSeed(long seed)
     {
-        PixelEngine.RANDOM.setSeed(seed);
+        PixelEngine.random.setSeed(seed);
     }
     
     public static boolean nextBoolean()
     {
-        return PixelEngine.RANDOM.nextBoolean();
+        return PixelEngine.random.nextBoolean();
     }
     
     public static int nextInt()
     {
-        return PixelEngine.RANDOM.nextInt();
+        return PixelEngine.random.nextInt();
     }
     
     public static int nextInt(int limit)
     {
-        return PixelEngine.RANDOM.nextInt(limit);
+        return PixelEngine.random.nextInt(limit);
     }
     
     public static int nextInt(int origin, int limit)
     {
-        return PixelEngine.RANDOM.nextInt(origin, limit);
+        return PixelEngine.random.nextInt(origin, limit);
     }
     
     public static long nextLong()
     {
-        return PixelEngine.RANDOM.nextLong();
+        return PixelEngine.random.nextLong();
     }
     
     public static long nextLong(long limit)
     {
-        return PixelEngine.RANDOM.nextLong(limit);
+        return PixelEngine.random.nextLong(limit);
     }
     
     public static long nextLong(long origin, long limit)
     {
-        return PixelEngine.RANDOM.nextLong(origin, limit);
+        return PixelEngine.random.nextLong(origin, limit);
     }
     
     public static float nextFloat()
     {
-        return PixelEngine.RANDOM.nextFloat();
+        return PixelEngine.random.nextFloat();
     }
     
     public static float nextFloat(float limit)
     {
-        return PixelEngine.RANDOM.nextFloat(limit);
+        return PixelEngine.random.nextFloat(limit);
     }
     
     public static float nextFloat(float origin, float limit)
     {
-        return PixelEngine.RANDOM.nextFloat(origin, limit);
+        return PixelEngine.random.nextFloat(origin, limit);
     }
     
     public static double nextDouble()
     {
-        return PixelEngine.RANDOM.nextDouble();
+        return PixelEngine.random.nextDouble();
     }
     
     public static double nextDouble(double limit)
     {
-        return PixelEngine.RANDOM.nextDouble(limit);
+        return PixelEngine.random.nextDouble(limit);
     }
     
     public static double nextDouble(double origin, double limit)
     {
-        return PixelEngine.RANDOM.nextDouble(origin, limit);
+        return PixelEngine.random.nextDouble(origin, limit);
     }
     
     public static double nextGaussian()
     {
-        return PixelEngine.RANDOM.nextGaussian();
+        return PixelEngine.random.nextGaussian();
     }
     
     public static int nextIndex(int[] array)
     {
-        return PixelEngine.RANDOM.nextIndex(array);
+        return PixelEngine.random.nextIndex(array);
     }
     
     public static long nextIndex(long[] array)
     {
-        return PixelEngine.RANDOM.nextIndex(array);
+        return PixelEngine.random.nextIndex(array);
     }
     
     public static float nextIndex(float[] array)
     {
-        return PixelEngine.RANDOM.nextIndex(array);
+        return PixelEngine.random.nextIndex(array);
     }
     
     public static double nextIndex(double[] array)
     {
-        return PixelEngine.RANDOM.nextIndex(array);
+        return PixelEngine.random.nextIndex(array);
     }
     
     public static <T> T nextIndex(T[] array)
     {
-        return PixelEngine.RANDOM.nextIndex(array);
+        return PixelEngine.random.nextIndex(array);
     }
     
     public static <T> T nextIndex(Collection<T> collection)
     {
-        return PixelEngine.RANDOM.nextIndex(collection);
+        return PixelEngine.random.nextIndex(collection);
     }
     
     public static int choose(int... options)
     {
-        return PixelEngine.RANDOM.nextIndex(options);
+        return PixelEngine.random.nextIndex(options);
     }
     
     public static long choose(long... options)
     {
-        return PixelEngine.RANDOM.nextIndex(options);
+        return PixelEngine.random.nextIndex(options);
     }
     
     public static float choose(float... options)
     {
-        return PixelEngine.RANDOM.nextIndex(options);
+        return PixelEngine.random.nextIndex(options);
     }
     
     public static double choose(double... options)
     {
-        return PixelEngine.RANDOM.nextIndex(options);
+        return PixelEngine.random.nextIndex(options);
+    }
+    
+    public static Vector2i nextVector2i()
+    {
+        return PixelEngine.random.nextVector2i();
+    }
+    
+    public static Vector2i nextVector2i(int bound)
+    {
+        return PixelEngine.random.nextVector2i(bound);
+    }
+    
+    public static Vector2i nextVector2i(int origin, int bound)
+    {
+        return PixelEngine.random.nextVector2i(origin, bound);
+    }
+    
+    public static Vector3i nextVector3i()
+    {
+        return PixelEngine.random.nextVector3i();
+    }
+    
+    public static Vector3i nextVector3i(int bound)
+    {
+        return PixelEngine.random.nextVector3i(bound);
+    }
+    
+    public static Vector3i nextVector3i(int origin, int bound)
+    {
+        return PixelEngine.random.nextVector3i(origin, bound);
+    }
+    
+    public static Vector4i nextVector4i()
+    {
+        return PixelEngine.random.nextVector4i();
+    }
+    
+    public static Vector4i nextVector4i(int bound)
+    {
+        return PixelEngine.random.nextVector4i(bound);
+    }
+    
+    public static Vector4i nextVector4i(int origin, int bound)
+    {
+        return PixelEngine.random.nextVector4i(origin, bound);
+    }
+    
+    public static Vector2f nextVector2f()
+    {
+        return PixelEngine.random.nextVector2f();
+    }
+    
+    public static Vector2f nextVector2fUnit()
+    {
+        return PixelEngine.random.nextVector2fUnit();
+    }
+    
+    public static Vector2f nextVector2f(float bound)
+    {
+        return PixelEngine.random.nextVector2f(bound);
+    }
+    
+    public static Vector2f nextVector2f(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector2f(origin, bound);
+    }
+    
+    public static Vector3f nextVector3f()
+    {
+        return PixelEngine.random.nextVector3f();
+    }
+    
+    public static Vector3f nextVector3fUnit()
+    {
+        return PixelEngine.random.nextVector3fUnit();
+    }
+    
+    public static Vector3f nextVector3f(float bound)
+    {
+        return PixelEngine.random.nextVector3f(bound);
+    }
+    
+    public static Vector3f nextVector3f(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector3f(origin, bound);
+    }
+    
+    public static Vector4f nextVector4f()
+    {
+        return PixelEngine.random.nextVector4f();
+    }
+    
+    public static Vector4f nextVector4fUnit()
+    {
+        return PixelEngine.random.nextVector4fUnit();
+    }
+    
+    public static Vector4f nextVector4f(float bound)
+    {
+        return PixelEngine.random.nextVector4f(bound);
+    }
+    
+    public static Vector4f nextVector4f(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector4f(origin, bound);
+    }
+    
+    public static Vector2d nextVector2d()
+    {
+        return PixelEngine.random.nextVector2d();
+    }
+    
+    public static Vector2d nextVector2dUnit()
+    {
+        return PixelEngine.random.nextVector2dUnit();
+    }
+    
+    public static Vector2d nextVector2d(float bound)
+    {
+        return PixelEngine.random.nextVector2d(bound);
+    }
+    
+    public static Vector2d nextVector2d(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector2d(origin, bound);
+    }
+    
+    public static Vector3d nextVector3d()
+    {
+        return PixelEngine.random.nextVector3d();
+    }
+    
+    public static Vector3d nextVector3dUnit()
+    {
+        return PixelEngine.random.nextVector3dUnit();
+    }
+    
+    public static Vector3d nextVector3d(float bound)
+    {
+        return PixelEngine.random.nextVector3d(bound);
+    }
+    
+    public static Vector3d nextVector3d(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector3d(origin, bound);
+    }
+    
+    public static Vector4d nextVector4d()
+    {
+        return PixelEngine.random.nextVector4d();
+    }
+    
+    public static Vector4d nextVector4dUnit()
+    {
+        return PixelEngine.random.nextVector4dUnit();
+    }
+    
+    public static Vector4d nextVector4d(float bound)
+    {
+        return PixelEngine.random.nextVector4d(bound);
+    }
+    
+    public static Vector4d nextVector4d(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector4d(origin, bound);
     }
     
     // --------

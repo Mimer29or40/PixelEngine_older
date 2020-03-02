@@ -1,5 +1,7 @@
 package pe;
 
+import org.joml.*;
+
 import java.util.Collection;
 
 @SuppressWarnings({"unused", "StatementWithEmptyBody"})
@@ -122,5 +124,170 @@ public class Random extends java.util.Random
     public double choose(double... options)
     {
         return nextIndex(options);
+    }
+    
+    public Vector2i nextVector2i()
+    {
+        return new Vector2i(nextInt(), nextInt());
+    }
+    
+    public Vector2i nextVector2i(int bound)
+    {
+        return new Vector2i(nextInt(bound), nextInt(bound));
+    }
+    
+    public Vector2i nextVector2i(int origin, int bound)
+    {
+        return new Vector2i(nextInt(origin, bound), nextInt(origin, bound));
+    }
+    
+    public Vector3i nextVector3i()
+    {
+        return new Vector3i(nextInt(), nextInt(), nextInt());
+    }
+    
+    public Vector3i nextVector3i(int bound)
+    {
+        return new Vector3i(nextInt(bound), nextInt(bound), nextInt(bound));
+    }
+    
+    public Vector3i nextVector3i(int origin, int bound)
+    {
+        return new Vector3i(nextInt(origin, bound), nextInt(origin, bound), nextInt(origin, bound));
+    }
+    
+    public Vector4i nextVector4i()
+    {
+        return new Vector4i(nextInt(), nextInt(), nextInt(), nextInt());
+    }
+    
+    public Vector4i nextVector4i(int bound)
+    {
+        return new Vector4i(nextInt(bound), nextInt(bound), nextInt(bound), nextInt(bound));
+    }
+    
+    public Vector4i nextVector4i(int origin, int bound)
+    {
+        return new Vector4i(nextInt(origin, bound), nextInt(origin, bound), nextInt(origin, bound), nextInt(origin, bound));
+    }
+    
+    public Vector2f nextVector2f()
+    {
+        return new Vector2f(nextFloat(), nextFloat());
+    }
+    
+    public Vector2f nextVector2fUnit()
+    {
+        return new Vector2f(nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
+    }
+    
+    public Vector2f nextVector2f(float bound)
+    {
+        return new Vector2f(nextFloat(bound), nextFloat(bound));
+    }
+    
+    public Vector2f nextVector2f(float origin, float bound)
+    {
+        return new Vector2f(nextFloat(origin, bound), nextFloat(origin, bound));
+    }
+    
+    public Vector3f nextVector3f()
+    {
+        return new Vector3f(nextFloat(), nextFloat(), nextFloat());
+    }
+    
+    public Vector3f nextVector3fUnit()
+    {
+        return new Vector3f(nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
+    }
+    
+    public Vector3f nextVector3f(float bound)
+    {
+        return new Vector3f(nextFloat(bound), nextFloat(bound), nextFloat(bound));
+    }
+    
+    public Vector3f nextVector3f(float origin, float bound)
+    {
+        return new Vector3f(nextFloat(origin, bound), nextFloat(origin, bound), nextFloat(origin, bound));
+    }
+    
+    public Vector4f nextVector4f()
+    {
+        return new Vector4f(nextFloat(), nextFloat(), nextFloat(), nextFloat());
+    }
+    
+    public Vector4f nextVector4fUnit()
+    {
+        return new Vector4f(nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
+    }
+    
+    public Vector4f nextVector4f(float bound)
+    {
+        return new Vector4f(nextFloat(bound), nextFloat(bound), nextFloat(bound), nextFloat(bound));
+    }
+    
+    public Vector4f nextVector4f(float origin, float bound)
+    {
+        return new Vector4f(nextFloat(origin, bound), nextFloat(origin, bound), nextFloat(origin, bound), nextFloat(origin, bound));
+    }
+    
+    public Vector2d nextVector2d()
+    {
+        return new Vector2d(nextDouble(), nextDouble());
+    }
+    
+    public Vector2d nextVector2dUnit()
+    {
+        return new Vector2d(nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
+    }
+    
+    public Vector2d nextVector2d(float bound)
+    {
+        return new Vector2d(nextDouble(bound), nextDouble(bound));
+    }
+    
+    public Vector2d nextVector2d(float origin, float bound)
+    {
+        return new Vector2d(nextDouble(origin, bound), nextDouble(origin, bound));
+    }
+    
+    public Vector3d nextVector3d()
+    {
+        return new Vector3d(nextDouble(), nextDouble(), nextDouble());
+    }
+    
+    public Vector3d nextVector3dUnit()
+    {
+        return new Vector3d(nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
+    }
+    
+    public Vector3d nextVector3d(float bound)
+    {
+        return new Vector3d(nextDouble(bound), nextDouble(bound), nextDouble(bound));
+    }
+    
+    public Vector3d nextVector3d(float origin, float bound)
+    {
+        return new Vector3d(nextDouble(origin, bound), nextDouble(origin, bound), nextDouble(origin, bound));
+    }
+    
+    public Vector4d nextVector4d()
+    {
+        return new Vector4d(nextDouble(), nextDouble(), nextDouble(), nextDouble());
+    }
+    
+    public Vector4d nextVector4dUnit()
+    {
+        return new Vector4d(nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
+    }
+    
+    public Vector4d nextVector4d(float bound)
+    {
+        return new Vector4d(nextDouble(bound), nextDouble(bound), nextDouble(bound), nextDouble(bound));
+    }
+    
+    public Vector4d nextVector4d(float origin, float bound)
+    {
+        return new Vector4d(nextDouble(origin, bound), nextDouble(origin, bound), nextDouble(origin, bound), nextDouble(origin, bound));
     }
 }

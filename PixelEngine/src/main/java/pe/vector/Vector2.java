@@ -1,7 +1,6 @@
 package pe.vector;
 
 import org.joml.*;
-import pe.PixelEngine;
 
 import java.lang.Math;
 
@@ -41,19 +40,5 @@ public class Vector2
     public static Vector2d fromAngle(double angle)
     {
         return fromAngle(angle, new Vector2d());
-    }
-    
-    public static Vector2f randomF()
-    {
-        float x = PixelEngine.nextFloat(-1F, 1F);
-        float y = PixelEngine.nextFloat(-1F, 1F);
-        return new Vector2f(x, y).normalize();
-    }
-    
-    public static Vector2d randomD()
-    {
-        double x = PixelEngine.nextDouble(-1.0, 1.0);
-        double y = PixelEngine.nextDouble(-1.0, 1.0);
-        return new Vector2d(x, y).normalize();
     }
 }
