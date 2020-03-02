@@ -1,5 +1,6 @@
 package pe;
 
+import org.joml.*;
 import org.reflections.Reflections;
 import pe.color.Blend;
 import pe.color.Color;
@@ -10,6 +11,7 @@ import pe.render.OpenGLRenderer;
 import pe.render.Renderer;
 import pe.util.PairI;
 
+import java.lang.Math;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -37,8 +39,10 @@ public class PixelEngine
     private static boolean running;
     private static long    startTime;
     
-    private static int screenW, screenH;
-    private static int pixelW, pixelH;
+    private static final Vector2i screenSize = new Vector2i();
+    private static final Vector2i pixelSize  = new Vector2i();
+    
+    private static final Random random = new Random();
     
     private static final Random random = new Random();
     
@@ -116,12 +120,11 @@ public class PixelEngine
         PixelEngine.LOGGER.trace("Setting Logic");
         PixelEngine.logic = logic;
         
-        PixelEngine.screenW = screenW;
-        PixelEngine.screenH = screenH;
+        PixelEngine.screenSize.set(screenW, screenH);
         PixelEngine.LOGGER.trace("Screen Size (%s, %s)", screenW, screenH);
         
-        PixelEngine.pixelW = pixelW;
-        PixelEngine.pixelH = pixelH;
+        PixelEngine.pixelSize.x = pixelW;
+        PixelEngine.pixelSize.y = pixelH;
         PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
         
         Window.fullscreen(fullscreen);
@@ -129,9 +132,9 @@ public class PixelEngine
         
         Window.vsync(vsync);
         PixelEngine.LOGGER.trace("VSync: %s)", vsync);
-    
-        if (PixelEngine.screenW == 0 || PixelEngine.screenH == 0) throw new RuntimeException("Screen dimension must be > 0");
-        if (PixelEngine.pixelW == 0 || PixelEngine.pixelH == 0) throw new RuntimeException("Color dimension must be > 0");
+        
+        if (PixelEngine.screenSize.x == 0 || PixelEngine.screenSize.y == 0) throw new RuntimeException("Screen dimension must be > 0");
+        if (PixelEngine.pixelSize.x == 0 || PixelEngine.pixelSize.y == 0) throw new RuntimeException("Pixel dimension must be > 0");
         PixelEngine.LOGGER.trace("Screen Size and Color Dimensions pass initial test");
     
         // PixelEngine.renderer = new SoftwareRenderer();
@@ -206,25 +209,35 @@ public class PixelEngine
     // - Properties -
     // --------------
     
+    public static Vector2ic screenSize()
+    {
+        return PixelEngine.screenSize;
+    }
+    
     public static int screenWidth()
     {
-        return PixelEngine.screenW;
+        return PixelEngine.screenSize.x;
     }
     
     public static int screenHeight()
     {
-        return PixelEngine.screenH;
+        return PixelEngine.screenSize.y;
+    }
+    
+    public static Vector2ic pixelSize()
+    {
+        return PixelEngine.screenSize;
     }
     
     // TODO - set pixel dims on window resize
     public static int pixelWidth()
     {
-        return PixelEngine.pixelW;
+        return PixelEngine.pixelSize.x;
     }
     
     public static int pixelHeight()
     {
-        return PixelEngine.pixelH;
+        return PixelEngine.pixelSize.y;
     }
     
     public static Renderer renderer()
@@ -593,6 +606,172 @@ public class PixelEngine
     
     public static double choose(double... options)
     {
+        return PixelEngine.random.nextIndex(options);
+    }
+    
+    public static Vector2i nextVector2i()
+    {
+        return PixelEngine.random.nextVector2i();
+    }
+    
+    public static Vector2i nextVector2i(int bound)
+    {
+        return PixelEngine.random.nextVector2i(bound);
+    }
+    
+    public static Vector2i nextVector2i(int origin, int bound)
+    {
+        return PixelEngine.random.nextVector2i(origin, bound);
+    }
+    
+    public static Vector3i nextVector3i()
+    {
+        return PixelEngine.random.nextVector3i();
+    }
+    
+    public static Vector3i nextVector3i(int bound)
+    {
+        return PixelEngine.random.nextVector3i(bound);
+    }
+    
+    public static Vector3i nextVector3i(int origin, int bound)
+    {
+        return PixelEngine.random.nextVector3i(origin, bound);
+    }
+    
+    public static Vector4i nextVector4i()
+    {
+        return PixelEngine.random.nextVector4i();
+    }
+    
+    public static Vector4i nextVector4i(int bound)
+    {
+        return PixelEngine.random.nextVector4i(bound);
+    }
+    
+    public static Vector4i nextVector4i(int origin, int bound)
+    {
+        return PixelEngine.random.nextVector4i(origin, bound);
+    }
+    
+    public static Vector2f nextVector2f()
+    {
+        return PixelEngine.random.nextVector2f();
+    }
+    
+    public static Vector2f nextVector2fUnit()
+    {
+        return PixelEngine.random.nextVector2fUnit();
+    }
+    
+    public static Vector2f nextVector2f(float bound)
+    {
+        return PixelEngine.random.nextVector2f(bound);
+    }
+    
+    public static Vector2f nextVector2f(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector2f(origin, bound);
+    }
+    
+    public static Vector3f nextVector3f()
+    {
+        return PixelEngine.random.nextVector3f();
+    }
+    
+    public static Vector3f nextVector3fUnit()
+    {
+        return PixelEngine.random.nextVector3fUnit();
+    }
+    
+    public static Vector3f nextVector3f(float bound)
+    {
+        return PixelEngine.random.nextVector3f(bound);
+    }
+    
+    public static Vector3f nextVector3f(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector3f(origin, bound);
+    }
+    
+    public static Vector4f nextVector4f()
+    {
+        return PixelEngine.random.nextVector4f();
+    }
+    
+    public static Vector4f nextVector4fUnit()
+    {
+        return PixelEngine.random.nextVector4fUnit();
+    }
+    
+    public static Vector4f nextVector4f(float bound)
+    {
+        return PixelEngine.random.nextVector4f(bound);
+    }
+    
+    public static Vector4f nextVector4f(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector4f(origin, bound);
+    }
+    
+    public static Vector2d nextVector2d()
+    {
+        return PixelEngine.random.nextVector2d();
+    }
+    
+    public static Vector2d nextVector2dUnit()
+    {
+        return PixelEngine.random.nextVector2dUnit();
+    }
+    
+    public static Vector2d nextVector2d(float bound)
+    {
+        return PixelEngine.random.nextVector2d(bound);
+    }
+    
+    public static Vector2d nextVector2d(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector2d(origin, bound);
+    }
+    
+    public static Vector3d nextVector3d()
+    {
+        return PixelEngine.random.nextVector3d();
+    }
+    
+    public static Vector3d nextVector3dUnit()
+    {
+        return PixelEngine.random.nextVector3dUnit();
+    }
+    
+    public static Vector3d nextVector3d(float bound)
+    {
+        return PixelEngine.random.nextVector3d(bound);
+    }
+    
+    public static Vector3d nextVector3d(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector3d(origin, bound);
+    }
+    
+    public static Vector4d nextVector4d()
+    {
+        return PixelEngine.random.nextVector4d();
+    }
+    
+    public static Vector4d nextVector4dUnit()
+    {
+        return PixelEngine.random.nextVector4dUnit();
+    }
+    
+    public static Vector4d nextVector4d(float bound)
+    {
+        return PixelEngine.random.nextVector4d(bound);
+    }
+    
+    public static Vector4d nextVector4d(float origin, float bound)
+    {
+        return PixelEngine.random.nextVector4d(origin, bound);
         return PixelEngine.random.nextIndex(options);
     }
     

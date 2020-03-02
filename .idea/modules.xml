@@ -9,7 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" filepath="$PROJECT_DIR$/PEX_Physics2D/PEX_Physics2D.iml" />
       <module fileurl="file://$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" filepath="$PROJECT_DIR$/PEX_Physics3D/PEX_Physics3D.iml" />
       <module fileurl="file://$PROJECT_DIR$/PEX_Sound/PEX_Sound.iml" filepath="$PROJECT_DIR$/PEX_Sound/PEX_Sound.iml" />
-      <module fileurl="file://$PROJECT_DIR$/PEX_Vector/PEX_Vector.iml" filepath="$PROJECT_DIR$/PEX_Vector/PEX_Vector.iml" />
       <module fileurl="file://$PROJECT_DIR$/PixelEngine/PixelEngine.iml" filepath="$PROJECT_DIR$/PixelEngine/PixelEngine.iml" />
     </modules>
   </component>

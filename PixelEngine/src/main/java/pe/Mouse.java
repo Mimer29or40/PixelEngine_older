@@ -1,5 +1,7 @@
 package pe;
 
+import org.joml.Vector2i;
+import org.joml.Vector2ic;
 import pe.event.*;
 
 import java.util.Collection;
@@ -30,12 +32,14 @@ public class Mouse
     
     private static boolean entered, newEntered;
     
-    private static int x, y, newX, newY;
-    private static int relX, relY;
-    private static int scrollX, scrollY, newScrollX, newScrollY;
+    private static final Vector2i pos       = new Vector2i();
+    private static final Vector2i newPos    = new Vector2i();
+    private static final Vector2i rel       = new Vector2i();
+    private static final Vector2i scroll    = new Vector2i();
+    private static final Vector2i newScroll = new Vector2i();
     
-    private static Button drag;
-    private static int    dragX, dragY;
+    private static       Button   drag;
+    private static final Vector2i dragPos = new Vector2i();
     
     private Mouse() { }
     
@@ -74,34 +78,49 @@ public class Mouse
         return Mouse.entered;
     }
     
+    public static Vector2ic pos()
+    {
+        return Mouse.pos;
+    }
+    
     public static int x()
     {
-        return Mouse.x;
+        return Mouse.pos.x;
     }
     
     public static int y()
     {
-        return Mouse.y;
+        return Mouse.pos.y;
+    }
+    
+    public static Vector2ic rel()
+    {
+        return Mouse.rel;
     }
     
     public static int relX()
     {
-        return Mouse.relX;
+        return Mouse.rel.x;
     }
     
     public static int relY()
     {
-        return Mouse.relY;
+        return Mouse.rel.y;
+    }
+    
+    public static Vector2ic scroll()
+    {
+        return Mouse.scroll;
     }
     
     public static int scrollX()
     {
-        return Mouse.scrollX;
+        return Mouse.scroll.x;
     }
     
     public static int scrollY()
     {
-        return Mouse.scrollY;
+        return Mouse.scroll.y;
     }
     
     @SuppressWarnings("DuplicatedCode")
@@ -109,25 +128,21 @@ public class Mouse
     {
         if (Mouse.entered != Mouse.newEntered) Events.post(EventMouseEntered.class, Mouse.newEntered);
         Mouse.entered = Mouse.newEntered;
-        
-        Mouse.relX = Mouse.newX - Mouse.x;
-        Mouse.relY = Mouse.newY - Mouse.y;
-        Mouse.x    = Mouse.newX;
-        Mouse.y    = Mouse.newY;
-        if (Mouse.relX != 0 || Mouse.relY != 0) Events.post(EventMouseMoved.class, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
-        
-        Mouse.scrollX    = Mouse.newScrollX;
-        Mouse.scrollY    = Mouse.newScrollY;
-        Mouse.newScrollX = 0;
-        Mouse.newScrollY = 0;
-        if (Mouse.scrollX != 0 || Mouse.scrollY != 0) Events.post(EventMouseScrolled.class, Mouse.scrollX, Mouse.scrollY);
-        
+    
+        Mouse.newPos.sub(Mouse.pos, Mouse.rel);
+        Mouse.pos.set(Mouse.newPos);
+        if (Mouse.rel.x != 0 || Mouse.rel.y != 0) Events.post(EventMouseMoved.class, Mouse.pos, Mouse.rel);
+    
+        Mouse.scroll.set(Mouse.newScroll);
+        Mouse.newScroll.set(0);
+        if (Mouse.scroll.x != 0 || Mouse.scroll.y != 0) Events.post(EventMouseScrolled.class, Mouse.scroll);
+    
         for (Button button : inputs())
         {
             button.down   = false;
             button.up     = false;
             button.repeat = false;
-            
+        
             if (button.state != button.prevState)
             {
                 if (button.state == GLFW_PRESS)
@@ -152,47 +167,44 @@ public class Mouse
             
             if (button.down)
             {
-                Events.post(EventMouseButtonDown.class, button, Mouse.x, Mouse.y);
-                
-                button.clickX = Mouse.x;
-                button.clickY = Mouse.y;
+                Events.post(EventMouseButtonDown.class, button, Mouse.pos);
+    
+                button.click.set(Mouse.pos);
                 if (Mouse.drag == null)
                 {
-                    Mouse.drag  = button;
-                    Mouse.dragX = Mouse.x;
-                    Mouse.dragY = Mouse.y;
+                    Mouse.drag = button;
+                    Mouse.dragPos.set(Mouse.pos);
                 }
             }
             if (button.up)
             {
-                Events.post(EventMouseButtonUp.class, button, Mouse.x, Mouse.y);
-                
-                boolean inClickRange  = Math.abs(Mouse.x - button.clickX) < 2 && Math.abs(Mouse.y - button.clickY) < 2;
-                boolean inDClickRange = Math.abs(Mouse.x - button.dClickX) < 2 && Math.abs(Mouse.y - button.dClickY) < 2;
-                
+                Events.post(EventMouseButtonUp.class, button, Mouse.pos);
+    
+                boolean inClickRange  = Math.abs(Mouse.pos.x - button.click.x) < 2 && Math.abs(Mouse.pos.y - button.click.y) < 2;
+                boolean inDClickRange = Math.abs(Mouse.pos.x - button.dClick.x) < 2 && Math.abs(Mouse.pos.y - button.dClick.y) < 2;
+    
                 if (inDClickRange && time - button.clickTime < 500_000_000)
                 {
-                    Events.post(EventMouseButtonClicked.class, button, Mouse.x, Mouse.y, true);
+                    Events.post(EventMouseButtonClicked.class, button, Mouse.pos, true);
                 }
                 else if (inClickRange)
                 {
-                    Events.post(EventMouseButtonClicked.class, button, Mouse.x, Mouse.y, false);
-                    button.dClickX   = Mouse.x;
-                    button.dClickY   = Mouse.y;
+                    Events.post(EventMouseButtonClicked.class, button, Mouse.pos, false);
+                    button.dClick.set(Mouse.pos);
                     button.clickTime = time;
                 }
                 if (Mouse.drag == button) Mouse.drag = null;
             }
             if (button.held)
             {
-                Events.post(EventMouseButtonHeld.class, button, Mouse.x, Mouse.y);
-                
-                if (Mouse.drag == button && (Mouse.relX != 0 || Mouse.relY != 0))
+                Events.post(EventMouseButtonHeld.class, button, Mouse.pos);
+            
+                if (Mouse.drag == button && (Mouse.rel.x != 0 || Mouse.rel.y != 0))
                 {
-                    Events.post(EventMouseButtonDragged.class, button, Mouse.dragX, Mouse.dragY, Mouse.x, Mouse.y, Mouse.relX, Mouse.relY);
+                    Events.post(EventMouseButtonDragged.class, button, Mouse.dragPos, Mouse.pos, Mouse.rel);
                 }
             }
-            if (button.repeat) Events.post(EventMouseButtonRepeat.class, button, Mouse.x, Mouse.y);
+            if (button.repeat) Events.post(EventMouseButtonRepeat.class, button, Mouse.pos);
         }
     }
     
@@ -208,51 +220,46 @@ public class Mouse
     
     public static void positionCallback(double x, double y)
     {
-        Mouse.newX = (int) x;
-        Mouse.newY = (int) y;
+        Mouse.newPos.set((int) x, (int) y);
     
-        if (Mouse.newX < 0) Mouse.newX = 0;
-        if (Mouse.newY < 0) Mouse.newY = 0;
+        if (Mouse.newPos.x < 0) Mouse.newPos.x = 0;
+        if (Mouse.newPos.y < 0) Mouse.newPos.y = 0;
     
-        if (screenWidth() <= Mouse.newX) Mouse.newX = screenWidth() - 1;
-        if (screenHeight() <= Mouse.newY) Mouse.newY = screenHeight() - 1;
+        if (screenWidth() <= Mouse.newPos.x) Mouse.newPos.x = screenWidth() - 1;
+        if (screenHeight() <= Mouse.newPos.y) Mouse.newPos.y = screenHeight() - 1;
     }
     
     public static void scrollCallback(double x, double y)
     {
-        Mouse.newScrollX += x;
-        Mouse.newScrollY += y;
+        Mouse.newScroll.add((int) x, (int) y);
     }
     
     public static void captureCallback(boolean captured)
     {
-        if (captured)
-        {
-            Mouse.newX = Mouse.x = screenWidth() / 2;
-            Mouse.newY = Mouse.y = screenHeight() / 2;
-        }
+        if (captured) Mouse.newPos.set(Mouse.pos.set(screenWidth() / 2, screenHeight() / 2));
     }
     
     public static class Button
     {
         private final String name;
-        
+    
         private boolean down   = false;
         private boolean up     = false;
         private boolean held   = false;
         private boolean repeat = false;
-        
+    
         private int state, prevState;
         private long downTime, clickTime;
-        private int clickX, clickY, dClickX, dClickY;
-        
+        private final Vector2i click  = new Vector2i();
+        private final Vector2i dClick = new Vector2i();
+    
         private Button(String name, int reference)
         {
             this.name = name;
-            
+        
             Mouse.inputs.put(reference, this);
         }
-        
+    
         @Override
         public String toString()
         {

@@ -1,7 +1,6 @@
 package pe.vector;
 
 import org.joml.*;
-import pe.PixelEngine;
 
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class Vector4
@@ -26,22 +25,4 @@ public class Vector4
     public static final Vector4dc Wd    = new Vector4d(0, 0, 0, 1);
     public static final Vector4dc ZEROd = new Vector4d(0, 0, 0, 0);
     public static final Vector4dc ONEd  = new Vector4d(1, 1, 1, 1);
-    
-    public static Vector4f randomF()
-    {
-        float x = PixelEngine.nextFloat(-1F, 1F);
-        float y = PixelEngine.nextFloat(-1F, 1F);
-        float z = PixelEngine.nextFloat(-1F, 1F);
-        float w = PixelEngine.nextFloat(-1F, 1F);
-        return new Vector4f(x, y, z, w).normalize();
-    }
-    
-    public static Vector4d randomD()
-    {
-        double x = PixelEngine.nextDouble(-1.0, 1.0);
-        double y = PixelEngine.nextDouble(-1.0, 1.0);
-        double z = PixelEngine.nextDouble(-1.0, 1.0);
-        double w = PixelEngine.nextDouble(-1.0, 1.0);
-        return new Vector4d(x, y, z, w).normalize();
-    }
 }
