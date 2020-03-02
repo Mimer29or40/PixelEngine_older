@@ -176,11 +176,6 @@ public class Random extends java.util.Random
         return new Vector2f(nextFloat(), nextFloat());
     }
     
-    public Vector2f nextVector2fUnit()
-    {
-        return new Vector2f(nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
-    }
-    
     public Vector2f nextVector2f(float bound)
     {
         return new Vector2f(nextFloat(bound), nextFloat(bound));
@@ -194,11 +189,6 @@ public class Random extends java.util.Random
     public Vector3f nextVector3f()
     {
         return new Vector3f(nextFloat(), nextFloat(), nextFloat());
-    }
-    
-    public Vector3f nextVector3fUnit()
-    {
-        return new Vector3f(nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
     }
     
     public Vector3f nextVector3f(float bound)
@@ -216,11 +206,6 @@ public class Random extends java.util.Random
         return new Vector4f(nextFloat(), nextFloat(), nextFloat(), nextFloat());
     }
     
-    public Vector4f nextVector4fUnit()
-    {
-        return new Vector4f(nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
-    }
-    
     public Vector4f nextVector4f(float bound)
     {
         return new Vector4f(nextFloat(bound), nextFloat(bound), nextFloat(bound), nextFloat(bound));
@@ -234,11 +219,6 @@ public class Random extends java.util.Random
     public Vector2d nextVector2d()
     {
         return new Vector2d(nextDouble(), nextDouble());
-    }
-    
-    public Vector2d nextVector2dUnit()
-    {
-        return new Vector2d(nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
     }
     
     public Vector2d nextVector2d(float bound)
@@ -256,11 +236,6 @@ public class Random extends java.util.Random
         return new Vector3d(nextDouble(), nextDouble(), nextDouble());
     }
     
-    public Vector3d nextVector3dUnit()
-    {
-        return new Vector3d(nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
-    }
-    
     public Vector3d nextVector3d(float bound)
     {
         return new Vector3d(nextDouble(bound), nextDouble(bound), nextDouble(bound));
@@ -276,11 +251,6 @@ public class Random extends java.util.Random
         return new Vector4d(nextDouble(), nextDouble(), nextDouble(), nextDouble());
     }
     
-    public Vector4d nextVector4dUnit()
-    {
-        return new Vector4d(nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
-    }
-    
     public Vector4d nextVector4d(float bound)
     {
         return new Vector4d(nextDouble(bound), nextDouble(bound), nextDouble(bound), nextDouble(bound));
@@ -289,5 +259,35 @@ public class Random extends java.util.Random
     public Vector4d nextVector4d(float origin, float bound)
     {
         return new Vector4d(nextDouble(origin, bound), nextDouble(origin, bound), nextDouble(origin, bound), nextDouble(origin, bound));
+    }
+    
+    public Vector2f nextUnit2f()
+    {
+        return new Vector2f(nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
+    }
+    
+    public Vector3f nextUnit3f()
+    {
+        return new Vector3f(nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
+    }
+    
+    public Vector4f nextUnit4f()
+    {
+        return new Vector4f(nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1), nextFloat(-1, 1)).normalize();
+    }
+    
+    public Vector2d nextUnit2d()
+    {
+        return new Vector2d(nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
+    }
+    
+    public Vector3d nextUnit3d()
+    {
+        return new Vector3d(nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
+    }
+    
+    public Vector4d nextUnit4d()
+    {
+        return new Vector4d(nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1), nextDouble(-1, 1)).normalize();
     }
 }
