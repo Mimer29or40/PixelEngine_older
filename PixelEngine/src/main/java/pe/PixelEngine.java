@@ -44,8 +44,6 @@ public class PixelEngine
     
     private static final Random random = new Random();
     
-    private static final Random random = new Random();
-    
     private static       Renderer renderer;
     private static final Blend    blend = new Blend();
     
@@ -659,11 +657,6 @@ public class PixelEngine
         return PixelEngine.random.nextVector2f();
     }
     
-    public static Vector2f nextVector2fUnit()
-    {
-        return PixelEngine.random.nextVector2fUnit();
-    }
-    
     public static Vector2f nextVector2f(float bound)
     {
         return PixelEngine.random.nextVector2f(bound);
@@ -677,11 +670,6 @@ public class PixelEngine
     public static Vector3f nextVector3f()
     {
         return PixelEngine.random.nextVector3f();
-    }
-    
-    public static Vector3f nextVector3fUnit()
-    {
-        return PixelEngine.random.nextVector3fUnit();
     }
     
     public static Vector3f nextVector3f(float bound)
@@ -699,11 +687,6 @@ public class PixelEngine
         return PixelEngine.random.nextVector4f();
     }
     
-    public static Vector4f nextVector4fUnit()
-    {
-        return PixelEngine.random.nextVector4fUnit();
-    }
-    
     public static Vector4f nextVector4f(float bound)
     {
         return PixelEngine.random.nextVector4f(bound);
@@ -717,11 +700,6 @@ public class PixelEngine
     public static Vector2d nextVector2d()
     {
         return PixelEngine.random.nextVector2d();
-    }
-    
-    public static Vector2d nextVector2dUnit()
-    {
-        return PixelEngine.random.nextVector2dUnit();
     }
     
     public static Vector2d nextVector2d(float bound)
@@ -739,11 +717,6 @@ public class PixelEngine
         return PixelEngine.random.nextVector3d();
     }
     
-    public static Vector3d nextVector3dUnit()
-    {
-        return PixelEngine.random.nextVector3dUnit();
-    }
-    
     public static Vector3d nextVector3d(float bound)
     {
         return PixelEngine.random.nextVector3d(bound);
@@ -759,11 +732,6 @@ public class PixelEngine
         return PixelEngine.random.nextVector4d();
     }
     
-    public static Vector4d nextVector4dUnit()
-    {
-        return PixelEngine.random.nextVector4dUnit();
-    }
-    
     public static Vector4d nextVector4d(float bound)
     {
         return PixelEngine.random.nextVector4d(bound);
@@ -772,7 +740,36 @@ public class PixelEngine
     public static Vector4d nextVector4d(float origin, float bound)
     {
         return PixelEngine.random.nextVector4d(origin, bound);
-        return PixelEngine.random.nextIndex(options);
+    }
+    
+    public static Vector2f nextUnit2f()
+    {
+        return PixelEngine.random.nextUnit2f();
+    }
+    
+    public static Vector3f nextUnit3f()
+    {
+        return PixelEngine.random.nextUnit3f();
+    }
+    
+    public static Vector4f nextUnit4f()
+    {
+        return PixelEngine.random.nextUnit4f();
+    }
+    
+    public static Vector2d nextUnit2d()
+    {
+        return PixelEngine.random.nextUnit2d();
+    }
+    
+    public static Vector3d nextUnit3d()
+    {
+        return PixelEngine.random.nextUnit3d();
+    }
+    
+    public static Vector4d nextUnit4d()
+    {
+        return PixelEngine.random.nextUnit4d();
     }
     
     // ------------
