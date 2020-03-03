@@ -26,6 +26,8 @@ public class WindowTest extends PixelEngine
         // size(600, 400, 2, 2);
         size();
     
+        frameRate(20);
+    
         int lines = (screenHeight() - 2) / 8;
         for (int i = 0; i < lines; i++) events.add("");
     

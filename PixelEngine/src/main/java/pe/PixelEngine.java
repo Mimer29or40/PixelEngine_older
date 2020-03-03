@@ -37,7 +37,9 @@ public class PixelEngine
     
     private static String  printFrame;
     private static boolean running;
-    private static long    startTime;
+    
+    private static long startTime;
+    private static long frameRate;
     
     private static final Vector2i screenSize = new Vector2i();
     private static final Vector2i pixelSize  = new Vector2i();
@@ -202,6 +204,16 @@ public class PixelEngine
     // --------------
     // - Properties -
     // --------------
+    
+    public static int frameRate()
+    {
+        return (int) (1_000_000_000L / PixelEngine.frameRate);
+    }
+    
+    public static void frameRate(int frameRate)
+    {
+        PixelEngine.frameRate = frameRate > 1 ? 1_000_000_000L / frameRate : 0L;
+    }
     
     public static Vector2ic screenSize()
     {
@@ -1562,175 +1574,168 @@ public class PixelEngine
     private static void renderLoop()
     {
         Window.setupContext();
-        
+    
         long t, dt;
         long lastFrame  = System.nanoTime();
         long lastSecond = 0;
-        
+    
         long frameTime;
-        long minTime   = Long.MAX_VALUE;
-        long maxTime   = Long.MIN_VALUE;
         long totalTime = 0;
-        
+    
+        long minTime = Long.MAX_VALUE;
+        long maxTime = Long.MIN_VALUE;
+    
         int totalFrames = 0;
-        
+    
         try
         {
             while (PixelEngine.running)
             {
                 PixelEngine.LOGGER.trace("Frame Started");
-    
-                t         = System.nanoTime();
-                dt        = t - lastFrame;
-                lastFrame = t;
-    
-                PixelEngine.PROFILER.startTick();
+            
+                t = System.nanoTime();
+            
+                dt = t - lastFrame;
+                if (dt >= PixelEngine.frameRate)
                 {
-                    PixelEngine.PROFILER.startSection("Events");
+                    lastFrame = t;
+                
+                    PixelEngine.PROFILER.startTick();
                     {
-                        Events.clear(); // TODO - Have a way to have events persist and be consumable.
+                        PixelEngine.PROFILER.startSection("Events");
+                        {
+                            Events.clear(); // TODO - Have a way to have events persist and be consumable.
                         
-                        PixelEngine.PROFILER.startSection("Mouse Events");
-                        {
-                            Mouse.handleEvents(t, dt);
-                        }
-                        PixelEngine.PROFILER.endSection();
-                        
-                        PixelEngine.PROFILER.startSection("Key Events");
-                        {
-                            Keyboard.handleEvents(t, dt);
-                        }
-                        PixelEngine.PROFILER.endSection();
-                        
-                        PixelEngine.PROFILER.startSection("Window Events");
-                        {
-                            Window.handleEvents(t, dt);
-                        }
-                        PixelEngine.PROFILER.endSection();
-                    }
-                    PixelEngine.PROFILER.endSection();
-                    
-                    PixelEngine.PROFILER.startSection("PEX Pre");
-                    {
-                        for (String name : PixelEngine.extensions.keySet())
-                        {
-                            if (PixelEngine.extensions.get(name).isEnabled())
+                            PixelEngine.PROFILER.startSection("Mouse Events");
                             {
-                                PixelEngine.PROFILER.startSection(name);
-                                {
-                                    PixelEngine.extensions.get(name).beforeDraw(dt / 1_000_000_000D);
-                                }
-                                PixelEngine.PROFILER.endSection();
+                                Mouse.handleEvents(t, dt);
                             }
-                        }
-                    }
-                    PixelEngine.PROFILER.endSection();
-                    
-                    PixelEngine.PROFILER.startSection("User Update");
-                    {
-                        PixelEngine.logic.draw(dt / 1_000_000_000D);
-                    }
-                    PixelEngine.PROFILER.endSection();
-                    
-                    PixelEngine.PROFILER.startSection("PEX Post");
-                    {
-                        for (String name : PixelEngine.extensions.keySet())
-                        {
-                            if (PixelEngine.extensions.get(name).isEnabled())
-                            {
-                                PixelEngine.PROFILER.startSection(name);
-                                {
-                                    PixelEngine.extensions.get(name).afterDraw(dt / 1_000_000_000D);
-                                }
-                                PixelEngine.PROFILER.endSection();
-                            }
-                        }
-                    }
-                    PixelEngine.PROFILER.endSection();
-                    
-                    boolean update;
-                    PixelEngine.PROFILER.startSection("Window Update");
-                    {
-                        update = Window.update();
-                    }
-                    PixelEngine.PROFILER.endSection();
-                    
-                    PixelEngine.PROFILER.startSection("Render");
-                    {
-                        for (int i = 0; i < PixelEngine.screenSize.x * PixelEngine.screenSize.y; i++)
-                        {
-                            ByteBuffer currData = PixelEngine.window.getData();
-                            ByteBuffer prevData = PixelEngine.prev.getData();
-                            if (update || currData.getInt(4 * i) != prevData.getInt(4 * i))
-                            {
-                                PixelEngine.LOGGER.trace("Rendering Frame");
-    
-                                PixelEngine.PROFILER.startSection("Update/Draw Texture");
-                                {
-                                    Window.drawSprite(PixelEngine.window);
-                                }
-                                PixelEngine.PROFILER.endSection();
-                                
-                                PixelEngine.PROFILER.startSection("Swap");
-                                {
-                                    Window.swap();
-                                }
-                                PixelEngine.PROFILER.endSection();
-                                
-                                PixelEngine.PROFILER.startSection("Swap Sprites");
-                                {
-                                    PixelEngine.window.copy(PixelEngine.prev);
-                                }
-                                PixelEngine.PROFILER.endSection();
-                                
-                                break;
-                            }
-                        }
-                    }
-                    PixelEngine.PROFILER.endSection();
-                    
-                    PixelEngine.PROFILER.startSection("Stats");
-                    {
-                        PixelEngine.PROFILER.startSection("Update");
-                        {
-                            frameTime = System.nanoTime() - t;
-                            minTime   = Math.min(minTime, frameTime);
-                            maxTime   = Math.max(maxTime, frameTime);
-                            totalTime += frameTime;
-                            totalFrames++;
-                        }
-                        PixelEngine.PROFILER.endSection();
+                            PixelEngine.PROFILER.endSection();
                         
-                        dt = t - lastSecond;
-                        if (dt > 1_000_000_000L)
-                        {
-                            PixelEngine.PROFILER.startSection("Update Title");
+                            PixelEngine.PROFILER.startSection("Key Events");
                             {
-                                lastSecond = t;
-                                
-                                double s = 1000D;
-                                
-                                totalTime /= totalFrames;
-                                
-                                Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / s, minTime / s, maxTime / s));
-                                
-                                totalTime   = 0;
-                                minTime     = Long.MAX_VALUE;
-                                maxTime     = Long.MIN_VALUE;
-                                totalFrames = 0;
+                                Keyboard.handleEvents(t, dt);
+                            }
+                            PixelEngine.PROFILER.endSection();
+                        
+                            PixelEngine.PROFILER.startSection("Window Events");
+                            {
+                                Window.handleEvents(t, dt);
                             }
                             PixelEngine.PROFILER.endSection();
                         }
+                        PixelEngine.PROFILER.endSection();
+                    
+                        PixelEngine.PROFILER.startSection("PEX Pre");
+                        {
+                            for (String name : PixelEngine.extensions.keySet())
+                            {
+                                if (PixelEngine.extensions.get(name).isEnabled())
+                                {
+                                    PixelEngine.PROFILER.startSection(name);
+                                    {
+                                        PixelEngine.extensions.get(name).beforeDraw(dt / 1_000_000_000D);
+                                    }
+                                    PixelEngine.PROFILER.endSection();
+                                }
+                            }
+                        }
+                        PixelEngine.PROFILER.endSection();
+                    
+                        PixelEngine.PROFILER.startSection("User Update");
+                        {
+                            PixelEngine.logic.draw(dt / 1_000_000_000D);
+                        }
+                        PixelEngine.PROFILER.endSection();
+                    
+                        PixelEngine.PROFILER.startSection("PEX Post");
+                        {
+                            for (String name : PixelEngine.extensions.keySet())
+                            {
+                                if (PixelEngine.extensions.get(name).isEnabled())
+                                {
+                                    PixelEngine.PROFILER.startSection(name);
+                                    {
+                                        PixelEngine.extensions.get(name).afterDraw(dt / 1_000_000_000D);
+                                    }
+                                    PixelEngine.PROFILER.endSection();
+                                }
+                            }
+                        }
+                        PixelEngine.PROFILER.endSection();
+                    
+                        boolean update;
+                        PixelEngine.PROFILER.startSection("Window Update");
+                        {
+                            update = Window.update();
+                        }
+                        PixelEngine.PROFILER.endSection();
+                    
+                        PixelEngine.PROFILER.startSection("Render");
+                        {
+                            for (int i = 0; i < PixelEngine.screenSize.x * PixelEngine.screenSize.y; i++)
+                            {
+                                ByteBuffer currData = PixelEngine.window.getData();
+                                ByteBuffer prevData = PixelEngine.prev.getData();
+                                if (update || currData.getInt(4 * i) != prevData.getInt(4 * i))
+                                {
+                                    PixelEngine.LOGGER.trace("Rendering Frame");
+                                
+                                    PixelEngine.PROFILER.startSection("Update/Draw Texture");
+                                    {
+                                        Window.drawSprite(PixelEngine.window);
+                                    }
+                                    PixelEngine.PROFILER.endSection();
+                                
+                                    PixelEngine.PROFILER.startSection("Swap");
+                                    {
+                                        Window.swap();
+                                    }
+                                    PixelEngine.PROFILER.endSection();
+                                
+                                    PixelEngine.PROFILER.startSection("Swap Sprites");
+                                    {
+                                        PixelEngine.window.copy(PixelEngine.prev);
+                                    }
+                                    PixelEngine.PROFILER.endSection();
+                                
+                                    break;
+                                }
+                            }
+                        }
+                        PixelEngine.PROFILER.endSection();
+                    
+                        frameTime = System.nanoTime() - t;
+                        minTime   = Math.min(minTime, frameTime);
+                        maxTime   = Math.max(maxTime, frameTime);
+                        totalTime += frameTime;
+                        totalFrames++;
                     }
-                    PixelEngine.PROFILER.endSection();
-                }
-                PixelEngine.PROFILER.endTick();
+                    PixelEngine.PROFILER.endTick();
                 
-                if (PixelEngine.PROFILER.enabled && PixelEngine.printFrame != null)
+                    if (PixelEngine.PROFILER.enabled && PixelEngine.printFrame != null)
+                    {
+                        String parent = PixelEngine.printFrame.equals("") ? null : PixelEngine.printFrame;
+                        println(PixelEngine.PROFILER.getFormattedData(parent));
+                        PixelEngine.printFrame = null;
+                    }
+                }
+            
+                dt = t - lastSecond;
+                if (dt >= 1_000_000_000L && totalFrames > 0)
                 {
-                    String parent = PixelEngine.printFrame.equals("") ? null : PixelEngine.printFrame;
-                    println(PixelEngine.PROFILER.getFormattedData(parent));
-                    PixelEngine.printFrame = null;
+                    lastSecond = t;
+                
+                    totalTime /= totalFrames;
+                
+                    Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / 1000D, minTime / 1000D, maxTime / 1000D));
+                
+                    totalTime = 0;
+                
+                    minTime = Long.MAX_VALUE;
+                    maxTime = Long.MIN_VALUE;
+                
+                    totalFrames = 0;
                 }
             }
         }
