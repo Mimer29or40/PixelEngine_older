@@ -416,9 +416,9 @@ public class DrawTest extends PixelEngine
     }
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
-        return true;
+        size();
     }
     
     long tLH1, minLH1 = Long.MAX_VALUE, maxLH1 = Long.MIN_VALUE, sumLH1 = 0;
@@ -445,7 +445,7 @@ public class DrawTest extends PixelEngine
     int x, y;
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
         clear();
         
@@ -456,8 +456,6 @@ public class DrawTest extends PixelEngine
         
         // drawBezier(0, 0, Mouse.x(), Mouse.y(), screenWidth(), screenHeight(), Color.WHITE);
         fillEllipse(screenWidth() / 2, screenHeight() / 2, Math.abs(Mouse.x() * 2 - screenWidth()), Math.abs(Mouse.y() * 2 - screenHeight()), Color.WHITE);
-        
-        return true;
     }
     
     @Override

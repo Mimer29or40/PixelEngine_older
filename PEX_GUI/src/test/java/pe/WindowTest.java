@@ -21,8 +21,11 @@ public class WindowTest extends PixelEngine
     }
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
+        // size(600, 400, 2, 2);
+        size();
+    
         int lines = (screenHeight() - 2) / 8;
         for (int i = 0; i < lines; i++) events.add("");
     
@@ -108,12 +111,10 @@ public class WindowTest extends PixelEngine
         alert = new Alert("ALERT", "ALERT MESSAGE");
         alert.onModalOpened(() -> addEvent("Alert Opened"));
         alert.onModalClosed((result) -> addEvent("Alert Closed: " + result));
-        
-        return true;
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
         clear();
         
@@ -137,14 +138,10 @@ public class WindowTest extends PixelEngine
         }
     
         if (Keyboard.A.down()) alert.open();
-        
-        return true;
     }
     
     public static void main(String[] args)
     {
-        Logger.setLevel(Logger.Level.DEBUG);
-        //start(new WindowTest(), 600, 400, 2, 2);
-        start(new WindowTest());
+        start(new WindowTest(), Logger.Level.DEBUG);
     }
 }

@@ -21,7 +21,7 @@ public class EvaluatorTest extends PixelEngine
     private static EvaluatorTest.ISetupFunc setupFunc;
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
         Random random = new Random();
     
@@ -68,8 +68,6 @@ public class EvaluatorTest extends PixelEngine
         
         drawer.generateGraph(eva.fittest).saveSprite(String.format("%s_%s.png", name, generations));
         eva.fittest.save(String.format("%s_fittest", name));
-        
-        return false;
     }
     
     public static void setup(ISetupFunc setupFunc)

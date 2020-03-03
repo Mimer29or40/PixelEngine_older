@@ -76,94 +76,64 @@ public class PixelEngine
     
     /**
      * Called once before engine enter loop. Use to initialize user variables.
-     *
-     * @return True if engine can continue to run
+     * You must call size for a window to be created.
      */
-    protected boolean setup()
-    {
-        return false;
-    }
+    protected void setup() { }
     
     /**
      * Called every frame.
      *
      * @param elapsedTime time in seconds since that last frame. Must be overridden for engine to run
-     * @return True if engine can continue to run
      */
-    protected boolean draw(double elapsedTime)
-    {
-        return false;
-    }
+    protected void draw(double elapsedTime) { }
     
     /**
      * Called once after engine is put into a stopped state.
      */
-    protected void destroy()
-    {
-        
-    }
+    protected void destroy() { }
     
     /**
      * This will create and initialize the window size, stats and pixel dimensions.
      *
-     * @param logic      Sub-Classed PixelEngine providing onUser methods
-     * @param screenW    Screen width in pixels
-     * @param screenH    Screen height in pixels
-     * @param pixelW     Width of pixel in actual pixels
-     * @param pixelH     Height of pixel in actual pixels
-     * @param fullscreen Engine should be fullscreen
-     * @param vsync      Engine should lock to monitor refresh rate
+     * @param logic Sub-Classed PixelEngine providing onUser methods
+     * @param level The log level
      */
-    protected static void start(PixelEngine logic, int screenW, int screenH, int pixelW, int pixelH, boolean fullscreen, boolean vsync)
+    protected static void start(PixelEngine logic, Logger.Level level)
     {
+        Logger.setLevel(level);
+        
         PixelEngine.LOGGER.info("Engine Started");
-    
+        
         if (PixelEngine.logic != null) throw new RuntimeException("PixelEngine can only be constructed once.");
-        PixelEngine.LOGGER.trace("Setting Logic");
         PixelEngine.logic = logic;
-    
-        PixelEngine.screenSize.set(screenW, screenH);
-        PixelEngine.LOGGER.trace("Screen Size (%s, %s)", screenW, screenH);
-    
-        PixelEngine.pixelSize.x = pixelW;
-        PixelEngine.pixelSize.y = pixelH;
-        PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
-    
-        Window.fullscreen(fullscreen);
-        PixelEngine.LOGGER.trace("Fullscreen: %s)", fullscreen);
-    
-        Window.vsync(vsync);
-        PixelEngine.LOGGER.trace("VSync: %s)", vsync);
-    
-        if (PixelEngine.screenSize.x == 0 || PixelEngine.screenSize.y == 0) throw new RuntimeException("Screen dimension must be > 0");
-        if (PixelEngine.pixelSize.x == 0 || PixelEngine.pixelSize.y == 0) throw new RuntimeException("Pixel dimension must be > 0");
-        PixelEngine.LOGGER.trace("Screen Size and Color Dimensions pass initial test");
-    
+        
         createFontSheet();
-    
+        
         loadExtensions();
-    
-        PixelEngine.window = PixelEngine.target = new Sprite(screenW, screenH);
-        PixelEngine.prev   = new Sprite(screenW, screenH);
-    
+        
         PixelEngine.running   = true;
         PixelEngine.startTime = System.nanoTime();
-    
+        
         try
         {
             PixelEngine.LOGGER.debug("Extension Pre Setup");
             PixelEngine.extensions.values().forEach(PEX::beforeSetup);
-    
+            
             PixelEngine.LOGGER.debug("User Initialization");
-            if (PixelEngine.logic.setup())
+            PixelEngine.logic.setup();
+            
+            if (PixelEngine.screenSize.lengthSquared() > 0 && PixelEngine.pixelSize.lengthSquared() > 0)
             {
+                PixelEngine.window = PixelEngine.target = new Sprite(PixelEngine.screenSize.x, PixelEngine.screenSize.y);
+                PixelEngine.prev   = new Sprite(PixelEngine.screenSize.x, PixelEngine.screenSize.y);
+                
                 PixelEngine.LOGGER.debug("Extension Post Setup");
                 PixelEngine.extensions.values().forEach(PEX::afterSetup);
-    
+                
                 Window.setup();
-    
+                
                 new Thread(PixelEngine::renderLoop, "Render Loop").start();
-    
+                
                 while (PixelEngine.running) Window.pollEvents();
             }
         }
@@ -184,19 +154,39 @@ public class PixelEngine
         PixelEngine.LOGGER.info("Engine Finished");
     }
     
-    protected static void start(PixelEngine gameLogic, int screenW, int screenH, int pixelW, int pixelH)
+    protected static void start(PixelEngine logic)
     {
-        start(gameLogic, screenW, screenH, pixelW, pixelH, false, false);
+        start(logic, Logger.Level.INFO);
     }
     
-    protected static void start(PixelEngine gameLogic, int screenW, int screenH)
+    /**
+     * This sets the size of the window. If this method is not called then a window will not be created.
+     *
+     * @param screenW Screen width in pixels
+     * @param screenH Screen height in pixels
+     * @param pixelW  Width of pixel in actual pixels
+     * @param pixelH  Height of pixel in actual pixels
+     */
+    public static void size(int screenW, int screenH, int pixelW, int pixelH)
     {
-        start(gameLogic, screenW, screenH, 4, 4, false, false);
+        PixelEngine.screenSize.set(screenW, screenH);
+        PixelEngine.LOGGER.trace("Screen Size (%s, %s)", screenW, screenH);
+        
+        PixelEngine.pixelSize.set(pixelW, pixelH);
+        PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
+        
+        if (PixelEngine.screenSize.lengthSquared() == 0) throw new RuntimeException("Screen dimension must be > 0");
+        if (PixelEngine.pixelSize.lengthSquared() == 0) throw new RuntimeException("Pixel dimension must be > 0");
     }
     
-    protected static void start(PixelEngine gameLogic)
+    public static void size(int screenW, int screenH)
     {
-        start(gameLogic, 300, 200, 4, 4, false, false);
+        size(screenW, screenH, 4, 4);
+    }
+    
+    public static void size()
+    {
+        size(300, 200, 4, 4);
     }
     
     public static void stop()
@@ -1638,11 +1628,7 @@ public class PixelEngine
                     
                     PixelEngine.PROFILER.startSection("User Update");
                     {
-                        if (!PixelEngine.logic.draw(dt / 1_000_000_000D))
-                        {
-                            PixelEngine.LOGGER.trace("onUserUpdate return false so engine will stop");
-                            PixelEngine.running = false;
-                        }
+                        PixelEngine.logic.draw(dt / 1_000_000_000D);
                     }
                     PixelEngine.PROFILER.endSection();
                     
@@ -1678,7 +1664,7 @@ public class PixelEngine
                             if (update || currData.getInt(4 * i) != prevData.getInt(4 * i))
                             {
                                 PixelEngine.LOGGER.trace("Rendering Frame");
-            
+    
                                 PixelEngine.PROFILER.startSection("Update/Draw Texture");
                                 {
                                     Window.drawSprite(PixelEngine.window);

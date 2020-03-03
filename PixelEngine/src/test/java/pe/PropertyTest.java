@@ -5,8 +5,10 @@ public class PropertyTest extends PixelEngine
     private static final Logger LOGGER = Logger.getLogger();
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
+        size(400, 300, 2, 2);
+    
         LOGGER.info("Monitor Width: %s Expected: %s", Window.monitorWidth(), 0);
     
         LOGGER.info("Monitor Height: %s Expected: %s", Window.monitorHeight(), 0);
@@ -40,14 +42,12 @@ public class PropertyTest extends PixelEngine
     
         LOGGER.info("V-Sync: %s Expected: %s", Window.vsync(), false);
         assert !Window.vsync();
-    
-        return true;
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
-        return false;
+    
     }
     
     @Override
@@ -58,6 +58,6 @@ public class PropertyTest extends PixelEngine
     
     public static void main(String[] args)
     {
-        start(new PropertyTest(), 400, 300, 2, 2);
+        start(new PropertyTest());
     }
 }

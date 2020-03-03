@@ -6,15 +6,15 @@ public class SpriteTransformations extends PixelEngine
     float  rotate = 0.0f;
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
-        this.sprCar = Sprite.loadSprite("car_top1.png");
+        size(256, 240, 4, 4);
     
-        return true;
+        this.sprCar = Sprite.loadSprite("car_top1.png");
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
         //if (getKey(Keyboard.Keyboard.Z).held) this.rotate -= 2.0f * elapsedTime;
         //if (getKey(Keyboard.Keyboard.X).held) this.rotate += 2.0f * elapsedTime;
@@ -113,12 +113,10 @@ public class SpriteTransformations extends PixelEngine
         //}
         //
         //setDrawMode(DrawMode.NORMAL);
-        
-        return true;
     }
     
     public static void main(String[] args)
     {
-        start(new SpriteTransformations(), 256, 240, 4, 4);
+        start(new SpriteTransformations());
     }
 }

@@ -35,16 +35,18 @@ public class GameTest extends PixelEngine
     public static boolean debug = false;
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
+        size(200, 200, 2, 2);
+    
         Counter nodeInno = new Counter();
         Counter connInno = new Counter();
-        
+    
         Genome initialBrain = new Genome();
-        
+    
         for (int i = 0; i < rayCount + 1; i++) initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.INPUT, 0));
         for (int i = 0; i < 4; i++) initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.OUTPUT, 1));
-        
+    
         Node bias = initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.BIAS, 0));
         
         for (int j = 0, ni = initialBrain.inputSize(), nj = initialBrain.outputSize(); j < nj; j++)
@@ -61,23 +63,19 @@ public class GameTest extends PixelEngine
         PEX_Neat.random.setSeed(10);
         
         disableExtension("PEX_CBNeat");
-        
-        return true;
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
-        if (Keyboard.ESCAPE.down()) return false;
-    
-        if (Keyboard.D.down()) debug = !debug;
+        if (Keyboard.ESCAPE.down()) stop();
         
-        return true;
+        if (Keyboard.D.down()) debug = !debug;
     }
     
     public static void main(String[] args)
     {
-        start(new GameTest(), 200, 200, 2, 2);
+        start(new GameTest());
     }
     
     public static class Bullet

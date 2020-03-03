@@ -5,19 +5,19 @@ import pe.PixelEngine;
 public class Asteroids extends PixelEngine
 {
     @Override
-    protected boolean setup()
+    protected void setup()
     {
-        return true;
+        size(600, 350, 1, 1);
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
-        return true;
+    
     }
     
     public static void main(String[] args)
     {
-        start(new Asteroids(), 600, 350, 1, 1);
+        start(new Asteroids());
     }
 }

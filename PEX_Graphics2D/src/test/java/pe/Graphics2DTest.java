@@ -21,17 +21,17 @@ public class Graphics2DTest extends PixelEngine
     }
     
     @Override
-    public boolean setup()
+    public void setup()
     {
+        size(640, 480, 2, 2);
+    
         for (int i = 0; i < 16; i++) events.add("");
     
         spr = Sprite.loadSprite("zombie.png");
-    
-        return true;
     }
     
     @Override
-    public boolean draw(double elapsedTime)
+    public void draw(double elapsedTime)
     {
         drawMode(DrawMode.NORMAL);
         clear(Color.BLUE);
@@ -112,12 +112,10 @@ public class Graphics2DTest extends PixelEngine
         PEX_GFX2D.drawSprite(spr, t1);
         
         drawSprite((int) mx, (int) my, spr, 4);
-        
-        return true;
     }
     
     public static void main(String[] args)
     {
-        start(new Graphics2DTest(), 640, 480, 2, 2);
+        start(new Graphics2DTest());
     }
 }
