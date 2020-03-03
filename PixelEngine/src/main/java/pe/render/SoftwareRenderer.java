@@ -113,7 +113,7 @@ public class SoftwareRenderer extends Renderer
         int dy  = Math.abs(y2 - y1), sy = y1 < y2 ? 1 : -1;
         int err = dx - dy, e2; /* error value e_xy */
         
-        if (this.strokeWeight == 1)
+        if (this.weight == 1)
         {
             if (dx == 0)
             {
@@ -156,8 +156,8 @@ public class SoftwareRenderer extends Renderer
             int     x3, y3, e3;
             double  ed = dx + dy == 0 ? 1 : Math.sqrt(dx * dx + dy * dy);
             boolean shouldDraw;
-            
-            for (int w = (this.strokeWeight + 1) / 2; ; )
+    
+            for (int w = (this.weight + 1) / 2; ; )
             {
                 shouldDraw = pattern.shouldDraw();
                 if (shouldDraw) this.drawCords.add(new PairI(x1, y1));

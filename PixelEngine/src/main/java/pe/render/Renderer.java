@@ -8,6 +8,8 @@ import pe.color.Color;
 import pe.color.Colorc;
 import pe.color.IBlendPos;
 
+import java.util.Stack;
+
 public abstract class Renderer
 {
     protected static final Logger LOGGER = Logger.getLogger();
@@ -21,9 +23,13 @@ public abstract class Renderer
     
     protected final Color stroke = new Color(Color.BLACK);
     protected final Color fill   = new Color(Color.WHITE);
-    protected final Color clear  = new Color(Color.BACKGROUND_GREY);
+    protected       int   weight = 1;
     
-    protected int strokeWeight = 1;
+    protected final Stack<Color>   strokeStack = new Stack<>();
+    protected final Stack<Color>   fillStack   = new Stack<>();
+    protected final Stack<Integer> weightStack = new Stack<>();
+    
+    protected final Color clear = new Color(Color.BACKGROUND_GREY);
     
     public Sprite drawTarget()
     {
@@ -114,7 +120,7 @@ public abstract class Renderer
     public void strokeWeight(int strokeWeight)
     {
         if (strokeWeight < 1) throw new RuntimeException("strokeWeight must be >= 1");
-        this.strokeWeight = strokeWeight;
+        this.weight = strokeWeight;
     }
     
     public abstract void init();
@@ -145,16 +151,15 @@ public abstract class Renderer
         clearImpl();
     }
     
-    public void clear()
-    {
-        this.clear.set(Color.BACKGROUND_GREY);
-        clearImpl();
-    }
-    
     public void clear(Colorc color)
     {
         this.clear.set(color);
         clearImpl();
+    }
+    
+    public void clear()
+    {
+        clear(Color.BACKGROUND_GREY);
     }
     
     protected abstract void clearImpl();

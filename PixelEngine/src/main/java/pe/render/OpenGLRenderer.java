@@ -115,7 +115,7 @@ public class OpenGLRenderer extends Renderer
             this.lineShader.bind();
             // this.lineShader.set_floatm('pv', self.view @self.proj)
             this.lineShader.setColor("color", this.stroke);
-            this.lineShader.setFloat("thickness", this.strokeWeight);
+            this.lineShader.setFloat("thickness", this.weight);
             this.lineShader.setVec2("viewport", screenWidth(), screenHeight());
         
             glDrawArrays(GL_LINES, 0, 2);
