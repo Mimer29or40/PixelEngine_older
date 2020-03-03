@@ -5,13 +5,13 @@ import pe.color.Color;
 public class ColorTest extends PixelEngine
 {
     @Override
-    protected boolean setup()
+    protected void setup()
     {
-        return true;
+        size(200, 200, 4, 4);
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
         // for (int j = 0; j < screenHeight(); j++)
         // {
@@ -21,7 +21,7 @@ public class ColorTest extends PixelEngine
         //         renderer().draw(i, j);
         //     }
         // }
-    
+        
         renderer().clear(Color.BLACK);
     
         // // renderer().drawMode((x, y, backdrop, source) -> Blend.ALPHA.blend(backdrop, source, new Color()));
@@ -42,8 +42,6 @@ public class ColorTest extends PixelEngine
         {
             printFrameData("");
         }
-    
-        return true;
     }
     
     public static void main(String[] args)
@@ -56,7 +54,8 @@ public class ColorTest extends PixelEngine
         // int b = 255;
         // int a = 255;
         // println(r | (g << 8) | (b << 16) | (a << 24));
+        // start(new ColorTest(), 200, 200, 4, 4);
         enableProfiler();
-        start(new ColorTest(), 200, 200, 4, 4);
+        start(new ColorTest());
     }
 }

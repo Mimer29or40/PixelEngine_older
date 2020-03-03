@@ -6,31 +6,29 @@ import pe.vector.Vector2;
 public class VectorTest extends PixelEngine
 {
     @Override
-    protected boolean setup()
+    protected void setup()
     {
-        println(Vector2.Xf.x());
+        size(800, 600, 1, 1);
     
-        return true;
+        println(Vector2.Xf.x());
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
         Vector2d v0 = new Vector2d(0, 0);
         Vector2d v1 = new Vector2d(-1, -1);
         Vector2d v2 = new Vector2d(v1).perpendicular();
-    
+        
         v0.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
         v1.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
         v2.mul(50).add(screenWidth() / 2D, screenHeight() / 2D);
         // PEX_GFX2D.drawLine(v0, v1);
         // PEX_GFX2D.drawLine(v0, v2, Color.RED);
-    
-        return true;
     }
     
     public static void main(String[] args)
     {
-        start(new VectorTest(), 800, 600, 1, 1);
+        start(new VectorTest());
     }
 }

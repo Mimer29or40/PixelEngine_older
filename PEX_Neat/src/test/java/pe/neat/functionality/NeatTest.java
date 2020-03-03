@@ -20,7 +20,7 @@ public class NeatTest extends PixelEngine
     private static ITestArrayFunc  testArrayFunc;
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
         Random random = new Random();
     
@@ -67,7 +67,6 @@ public class NeatTest extends PixelEngine
                 drawer.generateGraph(genomes[0]).saveImage(String.format("out/%s_after.png", name));
             }
         }
-        return false;
     }
     
     public static void setup(ISetupFunc setupFunc)

@@ -16,14 +16,15 @@ public class EventsTest extends PixelEngine
     }
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
+        size(400, 200);
+        frameRate(60);
+    
         int lines = (screenHeight() - 2) / 8;
         for (int i = 0; i < lines; i++) events.add("");
     
         Events.subscribe(Events.INPUT_EVENTS, this::onInputEvent);
-    
-        return true;
     }
     
     public void onInputEvent(Event event)
@@ -32,7 +33,7 @@ public class EventsTest extends PixelEngine
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
         renderer().clear();
         
@@ -54,12 +55,10 @@ public class EventsTest extends PixelEngine
         // }
     
         if (Keyboard.SPACE.down()) Window.fullscreen(!Window.fullscreen());
-    
-        return true;
     }
     
     public static void main(String[] args)
     {
-        start(new EventsTest(), 400, 200);
+        start(new EventsTest());
     }
 }

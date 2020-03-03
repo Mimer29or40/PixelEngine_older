@@ -21,7 +21,7 @@ public class EvaluatorTest extends PixelEngine
     private static EvaluatorTest.ISetupFunc setupFunc;
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
         Random random = new Random();
     
@@ -56,20 +56,18 @@ public class EvaluatorTest extends PixelEngine
             println("\tHighest Fitness: %s", eva.fittest.fitness);
             println("\tPopulation Size: %s", eva.genomes.size());
             println("\tResults from best network:");
-    
+            
             print("\t\t");
             printFunc.accept(eva.fittest);
-    
-            if (i % (generations / 2) == 0) drawer.generateGraph(eva.fittest).saveImage(String.format("%s_%s.png", name, i));
+            
+            if (i % (generations / 2) == 0) drawer.generateGraph(eva.fittest).saveSprite(String.format("%s_%s.png", name, i));
         }
-    
+        
         FitnessPlotter plotter = new FitnessPlotter();
-        plotter.generatePlot(fitnessOverTime).saveImage(String.format("%s_fitness.png", name));
-    
-        drawer.generateGraph(eva.fittest).saveImage(String.format("%s_%s.png", name, generations));
+        plotter.generatePlot(fitnessOverTime).saveSprite(String.format("%s_fitness.png", name));
+        
+        drawer.generateGraph(eva.fittest).saveSprite(String.format("%s_%s.png", name, generations));
         eva.fittest.save(String.format("%s_fittest", name));
-    
-        return false;
     }
     
     public static void setup(ISetupFunc setupFunc)

@@ -18,8 +18,10 @@ public class PolyCollisions extends PixelEngine
     int           mode   = 0;
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
+        size(256, 240, 4, 4);
+    
         //// Create Pentagon
         //Polygon s1     = new Polygon();
         //float   fTheta = 3.14159f * 2.0f / 5.0f;
@@ -59,8 +61,6 @@ public class PolyCollisions extends PixelEngine
         //this.shapes.add(s1);
         //this.shapes.add(s2);
         //this.shapes.add(s3);
-        
-        return true;
     }
     
     boolean ShapeOverlap_SAT(Polygon r1, Polygon r2)
@@ -258,7 +258,7 @@ public class PolyCollisions extends PixelEngine
     
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
         // if (Keyboard.F1.up()) this.mode = 0;
         // if (Keyboard.F2.up()) this.mode = 1;
@@ -359,12 +359,10 @@ public class PolyCollisions extends PixelEngine
         // drawString(8, 20, "F2: SAT/STATIC", (this.mode == 1 ? Color.RED : Color.YELLOW));
         // drawString(8, 30, "F3: DIAG", (this.mode == 2 ? Color.RED : Color.YELLOW));
         // drawString(8, 40, "F4: DIAG/STATIC", (this.mode == 3 ? Color.RED : Color.YELLOW));
-    
-        return true;
     }
     
     public static void main(String[] args)
     {
-        start(new PolyCollisions(), 256, 240, 4, 4);
+        start(new PolyCollisions());
     }
 }

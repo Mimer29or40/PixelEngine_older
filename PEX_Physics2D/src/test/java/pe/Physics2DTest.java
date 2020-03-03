@@ -68,15 +68,15 @@ public class Physics2DTest extends PixelEngine
     }
     
     @Override
-    protected boolean setup()
+    protected void setup()
     {
-        return true;
+        size();
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
-        return true;
+    
     }
     
     @Override

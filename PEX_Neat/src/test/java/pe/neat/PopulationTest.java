@@ -9,16 +9,18 @@ import java.util.function.Supplier;
 public class PopulationTest extends PixelEngine
 {
     @Override
-    protected boolean setup()
+    protected void setup()
     {
+        size();
+    
         Counter nodeInno = new Counter();
         Counter connInno = new Counter();
-        
+    
         Genome initialBrain = new Genome();
-        
+    
         initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.INPUT, 0));
         initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.INPUT, 0));
-        
+    
         initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.OUTPUT, 1));
         initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.OUTPUT, 1));
         initialBrain.addNode(new Node(nodeInno.inc(), Node.Type.OUTPUT, 1));
@@ -42,14 +44,12 @@ public class PopulationTest extends PixelEngine
         PEX_Neat.random.setSeed(10);
     
         disableExtension("PEX_CBNeat");
-    
-        return true;
     }
     
     @Override
-    protected boolean draw(double elapsedTime)
+    protected void draw(double elapsedTime)
     {
-        return true;
+    
     }
     
     public static void main(String[] args)

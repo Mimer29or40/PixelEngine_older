@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RandomTest extends PixelEngine
 {
     @Override
-    protected boolean setup()
+    protected void setup()
     {
         setSeed(1337);
     
@@ -38,8 +38,6 @@ public class RandomTest extends PixelEngine
         println("Next Index [1, 2, 4, 8, ..., 200^2]: 11025=%s", nextIndex(squares));
     
         println("Choose (10, 20, 30): 10=%s", choose(10, 20, 30));
-        
-        return false;
     }
     
     public static void main(String[] args)

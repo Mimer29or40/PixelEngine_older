@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class FitnessPlotTest extends PixelEngine
 {
     @Override
-    protected boolean setup()
+    protected void setup()
     {
         ArrayList<Double> fitnessList = new ArrayList<>();
     
@@ -20,8 +20,6 @@ public class FitnessPlotTest extends PixelEngine
         FitnessPlotter plotter = new FitnessPlotter();
         
         plotter.generatePlot(fitnessList).saveImage("out/fitness.png");
-        
-        return false;
     }
     
     public static void main(String[] args)
