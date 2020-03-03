@@ -143,13 +143,13 @@ public class PixelEngine
         {
             PixelEngine.LOGGER.trace("Extension Pre Destruction");
             PixelEngine.extensions.values().forEach(PEX::beforeDestroy);
-    
+            
             PixelEngine.LOGGER.debug("User Initialization");
             PixelEngine.logic.destroy();
-    
+            
             PixelEngine.LOGGER.trace("Extension Post Destruction");
             PixelEngine.extensions.values().forEach(PEX::afterDestroy);
-    
+            
             Window.destroy();
         }
         
@@ -1202,12 +1202,12 @@ public class PixelEngine
         if (w < 1 || h < 1) return;
         int x2 = x + w;
         int y2 = y + h;
-    
+        
         x  = Math.max(0, Math.min(x, PixelEngine.screenSize.x));
         y  = Math.max(0, Math.min(y, PixelEngine.screenSize.y));
         x2 = Math.max(0, Math.min(x2, PixelEngine.screenSize.x));
         y2 = Math.max(0, Math.min(y2, PixelEngine.screenSize.y));
-    
+        
         for (int i = x; i < x2; i++)
         {
             for (int j = y; j < y2; j++)
@@ -1237,20 +1237,20 @@ public class PixelEngine
     public static void fillTriangle(int x1, int y1, int x2, int y2, int x3, int y3, Colorc color)
     {
         int minX, minY, maxX, maxY;
-    
+        
         minX = Math.min(x1, Math.min(x2, x3));
         minY = Math.min(y1, Math.min(y2, y3));
         maxX = Math.max(x1, Math.max(x2, x3));
         maxY = Math.max(y1, Math.max(y2, y3));
-    
+        
         minX = Math.max(0, Math.min(minX, PixelEngine.screenSize.x));
         minY = Math.max(0, Math.min(minY, PixelEngine.screenSize.y));
         maxX = Math.max(0, Math.min(maxX, PixelEngine.screenSize.x));
         maxY = Math.max(0, Math.min(maxY, PixelEngine.screenSize.y));
-    
+        
         int abc = Math.abs(x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2));
         int abp, apc, pbc;
-    
+        
         for (int i = minX; i <= maxX; i++)
         {
             for (int j = minY; j <= maxY; j++)
@@ -1332,7 +1332,7 @@ public class PixelEngine
                             xPercent = u < uMin ? 1.0 - uMin + u : u + 1 > uMax ? uMax - u : 1.0;
                             yPercent = v < vMin ? 1.0 - vMin + v : v + 1 > vMax ? vMax - v : 1.0;
                             pPercent = xPercent * yPercent;
-    
+                            
                             p.set(sprite.getPixel(ox + u, oy + v));
                             
                             r += pPercent * p.r();
@@ -1373,7 +1373,7 @@ public class PixelEngine
         int  sx = 0, sy = 0;
         char c;
         int  ox, oy;
-    
+        
         DrawMode prev = drawMode();
         if (scale == (int) scale)
         {
@@ -1574,50 +1574,50 @@ public class PixelEngine
     private static void renderLoop()
     {
         Window.setupContext();
-    
+        
         long t, dt;
         long lastFrame  = System.nanoTime();
         long lastSecond = 0;
-    
+        
         long frameTime;
         long totalTime = 0;
-    
+        
         long minTime = Long.MAX_VALUE;
         long maxTime = Long.MIN_VALUE;
-    
+        
         int totalFrames = 0;
-    
+        
         try
         {
             while (PixelEngine.running)
             {
                 PixelEngine.LOGGER.trace("Frame Started");
-            
+                
                 t = System.nanoTime();
-            
+                
                 dt = t - lastFrame;
                 if (dt >= PixelEngine.frameRate)
                 {
                     lastFrame = t;
-                
+                    
                     PixelEngine.PROFILER.startTick();
                     {
                         PixelEngine.PROFILER.startSection("Events");
                         {
                             Events.clear(); // TODO - Have a way to have events persist and be consumable.
-                        
+                            
                             PixelEngine.PROFILER.startSection("Mouse Events");
                             {
                                 Mouse.handleEvents(t, dt);
                             }
                             PixelEngine.PROFILER.endSection();
-                        
+                            
                             PixelEngine.PROFILER.startSection("Key Events");
                             {
                                 Keyboard.handleEvents(t, dt);
                             }
                             PixelEngine.PROFILER.endSection();
-                        
+                            
                             PixelEngine.PROFILER.startSection("Window Events");
                             {
                                 Window.handleEvents(t, dt);
@@ -1625,7 +1625,7 @@ public class PixelEngine
                             PixelEngine.PROFILER.endSection();
                         }
                         PixelEngine.PROFILER.endSection();
-                    
+                        
                         PixelEngine.PROFILER.startSection("PEX Pre");
                         {
                             for (String name : PixelEngine.extensions.keySet())
@@ -1641,13 +1641,13 @@ public class PixelEngine
                             }
                         }
                         PixelEngine.PROFILER.endSection();
-                    
+                        
                         PixelEngine.PROFILER.startSection("User Update");
                         {
                             PixelEngine.logic.draw(dt / 1_000_000_000D);
                         }
                         PixelEngine.PROFILER.endSection();
-                    
+                        
                         PixelEngine.PROFILER.startSection("PEX Post");
                         {
                             for (String name : PixelEngine.extensions.keySet())
@@ -1663,14 +1663,14 @@ public class PixelEngine
                             }
                         }
                         PixelEngine.PROFILER.endSection();
-                    
+                        
                         boolean update;
                         PixelEngine.PROFILER.startSection("Window Update");
                         {
                             update = Window.update();
                         }
                         PixelEngine.PROFILER.endSection();
-                    
+                        
                         PixelEngine.PROFILER.startSection("Render");
                         {
                             for (int i = 0; i < PixelEngine.screenSize.x * PixelEngine.screenSize.y; i++)
@@ -1680,31 +1680,31 @@ public class PixelEngine
                                 if (update || currData.getInt(4 * i) != prevData.getInt(4 * i))
                                 {
                                     PixelEngine.LOGGER.trace("Rendering Frame");
-                                
+                                    
                                     PixelEngine.PROFILER.startSection("Update/Draw Texture");
                                     {
                                         Window.drawSprite(PixelEngine.window);
                                     }
                                     PixelEngine.PROFILER.endSection();
-                                
+                                    
                                     PixelEngine.PROFILER.startSection("Swap");
                                     {
                                         Window.swap();
                                     }
                                     PixelEngine.PROFILER.endSection();
-                                
+                                    
                                     PixelEngine.PROFILER.startSection("Swap Sprites");
                                     {
                                         PixelEngine.window.copy(PixelEngine.prev);
                                     }
                                     PixelEngine.PROFILER.endSection();
-                                
+                                    
                                     break;
                                 }
                             }
                         }
                         PixelEngine.PROFILER.endSection();
-                    
+                        
                         frameTime = System.nanoTime() - t;
                         minTime   = Math.min(minTime, frameTime);
                         maxTime   = Math.max(maxTime, frameTime);
@@ -1712,7 +1712,7 @@ public class PixelEngine
                         totalFrames++;
                     }
                     PixelEngine.PROFILER.endTick();
-                
+                    
                     if (PixelEngine.PROFILER.enabled && PixelEngine.printFrame != null)
                     {
                         String parent = PixelEngine.printFrame.equals("") ? null : PixelEngine.printFrame;
@@ -1720,21 +1720,21 @@ public class PixelEngine
                         PixelEngine.printFrame = null;
                     }
                 }
-            
+                
                 dt = t - lastSecond;
                 if (dt >= 1_000_000_000L && totalFrames > 0)
                 {
                     lastSecond = t;
-                
+                    
                     totalTime /= totalFrames;
-                
+                    
                     Window.title(String.format(PixelEngine.TITLE, PixelEngine.logic.name, totalFrames, totalTime / 1000D, minTime / 1000D, maxTime / 1000D));
-                
+                    
                     totalTime = 0;
-                
+                    
                     minTime = Long.MAX_VALUE;
                     maxTime = Long.MIN_VALUE;
-                
+                    
                     totalFrames = 0;
                 }
             }
