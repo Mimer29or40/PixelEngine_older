@@ -105,9 +105,6 @@ public class PixelEngine
         if (PixelEngine.logic != null) throw new RuntimeException("PixelEngine can only be constructed once.");
         PixelEngine.logic = logic;
         
-        // PixelEngine.renderer = new SoftwareRenderer();
-        PixelEngine.renderer = new OpenGLRenderer();
-        
         loadExtensions();
         
         PixelEngine.running   = true;
@@ -167,12 +164,15 @@ public class PixelEngine
     {
         PixelEngine.screenSize.set(screenW, screenH);
         PixelEngine.LOGGER.trace("Screen Size (%s, %s)", screenW, screenH);
-        
+    
         PixelEngine.pixelSize.set(pixelW, pixelH);
         PixelEngine.LOGGER.trace("Color Dimensions (%s, %s)", pixelW, pixelH);
-        
+    
         if (PixelEngine.screenSize.lengthSquared() == 0) throw new RuntimeException("Screen dimension must be > 0");
         if (PixelEngine.pixelSize.lengthSquared() == 0) throw new RuntimeException("Pixel dimension must be > 0");
+    
+        // PixelEngine.renderer = new SoftwareRenderer();
+        PixelEngine.renderer = new OpenGLRenderer();
     }
     
     public static void size(int screenW, int screenH)

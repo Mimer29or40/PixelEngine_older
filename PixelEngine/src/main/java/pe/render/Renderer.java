@@ -31,6 +31,20 @@ public abstract class Renderer
     
     protected final Color clear = new Color(Color.BACKGROUND_GREY);
     
+    public void push()
+    {
+        this.strokeStack.push(new Color(this.stroke));
+        this.fillStack.push(new Color(this.fill));
+        this.weightStack.push(this.weight);
+    }
+    
+    public void pop()
+    {
+        this.stroke.set(this.strokeStack.pop());
+        this.fill.set(this.fillStack.pop());
+        this.weight = this.weightStack.pop();
+    }
+    
     public Sprite drawTarget()
     {
         return this.target;
@@ -129,32 +143,22 @@ public abstract class Renderer
     
     public void clear(Number r, Number g, Number b, Number a)
     {
-        this.clear.set(r, g, b, a);
-        clearImpl();
+        clear(this.clear.set(r, g, b, a));
     }
     
     public void clear(Number r, Number g, Number b)
     {
-        this.clear.set(r, g, b);
-        clearImpl();
+        clear(this.clear.set(r, g, b));
     }
     
     public void clear(Number grey, Number a)
     {
-        this.clear.set(grey, a);
-        clearImpl();
+        clear(this.clear.set(grey, a));
     }
     
     public void clear(Number grey)
     {
-        this.clear.set(grey);
-        clearImpl();
-    }
-    
-    public void clear(Colorc color)
-    {
-        this.clear.set(color);
-        clearImpl();
+        clear(this.clear.set(grey));
     }
     
     public void clear()
@@ -162,7 +166,7 @@ public abstract class Renderer
         clear(Color.BACKGROUND_GREY);
     }
     
-    protected abstract void clearImpl();
+    public abstract void clear(Colorc color);
     
     protected abstract void point(int x, int y, Colorc color);
     

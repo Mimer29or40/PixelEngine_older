@@ -77,9 +77,9 @@ public class SoftwareRenderer extends Renderer
     }
     
     @Override
-    protected void clearImpl()
+    public void clear(Colorc color)
     {
-        this.target.clear(this.clear);
+        this.target.clear(color);
     }
     
     public void point(int x, int y, Colorc color)

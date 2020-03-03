@@ -20,6 +20,11 @@ public class OpenGLRenderer extends Renderer
     private VertexArray vertexArray;
     private Shader      lineShader;
     
+    public OpenGLRenderer()
+    {
+    
+    }
+    
     @Override
     public void init()
     {
@@ -60,28 +65,28 @@ public class OpenGLRenderer extends Renderer
     {
     
         // second pass
-        glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
-        // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-        // glClear(GL_COLOR_BUFFER_BIT);
-        quadShader.bind();
-        quadArray.bind();
-        // glDisable(GL_DEPTH_TEST);
-        glBindTexture(GL_TEXTURE_2D, texColorBuffer);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        quadArray.unbind();
+        // glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
+        // // glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        // // glClear(GL_COLOR_BUFFER_BIT);
+        // quadShader.bind();
+        // quadArray.bind();
+        // // glDisable(GL_DEPTH_TEST);
+        // glBindTexture(GL_TEXTURE_2D, texColorBuffer);
+        // glDrawArrays(GL_TRIANGLES, 0, 6);
+        // quadArray.unbind();
     
         Window.swap();
     
-        glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+        // glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
         // glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         // glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // we're not using the stencil buffer now
         // glEnable(GL_DEPTH_TEST);
     }
     
     @Override
-    protected void clearImpl()
+    public void clear(Colorc color)
     {
-        glClearColor(this.clear.rf(), this.clear.gf(), this.clear.bf(), this.clear.af());
+        glClearColor(color.rf(), color.gf(), color.bf(), color.af());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
     
@@ -109,6 +114,7 @@ public class OpenGLRenderer extends Renderer
             float   width  = screenWidth();
             float   height = screenHeight();
             float[] data   = new float[] {(float) x1 / width, (float) y1 / height, 0, (float) x2 / width, (float) y2 / height, 0};
+            // println(Arrays.toString(data));
             this.vertexArray.add(3, data, GL_DYNAMIC_DRAW);
             this.vertexArray.bind();
         
